@@ -91,6 +91,5 @@ R community members produce valuable content to help you learn how to program in
 * [Daring Fireball](https://daringfireball.net/projects/markdown/). A page maintained by the markdown creator, [John Gruber](https://en.wikipedia.org/wiki/John_Gruber), not [Jon Gruber](https://en.wikipedia.org/wiki/Jonathan_Gruber_(economist)).
 * [Pandoc Markdown](http://rmarkdown.rstudio.com/authoring_pandoc_markdown.html). Among other things, Pandoc is great for formatting tables in R Markdown. I use it regularly. 
 * [Coolors](https://coolors.co/). I love this site. It is great inspiration when building charts.
-* [Top 50 ggplot2 Visualizations](http://uc-r.github.io/
-http://r-statistics.co/Top50-Ggplot2-Visualizations-MasterList-R-Code.html). Check this out when you want to produce new chart types. It is full of good ideas.
+* [Top 50 ggplot2 Visualizations](http://r-statistics.co/Top50-Ggplot2-Visualizations-MasterList-R-Code.html). Check this out when you want to produce new chart types. It is full of good ideas.
 * [Github](https://github.com/). If you're serious about any sort of programming, you should create a Github account.
