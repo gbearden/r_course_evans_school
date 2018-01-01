@@ -1,9 +1,8 @@
-Syllabus"
-Winter 2018
-Workshop: Introduction to Data Processing and Visualization Design in R
+Syllabus  
+Winter 2018  
+Workshop: Introduction to Data Processing and Visualization Design in R  
 
 Graham Bearden
-
 gbearden@uw.edu  
 Time: 6:00PM - 8:50PM  
 Class Dates: 1/10, 1/17, 1/24, 2/7  
