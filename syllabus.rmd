@@ -1,9 +1,6 @@
----
-title: "Syllabus"
-output: pdf_document
-date: "Winter 2018"
-subtitle: 'Workshop: Introduction to Data Processing and Visualization Design in R'
----
+Syllabus"
+Winter 2018
+Workshop: Introduction to Data Processing and Visualization Design in R
 
 Graham Bearden
 
@@ -72,7 +69,6 @@ We will use the datasets below in our workshop. These datasets are also used in 
 * [Contributions to Candidates and Political Committees](https://data.wa.gov/Politics/Contributions-to-Candidates-and-Political-Committe/kv7h-kjye)
 * [Seattle Police Department 911 Incident Response](https://data.seattle.gov/Public-Safety/Seattle-Police-Department-911-Incident-Response/3k2p-39jp)
 
-\newpage
 ## Reference Materials
 
 R community members produce valuable content to help you learn how to program in R. Here are some of my favorite resources that you might find useful as a new R programmer:
