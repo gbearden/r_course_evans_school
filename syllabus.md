@@ -86,7 +86,7 @@ R community members produce valuable content to help you learn how to program in
 * [Karl Broman on data organization](http://kbroman.org/dataorg/). Prepare your data according to Karl's recommendations and R will become a lot easier. (The tip is relevant to all other KB recommendations.)
 * [Jose Manuel Magallanes on data collection and organization](https://www.amazon.com/Introduction-Science-Social-Policy-Research/dp/1107540259/ref=sr_1_1?ie=UTF8&qid=1504135785&sr=8-1&keywords=jose+manuel+magallanes). Jose teaches the Computational Thinking for Governance Analytics course at the Evans School. He recently published this book!
 * [R Bloggers](https://www.r-bloggers.com/). All things R. Folks from various industries - many of whom are super smart with impressive R experience - share tips, tricks, and anecdotes here.
-* [stackoverflow](https://stackoverflow.com/documentation/r/topics). This is where you come when you get stuck. Google the problem you are having and you'll see a possible solution on the stackoverflow site. Guaranteed.
+* [stackoverflow](https://stackoverflow.com/questions/tagged/r). This is where you come when you get stuck. Google the problem you are having and you'll see a possible solution on the stackoverflow site. Guaranteed.
 * [Google R Style Guide](https://google.github.io/styleguide/Rguide.xml). Your code can get really messy really quickly. This guide can help.
 * [Daring Fireball](https://daringfireball.net/projects/markdown/). A page maintained by the markdown creator, [John Gruber](https://en.wikipedia.org/wiki/John_Gruber).
 * [Pandoc Markdown](http://rmarkdown.rstudio.com/authoring_pandoc_markdown.html). Among other things, Pandoc is great for formatting tables in R Markdown. I use it regularly. 
