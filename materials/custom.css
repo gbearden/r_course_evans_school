@@ -1,0 +1,43 @@
+.questions {
+    color: #F0E8E6; background: #363457;
+    position: fixed; top: 90%;
+    text-align:left; width: 600%;
+}
+
+.funs {
+    color: #39968F; ;
+}
+
+.column-right{
+	float: right;
+	width: 50%;
+	text-align: left;
+}
+
+.column-right-questions{
+	color: #F0E8E6; background: #363457;
+	float: right;
+	width: 50%;
+	text-align: left;
+}
+
+.column-left-questions{
+	color: #F0E8E6; background: #363457;
+	float: left;
+	width: 50%;
+	text-align: left;
+}
+
+.column-left{
+	float: left;
+	width: 50%;
+	text-align: left;
+	overflow-wrap: break-word;
+}
+
+.column-left-wide{
+	float: left;
+	width: 75%;
+	text-align: left;
+	overflow-wrap: break-word;
+}
