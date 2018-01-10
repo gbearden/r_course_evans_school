@@ -69,6 +69,7 @@ Class reference materials: [R Markdown cheat sheet](https://www.rstudio.com/wp-c
 We will use the datasets below in our workshop. These datasets are also used in the Computational Thinking for Governance Analytics course.
 
 * [Contributions to Candidates and Political Committees](https://data.wa.gov/Politics/Contributions-to-Candidates-and-Political-Committe/kv7h-kjye)
+  * [Small Contributions Dataset](https://raw.githubusercontent.com/gbearden/r_course_evans_school/master/data/small_donations_data.csv)
 * [Seattle Police Department 911 Incident Response](https://data.seattle.gov/Public-Safety/Seattle-Police-Department-911-Incident-Response/3k2p-39jp)
 
 ## Reference Materials
