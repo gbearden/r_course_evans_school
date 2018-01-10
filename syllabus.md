@@ -71,6 +71,7 @@ We will use the datasets below in our workshop. These datasets are also used in 
 * [Contributions to Candidates and Political Committees](https://data.wa.gov/Politics/Contributions-to-Candidates-and-Political-Committe/kv7h-kjye)
   * [Small Contributions Dataset](https://raw.githubusercontent.com/gbearden/r_course_evans_school/master/data/small_donations_data.csv)
 * [Seattle Police Department 911 Incident Response](https://data.seattle.gov/Public-Safety/Seattle-Police-Department-911-Incident-Response/3k2p-39jp)
+  * [Small Police Dataset](https://raw.githubusercontent.com/gbearden/r_course_evans_school/master/data/small_police_data.csv)
 
 ## Reference Materials
 
