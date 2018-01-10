@@ -30,7 +30,7 @@ Please let me know if you need any specific accomodations. I will help provide a
 
 ## Schedule
 
-#### Week 1 | January 10
+#### [Week 1 | January 10](http://rpubs.com/gbearden/r_basics)
 
 Week 1 will focus on the basics of R. Students will learn about key R concepts like data types and the anatomy of a function, how to read (import) and write (export) data, and the essentials of writing successful code.
 
