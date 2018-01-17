@@ -40,7 +40,7 @@ At the end of week 1, students should be familiar with the R interface, know how
 
 Course materials: [Base R cheat sheet](https://www.rstudio.com/wp-content/uploads/2016/05/base-r.pdf), [Data transformation cheat sheet](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf)
 
-#### Week 2 | January 17
+#### [Week 2 | January 17](http://rpubs.com/gbearden/intro_tidyverse)
 
 Week 2 will focus on data processing. We will a variety of methodsto manipulate data and prepare it for analysis. The Tidyverse will be emphasized. Students will learn how to manipulate data at various levels, including at the dataset-level, the variable-level, and the value-level.
 
