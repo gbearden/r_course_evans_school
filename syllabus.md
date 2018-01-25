@@ -95,4 +95,4 @@ R community members produce valuable content to help you learn how to program in
 * [Coolors](https://coolors.co/). I love this site. It is great inspiration when building charts.
 * [Top 50 ggplot2 Visualizations](http://r-statistics.co/Top50-Ggplot2-Visualizations-MasterList-R-Code.html). Check this out when you want to produce new chart types. It is full of good ideas.
 * [Github](https://github.com/). If you're serious about any sort of programming, you should create a Github account.
-* [R Notebook Template].(https://raw.githubusercontent.com/gbearden/r_course_evans_school/master/template/rmarkdown_template.Rmd)
+* [R Notebook Template](https://raw.githubusercontent.com/gbearden/r_course_evans_school/master/template/rmarkdown_template.Rmd)
