@@ -7,9 +7,28 @@ header-includes:
 ---
 \pagecolor{lightgray}
 
-## Plot
-
-```{r plot, echo=FALSE}  
+```{r load_packages, include=FALSE}
 library(tidyverse)
-mpg %>% ggplot() + geom_point(aes(displ, hwy))
+library(ggthemes)
+library(scales)
+library(lubridate)
+library(knitr)
+
+donor <- read.csv('https://goo.gl/tm9JQ5')
+```
+
+```{r,  fig.height = 4, fig.width = 7, echo = FALSE, collapse=TRUE}
+donor %>% 
+  ggplot(aes(primary_general, fill = primary_general)) + 
+  geom_bar() + 
+  labs(
+    x = 'Election Type'
+    , y = 'Donations (#)'
+    , fill = element_blank()
+    , title = 'Number of Donations by Election Type'
+    , subtitle = 'Over 6,000 full election cycle donations'
+    ) + 
+  scale_y_continuous(labels = comma) +
+  theme_economist() + 
+  scale_fill_economist()
 ```
