@@ -9,6 +9,7 @@ header-includes:
 
 ## Plot
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+```{r plot, echo=FALSE}  
+library(tidyverse)
+mpg %>% ggplot() + geom_point(aes(displ, hwy))
 ```
