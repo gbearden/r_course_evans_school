@@ -1,0 +1,14 @@
+---
+title: "Whoa, what a title!"
+output: pdf_document
+fontsize: 12pt
+header-includes:
+- \usepackage{pagecolor}
+---
+\pagecolor{lightgray}
+
+## Plot
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
