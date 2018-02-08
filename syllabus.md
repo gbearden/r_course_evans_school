@@ -56,7 +56,7 @@ At the end of week 3, students should be able to produce a standard set of chart
 
 Class reference materials: [Data visualization cheat sheet](https://www.rstudio.com/wp-content/uploads/2016/11/ggplot2-cheatsheet-2.1.pdf), [Coolors](https://coolors.co/)
 
-#### Week 4 | February 7
+#### [Week 4 | February 7](http://rpubs.com/gbearden/reporting_with_markdown)
 
 Week 4 will focus on reporting analyses in markdown with knitr. Markdown is a simple language used to streamline documentation/reporting and integrates nicely with R. Markdown integration allows you to 'pipe in' analyses calculated in R in the form of text, tables, and charts. knitr is a built-in R Studio tool (as well as an independent R package) that helps R programmers produce documents derived from code at the press of a button. Mastery of knitr and markdown sets you on the path of learning to automate production of reports.
 
