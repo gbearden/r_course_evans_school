@@ -2,7 +2,7 @@
 <p align="center">
   <b>Syllabus</b><br>    
   <b>Winter 2018  </b><br>
-  <b>Workshop: Introduction to Data Processing and Visualization Design in R  </b><br>
+  <b>Introduction to Data Processing and Visualization Design in R  </b><br>
 </p>
  
 Graham Bearden  
