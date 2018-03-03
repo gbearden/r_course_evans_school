@@ -22,7 +22,7 @@ This is an applied course that focuses on successful execution of code. While st
 ## Course Expectations
 
 - Attend all four classes. Class dates are January 10, 17, and 24 and February 7. Each class is 2 hours and 50 minutes.
-- Submit a 1-page report generated in R Markdown that includes bullet points, at least one table, and at least one chart produced with the ggplot library. Due by February 16.
+- Submit a 1-page report generated in R Markdown that includes a title, at least one table, and at least one chart produced with the ggplot library. Due by February 16.
 
 ## Accomodations
 
