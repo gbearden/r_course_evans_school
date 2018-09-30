@@ -101,4 +101,4 @@ R community members produce valuable content to help you learn how to program in
 
 
 ---
-Click [here](https://github.com/gbearden/r_course_evans_school/blob/master/syllabus.md) for the Winter 2018 syllabus.
+Click [here](https://github.com/gbearden/r_course_evans_school/blob/master/previous_courses/syllabus_w18.md) for the Winter 2018 syllabus.
