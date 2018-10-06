@@ -30,7 +30,7 @@ Please let me know if you need any specific accomodations. I will help provide a
 
 ## Schedule
 
-#### January 6 | Part 1
+#### [January 6 | Part 1] (http://rpubs.com/gbearden/r_basics_aut18)
 
 Part 1 will focus on the basics of R. Students will learn about key R concepts like data types and the anatomy of a function, how to read (import) and write (export) data, and the essentials of writing successful code.
 
@@ -40,7 +40,7 @@ At the end of Part 1, students should be familiar with the R interface, know how
 
 Course materials: [Base R cheat sheet](https://www.rstudio.com/wp-content/uploads/2016/05/base-r.pdf), [Data transformation cheat sheet](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf)
 
-#### January 6 | Part 2
+#### [January 6 | Part 2] (http://rpubs.com/gbearden/intro_tidyverse_aut18)
 
 Part 2 will focus on data processing. We will use a variety of methods to manipulate data and prepare it for analysis. The Tidyverse will be emphasized. Students will learn how to manipulate data at various levels, including at the dataset-level, the variable-level, and the value-level.
 
@@ -48,7 +48,7 @@ At the end of Part 2, students should be able to transform datasets of varying l
 
 Class reference materials: [Data transformation cheat sheet](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf)
 
-#### January 13 | Part 3
+#### January 13 | Part 3 
 
 Part 3 will focus on data visualization. We will use ggplot, a visualization library that is part of the tidyverse, to build a variety of charts. The modularity of ggplot charting functions will be emphasized as will the distinction between visualizing aggregated and non-aggregated data.
 
