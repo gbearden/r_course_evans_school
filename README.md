@@ -22,7 +22,9 @@ This is an applied course that focuses on successful execution of code. While st
 ## Course Expectations
 
 - Attend both classes. Class dates are October 6 and 13. A full class is 5 hours and 50 minutes, breaks included.
-- Submit a 1-page report generated in R Markdown that includes bullet points, at least one table, and at least one chart produced with the ggplot library. Due by October 22.
+- Submit a 1-page report generated in R Markdown that includes bullet points, at least one table, and at least one chart produced with the ggplot library
+  - Due by October 22
+  - Do not print code in output (echo = FALSE)
  
 ## Accomodations
 
