@@ -12,8 +12,13 @@ rm(list = ls())
 library(tidyverse)
 library(ggthemes)
 library(scales)
-library(ggmap)
 library(lubridate)
+
+# devtools::install_github("dkahle/ggmap")
+
+library(ggmap)
+
+register_google(key = 'AIzaSyB96DWzULF-BPebTXa-oJU-fzs7Cwo751Y')
 
 multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL) {
   library(grid)
@@ -89,7 +94,8 @@ timeline <- parking %>%
   theme(legend.position = 'top') +
   labs(fill = 'Time of Day')
 
-seattle <-  get_googlemap("seattle", zoom = 12)
+seattle_coords <- c(-122.335167, 47.608013)
+seattle <- get_googlemap(seattle_coords, zoom = 12)
 
 overlay <- stat_density2d(
   aes(
