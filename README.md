@@ -105,4 +105,4 @@ R community members produce valuable content to help you learn how to program in
 
 
 ---
-Click [here](https://github.com/gbearden/r_course_evans_school/blob/master/previous_courses/syllabus_w18.md) for the Winter 2018 syllabus and [here](https://github.com/gbearden/r_course_evans_school/blob/master/previous_courses/syllabus_a18.md) for the Autumn 2018 syllabus.
+Here are syllabi for previous workshops: [Autumn 2018](https://github.com/gbearden/r_course_evans_school/blob/master/previous_courses/syllabus_a18.md), [Winter 2018](https://github.com/gbearden/r_course_evans_school/blob/master/previous_courses/syllabus_w18.md)
