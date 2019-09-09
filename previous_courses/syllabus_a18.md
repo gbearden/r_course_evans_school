@@ -100,6 +100,3 @@ R community members produce valuable content to help you learn how to program in
 * [Github](https://github.com/). If you're serious about any sort of programming, you should create a Github account.
 * [R Notebook Template](https://raw.githubusercontent.com/gbearden/r_course_evans_school/master/template/rmarkdown_template.Rmd)
 * [PDF Document Example](https://raw.githubusercontent.com/gbearden/r_course_evans_school/master/template/pdf_template.Rmd)
-
-
----
