@@ -32,7 +32,7 @@ Please let me know if you need any specific accomodations. I will help provide a
 
 ## Schedule
 
-#### [January 6 | Part 1](http://rpubs.com/gbearden/r_basics_aut18)
+#### [October 6 | Part 1](http://rpubs.com/gbearden/r_basics_aut18)
 
 Part 1 will focus on the basics of R. Students will learn about key R concepts like data types and the anatomy of a function, how to read (import) and write (export) data, and the essentials of writing successful code.
 
@@ -42,7 +42,7 @@ At the end of Part 1, students should be familiar with the R interface, know how
 
 Course materials: [Base R cheat sheet](https://www.rstudio.com/wp-content/uploads/2016/05/base-r.pdf), [Data transformation cheat sheet](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf)
 
-#### [January 6 | Part 2](http://rpubs.com/gbearden/intro_tidyverse_aut18)
+#### [October 6 | Part 2](http://rpubs.com/gbearden/intro_tidyverse_aut18)
 
 Part 2 will focus on data processing. We will use a variety of methods to manipulate data and prepare it for analysis. The Tidyverse will be emphasized. Students will learn how to manipulate data at various levels, including at the dataset-level, the variable-level, and the value-level.
 
@@ -50,7 +50,7 @@ At the end of Part 2, students should be able to transform datasets of varying l
 
 Class reference materials: [Data transformation cheat sheet](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf)
 
-#### [January 13 | Part 3](http://rpubs.com/gbearden/ggplot_aut18) 
+#### [October 13 | Part 3](http://rpubs.com/gbearden/ggplot_aut18) 
 
 Part 3 will focus on data visualization. We will use ggplot, a visualization library that is part of the tidyverse, to build a variety of charts. The modularity of ggplot charting functions will be emphasized as will the distinction between visualizing aggregated and non-aggregated data.
 
@@ -59,7 +59,7 @@ At the end of Part 3, students should be able to produce a standard set of chart
 Class reference materials: [Data visualization cheat sheet](https://www.rstudio.com/wp-content/uploads/2016/11/ggplot2-cheatsheet-2.1.pdf), [Coolors](https://coolors.co/)
 
 
-#### [January 13 | Part 4](http://rpubs.com/gbearden/r_reporting_aut18)
+#### [October 13 | Part 4](http://rpubs.com/gbearden/r_reporting_aut18)
 
 Part 4 will focus on reporting analyses in markdown with knitr. Markdown is a simple language used to streamline documentation/reporting and integrates nicely with R. Markdown integration allows you to 'pipe in' analyses calculated in R in the form of text, tables, and charts. knitr is a built-in R Studio tool (as well as an independent R package) that helps R programmers produce documents derived from code at the press of a button. Mastery of knitr and markdown sets you on the path of learning to automate production of reports.
 
