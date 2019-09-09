@@ -61,11 +61,11 @@ Class reference materials: [Data visualization cheat sheet](https://www.rstudio.
 
 #### October 26 | Part 4
 
-Part 4 will focus on reporting analyses in markdown with knitr. Markdown is a simple language used to streamline documentation/reporting and integrates nicely with R. Markdown integration allows you to 'pipe in' analyses calculated in R in the form of text, tables, and charts. knitr is a built-in R Studio tool (as well as an independent R package) that helps R programmers produce documents derived from code at the press of a button. Mastery of knitr and markdown sets you on the path of learning to automate production of reports.
+Part 4 will focus on reporting analyses with officer, a library that makes it easy to create PowerPoint decks. `officer` integration allows you to 'pipe into' PowerPoint analyses calculated in R in the form of text, tables, and charts. 
 
-At the end of Part 4, students should be able to write documents in markdown that include R-generated analyses.
+At the end of Part 4, students should be able to build PowerPoint decks that include R-generated analyses.
 
-Class reference materials: [R Markdown cheat sheet](https://www.rstudio.com/wp-content/uploads/2016/03/rmarkdown-cheatsheet-2.0.pdf), [Daring Fireball](https://daringfireball.net/projects/markdown/), [Pandoc Markdown](http://rmarkdown.rstudio.com/authoring_pandoc_markdown.html)
+Class reference materials: [officer PowerPoint vignette](https://cran.r-project.org/web/packages/officer/vignettes/powerpoint.html)
 
 ## Data
 
