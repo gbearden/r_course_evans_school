@@ -65,7 +65,7 @@ Part 4 will focus on reporting analyses with `officer`, a library that makes it 
 
 At the end of Part 4, students should be able to build PowerPoint decks that include R-generated analyses.
 
-Class reference materials: [`officer` PowerPoint vignette](https://cran.r-project.org/web/packages/officer/vignettes/powerpoint.html)
+Class reference materials: [officer PowerPoint vignette](https://cran.r-project.org/web/packages/officer/vignettes/powerpoint.html)
 
 ## Data
 
