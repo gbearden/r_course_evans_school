@@ -36,7 +36,7 @@ Please let me know if you need any specific accomodations. I will help provide a
 
 Part 1 will focus on the basics of R. Students will learn about key R concepts like data types and the anatomy of a function, how to read (import) and write (export) data, and the essentials of writing successful code.
 
-We will also begin to explore the tidyverse as a data processing tool and troubleshooting tactics students can use to solve coding errors.
+We will also begin to explore the `tidyverse` as a data processing tool and troubleshooting tactics students can use to solve coding errors.
 
 At the end of Part 1, students should be familiar with the R interface, know how to perform basic operations, and walk through a series of steps to troubleshoot code.
 
@@ -44,7 +44,7 @@ Course materials: [Base R cheat sheet](https://www.rstudio.com/wp-content/upload
 
 #### October 12 | Part 2
 
-Part 2 will focus on data processing. We will use a variety of methods to manipulate data and prepare it for analysis. The Tidyverse will be emphasized. Students will learn how to manipulate data at various levels, including at the dataset-level, the variable-level, and the value-level.
+Part 2 will focus on data processing. We will use a variety of methods to manipulate data and prepare it for analysis. The `tidyverse` will be emphasized. Students will learn how to manipulate data at various levels, including at the dataset-level, the variable-level, and the value-level.
 
 At the end of Part 2, students should be able to transform datasets of varying levels of complexities into data suitable for analysis.
 
@@ -52,7 +52,7 @@ Class reference materials: [Data transformation cheat sheet](https://www.rstudio
 
 #### October 19 | Part 3 
 
-Part 3 will focus on data visualization. We will use ggplot, a visualization library that is part of the tidyverse, to build a variety of charts. The modularity of ggplot charting functions will be emphasized as will the distinction between visualizing aggregated and non-aggregated data.
+Part 3 will focus on data visualization. We will use `ggplot`, a visualization library that is part of the `tidyverse`, to build a variety of charts. The modularity of `ggplot` charting functions will be emphasized as will the distinction between visualizing aggregated and non-aggregated data.
 
 At the end of Part 3, students should be able to produce a standard set of charts and manipulate chart aesthetics.
 
@@ -61,11 +61,11 @@ Class reference materials: [Data visualization cheat sheet](https://www.rstudio.
 
 #### October 26 | Part 4
 
-Part 4 will focus on reporting analyses with officer, a library that makes it easy to create PowerPoint decks. `officer` integration allows you to 'pipe into' PowerPoint analyses calculated in R in the form of text, tables, and charts. 
+Part 4 will focus on reporting analyses with `officer`, a library that makes it easy to create PowerPoint decks. `officer` integration allows you to 'pipe into' PowerPoint analyses calculated in R in the form of text, tables, and charts. 
 
 At the end of Part 4, students should be able to build PowerPoint decks that include R-generated analyses.
 
-Class reference materials: [officer PowerPoint vignette](https://cran.r-project.org/web/packages/officer/vignettes/powerpoint.html)
+Class reference materials: [`officer` PowerPoint vignette](https://cran.r-project.org/web/packages/officer/vignettes/powerpoint.html)
 
 ## Data
 
