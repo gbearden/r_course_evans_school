@@ -1,14 +1,14 @@
 
 <p align="center">
   <b>Syllabus</b><br>    
-  <b>Autumn 2019  </b><br>
+  <b>Autumn 2019</b><br>
   <b>Introduction to Data Processing and Visualization Design in R  </b><br>
 </p>
 
 Graham Bearden  
 gbearden@uw.edu  
 Time: 9:00AM - 11:50AM  
-Class Dates: 10/4, 10/12, 10/19, 10/26  
+Class Dates: 10/5, 10/12, 10/19, 10/26  
 Location: [CDH 110B](http://www.washington.edu/maps/#!/cdh)
 
 ## Overview
@@ -21,7 +21,7 @@ This is an applied course that focuses on successful execution of code. While st
 
 ## Course Expectations
 
-- Attend four classes. Class dates are October 4, 12, 19, and 26. A full class is 2 hours and 50 minutes, breaks included.
+- Attend four classes. Class dates are October 5, 12, 19, and 26. A full class is 2 hours and 50 minutes, breaks included.
 - Submit a 2 slide PowerPoint deck generated in R that includes bullet points, at least one table, and at least one chart produced with the ggplot library
   - Due by October 28
   - Do not print code in output (echo = FALSE)
@@ -32,7 +32,7 @@ Please let me know if you need any specific accomodations. I will help provide a
 
 ## Schedule
 
-#### October 4 | Part 1
+#### October 5 | Part 1
 
 Part 1 will focus on the basics of R. Students will learn about key R concepts like data types and the anatomy of a function, how to read (import) and write (export) data, and the essentials of writing successful code.
 
