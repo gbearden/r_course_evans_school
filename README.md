@@ -69,7 +69,7 @@ Class reference materials: [officer PowerPoint vignette](https://cran.r-project.
 
 ## Data
 
-We will use the datasets below in our workshop. These datasets are also used in the Computational Thinking for Governance Analytics course. ([Code to prepare the political contributions and Seattle crime data](https://github.com/gbearden/r_course_evans_school/blob/master/process_course_data.r))
+We will use the datasets below in our workshop. These datasets are also used in the Computational Thinking for Governance Analytics course. ([Here](https://github.com/gbearden/r_course_evans_school/blob/master/process_course_data.r) is code to prepare the political contributions and Seattle crime data.)
 
 * [Contributions to Candidates and Political Committees](https://data.wa.gov/Politics/Contributions-to-Candidates-and-Political-Committe/kv7h-kjye)
   * [Political Contributions Dataset](https://raw.githubusercontent.com/gbearden/r_course_evans_school/master/data/contributions_data.txt)
