@@ -28,7 +28,9 @@ This is an applied course that focuses on successful execution of code. While st
  
 ## Accomodations
 
-Please let me know if you need any specific accomodations. I will help provide accomodations in accordance with Evans School policy.
+Washington state law requires that UW develop a policy for accommodation of student absences or significant hardship due to reasons of faith or conscience, or for organized religious activities. The UW’s policy, including more information about how to request an accommodation, is available at Religious Accommodations Policy (https://registrar.washington.edu/staffandfaculty/religious-accommodations-policy/). Accommodations must be requested within the first two weeks of this course using the Religious Accommodations Request form (https://registrar.washington.edu/students/religious-accommodations-request/). 
+
+Please let me know if you need any specific accomodations related to religious observation or otherwise. I will help provide accomodations in accordance with Evans School policy and Washington state law.
 
 ## Schedule
 
