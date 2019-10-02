@@ -80,7 +80,7 @@ We will use the datasets below in our workshop. These datasets are also used in 
 
 ## R Download
 
-If you have not already downloaded R and R Studio, use the links below to set up your machines.
+If you have not downloaded R and R Studio already, use the links below to set up your machines.
 
 * Install R ([on a Mac](https://cloud.r-project.org/bin/macosx/R-3.6.1.pkg) and [on a PC](https://cloud.r-project.org/bin/windows/base/R-3.6.1-win.exe))  
 * Install R Studio ([on a Mac](https://download1.rstudio.org/desktop/macos/RStudio-1.2.1335.dmg) and [on a PC](https://download1.rstudio.org/desktop/windows/RStudio-1.2.1335.exe))
