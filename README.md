@@ -34,7 +34,7 @@ Please let me know if you need any specific accomodations related to religious o
 
 ## Schedule
 
-#### October 5 | Part 1
+#### October 5 | [Part 1](http://rpubs.com/gbearden/r_basics_aut19)
 
 Part 1 will focus on the basics of R. Students will learn about key R concepts like data types and the anatomy of a function, how to read (import) and write (export) data, and the essentials of writing successful code.
 
