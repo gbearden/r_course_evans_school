@@ -78,6 +78,13 @@ We will use the datasets below in our workshop. These datasets are also used in 
 * [Seattle Police Department 911 Incident Response](https://data.seattle.gov/Public-Safety/Crime-Data/4fs7-3vj5)
   * [Seattle Crime Dataset](https://raw.githubusercontent.com/gbearden/r_course_evans_school/master/data/crime_data.txt)
 
+## R Download
+
+If you have not already downloaded R and R Studio, use the links below to set up your machines.
+
+* Install R ([on a Mac](https://cloud.r-project.org/bin/macosx/R-3.6.1.pkg) and [on a PC](https://cloud.r-project.org/bin/windows/base/R-3.6.1-win.exe))  
+* Install R Studio ([on a Mac](https://download1.rstudio.org/desktop/macos/RStudio-1.2.1335.dmg) and [on a PC](https://download1.rstudio.org/desktop/windows/RStudio-1.2.1335.exe))
+
 ## Reference Materials
 
 R community members produce valuable content to help you learn how to program in R. Here are some of my favorite resources that you might find useful as a new R programmer:
