@@ -9,7 +9,7 @@ Graham Bearden
 gbearden@uw.edu  
 Time: 9:00AM - 11:50AM  
 Class Dates: 10/5, 10/12, 10/19, 10/26  
-Location: [CDH 110B](http://www.washington.edu/maps/#!/cdh)
+Location: [CDH 135](http://www.washington.edu/maps/#!/cdh)
 
 ## Overview
 
