@@ -44,7 +44,7 @@ At the end of Part 1, students should be familiar with the R interface, know how
 
 Course materials: [Base R cheat sheet](https://www.rstudio.com/wp-content/uploads/2016/05/base-r.pdf), [Data transformation cheat sheet](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf)
 
-#### October 12 | Part 2
+#### October 12 | [Part 2](http://rpubs.com/gbearden/r_tidyverse_aut19)
 
 Part 2 will focus on data processing. We will use a variety of methods to manipulate data and prepare it for analysis. The `tidyverse` will be emphasized. Students will learn how to manipulate data at various levels, including at the dataset-level, the variable-level, and the value-level.
 
