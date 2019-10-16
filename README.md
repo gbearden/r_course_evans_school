@@ -58,7 +58,7 @@ Part 3 will focus on data visualization. We will use `ggplot`, a visualization l
 
 At the end of Part 3, students should be able to produce a standard set of charts and manipulate chart aesthetics.
 
-Class reference materials: [Data visualization cheat sheet](https://www.rstudio.com/wp-content/uploads/2016/11/ggplot2-cheatsheet-2.1.pdf), [Coolors](https://coolors.co/)
+Class reference materials: [Data visualization cheat sheet](https://www.rstudio.com/wp-content/uploads/2016/11/ggplot2-cheatsheet-2.1.pdf), [Coolors](https://coolors.co/), [R for Stata folks](https://johnricco.github.io/2016/06/14/stata-dplyr/)
 
 
 #### October 26 | Part 4
