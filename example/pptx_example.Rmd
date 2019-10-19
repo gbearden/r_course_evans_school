@@ -74,6 +74,6 @@ read_pptx() %>%
   ph_with_gg(value = slide_2, location = ph_location_fullsize()) %>%
   add_slide(layout = 'Title and Content', master = 'Office Theme') %>%
   ph_with_gg(value = slide_3, location = ph_location_fullsize()) %>% 
-  print(target = '/Users/graham/Dropbox/r_course_evans_school/my_presentation.pptx')
+  print(target = 'my_presentation.pptx')
 
 ```
