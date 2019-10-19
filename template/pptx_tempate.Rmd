@@ -1,0 +1,38 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+### Import libraries and data
+
+```{r}
+
+rm(list = ls())
+
+library(tidyverse)
+library(officer)
+library(magrittr)
+library(knitr)
+library(ggthemes)
+options(scipen=999)
+
+```
+
+### Produce slide content
+
+Create and save data visualizations and tables below.
+
+```{r}
+
+
+```
+
+### Write content to PowerPoint
+
+```{r}
+
+read_pptx() %>%
+  [...] %>% # the code you write to produce your pptx file 
+  print(target = 'your_file.pptx')
+
+```
