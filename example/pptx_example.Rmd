@@ -1,0 +1,79 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+### Import libraries and data
+
+```{r}
+
+rm(list = ls())
+
+library(tidyverse)
+library(officer)
+library(magrittr)
+library(knitr)
+library(ggthemes)
+options(scipen=999)
+
+opts_chunk$set(warning=FALSE, message=FALSE)
+
+crime <- read_csv('https://bit.ly/2mcZLq4') %>% as.data.frame()
+
+```
+
+### Create data visualizations
+
+```{r}
+
+slide_2 <- crime %>% 
+  mutate(occurred_time_ampm = ifelse(occurred_time >= 1200, 'PM', 'AM')) %>% 
+  filter(
+    ! occurred_time_ampm %in% NA & 
+    ! crime_subcategory %in% NA
+    ) %>%
+  group_by(crime_subcategory, occurred_time_ampm) %>%
+  summarise(n = n()) %>%
+  ungroup %>%
+  group_by(crime_subcategory) %>%
+  mutate(total = sum(n, na.rm = TRUE)) %>%
+  filter(total >= 100) %>%
+  ggplot(aes(reorder(crime_subcategory, n), n, fill = occurred_time_ampm)) + 
+  geom_bar(stat = 'identity') + 
+  coord_flip() + 
+  theme_wsj() + 
+  scale_colour_wsj() + 
+  labs(title = 'Most incidence occur\nin the AM', fill = 'Time of Day')
+
+slide_3 <- crime %>% 
+  filter(
+    sector %in% c('B', 'E', 'D', 'R', 'O', 'C', 'K') &
+    crime_subcategory %in% c('ROBBERY-STREET', 'THEFT-BICYCLE', 'AGGRAVATED ASSAULT', 'TRESPASS')
+    ) %>%
+  ggplot(aes(sector, fill = crime_subcategory)) + geom_bar() + 
+  labs(x = 'District Sectors'
+       , y = 'Incidences by Event\nClearance Group (#)'
+       , fill = element_blank()
+       , title = 'Crimes in Seattle'
+       , subtitle = 'Bicycle theft is worst\nin sector B'
+       ) + 
+  theme_wsj() + 
+  scale_fill_wsj() + 
+  guides(fill=guide_legend(nrow=2))
+
+```
+
+### Generate PowerPoint
+
+```{r}
+
+read_pptx() %>% 
+  add_slide(layout = "Title Slide", master = "Office Theme") %>% 
+  ph_with_text(type = "ctrTitle", str = "Check out my awesome charts") %>%
+  add_slide(layout = 'Title and Content', master = 'Office Theme') %>%
+  ph_with_gg(value = slide_2, location = ph_location_fullsize()) %>%
+  add_slide(layout = 'Title and Content', master = 'Office Theme') %>%
+  ph_with_gg(value = slide_3, location = ph_location_fullsize()) %>% 
+  print(target = '/Users/graham/Dropbox/r_course_evans_school/my_presentation.pptx')
+
+```
