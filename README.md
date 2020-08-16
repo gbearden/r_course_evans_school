@@ -15,7 +15,7 @@ Location: <i>TBD</i>
 
 This is an introductory course that will avail R functionality in a way that is accessible to new R programmers. You will learn the fundamental skills required to prepare, analyze and report data in R. 
 
-Course materials are prepared in order to offer a survey of selected R functionality. Students interested in R programming that is more sophisticated and/or specialized than what is taught in the workshop are encouraged to seek additional opportunities to apply their R programming skills.
+Course materials are prepared in order to offer a survey of selected R functionality. Students interested in R programming that is more sophisticated and/or specialized than what is taught in the course are encouraged to seek additional opportunities to apply their R programming skills.
 
 This is an applied course that focuses on successful execution of code. While students should consider theory, style, and efficiency of R programming, getting the job done right will be the first priority.
 
@@ -110,4 +110,4 @@ R community members produce valuable content to help you learn how to program in
 * [PowerPoint Example](https://raw.githubusercontent.com/gbearden/r_course_evans_school/master/example/pptx_example.Rmd)
 
 ---
-Here are syllabi for previous workshops: [Autumn 2019](https://github.com/gbearden/r_course_evans_school/blob/master/previous_courses/syllabus_a19.md), [Autumn 2018](https://github.com/gbearden/r_course_evans_school/blob/master/previous_courses/syllabus_a18.md), [Winter 2018](https://github.com/gbearden/r_course_evans_school/blob/master/previous_courses/syllabus_w18.md)
+Here are syllabi from previous quarters: [Autumn 2019](https://github.com/gbearden/r_course_evans_school/blob/master/previous_courses/syllabus_a19.md), [Autumn 2018](https://github.com/gbearden/r_course_evans_school/blob/master/previous_courses/syllabus_a18.md), [Winter 2018](https://github.com/gbearden/r_course_evans_school/blob/master/previous_courses/syllabus_w18.md)
