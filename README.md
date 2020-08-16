@@ -1,36 +1,36 @@
 
 <p align="center">
   <b>Syllabus</b><br>    
-  <b>Autumn 2019</b><br>
-  <b>Introduction to Data Processing and Visualization Design in R  </b><br>
+  <b>Autumn 2020</b><br>
+  <b>Introduction to Data Processing and Visualization Design in R</b><br>
 </p>
 
 Graham Bearden  
 gbearden@uw.edu  
-Time: 9:00AM - 11:50AM  
-Class Dates: 10/5, 10/12, 10/19, 10/26  
-Location: [CDH 135](http://www.washington.edu/maps/#!/cdh)
+Time: <i>TBD</i>  
+Class Dates: <i>TBD</i>  
+Location: <i>TBD</i>
 
 ## Overview
 
-This workshop teaches the fundamental skills required to prepare, analyze and report data in R. This is an introductory course that will avail R functionality in a way that is accessible to new R programmers. 
+This is an introductory course that will avail R functionality in a way that is accessible to new R programmers. You will learn the fundamental skills required to prepare, analyze and report data in R. 
 
 Course materials are prepared in order to offer a survey of selected R functionality. Students interested in R programming that is more sophisticated and/or specialized than what is taught in the workshop are encouraged to seek additional opportunities to apply their R programming skills.
 
-This is an applied course that focuses on successful execution of code. While students should consider theory, style, and efficiency of R programming, getting the job done right will be the first priority of the workshop.
+This is an applied course that focuses on successful execution of code. While students should consider theory, style, and efficiency of R programming, getting the job done right will be the first priority.
 
 ## Course Expectations
 
-- Attend four classes. Class dates are October 5, 12, 19, and 26. A full class is 2 hours and 50 minutes, breaks included.
+- Attend four classes. Class dates are <i>TBD</i>. A full class is 2 hours and 50 minutes, breaks included.
 - Submit a 2 slide PowerPoint deck generated in R that includes bullet points, at least one table, and at least one chart produced with the ggplot library
-  - Due by October 28
-  - Do not print code in output (echo = FALSE)
+  - Due by October <span style="color:red">xx</span>
+  - Do not print code in output (`echo = FALSE`)
  
 ## Accomodations
 
 Washington state law requires that UW develop a policy for accommodation of student absences or significant hardship due to reasons of faith or conscience, or for organized religious activities. The UW’s policy, including more information about how to request an accommodation, is available at Religious Accommodations Policy (https://registrar.washington.edu/staffandfaculty/religious-accommodations-policy/). Accommodations must be requested within the first two weeks of this course using the Religious Accommodations Request form (https://registrar.washington.edu/students/religious-accommodations-request/). 
 
-Please let me know if you need any specific accomodations related to religious observation or otherwise. I will help provide accomodations in accordance with Evans School policy and Washington state law.
+Please let me know if you need any specific accomodations related to religious observation or otherwise. I will help provide accomodations in accordance with Evans School policy and Washington State law.
 
 ## Schedule
 
