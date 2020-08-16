@@ -28,7 +28,7 @@ This is an applied course that focuses on successful execution of code. While st
  
 ## Accomodations
 
-Washington state law requires that UW develop a policy for accommodation of student absences or significant hardship due to reasons of faith or conscience, or for organized religious activities. The UW’s policy, including more information about how to request an accommodation, is available at [Religious Accommodations Policy](https://registrar.washington.edu/staffandfaculty/religious-accommodations-policy/). Accommodations must be requested within the first two weeks of this course using the [Religious Accommodations Request form](https://registrar.washington.edu/students/religious-accommodations-request/). 
+Washington state law requires that UW develop a policy for accommodation of student absences or significant hardship due to reasons of faith or conscience, or for organized religious activities. The UW’s policy, including more information about how to request an accommodation, is available at [Religious Accommodations Policy](https://registrar.washington.edu/staffandfaculty/religious-accommodations-policy/). Accommodations must be requested within the first two weeks of this course using the [Religious Accommodations Request Form](https://registrar.washington.edu/students/religious-accommodations-request/). 
 
 Please let me know if you need any specific accomodations related to religious observation or otherwise. I will help provide accomodations in accordance with Evans School policy and Washington State law.
 
@@ -38,7 +38,7 @@ Please let me know if you need any specific accomodations related to religious o
 
 Part 1 will focus on the basics of R. Students will learn about key R concepts like data types and the anatomy of a function, how to read (import) and write (export) data, and the essentials of writing successful code.
 
-We will also begin to explore the `tidyverse` as a data processing tool and troubleshooting tactics students can use to solve coding errors.
+We will also begin to explore the `tidyverse` as a data processing tool and troubleshooting tactics that students can use to solve coding errors.
 
 At the end of Part 1, students should be familiar with the R interface, know how to perform basic operations, and walk through a series of steps to troubleshoot code.
 
@@ -82,8 +82,8 @@ We will use the datasets below in our workshop. These datasets are also used in 
 
 If you have not downloaded R and R Studio already, use the links below to set up your machines.
 
-* Install R ([on a Mac](https://cloud.r-project.org/bin/macosx/R-3.6.1.pkg) and [on a PC](https://cloud.r-project.org/bin/windows/base/R-3.6.1-win.exe))  
-* Install R Studio ([on a Mac](https://download1.rstudio.org/desktop/macos/RStudio-1.2.1335.dmg) and [on a PC](https://download1.rstudio.org/desktop/windows/RStudio-1.2.1335.exe))
+* Install R ([on a Mac](https://cloud.r-project.org/bin/macosx/R-4.0.2.pkg) and [on a PC](https://cloud.r-project.org/bin/windows/base/R-4.0.2-win.exe))  
+* Install R Studio ([on a Mac](https://download1.rstudio.org/desktop/macos/RStudio-1.3.1073.dmg) and [on a PC](https://download1.rstudio.org/desktop/windows/RStudio-1.3.1073.exe))
 
 ## Reference Materials
 
@@ -98,7 +98,7 @@ R community members produce valuable content to help you learn how to program in
     + [R Markdown](https://www.rstudio.com/wp-content/uploads/2016/03/rmarkdown-cheatsheet-2.0.pdf). A useful reference for using R Markdown.
     + [Lubridate](http://blog.yhat.com/static/pdf/R_date_cheat_sheet.pdf). Dates in R are a pain in the butt. This cheat sheet and the lubridate library will make your life easier.
 * [Karl Broman on data organization](http://kbroman.org/dataorg/). Prepare your data according to Karl's recommendations and R will become a lot easier. (The tip is relevant to all other KB recommendations.)
-* [Jose Manuel Magallanes on data collection and organization](https://www.amazon.com/Introduction-Science-Social-Policy-Research/dp/1107540259/ref=sr_1_1?ie=UTF8&qid=1504135785&sr=8-1&keywords=jose+manuel+magallanes). Jose teaches the Computational Thinking for Governance Analytics course at the Evans School. He recently published this book!
+* [Jose Manuel Magallanes on data collection and organization](https://www.amazon.com/Introduction-Science-Social-Policy-Research/dp/1107540259/ref=sr_1_1?ie=UTF8&qid=1504135785&sr=8-1&keywords=jose+manuel+magallanes). Jose teaches the Computational Thinking for Governance Analytics course at the Evans School. He published this book a couple years ago.
 * [R Bloggers](https://www.r-bloggers.com/). All things R. Folks from various industries - many of whom are super smart with impressive R experience - share tips, tricks, and anecdotes here.
 * [stackoverflow](https://stackoverflow.com/questions/tagged/r). This is where you come when you get stuck. Google the problem you are having and you'll see a possible solution on the stackoverflow site. Guaranteed.
 * [Google R Style Guide](https://google.github.io/styleguide/Rguide.xml). Your code can get really messy really quickly. This guide can help.
@@ -110,4 +110,4 @@ R community members produce valuable content to help you learn how to program in
 * [PowerPoint Example](https://raw.githubusercontent.com/gbearden/r_course_evans_school/master/example/pptx_example.Rmd)
 
 ---
-Here are syllabi for previous workshops: [Autumn 2018](https://github.com/gbearden/r_course_evans_school/blob/master/previous_courses/syllabus_a18.md), [Winter 2018](https://github.com/gbearden/r_course_evans_school/blob/master/previous_courses/syllabus_w18.md)
+Here are syllabi for previous workshops: [Autumn 2019](https://github.com/gbearden/r_course_evans_school/blob/master/previous_courses/syllabus_a19.md), [Autumn 2018](https://github.com/gbearden/r_course_evans_school/blob/master/previous_courses/syllabus_a18.md), [Winter 2018](https://github.com/gbearden/r_course_evans_school/blob/master/previous_courses/syllabus_w18.md)
