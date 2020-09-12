@@ -22,19 +22,19 @@ This is an applied course that focuses on successful execution of code. While st
 ## Course Expectations
 
 - Attend four classes. Class dates are 10/8, 10/15, 10/22, & 10/29. A full class is 2 hours and 50 minutes, breaks included.
-- Submit a 2 slide PowerPoint deck generated in R that includes bullet points, at least one table, and at least one chart produced with the ggplot library
+- Submit a 2 slide PowerPoint deck generated in R that includes bullet points, at least one table, and at least one chart produced with the ggplot library.
   - Due by November 6
   - Do not print code in output (`echo = FALSE`)
  
 ## Accomodations
 
-Washington state law requires that UW develop a policy for accommodation of student absences or significant hardship due to reasons of faith or conscience, or for organized religious activities. The UW’s policy, including more information about how to request an accommodation, is available at [Religious Accommodations Policy](https://registrar.washington.edu/staffandfaculty/religious-accommodations-policy/). Accommodations must be requested within the first two weeks of this course using the [Religious Accommodations Request Form](https://registrar.washington.edu/students/religious-accommodations-request/). 
+Washington State law requires that UW develop a policy for accommodation of student absences or significant hardship due to reasons of faith or conscience, or for organized religious activities. The UW’s policy, including more information about how to request an accommodation, is available at [Religious Accommodations Policy](https://registrar.washington.edu/staffandfaculty/religious-accommodations-policy/). Accommodations must be requested within the first two weeks of this course using the [Religious Accommodations Request Form](https://registrar.washington.edu/students/religious-accommodations-request/). 
 
 Please let me know if you need any specific accomodations related to religious observation or otherwise. I will help provide accomodations in accordance with Evans School policy and Washington State law.
 
 ## Schedule
 
-#### October xx | [Part 1](http://rpubs.com/gbearden/r_basics_aut19)
+#### October 8 | [Part 1](http://rpubs.com/gbearden/r_basics_aut19)
 
 Part 1 will focus on the basics of R. Students will learn about key R concepts like data types and the anatomy of a function, how to read (import) and write (export) data, and the essentials of writing successful code.
 
@@ -44,7 +44,7 @@ At the end of Part 1, students should be familiar with the R interface, know how
 
 Course materials: [Base R cheat sheet](https://www.rstudio.com/wp-content/uploads/2016/05/base-r.pdf), [Data transformation cheat sheet](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf)
 
-#### October xx | [Part 2]
+#### October 15 | [Part 2]
 
 Part 2 will focus on data processing. We will use a variety of methods to manipulate data and prepare it for analysis. The `tidyverse` will be emphasized. Students will learn how to manipulate data at various levels, including at the dataset-level, the variable-level, and the value-level.
 
@@ -52,7 +52,7 @@ At the end of Part 2, students should be able to transform datasets of varying l
 
 Class reference materials: [Data transformation cheat sheet](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf)
 
-#### October xx | [Part 3]
+#### October 22 | [Part 3]
 
 Part 3 will focus on data visualization. We will use `ggplot`, a visualization library that is part of the `tidyverse`, to build a variety of charts. The modularity of `ggplot` charting functions will be emphasized as will the distinction between visualizing aggregated and non-aggregated data.
 
@@ -61,7 +61,7 @@ At the end of Part 3, students should be able to produce a standard set of chart
 Class reference materials: [Data visualization cheat sheet](https://www.rstudio.com/wp-content/uploads/2016/11/ggplot2-cheatsheet-2.1.pdf), [Coolors](https://coolors.co/), [R for Stata folks](https://johnricco.github.io/2016/06/14/stata-dplyr/)
 
 
-#### October xx | [Part 4]
+#### October 29 | [Part 4]
 
 Part 4 will focus on reporting analyses with `officer`, a library that makes it easy to create PowerPoint decks. `officer` integration allows you to 'pipe into' PowerPoint analyses calculated in R in the form of text, tables, and charts. 
 
