@@ -7,9 +7,9 @@
 
 Graham Bearden  
 gbearden@uw.edu  
-Time: <i>TBD</i>  
-Class Dates: <i>TBD</i>  
-Location: <i>TBD</i>
+Time: 6:00-8:50pm
+Class Dates: 10/8, 10/15, 10/22, AND 10/29 
+Location: Right Here.
 
 ## Overview
 
@@ -23,7 +23,7 @@ This is an applied course that focuses on successful execution of code. While st
 
 - Attend four classes. Class dates are <i>TBD</i>. A full class is 2 hours and 50 minutes, breaks included.
 - Submit a 2 slide PowerPoint deck generated in R that includes bullet points, at least one table, and at least one chart produced with the ggplot library
-  - Due by October xx
+  - Due by November 6
   - Do not print code in output (`echo = FALSE`)
  
 ## Accomodations
@@ -44,7 +44,7 @@ At the end of Part 1, students should be familiar with the R interface, know how
 
 Course materials: [Base R cheat sheet](https://www.rstudio.com/wp-content/uploads/2016/05/base-r.pdf), [Data transformation cheat sheet](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf)
 
-#### October xx | [Part 2](http://rpubs.com/gbearden/r_tidyverse_aut19)
+#### October xx | [Part 2]
 
 Part 2 will focus on data processing. We will use a variety of methods to manipulate data and prepare it for analysis. The `tidyverse` will be emphasized. Students will learn how to manipulate data at various levels, including at the dataset-level, the variable-level, and the value-level.
 
@@ -52,7 +52,7 @@ At the end of Part 2, students should be able to transform datasets of varying l
 
 Class reference materials: [Data transformation cheat sheet](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf)
 
-#### October xx | [Part 3](http://rpubs.com/gbearden/r_dataviz_aut19) 
+#### October xx | [Part 3]
 
 Part 3 will focus on data visualization. We will use `ggplot`, a visualization library that is part of the `tidyverse`, to build a variety of charts. The modularity of `ggplot` charting functions will be emphasized as will the distinction between visualizing aggregated and non-aggregated data.
 
@@ -61,7 +61,7 @@ At the end of Part 3, students should be able to produce a standard set of chart
 Class reference materials: [Data visualization cheat sheet](https://www.rstudio.com/wp-content/uploads/2016/11/ggplot2-cheatsheet-2.1.pdf), [Coolors](https://coolors.co/), [R for Stata folks](https://johnricco.github.io/2016/06/14/stata-dplyr/)
 
 
-#### October xx | [Part 4](http://rpubs.com/gbearden/r_reporting_aut19)
+#### October xx | [Part 4]
 
 Part 4 will focus on reporting analyses with `officer`, a library that makes it easy to create PowerPoint decks. `officer` integration allows you to 'pipe into' PowerPoint analyses calculated in R in the form of text, tables, and charts. 
 
