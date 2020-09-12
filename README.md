@@ -8,7 +8,7 @@
 Graham Bearden  
 gbearden@uw.edu  
 Time: 6:00-8:50pm  
-Class Dates: 10/8, 10/15, 10/22, AND 10/29  
+Class Dates: 10/8, 10/15, 10/22, & 10/29  
 Location: Right Here
 
 ## Overview
