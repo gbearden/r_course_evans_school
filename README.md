@@ -71,10 +71,10 @@ Class reference materials: [officer PowerPoint vignette](https://cran.r-project.
 
 ## Data
 
-We will use the datasets below in our workshop. These datasets are also used in the Computational Thinking for Governance Analytics course. ([Here](https://github.com/gbearden/r_course_evans_school/blob/master/process_course_data.r) is code to prepare the political contributions and Seattle crime data.)
+We will use the datasets below in our workshop. ([Here](https://github.com/gbearden/r_course_evans_school/blob/master/process_course_data.r) is code to prepare the Covid-19 and Seattle crime data.)
 
 * [Covid-19 Estimates Source](http://www.healthdata.org/covid/data-downloads)
-  * [Covid-19 Estimates Dataset](https://raw.githubusercontent.com/gbearden/r_course_evans_school/master/data/contributions_data.txt)
+  * [Covid-19 Estimates Dataset](https://raw.githubusercontent.com/gbearden/r_course_evans_school/master/data/covid_data.txt)
 * [Seattle Crime Data](https://data.seattle.gov/Public-Safety/SPD-Crime-Data-2008-Present/tazs-3rd5)
   * [Seattle Crime Dataset](https://raw.githubusercontent.com/gbearden/r_course_evans_school/master/data/crime_data.txt)
 
