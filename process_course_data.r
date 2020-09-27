@@ -1,15 +1,17 @@
+
 library(tidyverse)
 
 read_csv('Best_mask_hospitalization_all_locs.csv') %>% 
-  select(-contains('upper'), -contains('lower'), -contains('smooth'), -V1, -location_id, -sero_pct) %>%
+  select(-contains('upper'), -contains('lower'), -contains('smooth'), -V1, -location_id
+         , -sero_pct, -totdea_mean
+         , -totdea_mean_p100k_rate, -contains('mobility')
+         ) %>%
   rename(
     location                = location_name
     , population            = total_pop
     , infections_cumulative = inf_cuml_mean
-    , total_deaths          = totdea_mean
-    , total_deaths_p100k    = totdea_mean_p100k_rate 
     ) %>% 
-  rename_all(function(.) gsub('_mean|_rate', '', .)) %>%
+  rename_all(function(.) gsub('_mean|_rate', '', .)) %>% 
   write.table('covid_data.txt')
 
 new_crime_data <- read_csv('SPD_Crime_Data__2008-Present.csv') %>% 
@@ -24,20 +26,20 @@ new_crime_data <- read_csv('SPD_Crime_Data__2008-Present.csv') %>%
          , -sector 
          ) %>% 
   mutate(
-    precinct = case_when(precinct %in% 'W'       ~ 'West'
-                           , precinct %in% 'N'   ~ 'North'
-                           , precinct %in% 'S'   ~ 'South'
-                           , precinct %in% 'E'   ~ 'East'
+    precinct = case_when(precinct %in% 'W' ~ 'West'
+                           , precinct %in% 'N' ~ 'North'
+                           , precinct %in% 'S' ~ 'South'
+                           , precinct %in% 'E' ~ 'East'
                            , precinct %in% 'OOJ' ~ 'Out of Jurisdiction'
-                           , precinct %in% 'SW'  ~ 'Southwest'
-                           , TRUE                ~ precinct)
+                           , precinct %in% 'SW' ~ 'Southwest'
+                           , TRUE ~ precinct)
     )
 
 names(new_crime_data) <- str_replace_all(names(new_crime_data), c(" " = "_"))
 
 new_crime_data %>%
   filter(complete.cases(.)) %>% 
-  sample_n(200000) %>% 
+  sample_n(150000) %>% 
   gather(var, val, 5:10) %>%
   mutate(val = ifelse(runif(nrow(.), 0, 1) > .1, val, NA)) %>%
   spread(var, val) %>%
