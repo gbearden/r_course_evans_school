@@ -74,7 +74,7 @@ Class reference materials: [officer PowerPoint vignette](https://cran.r-project.
 We will use the datasets below in our workshop. ([Here](https://github.com/gbearden/r_course_evans_school/blob/master/process_course_data.r) is code to prepare the Covid-19 and Seattle crime data.)
 
 * [Covid-19 Estimates Source](http://www.healthdata.org/covid/data-downloads)
-  * [Covid-19 Estimates Dataset](https://raw.githubusercontent.com/gbearden/r_course_evans_school/master/data/covid_data.txt)
+  * [Covid-19 Estimates Dataset](https://raw.githubusercontent.com/gbearden/r_course_evans_school/master/data/covid_data.csv)
 * [Seattle Crime Data](https://data.seattle.gov/Public-Safety/SPD-Crime-Data-2008-Present/tazs-3rd5)
   * [Seattle Crime Dataset](https://raw.githubusercontent.com/gbearden/r_course_evans_school/master/data/crime_data.csv)
 
