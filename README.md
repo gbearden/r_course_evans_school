@@ -42,7 +42,7 @@ We will also begin to explore the `tidyverse` as a data processing tool and trou
 
 At the end of Part 1, students should be familiar with the R interface, know how to perform basic operations, and walk through a series of steps to troubleshoot code.
 
-Course materials: [Base R cheat sheet](https://www.rstudio.com/wp-content/uploads/2016/05/base-r.pdf), [Data transformation cheat sheet](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf)
+Course materials: [Canvas Discussion](https://canvas.uw.edu/courses/1401867/discussion_topics/5746006), [Base R cheat sheet](https://www.rstudio.com/wp-content/uploads/2016/05/base-r.pdf), [Data transformation cheat sheet](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf)
 
 #### October 15 | [Part 2]
 
