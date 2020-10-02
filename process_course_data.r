@@ -2,17 +2,16 @@
 library(tidyverse)
 
 read_csv('Best_mask_hospitalization_all_locs.csv') %>% 
-  select(-contains('upper'), -contains('lower'), -contains('smooth'), -V1, -location_id
-         , -sero_pct, -totdea_mean
-         , -totdea_mean_p100k_rate, -contains('mobility')
+  select(-contains('upper'), -contains('lower'), , -V1, -location_id, -contains('smooth')
+         , -sero_pct, -totdea_mean, -totdea_mean_p100k_rate, -contains('mobility')
+         , -inf_cuml_mean
          ) %>%
   rename(
     location                = location_name
     , population            = total_pop
-    , infections_cumulative = inf_cuml_mean
     ) %>% 
   rename_all(function(.) gsub('_mean|_rate', '', .)) %>% 
-  write.table('covid_data.txt')
+  write_csv('covid_data.csv')
 
 new_crime_data <- read_csv('SPD_Crime_Data__2008-Present.csv') %>% 
   rename_all(tolower) %>% 
@@ -54,4 +53,4 @@ new_crime_data %>%
   select(report_number, offense_id, neighborhood, beat, precinct
          , crime_against_category, offense, offense_parent_group
          , contains('occurred'), contains('reported')) %>% 
-  write.table('crime_data.txt')
+  write_csv('crime_data.csv')
