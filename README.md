@@ -76,7 +76,7 @@ We will use the datasets below in our workshop. ([Here](https://github.com/gbear
 * [Covid-19 Estimates Source](http://www.healthdata.org/covid/data-downloads)
   * [Covid-19 Estimates Dataset](https://raw.githubusercontent.com/gbearden/r_course_evans_school/master/data/covid_data.txt)
 * [Seattle Crime Data](https://data.seattle.gov/Public-Safety/SPD-Crime-Data-2008-Present/tazs-3rd5)
-  * [Seattle Crime Dataset](https://raw.githubusercontent.com/gbearden/r_course_evans_school/master/data/crime_data.txt)
+  * [Seattle Crime Dataset](https://raw.githubusercontent.com/gbearden/r_course_evans_school/master/data/crime_data.csv)
 
 ## R Download
 
