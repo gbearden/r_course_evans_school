@@ -9,8 +9,8 @@ Graham Bearden
 gbearden@uw.edu  
 Time: 6:00-8:50pm  
 Class Dates: 10/8, 10/15, 10/22, & 10/29  
-Location: Right Here. 
-Canvas Discussion: [Here](https://canvas.uw.edu/courses/1401867/discussion_topics/5746006)  
+Location: Right Here.  
+[Canvas Discussion](https://canvas.uw.edu/courses/1401867/discussion_topics/5746006). 
 
 ## Overview
 
