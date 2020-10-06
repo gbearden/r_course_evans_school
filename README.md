@@ -9,7 +9,7 @@ Graham Bearden
 gbearden@uw.edu  
 Time: 6:00-8:50pm  
 Class Dates: 10/8, 10/15, 10/22, & 10/29  
-Location: Right Here.  
+Location: Online Classroom  
 [Canvas Discussion](https://canvas.uw.edu/courses/1401867/discussion_topics/5746006)  
 
 ## Overview
@@ -35,7 +35,7 @@ Please let me know if you need any specific accomodations related to religious o
 
 ## Schedule
 
-#### October 8 | [Part 1](http://rpubs.com/gbearden/r_basics_aut19)
+#### October 8 | Part 1
 
 Part 1 will focus on the basics of R. Students will learn about key R concepts like data types and the anatomy of a function, how to read (import) and write (export) data, and the essentials of writing successful code.
 
@@ -45,7 +45,7 @@ At the end of Part 1, students should be familiar with the R interface, know how
 
 Course materials: [Base R cheat sheet](https://www.rstudio.com/wp-content/uploads/2016/05/base-r.pdf), [Data transformation cheat sheet](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf)
 
-#### October 15 | [Part 2]
+#### October 15 | Part 2
 
 Part 2 will focus on data processing. We will use a variety of methods to manipulate data and prepare it for analysis. The `tidyverse` will be emphasized. Students will learn how to manipulate data at various levels, including at the dataset-level, the variable-level, and the value-level.
 
@@ -53,7 +53,7 @@ At the end of Part 2, students should be able to transform datasets of varying l
 
 Class reference materials: [Data transformation cheat sheet](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf)
 
-#### October 22 | [Part 3]
+#### October 22 | Part 3
 
 Part 3 will focus on data visualization. We will use `ggplot`, a visualization library that is part of the `tidyverse`, to build a variety of charts. The modularity of `ggplot` charting functions will be emphasized as will the distinction between visualizing aggregated and non-aggregated data.
 
@@ -62,7 +62,7 @@ At the end of Part 3, students should be able to produce a standard set of chart
 Class reference materials: [Data visualization cheat sheet](https://www.rstudio.com/wp-content/uploads/2016/11/ggplot2-cheatsheet-2.1.pdf), [Coolors](https://coolors.co/), [R for Stata folks](https://johnricco.github.io/2016/06/14/stata-dplyr/)
 
 
-#### October 29 | [Part 4]
+#### October 29 | Part 4
 
 Part 4 will focus on reporting analyses with `officer`, a library that makes it easy to create PowerPoint decks. `officer` integration allows you to 'pipe into' PowerPoint analyses calculated in R in the form of text, tables, and charts. 
 
