@@ -24,7 +24,6 @@ This is an applied course that focuses on successful execution of code. While st
 - Attend four classes. Class dates are 10/8, 10/15, 10/22, & 10/29. A full class is 2 hours and 50 minutes, breaks included.
 - Submit a 2 slide PowerPoint deck generated in R that includes bullet points, at least one table, and at least one chart produced with the ggplot library.
   - Due by November 6
-  - Do not print code in output (`echo = FALSE`)
  
 ## Accomodations
 
@@ -34,7 +33,7 @@ Please let me know if you need any specific accomodations related to religious o
 
 ## Schedule
 
-#### October 8 | Part 1
+#### October 8 | [Part 1](https://rpubs.com/gbearden/r_basics_aut20)
 
 Part 1 will focus on the basics of R. Students will learn about key R concepts like data types and the anatomy of a function, how to read (import) and write (export) data, and the essentials of writing successful code.
 
