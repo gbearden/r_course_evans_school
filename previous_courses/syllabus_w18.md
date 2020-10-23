@@ -48,7 +48,7 @@ At the end of week 2, students should be able to transform datasets of varying l
 
 Class reference materials: [Data transformation cheat sheet](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf)
 
-#### [Week 3 | January 24](http://rpubs.com/gbearden/ggplot)
+#### Week 3 | January 24
 
 Week 3 will focus on data visualization. We will use ggplot, a visualization library that is part of the tidyverse, to build a variety of charts. The modularity of ggplot charting functions will be emphasized as will the distinction between visualizing aggregated and non-aggregated data.
 
