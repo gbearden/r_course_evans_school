@@ -1,5 +1,5 @@
 ---
-title: "R Notebook"
+title: "Example Assignment"
 output: html_notebook
 ---
 
@@ -14,7 +14,7 @@ options(scipen=999)
 
 knitr::opts_chunk$set(warning=FALSE, message=FALSE)
 
-crime <- read_csv('https://bit.ly/2mcZLq4') 
+crime <- read_csv('https://rb.gy/5zuayh') 
 
 ```
 
