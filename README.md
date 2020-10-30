@@ -60,7 +60,7 @@ At the end of Part 3, students should be able to produce a standard set of chart
 Class reference materials: [Data visualization cheat sheet](https://www.rstudio.com/wp-content/uploads/2016/11/ggplot2-cheatsheet-2.1.pdf), [Coolors](https://coolors.co/), [R for Stata folks](https://johnricco.github.io/2016/06/14/stata-dplyr/)
 
 
-#### October 29 | Part 4
+#### October 29 | [Part 4](https://rpubs.com/gbearden/r_reporting_aut20)
 
 Part 4 will focus on reporting analyses with `officer`, a library that makes it easy to create PowerPoint decks. `officer` integration allows you to 'pipe into' PowerPoint analyses calculated in R in the form of text, tables, and charts. 
 
