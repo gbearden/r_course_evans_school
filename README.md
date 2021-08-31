@@ -110,4 +110,4 @@ R community members produce valuable content to help you learn how to program in
 * [PowerPoint Example](https://raw.githubusercontent.com/gbearden/r_course_evans_school/master/example/pptx_example.Rmd)
 
 ---
-Here are syllabi from previous quarters: [Autumn 2019](https://github.com/gbearden/r_course_evans_school/blob/master/previous_courses/syllabus_a19.md), [Autumn 2018](https://github.com/gbearden/r_course_evans_school/blob/master/previous_courses/syllabus_a18.md), [Winter 2018](https://github.com/gbearden/r_course_evans_school/blob/master/previous_courses/syllabus_w18.md)
+Here are syllabi from previous quarters: [Autumn 2020](https://github.com/gbearden/r_course_evans_school/blob/master/previous_courses/syllabus_a20.md), [Autumn 2019](https://github.com/gbearden/r_course_evans_school/blob/master/previous_courses/syllabus_a19.md), [Autumn 2018](https://github.com/gbearden/r_course_evans_school/blob/master/previous_courses/syllabus_a18.md), [Winter 2018](https://github.com/gbearden/r_course_evans_school/blob/master/previous_courses/syllabus_w18.md)
