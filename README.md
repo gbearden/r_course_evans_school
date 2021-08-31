@@ -8,8 +8,8 @@
 Graham Bearden  
 gbearden@uw.edu  
 Time: 6:00-8:50pm  
-Class Dates: 10/8, 10/15, 10/22, & 10/29  
-Location: [Online Classroom](https://washington.zoom.us/j/99885909680)    
+Class Dates: 10/14, 10/21, 10/28, 11/4  
+Location: [PAR 160](https://www.washington.edu/maps/#!/par)
 
 ## Overview
 
@@ -21,9 +21,9 @@ This is an applied course that focuses on successful execution of code. While st
 
 ## Course Expectations
 
-- Attend four classes. Class dates are 10/8, 10/15, 10/22, & 10/29. A full class is 2 hours and 50 minutes, breaks included.
-- Submit a 2 slide PowerPoint deck generated in R that includes bullet points, at least one table, and at least one chart produced with the ggplot library.
-  - Due by November 6
+- Attend four classes. Class dates are 10/14, 10/21, 10/28, & 11/4. A full class is 2 hours and 50 minutes, breaks included.
+- Submit 2 "client ready" data visualizations.
+  - Due on November 11 or before
  
 ## Accomodations
 
