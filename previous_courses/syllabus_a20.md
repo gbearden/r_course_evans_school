@@ -9,7 +9,7 @@ Graham Bearden
 gbearden@uw.edu  
 Time: 6:00-8:50pm  
 Class Dates: 10/8, 10/15, 10/22, 10/29  
-Location: [Online Classroom](https://www.washington.edu/maps/#!/par)
+Location: [Online Classroom](https://washington.zoom.us/j/99885909680)
 
 ## Overview
 
