@@ -17,7 +17,7 @@ setwd('/Users/grahamb/Analysis/r_course_evans_school')
 
 opts_chunk$set(warning=FALSE, message=FALSE)
 
-airbnb <- read_csv('https://bit.ly/3oadz2L')
+airbnb <- read_csv('https://bit.ly/3oadz2L', col_types = cols())
 
 ```
 
@@ -423,8 +423,8 @@ dim(airbnb)
 - How many variables are in `airbnb`?  
 
 ```{r, echo = TRUE, collapse=TRUE}
-covid %>% dim()
-covid %>% pull(mobility_composite) %>% median(na.rm = TRUE)
+dim(airbnb)
+median(airbnb$rating, na.rm = TRUE)
 ```
 
 ## Base R functions to explore tibbles
@@ -435,9 +435,9 @@ covid %>% pull(mobility_composite) %>% median(na.rm = TRUE)
 - How many variables are in `airbnb`?  
 
 ```{r, echo = TRUE, collapse=TRUE}
-covid %>% dim()
-covid %>% pull(mobility_composite) %>% median(na.rm = TRUE)
-covid %>% ncol()
+dim(airbnb)
+median(airbnb$rating, na.rm = TRUE)
+ncol(airbnb)
 ```
 
 ## Base R functions to explore tibbles
@@ -448,16 +448,16 @@ covid %>% ncol()
 - How many variables are in `airbnb`?  
 
 ```{r, echo = TRUE, collapse=TRUE}
-covid %>% dim()
-covid %>% pull(mobility_composite) %>% median(na.rm = TRUE)
-covid %>% ncol()
+dim(airbnb)
+median(airbnb$rating, na.rm = TRUE)
+ncol(airbnb)
 ```
 
 Other methods to answer questions
 ```r
-covid %>% nrow()
-covid %>% summary()
-covid %>% ls()
+nrow(airbnb)
+summary(airbnb)
+ls(airbnb)
 ```
 
 ## Base R functions to explore vectors
