@@ -9,4 +9,5 @@ read_csv('data-raw/seattle_airbnb.csv', col_types = cols()) %>%
                                      , TRUE ~ .x))
          ) %>% 
   select(-currency, -rate_type, -location, -last_modified) %>% 
+  rename(rating = overall_satisfaction) %>% 
   write_csv('data/seattle_airbnb.csv', na = '')

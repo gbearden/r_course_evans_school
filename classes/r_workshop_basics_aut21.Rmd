@@ -1,7 +1,7 @@
 ---
 title: "Part 1 - R Basics"
 author: "Graham Bearden"
-date: "October 8, 2020"
+date: "October 14, 2021"
 output: 
   ioslides_presentation:
     css: custom.css
@@ -17,8 +17,8 @@ setwd('/Users/grahamb/Analysis/r_course_evans_school')
 
 opts_chunk$set(warning=FALSE, message=FALSE)
 
-covid <- read_csv('https://rb.gy/lzlylj')
-crime <- read_csv('https://rb.gy/5zuayh') 
+airbnb <- read_csv('https://bit.ly/3oadz2L')
+
 ```
 
 ## First things first
@@ -323,59 +323,59 @@ matrix(data = 1:6, nrow = 3, ncol = 2)
 You are an analyst at a large global health organization. Organizational leadership needs to report pubically on the Covid-19 data that you've collected. Over the next month, you will be asked to prepare findings that you observe in the data.  
 
 **Exercise 1 - 5 minutes**  
-- What type of data object is `covid`?  
-- What are the `min()` and `mean()` for `est_infections_p100k`?  
-- What is the range for `date`?  
+- What type of data object is `airbnb`?  
+- What are the `min()` and `mean()` for `reviews`?  
+- What is the range for `bathrooms`?  
 
 ## Let's apply what we learned to real data
 
 **Exercise 1 - 5 minutes**  
-- What type of data object is `covid`?  
-- What are the `min()` and `mean()` for `est_infections_p100k`?  
-- What is the range for `date`?  
+- What type of data object is `airbnb`?  
+- What are the `min()` and `mean()` for `reviews`?  
+- What is the range for `bathrooms`?  
 
-To answer the questions, import the Covid-19 dataset.  
+To answer the questions, import the Seattle airbnb dataset.  
 ```r
-covid <- read_csv('https://rb.gy/lzlylj')
+airbnb <- read_csv('https://bit.ly/3oadz2L')
 ```
 
 ## Let's apply what we learned to real data
 
 **Exercise 1 - 5 minutes**  
-- What type of data object is `covid`?  
-- What are the `min()` and `mean()` for `est_infections_p100k`?  
-- What is the range for `date`?  
+- What type of data object is `airbnb`?  
+- What are the `min()` and `mean()` for `reviews`?  
+- What is the range for `bathrooms`?  
 
 ```{r, echo = TRUE, collapse=TRUE}
-covid %>% class()
+class(airbnb)
 ```
 
 ## Let's apply what we learned to real data
 
 **Exercise 1 - 5 minutes**  
-- What type of data object is `covid`?  
-- What are the `min()` and `mean()` for `est_infections_p100k`?  
-- What is the range for `date`?  
+- What type of data object is `airbnb`?  
+- What are the `min()` and `mean()` for `reviews`?  
+- What is the range for `bathrooms`?  
 
 ```{r, echo = TRUE, collapse=TRUE}
-covid %>% class()
-covid %>% pull(est_infections_p100k) %>% min(na.rm = TRUE)
-covid %>% pull(est_infections_p100k) %>% mean(na.rm = TRUE)
+class(airbnb)
+min(airbnb$reviews)
+mean(airbnb$reviews)
 ```
 
 ## Let's apply what we learned to real data
 
 **Exercise 1 - 5 minutes**  
-- What type of data object is `covid`?  
-- What are the `min()` and `mean()` for `est_infections_p100k`?  
-- What is the range for `date`?  
+- What type of data object is `airbnb`?  
+- What are the `min()` and `mean()` for `reviews`?  
+- What is the range for `bathrooms`?  
 
 ```{r, echo = TRUE, collapse=TRUE}
-covid %>% class()
-covid %>% pull(est_infections_p100k) %>% min(na.rm = TRUE)
-covid %>% pull(est_infections_p100k) %>% mean(na.rm = TRUE)
-covid %>% pull(date) %>% min(na.rm = TRUE)
-covid %>% pull(date) %>% max(na.rm = TRUE)
+class(airbnb)
+min(airbnb$reviews)
+mean(airbnb$reviews)
+min(airbnb$bathrooms, na.rm = TRUE)
+max(airbnb$bathrooms, na.rm = TRUE)
 ```
 
 # Base R functions to explore tibbles
@@ -398,29 +398,29 @@ covid %>% pull(date) %>% max(na.rm = TRUE)
 ## Base R functions to explore tibbles
 
 **Exercise 2 - 5 minutes**  
-- How many observations (or rows) are in `covid`?  
-- What is the `median()` value for `mobility_composite`?  
-- How many variables are in `covid`?  
+- How many observations (or rows) are in `airbnb`?  
+- What is the `median()` value for `rating`?  
+- How many variables are in `airbnb`?  
 
 <i>Hint: There are multiple ways to answers these questions with the functions you know</i>
 
 ## Base R functions to explore tibbles 
 
 **Exercise 2 - 5 minutes**  
-- How many observations (or rows) are in `covid`?  
-- What is the `median()` value for `mobility_composite`?  
-- How many variables are in `covid`?  
+- How many observations (or rows) are in `airbnb`?  
+- What is the median value for `rating`?  
+- How many variables are in `airbnb`?  
 
 ```{r, echo = TRUE, collapse=TRUE}
-covid %>% dim()
+dim(airbnb)
 ```
 
 ## Base R functions to explore tibbles
 
 **Exercise 2 - 5 minutes**  
-- How many observations (or rows) are in `covid`?  
-- What is the `median()` value for `mobility_composite`?  
-- How many variables are in `covid`?  
+- How many observations (or rows) are in `airbnb`?  
+- What is the median value for `rating`?  
+- How many variables are in `airbnb`?  
 
 ```{r, echo = TRUE, collapse=TRUE}
 covid %>% dim()
@@ -430,9 +430,9 @@ covid %>% pull(mobility_composite) %>% median(na.rm = TRUE)
 ## Base R functions to explore tibbles
 
 **Exercise 2 - 5 minutes**  
-- How many observations (or rows) are in `covid`?  
-- What is the `median()` value for `mobility_composite`?  
-- How many variables are in `covid`?  
+- How many observations (or rows) are in `airbnb`?  
+- What is the median value for `rating`?  
+- How many variables are in `airbnb`?  
 
 ```{r, echo = TRUE, collapse=TRUE}
 covid %>% dim()
@@ -443,9 +443,9 @@ covid %>% ncol()
 ## Base R functions to explore tibbles
 
 **Exercise 2 - 5 minutes**  
-- How many observations (or rows) are in `covid`?  
-- What is the `median()` value for `mobility_composite`?  
-- How many variables are in `covid`?  
+- How many observations (or rows) are in `airbnb`?  
+- What is the median value for `rating`?  
+- How many variables are in `airbnb`?  
 
 ```{r, echo = TRUE, collapse=TRUE}
 covid %>% dim()

@@ -1,4 +1,4 @@
-row,room_id,host_id,room_type,address,reviews,overall_satisfaction,accommodates,bedrooms,bathrooms,price,latitude,longitude,name
+row,room_id,host_id,room_type,address,reviews,rating,accommodates,bedrooms,bathrooms,price,latitude,longitude,name
 0,2318,2536,Entire home/apt,Seattle,21,5,8,4,2.5,250,47.610819,-122.290816,"Casa Madrona - Urban Oasis, 1 block from the Park!"
 1,3335,4193,Entire home/apt,Seattle,1,,4,2,1,100,47.529846,-122.27584,Sweet Seattle Urban Homestead 2 Bdr
 2,4291,35749,Private room,Seattle,63,4.5,2,1,1,82,47.687801,-122.313427,Sunrise in Seattle Master Suite
