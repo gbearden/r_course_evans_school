@@ -70,7 +70,7 @@ At the end of Part 4, students should be able to prepare data for analysis and v
 We will use the datasets below in our workshop. ([Here](https://github.com/gbearden/r_course_evans_school/blob/master/process_course_data.r) is code to prepare the Covid-19 and Seattle crime data.)
 
 * [Global Temperatures Source](https://www.kaggle.com/sohelranaccselab/global-climate-change)
-  * [Global Temperatures Dataset](https://raw.githubusercontent.com/gbearden/r_course_evans_school/master/data/global-temperatures.csv)
+  * [Global Temperatures Dataset](https://raw.githubusercontent.com/gbearden/r_course_evans_school/master/data/global_temperatures.csv)
 * [Seattle Airbnb Source](https://www.kaggle.com/shanelev/seattle-airbnb-listings)  
   * [Seattle Airbnb Dataset](https://raw.githubusercontent.com/gbearden/r_course_evans_school/master/data/seattle_airbnb.csv)
 
