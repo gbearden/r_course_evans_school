@@ -11,14 +11,13 @@ output:
 ```{r setup, include=FALSE}
 library(tidyverse)
 library(knitr)
+library(countdown)
 options(scipen=999)
-
-setwd('/Users/grahamb/Analysis/r_course_evans_school')
 
 opts_chunk$set(warning=FALSE, message=FALSE)
 
 airbnb <- read_csv('https://bit.ly/3oadz2L', col_types = cols())
-
+climate <- read_csv('https://bit.ly/3kKErEb', col_types = cols())
 ```
 
 ## First things first
@@ -123,7 +122,7 @@ sd(foo)
 
 - Function arguments
   - Let's look at arguments in the `lm` and `min` functions  
-  - Arguments are inputs
+  - Arguments are function inputs that tell your function "how" and "to what"
   - Arguments are comma separated
 
 ```r
@@ -144,7 +143,7 @@ cat_function <- function(love = TRUE){
 
 - Function arguments
   - Let's look at arguments in the `lm` and `min` functions  
-  - Arguments are inputs
+  - Arguments are function inputs that tell your function "how" and "to what"
   - Arguments are comma separated
 
 ```r
@@ -159,7 +158,7 @@ sd(foo)
 
 - Function arguments
   - Let's look at arguments in the `lm` and `min` functions    
-  - Arguments are inputs
+  - Arguments are function inputs that tell your function "how" and "to what"
   - Arguments are comma separated
 
 ```{r, echo = TRUE, collapse=TRUE}
@@ -173,16 +172,16 @@ sd(foo)
 ## Libraries, <span style='color:#6DA34D'>functions</span>, data
 
 - Function arguments
-  - Let's look at arguments in the `glm` and `min` functions    
-  - Arguments are inputs
+  - Let's look at arguments in the `lm` and `min` functions    
+  - Arguments are function inputs that tell your function "how" and "to what"
   - Arguments are comma separated
 
 ```{r, echo = TRUE, collapse=TRUE}
 foo <- c(1,2,NA, 4)
-min(foo, na.rm= TRUE)
-mean(foo, na.rm= TRUE)
-max(foo, na.rm= TRUE)
-sd(foo, na.rm= TRUE)
+min(foo, na.rm = TRUE)
+mean(foo, na.rm = TRUE)
+max(foo, na.rm = TRUE)
+sd(foo, na.rm = TRUE)
 ```
 
 ## Libraries, functions, <span style='color:#6DA34D'>data</span>
@@ -320,31 +319,35 @@ matrix(data = 1:6, nrow = 3, ncol = 2)
 
 ## Let's apply what we learned to real data
 
-You are an analyst at a large global health organization. Organizational leadership needs to report pubically on the Covid-19 data that you've collected. Over the next month, you will be asked to prepare findings that you observe in the data.  
+You are an analyst at the City of Seattle. City leadership wants to develop new policy to regulate Airbnb properties. Over the next month, you will be asked to prepare findings that you observe in the data.  
 
 **Exercise 1 - 5 minutes**  
 - What type of data object is `airbnb`?  
-- What are the `min()` and `mean()` for `reviews`?  
-- What is the range for `bathrooms`?  
+- What are the fewest and average number of `reviews`?  
+- What is the range of number of `bathrooms` in the `airbnb` data?  
 
 ## Let's apply what we learned to real data
 
 **Exercise 1 - 5 minutes**  
 - What type of data object is `airbnb`?  
-- What are the `min()` and `mean()` for `reviews`?  
-- What is the range for `bathrooms`?  
+- What are the fewest and average number of `reviews`?  
+- What is the range of number of `bathrooms` in the `airbnb` data?  
 
-To answer the questions, import the Seattle airbnb dataset.  
+To answer the questions, import the Seattle `airbnb` dataset.  
 ```r
 airbnb <- read_csv('https://bit.ly/3oadz2L')
+```
+
+```{r, echo = FALSE}
+countdown(minutes = 5, seconds = 0)
 ```
 
 ## Let's apply what we learned to real data
 
 **Exercise 1 - 5 minutes**  
 - What type of data object is `airbnb`?  
-- What are the `min()` and `mean()` for `reviews`?  
-- What is the range for `bathrooms`?  
+- What are the fewest and average number of `reviews`?  
+- What is the range of number of `bathrooms` in the `airbnb` data?  
 
 ```{r, echo = TRUE, collapse=TRUE}
 class(airbnb)
@@ -354,8 +357,8 @@ class(airbnb)
 
 **Exercise 1 - 5 minutes**  
 - What type of data object is `airbnb`?  
-- What are the `min()` and `mean()` for `reviews`?  
-- What is the range for `bathrooms`?  
+- What are the fewest and average number of `reviews`?  
+- What is the range of number of `bathrooms` in the `airbnb` data?  
 
 ```{r, echo = TRUE, collapse=TRUE}
 class(airbnb)
@@ -367,8 +370,8 @@ mean(airbnb$reviews)
 
 **Exercise 1 - 5 minutes**  
 - What type of data object is `airbnb`?  
-- What are the `min()` and `mean()` for `reviews`?  
-- What is the range for `bathrooms`?  
+- What are the fewest and average number of `reviews`?  
+- What is the range of number of `bathrooms` in the `airbnb` data?  
 
 ```{r, echo = TRUE, collapse=TRUE}
 class(airbnb)
@@ -383,10 +386,11 @@ max(airbnb$bathrooms, na.rm = TRUE)
 ## Base R functions to explore tibbles {.smaller}
 
 - Get in the habit of running these functions when you open a new dataset
-  - `head()` shows you the top subset of a data in a tibble
+  - `head()` shows you the top of a tibble (or data frame)
     - `head()` argument defaults to 6  
-    - `tail()` shows the bottom subset of data in a tibble  
-  - `summary()` shows summary statistics on all variabes in a dataset
+    - `tail()` shows the bottom of a tibble  
+    - `arrange()` pairs nicely with subsetting functions to explore your data
+  - `summary()` shows summary statistics on all variables in a dataset
     - Reported summary statistics depend on the variable type
   - `ls()` shows all variables in a tibble
     - You can also use `ls()` without calling an object between the parentheses to see all objects in your workspace
@@ -457,7 +461,6 @@ Other methods to answer questions
 ```r
 nrow(airbnb)
 summary(airbnb)
-ls(airbnb)
 ```
 
 ## Base R functions to explore vectors
@@ -466,32 +469,106 @@ ls(airbnb)
 - `length()` tells you in the number of elements in a vector  
 - `unique()` shows you the unique values in a vector  
 - `sort()` orders values in a vector  
-- `summary()` shows you descriptive statistics for a vector  
+- `summary()` shows you descriptive statistics on a vector  
   - `summary()` can run on a vector or tibble  
   
-You can chain together multiple functions
+You can nest multiple functions
 ```r
-covid %>% pull(location) %>% unique() %>% length()
+length(unique(airbnb$room_type))
 ```
 
 ## Base R functions to explore vectors
 
 **Exercise 3 - 5 minutes**  
-- How many 'projected' values are there in `mobility_data_type`?  
-- Which is the third to last value for `location` when values are listed alphabetically?  
-- Is 'projected' a value from the `total_tests_data_type` variable?  
+- How many distinct `address` values are there?  
+- Which is the eighth `host_id` value after listing unique ids alphabetically?  
+- Is 'yurt' a `room_type` value?  
 
 ## Base R functions to explore vectors
 
 **Exercise 3 - 5 minutes**  
-- How many 'projected' values are there in `mobility_data_type`?  
-- Which is the third to last value for `location` when values are listed alphabetically?  
-- Is 'projected' a value from the `total_tests_data_type` variable?  
+- How many distinct `address` values are there?  
+- Which is the eighth `host_id` value after listing unique ids alphabetically?  
+- Is 'yurt' a `room_type` value?  
 
 ```{r, echo = TRUE, collapse=TRUE}
-covid %>% pull(mobility_data_type) %>% table()
-covid %>% pull(location) %>% table() %>% tail()
-covid %>% pull(total_tests_data_type) %>% unique() 
+length(unique(airbnb$address))
+head(sort(unique(airbnb$host_id)), 8)
+unique(airbnb$room_type)
+```
+
+## Practice with climate data
+
+By day you're an analyst at the City of Seattle; by night you're a climate analyst at the Earth Institute. Over the next four weeks, you will analyze [climate](https://www.kaggle.com/sohelranaccselab/global-climate-change) data to answer questions that help the Earth Institute understand temperature and temperature change in cities and countries around the world.
+
+**Exercise 7-10 minutes**  
+- What is the earliest `year` in the `climate` dataset?  
+- What is the range of `uncertainty` values?  
+- How many cities and countries are in the dataset?  
+- In how many rows is Japan the `country`?  
+
+<b>Begin the exercise by importing the climate dataset in R Studio</b>  
+```r
+climate <- read_csv('https://bit.ly/3kKErEb')
+```
+
+## Practice with climate data
+
+**Exercise 7-10 minutes**  
+- What is the earliest `year` in the `climate` dataset?  
+- What is the range of `uncertainty` values?  
+- How many cities and countries are in the dataset?  
+- In how many rows is Japan the `country`?  
+
+```{r, echo = TRUE, collapse=TRUE}
+min(climate$year)
+```
+
+## Practice with climate data
+
+**Exercise 7-10 minutes**  
+- What is the earliest `year` in the `climate` dataset?  
+- What is the range of `uncertainty` values?  
+- How many cities and countries are in the dataset?  
+- In how many rows is Japan the `country`?  
+
+```{r, echo = TRUE, collapse=TRUE}
+min(climate$year)
+min(climate$uncertainty, na.rm = TRUE)
+max(climate$uncertainty, na.rm = TRUE)
+```
+
+## Practice with climate data {.smaller}
+
+**Exercise 7-10 minutes**  
+- What is the earliest `year` in the `climate` dataset?  
+- What is the range of `uncertainty` values?  
+- How many cities and countries are in the dataset?  
+- In how many rows is Japan the `country`?  
+
+```{r, echo = TRUE, collapse=TRUE}
+min(climate$year)
+min(climate$uncertainty, na.rm = TRUE)
+max(climate$uncertainty, na.rm = TRUE)
+length(unique(climate$city))
+length(unique(climate$country))
+```
+
+## Practice with climate data {.smaller}
+
+**Exercise 7-10 minutes**  
+- What is the earliest `year` in the `climate` dataset?  
+- What is the range of `uncertainty` values?  
+- How many cities and countries are in the dataset?  
+- In how many rows is Japan the `country`?  
+
+```{r, echo = TRUE, collapse=TRUE}
+min(climate$year)
+min(climate$uncertainty, na.rm = TRUE)
+max(climate$uncertainty, na.rm = TRUE)
+length(unique(climate$city))
+length(unique(climate$country))
+table(climate$country)['Japan']
 ```
 
 ## Troubleshooting your R code {.smaller}
@@ -500,105 +577,12 @@ Make sure...
 
 - You loaded your libraries
 - Arguments in your functions are comma-separated
-- Your functions have a closing paren
-- You have an end quotation mark where relevant
+- Your functions have start and closing parentheses
+- You have start and end quotation marks where relevant
 - The variable type is correct to perform the function you call
   - For example you probably don't want to run `min()` on a character string
 
 - Your definition operator looks like this
 ```r 
 <-
-```
-- You pipe operator looks like this 
-```r 
-%>%
-```
-
-## Troubleshooting your R code
-
-**Exercise 4 - 5 minutes**  
-
-This code contains 6 mistakes. The code is supposed to create three new data object called `covid_inf`, `mean_inf`, and `median_inf` and report mean and median confirmed infections.    
-
-- Correct 6 coding mistakes  
-- Reference the previous slide for help  
-
-```r
-covid_inf <- covid %.% pull(confirmed_infection)
-
-mean_inf < mean(covid_inf na.rm = TRUE)
-median_inf <- covid_inf %>% median(na.rm = TRUE
-
-mean_inf
-medean_inf
-```
-
-## Troubleshooting your R code
-
-**Exercise 4 - 5 minutes**  
-
-This code contains 6 mistakes. The code is supposed to create three new data object called `covid_inf`, `mean_inf`, and `median_inf` and report mean and median confirmed infections.    
-
-- Correct 6 coding mistakes  
-- Reference the previous slide for help  
-
-```{r, echo = TRUE, collapse=TRUE}
-covid_inf <- covid %>% pull(confirmed_infections)
-
-mean_inf <- mean(covid_inf, na.rm = TRUE)
-median_inf <- covid_inf %>% median(na.rm = TRUE)
-
-mean_inf
-median_inf
-```
-
-## Practice with crime data
-
-You wear many hats and are also a crime analyst at a think tank. For a report being prepared by the think tank, you need to analyze crime data.   
-
-**Exercise 5 - 7 minutes**  
-- What is the most recent `occurred_date`?  
-- Which `neighborhood` sees the most incident activity?  
-- What are the earliest and latest `reported_year` values?  
-
-<b>Begin the exercise by importing the crime dataset in R Studio</b>  
-```r
-crime <- read_csv('https://rb.gy/5zuayh') 
-```
-
-## Practice with crime data
-
-**Exercise 5 - 7 minutes**   
-- What is the most recent `occurred_date`?  
-- Which `neighborhood` sees the most incident activity?  
-- What are the earliest and latest `reported_year` values?  
-
-```{r, echo = TRUE, collapse=TRUE}
-crime %>% pull(occurred_date) %>% max(na.rm = TRUE)
-```
-
-## Practice with crime data
-
-**Exercise 5 - 7 minutes**  
-- What is the most recent `occurred_date`?  
-- Which `neighborhood` sees the most incident activity?  
-- What are the earliest and latest `reported_year` values?  
-
-```{r, echo = TRUE, collapse=TRUE}
-crime %>% pull(occurred_date) %>% max(na.rm = TRUE)
-crime %>% pull(neighborhood) %>% table() %>% sort() %>% tail()
-```
-
-## Practice with crime data {.smaller}
-
-**Exercise 5 - 7 minutes**  
-- What is the most recent `occurred_date`?  
-- Which `neighborhood` sees the most incident activity?  
-- What are the earliest and latest `reported_year` values?  
-
-```{r, echo = TRUE, collapse=TRUE}
-crime %>% pull(occurred_date) %>% max(na.rm = TRUE)
-crime %>% pull(neighborhood) %>% table() %>% sort() %>% tail()
-crime %>% pull(reported_year) %>% min(na.rm = TRUE)
-crime %>% pull(reported_year) %>% max(na.rm = TRUE)
 ```
