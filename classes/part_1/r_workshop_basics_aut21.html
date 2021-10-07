@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Part 1 - R Basics</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Graham Bearden" />
+    <meta name="date" content="2021-10-14" />
+    <script src="libs/header-attrs-2.11/header-attrs.js"></script>
+    <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/metropolis.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/metropolis-fonts.css" rel="stylesheet" />
+    <link href="libs/countdown-0.3.5/countdown.css" rel="stylesheet" />
+    <script src="libs/countdown-0.3.5/countdown.js"></script>
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Part 1 - R Basics
+### Graham Bearden
+### University of Washington
+### October 14, 2021
+
+---
+
+class: inverse, middle, center
+
+# Getting Started
+
+
+
+---
+
+# Set Up
+
+- Set up your machine to run R
+  - Install R ([on a Mac](https://cloud.r-project.org/bin/macosx/base/R-4.1.1.pkg) and [on a PC](https://cran.r-project.org/bin/windows/base/R-4.1.1-win.exe))
+  - Install RStudio ([on a Mac](https://download1.rstudio.org/desktop/macos/RStudio-1.4.1717.dmg) and [on a PC](https://download1.rstudio.org/desktop/windows/RStudio-1.4.1717.exe))
+
+---
+
+# Defining R Programming and the R Programmer 
+
+- Typical uses for R
+  - Data analysis
+  - Data visualization
+  - Reshaping data
+  - Automation
+- Mental models and programming
+  - Excel/SPSS/Stata --&gt; computational programming tools like R
+- What all R programmers do
+  - Google for answers
+  - Borrow code
+  - Ask friends and pros for help
+- Useful references (see Reference Materials in the [syllabus](https://github.com/gbearden/r_course_evans_school) for more)
+  - help()
+  - ??
+  - [R Bloggers](https://www.r-bloggers.com/)
+  - [stackoverflow](https://stackoverflow.com/questions/tagged/r)
+
+---
+
+# Quick Tour of R Studio
+
+- Open and save (locally) an R Notebook  
+- Run code from the notebook and the console  
+- Make sure you can install packages
+  - 2 ways to install packages
+    - Command line/Console
+    - R Studio GUI
+
+--
+
+```r
+install.packages('devtools')
+```
+
+---
+
+# Quick Tour of R Studio
+
+- Open and save (locally) an R Notebook  
+- Run code from the notebook and the console  
+- Make sure you can install packages
+  - 2 ways to install packages
+    - Command line/Console
+    - R Studio GUI
+
+![](./classes/figures/r_studio_install_packages.png)
+
+--- 
+class: inverse, middle, center
+
+# Libraries, functions, data
+
+---
+
+# &lt;span style='color:#6DA34D'&gt;Libraries&lt;/span&gt;, functions, data
+
+- Libraries (or packages) are collections of functions (and datasets)
+- Over 10,000 libraries on CRAN
+
+```r
+install.packages('tidyverse')
+install.packages('ggthemes')
+library(tidyverse)
+```
+
+---
+
+# Libraries, &lt;span style='color:#6DA34D'&gt;functions&lt;/span&gt;, data
+
+- Functions perform operations in R
+```r
+foo &lt;- c(1,2,4)
+min(foo)
+mean(foo)
+max(foo)
+sd(foo)
+```
+
+---
+
+# Libraries, &lt;span style='color:#6DA34D'&gt;functions&lt;/span&gt;, data
+
+- Functions perform operations in R
+
+```r
+foo &lt;- c(1,2,4)
+min(foo)
+## [1] 1
+mean(foo)
+## [1] 2.333333
+max(foo)
+## [1] 4
+sd(foo)
+## [1] 1.527525
+```
+
+---
+
+# Libraries, &lt;span style='color:#6DA34D'&gt;functions&lt;/span&gt;, data
+
+- Function arguments
+  - Let's look at arguments in the `lm` and `min` functions  
+  - Arguments are function inputs that tell your function "how" and "to what"
+  - Arguments are comma separated
+
+```r
+help(lm)
+help(min)
+
+cat_function &lt;- function(love = TRUE){
+    if(love == TRUE){
+        print('I love cats!')
+    }
+    else {
+        print('I am not a cool person.') 
+    }
+}
+```
+
+---
+
+# Libraries, &lt;span style='color:#6DA34D'&gt;functions&lt;/span&gt;, data
+
+- Function arguments
+  - Let's look at arguments in the `lm` and `min` functions  
+  - Arguments are function inputs that tell your function "how" and "to what"
+  - Arguments are comma separated
+
+```r
+foo &lt;- c(1,2,NA, 4)
+min(foo)
+mean(foo)
+max(foo)
+sd(foo)
+```
+
+---
+
+# Libraries, &lt;span style='color:#6DA34D'&gt;functions&lt;/span&gt;, data
+
+- Function arguments
+  - Let's look at arguments in the `lm` and `min` functions    
+  - Arguments are function inputs that tell your function "how" and "to what"
+  - Arguments are comma separated
+
+
+```r
+foo &lt;- c(1,2,NA, 4)
+min(foo)
+## [1] NA
+mean(foo)
+## [1] NA
+max(foo)
+## [1] NA
+sd(foo)
+## [1] NA
+```
+
+---
+
+# Libraries, &lt;span style='color:#6DA34D'&gt;functions&lt;/span&gt;, data
+
+- Function arguments
+  - Let's look at arguments in the `lm` and `min` functions    
+  - Arguments are function inputs that tell your function "how" and "to what"
+  - Arguments are comma separated
+
+
+```r
+foo &lt;- c(1,2,NA, 4)
+min(foo, na.rm = TRUE)
+## [1] 1
+mean(foo, na.rm = TRUE)
+## [1] 2.333333
+max(foo, na.rm = TRUE)
+## [1] 4
+sd(foo, na.rm = TRUE)
+## [1] 1.527525
+```
+
+---
+
+# Libraries, functions, &lt;span style='color:#6DA34D'&gt;data&lt;/span&gt;
+
+- Oh my, so many types of data!
+  - Vectors, tibbles, data frames, matrices
+  - Integers, numbers, characters, factors
+- Confirm data type
+```r
+class(c('Washington', 'Oregon', 'Idaho'))
+is.character(c('Washington', 'Oregon', 'Idaho'))
+is.factor(c('Washington', 'Oregon', 'Idaho'))
+```
+- Coerce data type
+```r
+as.factor(c('Washington', 'Oregon', 'Idaho'))
+class(as.factor(c('Washington', 'Oregon', 'Idaho')))
+```
+
+---
+
+# Libraries, functions, &lt;span style='color:#6DA34D'&gt;data&lt;/span&gt;
+
+- Oh my, so many types of data!
+  - Vectors, tibbles, data frames, matrices  
+  - Integers, numbers, characters, factors
+- Confirm data type
+
+```r
+class(c('Washington', 'Oregon', 'Idaho'))
+## [1] "character"
+is.character(c('Washington', 'Oregon', 'Idaho'))
+## [1] TRUE
+is.factor(c('Washington', 'Oregon', 'Idaho'))
+## [1] FALSE
+```
+- Coerce data type
+```r
+as.factor(c('Washington', 'Oregon', 'Idaho'))
+class(as.factor(c('Washington', 'Oregon', 'Idaho')))
+```
+
+---
+
+# Libraries, functions, &lt;span style='color:#6DA34D'&gt;data&lt;/span&gt;
+
+- Oh my, so many types of data!
+  - Vectors, tibbles, data frames, matrices  
+  - Integers, numbers, characters, factors
+- Confirm data type
+
+```r
+class(c('Washington', 'Oregon', 'Idaho'))
+## [1] "character"
+is.character(c('Washington', 'Oregon', 'Idaho'))
+## [1] TRUE
+is.factor(c('Washington', 'Oregon', 'Idaho'))
+## [1] FALSE
+```
+- Coerce data type
+
+```r
+as.factor(c('Washington', 'Oregon', 'Idaho'))
+## [1] Washington Oregon     Idaho     
+## Levels: Idaho Oregon Washington
+class(as.factor(c('Washington', 'Oregon', 'Idaho')))
+## [1] "factor"
+```
+
+---
+
+# Libraries, functions, &lt;span style='color:#6DA34D'&gt;data&lt;/span&gt; 
+
+- Oh my, so many types of data!
+  -  **Vectors**, tibbles, data frames, matrices  
+- Vectors contain 1 or more values in a string  
+- Call a specific element by its location in a vector  
+
+```r
+c('Washington', 'Oregon', 'Idaho')
+## [1] "Washington" "Oregon"     "Idaho"
+1:10
+##  [1]  1  2  3  4  5  6  7  8  9 10
+rep(1:2, times = 2)
+## [1] 1 2 1 2
+seq(from = 0, to = 100, by = 10)
+##  [1]   0  10  20  30  40  50  60  70  80  90 100
+```
+
+---
+
+# Libraries, functions, &lt;span style='color:#6DA34D'&gt;data&lt;/span&gt;
+
+- Oh my, so many types of data!
+  - **Vectors**, tibbles, data frames, matrices  
+- Vectors contain 1 or more values in a string  
+- Call a specific element by its location in a vector  
+```r
+c('Washington', 'Oregon', 'Idaho')[2]
+seq(from = 0, to = 100, by = 10)[6]
+```
+
+---
+
+# Libraries, functions, &lt;span style='color:#6DA34D'&gt;data&lt;/span&gt;
+
+- Oh my, so many types of data!
+  - **Vectors**, tibbles, data frames, matrices  
+- Vectors contain 1 or more values in a string  
+- Call a specific element by its location in a vector  
+
+```r
+c('Washington', 'Oregon', 'Idaho')[2]
+## [1] "Oregon"
+seq(from = 0, to = 100, by = 10)[6]
+## [1] 50
+```
+
+---
+
+# Libraries, functions, &lt;span style='color:#6DA34D'&gt;data&lt;/span&gt;
+
+- Oh my, so many types of data!
+  - Vectors, **tibbles**, data frames, matrices  
+- Tibbles look a little like spreadsheets
+
+```r
+tibble(
+  x = c(1:3), y = c(4:6)
+  , z = c('Washington', 'Oregon', 'Idaho')
+  )
+## # A tibble: 3 × 3
+##       x     y z         
+##   &lt;int&gt; &lt;int&gt; &lt;chr&gt;     
+## 1     1     4 Washington
+## 2     2     5 Oregon    
+## 3     3     6 Idaho
+```
+
+---
+
+# Libraries, functions, &lt;span style='color:#6DA34D'&gt;data&lt;/span&gt;
+
+- Call a specific variable by name or location in the tibble
+  - Variables are vectors  
+  - Use the `$` between the tibble name and the variable name
+  - Also able to call the column (or row) by index number
+
+
+```r
+head(cars$speed, 7)
+## [1]  4  4  7  7  8  9 10
+```
+
+
+```r
+head(cars[,1], 7)
+## [1]  4  4  7  7  8  9 10
+```
+
+---
+
+# Libraries, functions, &lt;span style='color:#6DA34D'&gt;data&lt;/span&gt;
+
+- Oh my, so many types of data!
+  - Vectors, tibbles, **data frames**, matrices
+- Data frames are like tibbles minus metadata (and truncated print)
+
+```r
+data.frame(
+  x = c(1:3)
+  , y = c(4:6)
+  , z = c('Washington', 'Oregon', 'Idaho')
+  )
+##   x y          z
+## 1 1 4 Washington
+## 2 2 5     Oregon
+## 3 3 6      Idaho
+```
+
+---
+
+# Libraries, functions, &lt;span style='color:#6DA34D'&gt;data&lt;/span&gt;
+
+- Oh my, so many types of data!
+  - Vectors, tibbles, data frames, **matrices**
+- Matrices and tibbles have similar shapes
+- Traditionally matrices contained data of a single type
+- When it comes down to using a matrix or tibbles in our class, tibbles are the way to go
+
+
+```r
+matrix(data = 1:6, nrow = 3, ncol = 2)
+##      [,1] [,2]
+## [1,]    1    4
+## [2,]    2    5
+## [3,]    3    6
+```
+
+---
+class: inverse, middle, center
+
+# Let's apply what we learned to real data
+
+---
+
+# Let's apply what we learned to real data
+
+You are an analyst at the City of Seattle. City leadership wants to develop new policy to regulate Airbnb properties. Over the next month, you will be asked to prepare findings that you observe in the data.  
+
+--
+
+**Exercise 1 - 5 minutes**  
+- What type of data object is `airbnb`?  
+- What are the fewest and average number of `reviews`?  
+- What is the range of number of `bathrooms` in the `airbnb` data?  
+
+--
+
+To answer the questions, import the Seattle `airbnb` dataset.  
+```r
+airbnb &lt;- read_csv('https://bit.ly/3oadz2L')
+```
+
+<div class="countdown" id="timer_615f63d6" style="right:0;bottom:0;" data-warnwhen="0">
+<code class="countdown-time"><span class="countdown-digits minutes">05</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
+</div>
+
+---
+
+# Let's apply what we learned to real data
+
+**Exercise 1 - 5 minutes**  
+- What type of data object is `airbnb`?  
+- What are the fewest and average number of `reviews`?  
+- What is the range of number of `bathrooms` in the `airbnb` data?  
+
+
+```r
+class(airbnb)
+## [1] "spec_tbl_df" "tbl_df"      "tbl"         "data.frame"
+```
+
+--
+
+
+```r
+min(airbnb$reviews)
+## [1] 0
+mean(airbnb$reviews)
+## [1] 48.15021
+```
+
+--
+
+
+```r
+min(airbnb$bathrooms, na.rm = TRUE)
+## [1] 0
+max(airbnb$bathrooms, na.rm = TRUE)
+## [1] 8
+```
+
+---
+class: inverse, middle, center
+
+# Base R functions to explore tibbles
+
+---
+
+# Base R functions to explore tibbles 
+
+Get in the habit of running these functions when you open a new dataset
+
+- `head()` shows you the top of a tibble (or data frame)
+  - `head()` argument defaults to 6  
+  - `tail()` shows the bottom of a tibble  
+  - `arrange()` pairs nicely with subsetting functions to explore your data
+- `summary()` shows summary statistics on all variables in a dataset
+  - Reported summary statistics depend on the variable type
+- `ls()` shows all variables in a tibble
+  - You can also use `ls()` without calling an object between the parentheses to see all objects in your workspace
+- `str()` tells the variable type and selected variable values in a tibble for all variables
+- `dim()` tells you the dimensions of your dataset
+  - `nrow()` reports the number of rows only 
+  - `ncol()` reports the number of columns only
+
+---
+
+# Base R functions to explore tibbles
+
+**Exercise 2 - 5 minutes**  
+- How many observations (or rows) are in `airbnb`?  
+- What is the median value for `rating`?  
+- How many variables are in `airbnb`?  
+
+&lt;i&gt;Hint: There are multiple ways to answers these questions with the functions you know&lt;/i&gt;
+
+<div class="countdown" id="timer_615f6292" style="right:0;bottom:0;" data-warnwhen="0">
+<code class="countdown-time"><span class="countdown-digits minutes">05</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
+</div>
+
+---
+
+# Base R functions to explore tibbles
+
+**Exercise 2 - 5 minutes**  
+- How many observations (or rows) are in `airbnb`?  
+- What is the median value for `rating`?  
+- How many variables are in `airbnb`?  
+
+
+```r
+nrow(airbnb)
+## [1] 7423
+```
+
+--
+
+
+```r
+median(airbnb$rating, na.rm = TRUE)
+## [1] 5
+```
+
+--
+
+
+```r
+ncol(airbnb)
+## [1] 14
+```
+
+--
+
+Other methods to answer questions
+```r
+dim(airbnb)
+summary(airbnb)
+```
+
+---
+
+# Base R functions to explore vectors
+
+- `table()` shows you the distribution of values in a vector  
+- `length()` tells you in the number of elements in a vector  
+- `unique()` shows you the unique values in a vector  
+- `sort()` orders values in a vector  
+- `summary()` shows you descriptive statistics on a vector  
+  - `summary()` can run on a vector or tibble  
+  
+You can nest multiple functions
+```r
+length(unique(airbnb$room_type))
+```
+
+---
+
+# Base R functions to explore vectors
+
+**Exercise 3 - 5 minutes**  
+- How many distinct `address` values are there?  
+- Which is the eighth `host_id` value after listing unique ids alphabetically?  
+- Is 'yurt' a `room_type` value?  
+
+<div class="countdown" id="timer_615f6335" style="right:0;bottom:0;" data-warnwhen="0">
+<code class="countdown-time"><span class="countdown-digits minutes">05</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
+</div>
+
+---
+
+# Base R functions to explore vectors
+
+**Exercise 3 - 5 minutes**  
+- How many distinct `address` values are there?  
+- Which is the eighth `host_id` value after listing unique ids alphabetically?  
+- Is 'yurt' a `room_type` value?  
+
+
+```r
+length(unique(airbnb$address))
+## [1] 4
+```
+
+--
+
+
+```r
+head(sort(unique(airbnb$host_id)), 8)
+## [1]  2536  4193  4797  8021  8993 13833 14942 20731
+```
+
+--
+
+
+```r
+unique(airbnb$room_type)
+## [1] "Entire home/apt" "Private room"    "Shared room"
+```
+
+---
+
+# Troubleshooting your R code
+
+Make sure...
+
+- You loaded your libraries
+- Arguments in your functions are comma-separated
+- Your functions have start and closing parentheses
+- You have start and end quotation marks where relevant
+- The variable type is correct to perform the function you call
+  - For example you probably don't want to run `min()` on a character string
+- Your assignment operator looks like this: `&lt;-`
+
+---
+
+# Practice with climate data
+
+By day you're an analyst at the City of Seattle; by night you're a climate analyst at the Earth Institute. Over the next four weeks, you will analyze [climate data](https://www.kaggle.com/sohelranaccselab/global-climate-change) to answer questions that help the Earth Institute understand temperature and temperature change in cities and countries around the world.
+
+--
+
+**Exercise 4 - 10 minutes**  
+- What is the earliest `year` in the `climate` dataset?  
+- What is the range of `uncertainty` values?  
+- How many cities and countries are in the dataset?  
+- In how many rows in the dataset is Japan the `country` value?  
+
+--
+
+&lt;b&gt;Begin the exercise by importing the climate dataset in R Studio&lt;/b&gt;  
+```r
+climate &lt;- read_csv('https://bit.ly/3kKErEb')
+```
+
+<div class="countdown" id="timer_615f6185" style="right:0;bottom:0;" data-warnwhen="0">
+<code class="countdown-time"><span class="countdown-digits minutes">10</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
+</div>
+
+---
+
+# Practice with climate data
+
+**Exercise 4 - 10 minutes**  
+- What is the earliest `year` in the `climate` dataset?  
+- What is the range of `uncertainty` values?  
+- How many cities and countries are in the dataset?  
+- In how many rows in the dataset is Japan the `country` value?  
+
+
+```r
+min(climate$year)
+## [1] 1743
+```
+
+--
+
+
+```r
+min(climate$uncertainty, na.rm = TRUE)
+## [1] 0.04
+max(climate$uncertainty, na.rm = TRUE)
+## [1] 14.037
+```
+
+--
+
+
+```r
+length(unique(climate$city))
+## [1] 100
+length(unique(climate$country))
+## [1] 49
+```
+
+---
+
+# Practice with climate data
+
+**Exercise 4 - 10 minutes**  
+- What is the earliest `year` in the `climate` dataset?  
+- What is the range of `uncertainty` values?  
+- How many cities and countries are in the dataset?  
+- In how many rows in the dataset is Japan the `country` value?  
+
+
+```r
+table(climate$country)['Japan']
+## Japan 
+##  4095
+```
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
