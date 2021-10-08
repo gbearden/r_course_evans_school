@@ -1,0 +1,438 @@
+---
+title: "Part 2 - Introduction to the Tidyverse"
+author: "Graham Bearden"
+institute: "University of Washington"
+date: "October 21, 2021"
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    css: [default, metropolis, metropolis-fonts]
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+# Before we get started
+
+SAVE FOR ANSWERING QUESTIONS HELD OVER FROM THE PREVIOUS CLASS
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library(knitr)
+library(countdown)
+library(kableExtra)
+options(scipen=999)
+
+opts_chunk$set(warning=FALSE, message=FALSE)
+
+airbnb <- read_csv('https://bit.ly/3oadz2L', col_types = cols())
+climate <- read_csv('https://bit.ly/3kKErEb', col_types = cols())
+```
+
+---
+
+# What we learned in the previous class
+
+- Getting up and running in RStudio  
+- Core R concepts  
+  - Data types
+  - Relationship between data and functions  
+- How to import data  
+- Regularly used data summary functions  
+- Assignment operator
+- Troubleshooting basics  
+
+---
+
+# What we'll learn today  
+
+- A bit more about troubleshooting
+- Chaining together functions with a pipe operator (`%>%`)
+- Selecting variables  
+- Creating variables  
+- Updating values  
+- Subsetting tibbles/data frames  
+- Aggregation  
+
+---
+
+# Troubleshooting your R code
+
+Make sure...
+
+- You loaded your libraries
+- Arguments in your functions are comma-separated
+- Your functions have start and closing parentheses
+- You have start and end quotation marks where relevant
+- The variable type is correct to perform the function you call
+  - For example you probably don't want to run `min()` on a character string
+- Your assignment operator looks like this: `<-`
+
+---
+
+# Troubleshooting your R code
+
+So, how then do you "make sure" your code is error-free?
+
+- Run code line by line  
+- Ensure the code finished running (`+`s vs. `>`s in the R console)
+- Red "x" annotation beside line numbers (after saving your file)
+
+![](./figures/red_x_example.png)
+
+---
+
+# Troubleshooting exercise 
+
+**Exercise 1 - 5 minutes**  
+
+This code contains 6 mistakes. The code is supposed to create four new data object called `reviews`, `price`, `med_reviews` and `max_price` and report median number of reviews and highest cost/night for a Seattle Airbnb rental.    
+
+- Correct 7 coding mistakes  
+- Reference the previous slides for help  
+
+--
+
+```r
+library(tidyverse)
+        
+airbnb <- read_csv('https://bit.ly/3oadz2L')
+
+reviews <- airbnb$reviews
+price <- airbnb$price
+
+med_reviews <- median(reviews)
+max_price <- max(price)
+
+med_reviews
+max_price
+```
+
+```{r, echo = FALSE}
+countdown(minutes = 5, seconds = 0)
+```
+
+---
+
+# Troubleshooting exercise 
+
+**Exercise 1 - 5 minutes**  
+
+This code contains 6 mistakes. The code is supposed to create four new data object called `reviews`, `price`, `med_reviews` and `max_price` and report median number of reviews and highest cost/night for a Seattle Airbnb rental.    
+
+- Correct 7 coding mistakes  
+- Reference the previous slides for help  
+
+![](figures/troubleshoot_solution_1.png)
+
+---
+class: inverse, middle, center
+
+# Select, create, and rename variables
+
+---
+
+# <span style="color:#6DA34D">Select</span>, create, and rename variables 
+
+- `select()` keeps the named variables from the dataset
+- You can also remove variables from the dataset with `-`
+- Let's keep it simple for now and not nest functions within `select()`  
+  - Exception: `everything()`
+- Use `'``'` for multi-word variables and variable names that begin with numbers
+
+--
+
+```{r, echo = TRUE, collapse=TRUE}
+head(select(airbnb, host_id, reviews, rating, price), 3)
+```
+
+--
+
+```{r, echo = TRUE, collapse=TRUE}
+head(select(select(airbnb, host_id, reviews, rating, price), -rating), 3)
+```
+
+---
+
+# <span style="color:#6DA34D">Select</span>, create, and rename variables
+
+- `select()` keeps the named variables from the dataset
+- You can also remove variables from the dataset with `-`
+- Let's keep it simple for now and not nest functions within `select()`  
+  - Exception: `everything()`
+- Use `'``'` for multi-word variables and variable names that begin with numbers
+
+```{r, echo = TRUE, collapse=TRUE}
+head(select(select(airbnb, host_id, reviews, rating, price), host_id, price, everything()), 3)
+```
+
+---
+
+# Make your code as readable as possible
+
+- A whole course could be taught on code format
+- **BOTTOM LINE (FOR OUR COURSE)**  
+  - Use the `tidyverse` pipe operator (`%>%`) when working with tibbles/data frames
+
+--
+
+**Bad** 
+```r
+head(select(select(airbnb, host_id, reviews, rating, price), host_id, price, everything()), 3)
+```
+
+**Good** 
+```r
+airbnb %>%
+  select(host_id, reviews, rating, price) %>% 
+  select(host_id, price, everything()) %>% 
+  head(3)
+```
+
+---
+
+# Make your code as readable as possible
+
+- Use the `tidyverse` pipe operator (`%>%`) when working with tibbles/data frames
+  - Easier to read and troubleshoot  
+  - Easier to comment (write end of line comments or above line comments)
+  - Modular
+
+```r
+airbnb %>%
+  select(host_id, reviews, rating, price) %>% 
+  select(host_id, price, everything()) %>% 
+  head(3)
+```
+
+---
+
+# Make your code as readable as possible
+
+- No firm, binding rule for using (or not using) the pipe operator with vectors
+  - Ask yourself: "which format is easiest to read?"
+  - Depends on the number of functions  
+  - Depends on whether you are pulling a variable of tibble that you are processing  
+    - `pull() == $`
+  
+```r
+length(unique(airbnb$address))
+airbnb$address %>% unique() %>% length()
+airbnb %>% pull(address) %>% unique() %>% length()
+```
+
+---
+
+# Select, <span style="color:#6DA34D">create</span>, and rename variables
+
+`mutate()` creates variables
+- Create multiple variables in one go
+- Use functions you already learned within `mutate()`
+  - `min()`, `max()`, `mean()`
+  - `as.character()`, `as.factor()`, `as.numeric()`
+- Use `ifelse()` within `mutate()`
+
+--
+
+```r
+airbnb %>% 
+  mutate(
+    cost_per_room = accommodates / price
+    , mean_price = mean(price)
+    ) 
+```
+
+---
+
+# Select, <span style="color:#6DA34D">create</span>, and rename variables 
+
+- `mutate()` creates variables
+- Create multiple variables in one go
+- Use functions you already learned within `mutate()`
+  - `min()`, `max()`, `mean()`
+  - `as.character()`, `as.factor()`, `as.numeric()`
+- Use `ifelse()` within `mutate()`
+
+```r
+x <- c(1, 2, 3)
+y <- c(4, 5, 1)
+
+ifelse(x > y, 'yes', 'no')
+```
+
+---
+
+# Select, <span style="color:#6DA34D">create</span>, and rename variables
+
+- `mutate()` creates variables
+- Create multiple variables in one go
+- Use functions you already learned within `mutate()`
+  - `min()`, `max()`, `mean()`
+  - `as.character()`, `as.factor()`, `as.numeric()`
+- Use `ifelse()` within `mutate()`
+
+```{r, echo = TRUE, collapse=TRUE}
+x <- c(1, 2, 3)
+y <- c(4, 5, 1)
+
+ifelse(x > y, 'yes', 'no')
+```
+
+---
+
+# Select, <span style="color:#6DA34D">create</span>, and rename variables
+
+- A little more on `ifelse()`  
+  - A logical test with a true-or-false outcome
+  - To make comparisons use: `==`, `<`, `<=`, `>`, `>=`, `!=`, `%in%`, `!`
+  - Also can use: `is.numeric()`, `is.character()`, etc.
+  
+--
+
+```{r, echo = TRUE, collapse=TRUE}
+city_1 <- 'San Francisco'
+city_2 <- 'Portland'
+california <- c('San Francisco', 'Los Angeles', 'San Diego')
+
+ifelse(city_1 %in% california, 'yes', 'no')
+ifelse(city_2 %in% california, 'yes', 'no')
+ifelse(237 %in% 200:300, 'yes', 'no')
+```
+
+---
+
+# Select, <span style="color:#6DA34D">create</span>, and rename variables
+
+- A little more on `ifelse()`  
+  - A logical test with a true-or-false outcome
+  - To make comparisons use: `==`, `<`, `<=`, `>`, `>=`, `!=`, `%in%`, `!`
+  - Also can use: `is.numeric()`, `is.character()`, etc.
+
+```{r, echo = TRUE, collapse=TRUE}
+city_1 <- 'San Francisco'
+city_2 <- 'Portland'
+california <- c('San Francisco', 'Los Angeles', 'San Diego')
+
+ifelse(! city_1 %in% california, 'yes', 'no')
+ifelse(! city_2 %in% california, 'yes', 'no')
+ifelse(! 237 %in% 200:300, 'yes', 'no')
+```
+
+---
+
+# Select, <span style="color:#6DA34D">create</span>, and rename variables
+
+- `mutate()` creates variables
+- Create multiple variables in one go
+- Use functions you already learned within `mutate()`
+  - `min()`, `max()`, `mean()`
+  - `as.character()`, `as.factor()`, `as.numeric()`
+- Use `ifelse()` within `mutate()`
+
+```r
+airbnb %>% 
+  mutate(
+    cost_per_room = accommodates / price
+    , mean_price = mean(price)
+    , seattle_address = ifelse(address == 'Seattle', 'y', NA)
+    , large = ifelse(accommodates > 5, 'y', NA)
+    ) 
+```
+
+---
+
+# Select, <span style="color:#6DA34D">create</span>, and rename variables 
+
+```{r, echo = TRUE, collapse=TRUE}
+airbnb %>% 
+  mutate(
+    cost_per_room = accommodates / price
+    , mean_price = mean(price)
+    , seattle_address = ifelse(address == 'Seattle', 'y', NA)
+    , large = ifelse(accommodates > 5, 'y', NA)
+    ) %>%
+  select(room_id, host_id, cost_per_room, mean_price, seattle_address, large) %>%
+  head(5) 
+```
+
+---
+
+# Select, <span style="color:#6DA34D">create</span>, and rename variables 
+
+<b>Exercise - 6 minutes</b>  
+- With the `climate` dataset, create variables called `high_uncertainty` and `winter`
+- In `high_uncertainty`, flag with a `1` all observations where `uncertainty` is greater than 1.5. All other records should have a `0`  
+- In `winter`, flag with a `1` all observations where month is a 1, 2, 12.  
+- Only report the following variables in the output: `country`, `city`, `high_uncertainty` and `winter`
+
+--
+
+```r
+climate <- read_csv('https://bit.ly/3kKErEb')
+```
+
+```{r, echo = FALSE}
+countdown(minutes = 6, seconds = 0)
+```
+
+---
+
+# Select, <span style="color:#6DA34D">create</span>, and rename variables 
+
+<b>Exercise - 6 minutes</b>  
+- With the `climate` dataset, create variables called `high_uncertainty` and `winter`
+- In `high_uncertainty`, flag with a `1` all observations where `uncertainty` is greater than 1.5. All other records should have a `0`  
+- In `winter`, flag with a `1` all observations where month is a 1, 2, 12.  
+- Only report the following variables in the output: `country`, `city`, `high_uncertainty` and `winter`
+
+```r
+climate %>% 
+  mutate(
+    high_uncertainty = ifelse(uncertainty > 1.5, 1, 0)
+    , winter = ifelse(month %in% c(1, 2, 12), 1, 0)
+    ) %>%
+  select(country, city, high_uncertainty, winter) %>%
+  head()
+```
+
+---
+
+```{r, echo = TRUE, collapse=TRUE}
+climate %>% 
+  mutate(
+    high_uncertainty = ifelse(uncertainty > 1.5, 1, 0)
+    , winter = ifelse(month %in% c(1, 2, 12), 1, 0)
+    ) %>%
+  select(country, city, high_uncertainty, winter) %>%
+  head()
+```
+
+---
+
+# Select, <span style="color:#6DA34D">create</span>, and rename variables {.build}
+
+- `transmute()` = `mutate()` + `select()`
+
+--
+
+```r
+climate %>% 
+  mutate(
+    high_uncertainty = ifelse(uncertainty > 1.5, 1, 0)
+    , winter = ifelse(month %in% c(1, 2, 12), 1, 0)
+    ) %>%
+  select(country, city, high_uncertainty, winter)
+```
+
+--
+
+```r
+climate %>% 
+  transmute(
+    country
+    , city
+    , high_uncertainty = ifelse(uncertainty > 1.5, 1, 0)
+    , winter = ifelse(month %in% c(1, 2, 12), 1, 0)
+    )
+```
