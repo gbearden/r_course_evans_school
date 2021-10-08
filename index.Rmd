@@ -85,7 +85,7 @@ install.packages('devtools')
     - Command line/Console
     - R Studio GUI
 
-![](./classes/figures/r_studio_install_packages.png)
+![](./figures/r_studio_install_packages.png)
 
 --- 
 class: inverse, middle, center
@@ -501,7 +501,9 @@ summary(airbnb)
 - `sort()` orders values in a vector  
 - `summary()` shows you descriptive statistics on a vector  
   - `summary()` can run on a vector or tibble  
-  
+
+--
+
 You can nest multiple functions
 ```r
 length(unique(airbnb$room_type))
