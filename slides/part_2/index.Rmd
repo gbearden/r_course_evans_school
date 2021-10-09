@@ -49,9 +49,7 @@ climate <- read_csv('https://bit.ly/3kKErEb', col_types = cols())
 
 - A bit more about troubleshooting
 - Chaining together functions with a pipe operator (`%>%`)
-- Selecting variables  
-- Creating variables  
-- Updating values  
+- Selecting, creating, and updating variables  
 - Subsetting tibbles/data frames  
 - Aggregation  
 
@@ -76,7 +74,11 @@ Make sure...
 So, how then do you "make sure" your code is error-free?
 
 - Run code line by line  
-- Ensure the code finished running (`+`s vs. `>`s in the R console)
+
+--
+- Ensure the code finished running (`+`s vs. `>`s in the R console)  
+
+--
 - Red "x" annotation beside line numbers (after saving your file)
 
 ![](./figures/red_x_example.png)
@@ -87,26 +89,26 @@ So, how then do you "make sure" your code is error-free?
 
 **Exercise 1 - 5 minutes**  
 
-This code contains 6 mistakes. The code is supposed to create four new data object called `reviews`, `price`, `med_reviews` and `max_price` and report median number of reviews and highest cost/night for a Seattle Airbnb rental.    
+This code contains 5 mistakes. The code is supposed to create four new data objects called `reviews`, `price`, `med_reviews` and `max_price` and report the median number of reviews and highest cost/night for a Seattle Airbnb rental.    
 
-- Correct 7 coding mistakes  
+- Correct 5 coding mistakes  
 - Reference the previous slides for help  
 
 --
 
 ```r
-library(tidyverse)
+library(tidyverse
         
-airbnb <- read_csv('https://bit.ly/3oadz2L')
+airbnb < read_csv('https://bit.ly/3oadz2L')
 
-reviews <- airbnb$reviews
+reviews <- airbnb$review
 price <- airbnb$price
 
 med_reviews <- median(reviews)
-max_price <- max(price)
+max_price <- MAX(price)
 
 med_reviews
-max_price
+max.price
 ```
 
 ```{r, echo = FALSE}
@@ -119,10 +121,7 @@ countdown(minutes = 5, seconds = 0)
 
 **Exercise 1 - 5 minutes**  
 
-This code contains 6 mistakes. The code is supposed to create four new data object called `reviews`, `price`, `med_reviews` and `max_price` and report median number of reviews and highest cost/night for a Seattle Airbnb rental.    
-
-- Correct 7 coding mistakes  
-- Reference the previous slides for help  
+This code contains 5 mistakes. The code is supposed to create four new data objects called `reviews`, `price`, `med_reviews` and `max_price` and report the median number of reviews and highest cost/night for a Seattle Airbnb rental.    
 
 ![](figures/troubleshoot_solution_1.png)
 
@@ -143,14 +142,36 @@ class: inverse, middle, center
 
 --
 
-```{r, echo = TRUE, collapse=TRUE}
-head(select(airbnb, host_id, reviews, rating, price), 3)
+```r
+select(airbnb, host_id, reviews, rating, price)
 ```
 
---
+```{r, echo = FALSE, collapse=TRUE}
+head(select(airbnb, host_id, reviews, rating, price), 3) %>% 
+  kbl() %>% 
+  kable_classic() %>% 
+  kable_styling(full_width = F, position = 'float_left')
+```
 
-```{r, echo = TRUE, collapse=TRUE}
-head(select(select(airbnb, host_id, reviews, rating, price), -rating), 3)
+---
+
+# <span style="color:#6DA34D">Select</span>, create, and rename variables 
+
+- `select()` keeps the named variables from the dataset
+- You can also remove variables from the dataset with `-`
+- Let's keep it simple for now and not nest functions within `select()`  
+  - Exception: `everything()`
+- Use `'``'` for multi-word variables and variable names that begin with numbers
+
+```r
+select(select(airbnb, host_id, reviews, rating, price), -rating)
+```
+
+```{r, echo = FALSE, collapse=TRUE}
+head(select(select(airbnb, host_id, reviews, rating, price), -rating), 3) %>% 
+  kbl() %>% 
+  kable_classic() %>% 
+  kable_styling(full_width = F, position = 'float_left')
 ```
 
 ---
@@ -163,8 +184,15 @@ head(select(select(airbnb, host_id, reviews, rating, price), -rating), 3)
   - Exception: `everything()`
 - Use `'``'` for multi-word variables and variable names that begin with numbers
 
-```{r, echo = TRUE, collapse=TRUE}
-head(select(select(airbnb, host_id, reviews, rating, price), host_id, price, everything()), 3)
+```r
+select(select(airbnb, host_id, reviews, rating, price), host_id, price, everything())
+```
+
+```{r, echo = FALSE, collapse=TRUE}
+head(select(select(airbnb, host_id, reviews, rating, price), host_id, price, everything()), 3) %>% 
+  kbl() %>% 
+  kable_classic() %>% 
+  kable_styling(full_width = F, position = 'float_left')
 ```
 
 ---
@@ -179,15 +207,14 @@ head(select(select(airbnb, host_id, reviews, rating, price), host_id, price, eve
 
 **Bad** 
 ```r
-head(select(select(airbnb, host_id, reviews, rating, price), host_id, price, everything()), 3)
+select(select(airbnb, host_id, reviews, rating, price), host_id, price, everything())
 ```
 
 **Good** 
 ```r
 airbnb %>%
   select(host_id, reviews, rating, price) %>% 
-  select(host_id, price, everything()) %>% 
-  head(3)
+  select(host_id, price, everything())
 ```
 
 ---
@@ -202,8 +229,7 @@ airbnb %>%
 ```r
 airbnb %>%
   select(host_id, reviews, rating, price) %>% 
-  select(host_id, price, everything()) %>% 
-  head(3)
+  select(host_id, price, everything()) 
 ```
 
 ---
@@ -226,7 +252,7 @@ airbnb %>% pull(address) %>% unique() %>% length()
 
 # Select, <span style="color:#6DA34D">create</span>, and rename variables
 
-`mutate()` creates variables
+- `mutate()` creates variables  
 - Create multiple variables in one go
 - Use functions you already learned within `mutate()`
   - `min()`, `max()`, `mean()`
@@ -285,9 +311,9 @@ ifelse(x > y, 'yes', 'no')
 
 - A little more on `ifelse()`  
   - A logical test with a true-or-false outcome
-  - To make comparisons use: `==`, `<`, `<=`, `>`, `>=`, `!=`, `%in%`, `!`
-  - Also can use: `is.numeric()`, `is.character()`, etc.
-  
+  - To make comparisons use: `==`, `<`, `<=`, `>`, `>=`, `!=`, `%in%`, `!`, `is.na()`
+  - Concatenate strings of values with `c()`
+
 --
 
 ```{r, echo = TRUE, collapse=TRUE}
@@ -306,8 +332,8 @@ ifelse(237 %in% 200:300, 'yes', 'no')
 
 - A little more on `ifelse()`  
   - A logical test with a true-or-false outcome
-  - To make comparisons use: `==`, `<`, `<=`, `>`, `>=`, `!=`, `%in%`, `!`
-  - Also can use: `is.numeric()`, `is.character()`, etc.
+  - To make comparisons use: `==`, `<`, `<=`, `>`, `>=`, `!=`, `%in%`, `!`, `is.na()`
+  - Concatenate strings of values with `c()`
 
 ```{r, echo = TRUE, collapse=TRUE}
 city_1 <- 'San Francisco'
@@ -410,7 +436,7 @@ climate %>%
 
 ---
 
-# Select, <span style="color:#6DA34D">create</span>, and rename variables {.build}
+# Select, <span style="color:#6DA34D">create</span>, and rename variables 
 
 - `transmute()` = `mutate()` + `select()`
 
@@ -436,3 +462,377 @@ climate %>%
     , winter = ifelse(month %in% c(1, 2, 12), 1, 0)
     )
 ```
+
+---
+
+# Select, create, and <span style="color:#6DA34D">rename</span> variables 
+
+- `rename()` assigns a new name to an existing variable
+- Renaming is possible with `transmute()` and `mutate()`as well
+  - `rename()`: renames selected variables, keeps all other variables
+  - `transmute()`: renames selected variables, drops all other variables
+  - `mutate()`: creates new variables (with new names) and keeps originals
+- Each variable transformation is comma-separated  
+
+--
+
+**Example**
+- How do I rename `address` as `city`, `price` as `cost`, and `name` as `description` with one of the methods in `airbnb`?
+
+--
+
+```r
+airbnb %>% 
+  rename(
+    city = address
+    , cost = price
+    , description = name
+    ) 
+```
+
+---
+
+# Select, create, and <span style="color:#6DA34D">rename</span> variables 
+
+- `rename()` assigns a new name to an existing variable
+- Renaming is possible with `transmute()` and `mutate()`as well
+  - `rename()`: renames selected variables, keeps all other variables
+  - `transmute()`: renames selected variables, drops all other variables
+  - `mutate()`: creates new variables (with new names) and keeps originals
+- Each variable transformation is comma-separated  
+
+```r
+airbnb %>% 
+  mutate(
+    city = address
+    , cost = price
+    , description = name
+    ) 
+```
+
+--
+
+```r
+airbnb %>% 
+  transmute(
+    city = address
+    , cost = price
+    , description = name
+    ) 
+```
+
+---
+
+# Exercise - 6 minutes
+
+- With `climate`, create a tibble that meets the following conditions:  
+
+  - The contains three variables: `year`, `city`, `temp`
+  - Make no changes to `year` 
+  - Rename `city` as `location`
+  - In `temp`, change `NA` values to `0`  
+
+```{r, echo = FALSE}
+countdown(minutes = 6, seconds = 0)
+```
+
+---
+
+# Exercise - 6 minutes
+
+- With `climate`, create a tibble that meets the following conditions:  
+
+  - The contains three variables: `year`, `city`, `temp`
+  - Make no changes to `year` 
+  - Rename `city` as `location`
+  - In `temp`, change `NA` values to `0`  
+
+```r
+climate %>% 
+  transmute(
+    year
+    , location = city
+    , temp = ifelse(is.na(temp), 0, temp)
+    ) 
+```
+
+---
+class: inverse, middle, center
+
+# Filter data frames
+
+---
+
+# Filter data frames
+
+- Use `filter()` to subset your data
+- With `filter()`, you tell R to exclude/include data that meet a logical TRUE/FALSE condition
+- Operators for conditions are the same as for `ifelse()`: `==`, `<`, `<=`, `>`, `>=`, `!=`, `%in%`, `!`, `is.na()`
+
+```r
+airbnb %>% 
+  filter(address != 'Seattle') %>% 
+  select(room_id, host_id, address) %>% 
+  tail(2)
+```
+
+---
+
+# Filter data frames 
+- You can stipulate multiple conditions with `filter()`
+  - Use `&` for 'and' expressions
+  - Use `|` for 'or' expressions
+  - If there are two or more sets of conditions, wrap conditions in `()` or use more than one `filter()`
+
+```r
+airbnb %>% 
+  filter(rating == 5 & room_type == 'Private room') %>% 
+  select(room_id, host_id, address, room_type, rating, name) %>% 
+  head(5)
+```
+
+--
+
+```r
+airbnb %>% 
+  filter(
+    rating == 5
+    & (
+      (price < 50 & room_type == 'Private room')
+      | (price > 50 & price < 100 & room_type == 'Entire home/apt')
+      )
+  ) %>% 
+  select(room_id, host_id, address, room_type, price, name) %>% 
+  head(5)
+```
+
+---
+
+# Filter data frames
+- Other functions for subsetting your data
+  - `head()`
+  - `tail()`
+  - `sample_n()`
+  
+--
+
+```{r, echo = TRUE, collapse=TRUE}
+airbnb %>% sample_n(3) %>% select(room_id, host_id, address, room_type, price, name)
+```
+
+--
+
+```{r, echo = TRUE, collapse=TRUE}
+airbnb %>% sample_n(3) %>% select(room_id, host_id, address, room_type, price, name)
+```
+
+---
+
+# Exercise - 12 minutes
+
+.pull-left[
+- Create a dataset called `colombia` that meets these conditions  
+  - Contains `temp` values not equal to `NA`  
+  - Contains data for 'Colombia' only
+  - Contains no dates prior to January 2001
+  - Contains a variable called `fahrenheit` that converts the `temp` value from celsius to fahrenheit. Use the formula: `(temp * 9/5) + 32` 
+  - Contains 4 variables in total in the following order: `year`, `month`, `city`, `fahrenheit`  
+]
+
+.pull-right[
+- Determine the following: 
+  - The number of records that meet the above filtering conditions  
+  - The fahrenheit mean for the dataset
+  - The names of cities in the dataset
+]
+
+```{r, echo = FALSE}
+countdown(minutes = 12, seconds = 0)
+```
+
+---
+
+# Exercise - 12 minutes
+
+- Create a dataset called `colombia` that meets these conditions  
+  - Contains `temp` values not equal to `NA`  
+  - Contains data for 'Colombia' only
+  - Contains no dates prior to January 2001
+  - Contains a variable called `fahrenheit` that converts the `temp` value from celsius to fahrenheit. Use the formula: `(temp * 9/5) + 32` 
+  - Contains 4 variables in total in the following order: `year`, `month`, `city`, `fahrenheit`  
+
+```r
+colombia <- climate %>% 
+  filter(! is.na(temp) & year > 2000 & country == 'Colombia') %>% 
+  transmute(
+    year
+    , month
+    , city
+    , fahrenheit = (temp * 9/5) + 32
+    )
+```
+
+---
+
+# Exercise - 12 minutes
+
+- Determine the following: 
+  - The number of records that meet the above filtering conditions  
+  - The fahrenheit mean for the dataset
+  - The names of cities in the dataset
+
+```r
+nrow(colombia)
+mean(colombia$fahrenheit) # OR colombia %>% pull(fahrenheit) %>% mean
+unique(colombia$city) # OR colombia %>% pull(city) %>% unique
+```
+
+---
+class: inverse, middle, center
+
+# Aggregate data with group_by() and summarise()
+
+---
+
+# group_by() and summarise() 
+
+- Count, sum, average, and identify max and min values
+- Example questions you could answer
+  - In `airbnb`, on average which city is most costly per night?   
+  - In `airbnb`, how many hosts offer each room type?
+  - In `airbnb`, on average how many more people does an 'Entire home/apt' accommodate than a 'Private room'?  
+  - In `climate`, what's the average temperature by year in cities in China?  
+  - In `climate`, to what extent does the range of uncertainty vary over time?  
+
+---
+
+# group_by() and summarise()  
+
+- In `group_by()`, list the variables by which you want to aggregate data
+- In `summarise()`, create a variable and define the variable with an aggregation function
+- Use `%>%` to 'link' `group_by()` and `summarise()`
+- Aggregation functions
+  - `n()`, `n_distinct()`, `sum()`, `mean()`, `max()`, `min()`, etc.
+- Perform multiple aggregations in a single `summarise()` function  
+
+--
+
+**Example**  
+In `airbnb`, on average which city is most costly per night?   
+
+--
+
+```r
+airbnb %>% 
+  group_by(address) %>% 
+  summarise(mean_cost = mean(price))
+```
+
+---
+
+# group_by() and summarise()  
+
+**Example**  
+In `airbnb`, how many hosts offer each room type?
+
+```r
+airbnb %>% 
+  group_by(room_type) %>% 
+  summarise(n_hosts = n_distinct(host_id))
+```
+
+--
+
+How do you update the code to count the number of hosts offering the three room types by city?
+
+--
+
+```r
+airbnb %>% 
+  group_by(room_type, address) %>% 
+  summarise(n_hosts = n_distinct(host_id))
+```
+
+--
+
+How do you further update the code to only see rows for Kirkland?
+
+--
+
+```r
+airbnb %>% 
+  group_by(room_type, address) %>% 
+  summarise(n_hosts = n_distinct(host_id)) %>% 
+  filter(address == 'Kirkland')
+```
+
+---
+
+# group_by() and summarise()  
+
+**Example**  
+In `airbnb`, how many hosts offer each room type?
+
+How do you further update the code to only see rows for Kirkland?
+
+```r
+airbnb %>% 
+  group_by(room_type, address) %>% 
+  summarise(n_hosts = n_distinct(host_id)) %>% 
+  filter(address == 'Kirkland')
+```
+
+--
+
+How would you create a variable that flags a host deficit for types of rentals (let's say any number of hosts fewer than 100)?
+
+--
+
+```r
+airbnb %>% 
+  group_by(room_type, address) %>% 
+  summarise(n_hosts = n_distinct(host_id)) %>% 
+  filter(address == 'Kirkland') %>% 
+  mutate(host_deficit = ifelse(n_hosts < 100, 'y', 'n'))
+```
+
+---
+
+# group_by() and summarise()  
+
+**Exercise - 10 minutes**  
+With `climate`, create a variable called `dif` that reports the difference between the smallest and largest uncertainty values for years after 1800. 
+- What is the largest difference in uncertainty? 
+- BONUS POINTS: In which year is the largest difference?
+
+```{r, echo = FALSE}
+countdown(minutes = 10, seconds = 0)
+```
+
+--
+
+**Hint**: To answer the bonus points question you need to use `max()` inside of `filter()`
+
+---
+
+**Exercise - 10 minutes**  
+With `climate`, create a variable called `dif` that reports the difference between the smallest and largest uncertainty values for years after 1800. 
+- What is the largest difference in uncertainty?  
+- BONUS POINTS: In which year is the largest difference?  
+
+```r
+dif_uncertainty <- climate %>% 
+  filter(year > 1800) %>% 
+  group_by(year) %>%
+  summarise(
+    min = min(uncertainty, na.rm = TRUE)
+    , max = max(uncertainty, na.rm = TRUE)
+    ) %>%
+  mutate(dif = max - min)
+  
+max(dif_uncertainty$dif)
+
+dif_uncertainty %>% 
+  filter(dif == max(dif))
+```
+
