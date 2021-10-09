@@ -1,7 +1,7 @@
 
 <p align="center">
   <b>Syllabus</b><br>    
-  <b>Autumn 2021</b><br>
+  <b>Autumn 2020</b><br>
   <b>Introduction to Data Processing and Visualization Design in R</b><br>
 </p>
 
