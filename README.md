@@ -67,7 +67,7 @@ At the end of Part 4, students should be able to prepare data for analysis and v
 
 ## Data
 
-We will use the datasets below in our workshop. ([Here](https://github.com/gbearden/r_course_evans_school/blob/master/process_course_data.r) is code to prepare the temperature and Airbnb data.)
+We will use the datasets below in our workshop. ([Here](https://github.com/gbearden/r_course_evans_school/blob/master/data/process_course_data.r) is code to prepare the temperature and Airbnb data.)
 
 * [Global Temperatures Source](https://www.kaggle.com/sohelranaccselab/global-climate-change)
   * [Global Temperatures Dataset](https://raw.githubusercontent.com/gbearden/r_course_evans_school/master/data/global_temperatures.csv)
@@ -104,4 +104,4 @@ R community members produce valuable content to help you learn how to program in
 * [Github](https://github.com/). If you're serious about any sort of programming, you should create a Github account.
  
 ---
-Here are syllabi from previous quarters: [Autumn 2020](https://github.com/gbearden/r_course_evans_school/blob/master/previous_courses/syllabus_a20.md), [Autumn 2019](https://github.com/gbearden/r_course_evans_school/blob/master/previous_courses/syllabus_a19.md), [Autumn 2018](https://github.com/gbearden/r_course_evans_school/blob/master/previous_courses/syllabus_a18.md), [Winter 2018](https://github.com/gbearden/r_course_evans_school/blob/master/previous_courses/syllabus_w18.md)
+Here are syllabi from previous quarters: [Autumn 2020](https://github.com/gbearden/r_course_evans_school/blob/master/archive/syllabus_a20.md), [Autumn 2019](https://github.com/gbearden/r_course_evans_school/blob/master/archive/syllabus_a19.md), [Autumn 2018](https://github.com/gbearden/r_course_evans_school/blob/master/archive/syllabus_a18.md), [Winter 2018](https://github.com/gbearden/r_course_evans_school/blob/master/archive/syllabus_w18.md)
