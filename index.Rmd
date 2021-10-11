@@ -33,13 +33,13 @@ h4.date {
 
 <br>
 
-# Schedule Overview
+## Schedule Overview
 
 **Time: 6:00-8:50pm**  
 **Class Dates: 10/14, 10/21, 10/28, 11/4**  
 **Location: [PAR 160](https://www.washington.edu/maps/#!/par)**
 
-## Overview
+## Course Overview
 
 This is an introductory course that will avail R functionality in a way that is accessible to new R programmers. You will learn the fundamental skills required to prepare, analyze and visualize data in R. 
 
