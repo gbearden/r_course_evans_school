@@ -21,17 +21,15 @@ h3.subtitle {
 }
 h4.author { 
     font-size: 18px;
-  font-family: "Times New Roman", Times, serif;
   color: Black;
   text-align: center;
 }
 h4.date { 
   font-size: 18px;
-  font-family: "Times New Roman", Times, serif;
   color: Black;
   text-align: center;
 }
-</style>
+</style> 
 
 <br>
 
