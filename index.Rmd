@@ -50,7 +50,7 @@ This is an applied course that focuses on successful execution of code. While st
 ## Course Expectations
 
 - Attend four classes. Class dates are 10/14, 10/21, 10/28, & 11/4. A full class is 2 hours and 50 minutes, breaks included.
-- Submit 2 "client ready" data visualizations.
+- Submit 2 "stakeholder-ready" data visualizations.
   - Due on November 11 or before
  
 ## Accomodations
@@ -65,9 +65,9 @@ Please let me know if you need any specific accommodations related to religious 
 
 Part 1 will focus on the basics of R. Students will learn about key R concepts like data types and the anatomy of a function, how to read (import) and write (export) data, and the essentials of writing successful code.
 
-We will also begin to explore the `tidyverse` as a data processing tool and troubleshooting tactics that students can use to solve coding errors.
+We will also begin to explore data summary techniques and troubleshooting tactics that students can use to solve coding errors.
 
-At the end of Part 1, students should be familiar with the R interface, know how to perform basic operations, and walk through a series of steps to troubleshoot code.
+At the end of Part 1, students should be familiar with the R interface, know how to perform basic operations, calculate summary statistics, and walk through a series of steps to troubleshoot code.
 
 Course materials: [Base R cheat sheet](https://www.rstudio.com/wp-content/uploads/2016/05/base-r.pdf), [Data transformation cheat sheet](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf)
 
@@ -75,7 +75,7 @@ Course materials: [Base R cheat sheet](https://www.rstudio.com/wp-content/upload
 
 Part 2 will focus on data processing. We will use a variety of methods to manipulate data and prepare it for analysis. The `tidyverse` will be emphasized. Students will learn how to manipulate data at various levels, including at the dataset-level, the variable-level, and the value-level.
 
-At the end of Part 2, students should be able to transform datasets so that data are suitable for analysis.
+At the end of Part 2, students should possess skills necessary to transform datasets so that data are suitable for analysis.
 
 Class reference materials: [Data transformation cheat sheet](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf)
 
@@ -91,7 +91,7 @@ Class reference materials: [Data visualization cheat sheet](https://www.rstudio.
 
 Part 4 will build on Parts 2 and 3, introducing additional data processing and visualization skills simultaneously. 
 
-At the end of Part 4, students should be able to prepare data for analysis and visualization using a broad set of coding skills.
+At the end of Part 4, students should be able to prepare data for analysis and "stakeholder-ready" visualization using a broad set of coding skills.
 
 ## Data
 

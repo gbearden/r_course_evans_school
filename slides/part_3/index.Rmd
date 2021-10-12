@@ -1,0 +1,399 @@
+---
+title: "Part 3 - Data Visualization with ggplot2"
+author: "Graham Bearden"
+institute: "University of Washington"
+date: "October 28, 2021"
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    css: [default, metropolis, metropolis-fonts]
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+# Before we get started
+
+SAVE FOR ANSWERING QUESTIONS HELD OVER FROM THE PREVIOUS CLASS
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library(knitr)
+library(countdown)
+library(kableExtra)
+options(scipen=999)
+
+opts_chunk$set(warning=FALSE, message=FALSE)
+
+airbnb <- read_csv('https://bit.ly/3oadz2L', col_types = cols())
+climate <- read_csv('https://bit.ly/3kKErEb', col_types = cols())
+```
+
+---
+
+# What we learned in the previous class
+
+- A bit more about troubleshooting
+- Chaining together functions with a pipe operator (`%>%`)
+- Selecting, creating, and updating variables  
+- Subsetting tibbles/data frames  
+- Aggregation  
+
+---
+
+# What we'll learn today  
+
+- Overview of ggplot2  
+- Building bar, line, and scatter plots
+- Customizing plots
+
+---
+
+# A reminder on troubleshooting
+
+- Run code line by line  
+- Ensure the code finished running (`+`s vs. `>`s in the R console)  
+- Red "x" annotation beside line numbers (after saving your file)
+
+![](./figures/red_x_example.png)
+
+---
+
+# Troubleshooting exercise 
+
+**Exercise 1 - 5 minutes**  
+
+This code contains 4 mistakes. The code is supposed to report the mean, median, and max temperatures for Brazilian cities in the 19th and 20th centuries.      
+
+--
+
+```r
+library(tidyverse)
+        
+climate <- read_csv('https://bit.ly/3kKErEb')
+
+climate %>% 
+  fitler(
+    country == 'Brazil' 
+    & ! is.na(temp) 
+    & year < 200
+  ) %>% 
+  mutate(century = ifese(year >= 1900, '20th Century', '19th Century')) %>% 
+  group_by(century, city) %>% 
+  summarise(
+    mean_temp = mean(temp) 
+    median_temp = median(temp)
+    , max_temp = max(temp)
+    ) %>% 
+  arrange(city)
+```
+
+```{r, echo = FALSE}
+countdown(minutes = 5, seconds = 0)
+```
+
+---
+
+# Troubleshooting exercise 
+
+**Exercise 1 - 5 minutes**  
+
+This code contains 4 mistakes. The code is supposed to report the mean, median, and max temperatures for Brazilian cities in the 19th and 20th centuries.      
+
+![](figures/troubleshoot_solution_1.png)
+
+---
+class: inverse, middle, center
+
+# Visualization with ggplot2
+
+---
+
+# ggplot2
+
+- Yardstick for plotting data in R  
+- `tidyverse` package  
+- Virtually no limits to plot types  
+- Plotting resources  
+  - [ggplot2 Launch Page](http://ggplot2.tidyverse.org/)
+  - [Top 50 ggplot2 Visualizations](http://r-statistics.co/Top50-Ggplot2-Visualizations-MasterList-R-Code.html)
+
+---
+
+# Plot types
+
+<img src="figures/plots_1.png" style="height: 550px"/>
+
+---
+
+# Plot types
+
+![](figures/plots_2.png)
+
+---
+
+# Plot types
+
+![](figures/plots_3.png)
+
+---
+
+# Plot types
+
+What we will learn
+
+<img src="figures/bar.png" style="height: 200px"/> <img src="figures/stacked_bar.png" style="height: 200px"/> <img src="figures/hist.png" style="height: 200px"/> <img src="figures/scatter.png" style="height: 200px"/> <img src="figures/line.png" style="height: 200px"/>
+
+--
+
+Requests to learn another plot type?
+
+---
+
+# Plot types
+
+1 discrete variable (plus other optional discrete and/or continuous variables)  
+
+<img src="figures/stacked_bar.png" style="height: 150px"/> <img src="figures/bar.png" style="height: 150px"/>  
+
+1 continuous variable  
+
+<img src="figures/hist.png" style="height: 150px"/>  
+
+---
+
+# Plot types
+
+2 continuous variables  
+
+<img src="figures/scatter.png" style="height: 150px"/>  
+
+1 continuous variable + date variable  
+
+<img src="figures/line.png" style="height: 150px"/>  
+
+---
+
+# Confirm that you can plot data 
+
+```r
+library(tidyverse)
+mpg %>% ggplot() + geom_point(aes(displ, hwy))
+```
+
+--
+
+```{r, echo = FALSE, collapse=TRUE, fig.width = 7, fig.height=5, dpi=300}
+mpg %>% ggplot() + geom_point(aes(displ, hwy))
+```
+
+---
+
+# Confirm that you can plot data 
+
+- If you see a plot, you're ready to go!  
+- If you do not, reinstall `tidyverse` and re-run the test code
+
+```r
+install.packages('tidyverse')
+library(tidyverse)
+mpg %>% ggplot(aes(displ, hwy))) + geom_point()
+```
+
+- If it still didn't work, install `ggplot2` and re-run the test code  
+
+```r
+install.packages('ggplot2')
+library(ggplot2)
+mpg %>% ggplot(aes(displ, hwy)) + geom_point()
+```
+
+---
+
+# How to plot data
+
+1. Pick your data
+2. Pick your chart type (geom)
+3. Program stuff like chart titles, axis names, axis types, and legends (scales)  
+4. Make it pretty (themes)
+5. Keep tuning and reuse code
+
+---
+
+# Geoms
+
+- Every plot needs a `ggplot()` function and a geom layer
+- Separate layers and other plotting functions with `+`
+
+```r
+ggplot() + geom_bar()       # create bar and stacked bar plots
+ggplot() + geom_histogram() # create histograms
+ggplot() + geom_point()     # create scatter plots
+ggplot() + geom_line()      # create line plots
+```
+
+--
+
+- Your data is an argument in the `ggplot()` function  
+
+```r
+airbnb %>% ggplot() + geom_bar()
+ggplot(airbnb) + geom_bar()
+```
+
+---
+
+# Geoms
+
+- Map your data to the plot with `aes()`
+  - `aes()` maps the variables in your data to the plot
+  - `aes()` can be an argument in `ggplot()` or the geom  
+  - Lots of `aes()` arguments
+
+```r
+airbnb %>% ggplot(aes(x = address)) + geom_bar()
+airbnb %>% ggplot() + geom_bar(aes(x = address))
+```
+
+--
+
+```r
+aes(x = NULL, y = NULL, color = NULL
+  , fill = NULL, alpha = NULL, label = NULL
+  , shape = NULL, size = NULL, group = NULL
+  , linetype = NULL
+  )
+```
+
+---
+
+# Geoms - Bar Plot
+
+- Mapping a character variable to `x`  
+
+```{r, dpi=300, fig.height = 4, fig.width = 7, echo = TRUE, collapse=TRUE}
+airbnb %>% ggplot(aes(x = address, fill = address)) + geom_bar()
+```
+
+---
+
+# Geoms - Bar Plot
+
+- Mapping a second character variable to `fill` builds a stacked bar plot
+
+```{r, dpi=300, fig.height = 4, fig.width = 7, echo = TRUE, collapse=TRUE}
+airbnb %>% ggplot(aes(x = address, fill = room_type)) + geom_bar()
+```
+
+---
+
+# Geoms - Bar Plot
+
+- Other handy features when building bar plots  
+  - `stat` in `geom_bar()`: "count" vs. "identity" 
+  - `position`in `geom_bar()`: "stacked" vs. "dodge"
+  - `coord_flip()`
+  - `reorder()`
+
+.pull-left[
+```r
+airbnb %>% 
+  ggplot(
+    aes(
+      x = address
+      , fill = address
+      )
+    ) + 
+  geom_bar()
+```
+]
+.pull-right[
+```{r foo, tidy=TRUE, fig.show='hide'}
+airbnb %>% 
+  group_by(address) %>%   #<<
+  summarise(n = n()) %>%   #<<
+  ggplot(
+    aes(
+      x = address
+      , y = n   #<<
+      , fill = address
+      )
+    ) + 
+  geom_bar(stat = 'identity')   #<<
+```
+]
+  
+---
+
+# Geoms - Bar Plot
+
+- Other handy features when building bar plots  
+  - `stat` in `geom_bar()`: "count" vs. "identity" 
+  - `position`in `geom_bar()`: "stacked" vs. "dodge"
+  - `coord_flip()`
+  - `reorder()`
+
+--
+
+```r
+airbnb %>% 
+  ggplot(aes(x = address, fill = room_type)) + 
+  geom_bar(position = 'dodge')
+```
+
+--
+
+```r
+airbnb %>% 
+  ggplot(aes(x = address, fill = room_type)) + 
+  geom_bar() + 
+  coord_flip()
+```
+
+---
+
+# Geom - Bar Plot
+
+Exercise - 7 minutes
+
+- Build a bar chart with `climate` data that shows the number of months with temperatures above and below 0 in 2000 in China
+- To complete the task, you'll need to:
+  - Subset your data using `filter()`
+  - Create a new variable called `temp_category` that tells whether a temperature is 'Below 0' or 'Above 0'
+  - Set the color of the bar segments to equal `temp_category`
+  
+
+```{r, echo = FALSE}
+countdown(minutes = 7, seconds = 0)
+```
+
+---
+
+# Geom - Bar Plot
+
+Exercise - 7 minutes
+
+- Build a bar chart with `climate` data that shows the number of months with temperatures above and below 0 in 2000 in China
+- To complete the task, you'll need to:
+  - Subset your data using `filter()`
+  - Create a new variable called `temp_category` that tells whether a temperature is 'Below 0' or 'Above 0'
+  - Set the color of the bar segments to equal `temp_category`
+  
+```r
+climate %>% 
+  filter(country == 'China' & year == 2000) %>% 
+  mutate(temp_category = ifelse(temp < 0, 'Below 0', 'Above 0')) %>%         
+  ggplot(aes(x = city, fill = temp_category)) + 
+  geom_bar()
+```
+
+---
+
+```{r,  fig.height = 5, fig.width = 8, echo = TRUE, collapse=TRUE}
+climate %>% 
+  filter(country == 'China' & year == 2000) %>% 
+  mutate(temp_category = ifelse(temp < 0, 'Below 0', 'Above 0')) %>% 
+  ggplot(aes(x = city, fill = temp_category)) + 
+  geom_bar()
+```
