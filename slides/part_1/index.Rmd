@@ -38,7 +38,7 @@ climate <- read_csv('https://bit.ly/3kKErEb', col_types = cols())
 
 ---
 
-# Defining R Programming and the R Programmer 
+# Defining R and the R Programmer 
 
 - Typical uses for R
   - Data analysis
@@ -51,7 +51,7 @@ climate <- read_csv('https://bit.ly/3kKErEb', col_types = cols())
   - Google for answers
   - Borrow code
   - Ask friends and pros for help
-- Useful references (see Reference Materials in the [syllabus](https://github.com/gbearden/r_course_evans_school) for more)
+- Useful references (see Reference Materials in the [syllabus](https://gbearden.github.io/r_course_evans_school/) for more)
   - help()
   - ??
   - [R Bloggers](https://www.r-bloggers.com/)
@@ -71,7 +71,7 @@ climate <- read_csv('https://bit.ly/3kKErEb', col_types = cols())
 --
 
 ```r
-install.packages('devtools')
+install.packages('tidyverse')
 ```
 
 ---
@@ -101,7 +101,6 @@ class: inverse, middle, center
 
 ```r
 install.packages('tidyverse')
-install.packages('ggthemes')
 library(tidyverse)
 ```
 
@@ -137,7 +136,7 @@ sd(foo)
 
 - Function arguments
   - Let's look at arguments in the `lm` and `min` functions  
-  - Arguments are function inputs that tell your function "how" and "to what"
+  - Arguments are function inputs that tell your function "how" and "to what" and state conditions for operations
   - Arguments are comma separated
 
 ```r
@@ -160,7 +159,7 @@ cat_function <- function(love = TRUE){
 
 - Function arguments
   - Let's look at arguments in the `lm` and `min` functions  
-  - Arguments are function inputs that tell your function "how" and "to what"
+  - Arguments are function inputs that tell your function "how" and "to what" and state conditions for operations
   - Arguments are comma separated
 
 ```r
@@ -176,8 +175,8 @@ sd(foo)
 # Libraries, <span style='color:#6DA34D'>functions</span>, data
 
 - Function arguments
-  - Let's look at arguments in the `lm` and `min` functions    
-  - Arguments are function inputs that tell your function "how" and "to what"
+  - Let's look at arguments in the `lm` and `min` functions  
+  - Arguments are function inputs that tell your function "how" and "to what" and state conditions for operations
   - Arguments are comma separated
 
 ```{r, echo = TRUE, collapse=TRUE}
@@ -193,8 +192,8 @@ sd(foo)
 # Libraries, <span style='color:#6DA34D'>functions</span>, data
 
 - Function arguments
-  - Let's look at arguments in the `lm` and `min` functions    
-  - Arguments are function inputs that tell your function "how" and "to what"
+  - Let's look at arguments in the `lm` and `min` functions  
+  - Arguments are function inputs that tell your function "how" and "to what" and state conditions for operations
   - Arguments are comma separated
 
 ```{r, echo = TRUE, collapse=TRUE}
@@ -209,35 +208,26 @@ sd(foo, na.rm = TRUE)
 
 # Libraries, functions, <span style='color:#6DA34D'>data</span>
 
+- Data type is an important concept in all types of programming
+  - Creates a set of parameters and expectations for operations
 - Oh my, so many types of data!
   - Vectors, tibbles, data frames, matrices
   - Integers, numbers, characters, factors
-- Confirm data type
+  
+--
+
+Confirm data type
+
 ```r
 class(c('Washington', 'Oregon', 'Idaho'))
 is.character(c('Washington', 'Oregon', 'Idaho'))
 is.factor(c('Washington', 'Oregon', 'Idaho'))
 ```
-- Coerce data type
-```r
-as.factor(c('Washington', 'Oregon', 'Idaho'))
-class(as.factor(c('Washington', 'Oregon', 'Idaho')))
-```
 
----
+--
 
-# Libraries, functions, <span style='color:#6DA34D'>data</span>
+Coerce data type
 
-- Oh my, so many types of data!
-  - Vectors, tibbles, data frames, matrices  
-  - Integers, numbers, characters, factors
-- Confirm data type
-```{r, echo = TRUE, collapse=TRUE}
-class(c('Washington', 'Oregon', 'Idaho'))
-is.character(c('Washington', 'Oregon', 'Idaho'))
-is.factor(c('Washington', 'Oregon', 'Idaho'))
-```
-- Coerce data type
 ```r
 as.factor(c('Washington', 'Oregon', 'Idaho'))
 class(as.factor(c('Washington', 'Oregon', 'Idaho')))
@@ -247,16 +237,47 @@ class(as.factor(c('Washington', 'Oregon', 'Idaho')))
 
 # Libraries, functions, <span style='color:#6DA34D'>data</span>
 
+- Data type is an important concept in all types of programming
+  - Creates a set of parameters and expectations for operations
 - Oh my, so many types of data!
   - Vectors, tibbles, data frames, matrices  
   - Integers, numbers, characters, factors
-- Confirm data type
+  
+Confirm data type
+
 ```{r, echo = TRUE, collapse=TRUE}
 class(c('Washington', 'Oregon', 'Idaho'))
 is.character(c('Washington', 'Oregon', 'Idaho'))
 is.factor(c('Washington', 'Oregon', 'Idaho'))
 ```
-- Coerce data type
+
+Coerce data type
+
+```r
+as.factor(c('Washington', 'Oregon', 'Idaho'))
+class(as.factor(c('Washington', 'Oregon', 'Idaho')))
+```
+
+---
+
+# Libraries, functions, <span style='color:#6DA34D'>data</span>
+
+- Data type is an important concept in all types of programming
+  - Creates a set of parameters and expectations for operations
+- Oh my, so many types of data!
+  - Vectors, tibbles, data frames, matrices  
+  - Integers, numbers, characters, factors
+  
+Confirm data type
+
+```{r, echo = TRUE, collapse=TRUE}
+class(c('Washington', 'Oregon', 'Idaho'))
+is.character(c('Washington', 'Oregon', 'Idaho'))
+is.factor(c('Washington', 'Oregon', 'Idaho'))
+```
+
+Coerce data type
+
 ```{r, echo = TRUE, collapse=TRUE}
 as.factor(c('Washington', 'Oregon', 'Idaho'))
 class(as.factor(c('Washington', 'Oregon', 'Idaho')))
@@ -285,6 +306,7 @@ seq(from = 0, to = 100, by = 10)
   - **Vectors**, tibbles, data frames, matrices  
 - Vectors contain 1 or more values in a string  
 - Call a specific element by its location in a vector  
+
 ```r
 c('Washington', 'Oregon', 'Idaho')[2]
 seq(from = 0, to = 100, by = 10)[6]
@@ -298,6 +320,7 @@ seq(from = 0, to = 100, by = 10)[6]
   - **Vectors**, tibbles, data frames, matrices  
 - Vectors contain 1 or more values in a string  
 - Call a specific element by its location in a vector  
+
 ```{r, echo = TRUE, collapse=TRUE}
 c('Washington', 'Oregon', 'Idaho')[2]
 seq(from = 0, to = 100, by = 10)[6]
@@ -326,12 +349,13 @@ tibble(
   - Use the `$` between the tibble name and the variable name
   - Also able to call the column (or row) by index number
 
-```{r, echo = TRUE, collapse=TRUE}
-head(cars$speed, 7)
+```r
+cars$speed
+cars[,1]
 ```
 
-```{r, echo = TRUE, collapse=TRUE}
-head(cars[,1], 7)
+```{r, echo = FALSE, collapse=FALSE}
+head(cars$speed, 7)
 ```
 
 ---
@@ -372,13 +396,14 @@ class: inverse, middle, center
 
 # Let's apply what we learned to real data
 
-You are an analyst at the City of Seattle. City leadership wants to develop new policy to regulate Airbnb properties. Over the next month, you will be asked to prepare findings that you observe in the data.  
+You are an analyst at the City of Seattle. City leadership wants to develop new policy to regulate Airbnb properties. Over the next month, you will be asked to prepare findings that you observe in the [dataset compiled on Airbnb properties](https://www.kaggle.com/shanelev/seattle-airbnb-listings).  
 
 --
 
 **Exercise 1 - 5 minutes**  
 - What type of data object is `airbnb`?  
-- What are the fewest and average number of `reviews`?  
+- What is the fewest number of `reviews` for a property?  
+- What is the average number of `reviews` for a property?  
 - What is the range of number of `bathrooms` in the `airbnb` data?  
 
 --
@@ -398,7 +423,8 @@ countdown(minutes = 5, seconds = 0)
 
 **Exercise 1 - 5 minutes**  
 - What type of data object is `airbnb`?  
-- What are the fewest and average number of `reviews`?  
+- What is the fewest number of `reviews` for a property?  
+- What is the average number of `reviews` for a property?  
 - What is the range of number of `bathrooms` in the `airbnb` data?  
 
 ```{r, echo = TRUE, collapse=TRUE}
