@@ -61,7 +61,7 @@ Please let me know if you need any specific accommodations related to religious 
 
 ## Schedule
 
-#### October 8 | Part 1
+#### October 8 | [Part 1](https://gbearden.github.io/r_course_evans_school/slides/part_1/)
 
 Part 1 will focus on the basics of R. Students will learn about key R concepts like data types and the anatomy of a function, how to read (import) and write (export) data, and the essentials of writing successful code.
 
@@ -69,7 +69,7 @@ We will also begin to explore data summary techniques and troubleshooting tactic
 
 At the end of Part 1, students should be familiar with the R interface, know how to perform basic operations, calculate summary statistics, and walk through a series of steps to troubleshoot code.
 
-Course materials: [Base R cheat sheet](https://www.rstudio.com/wp-content/uploads/2016/05/base-r.pdf), [Data transformation cheat sheet](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf)
+Course materials: [Base R cheat sheet](https://iqss.github.io/dss-workshops/R/Rintro/base-r-cheat-sheet.pdf), [Data transformation cheat sheet](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf)
 
 #### October 15 | Part 2
 
@@ -77,7 +77,7 @@ Part 2 will focus on data processing. We will use a variety of methods to manipu
 
 At the end of Part 2, students should possess skills necessary to transform datasets so that data are suitable for analysis.
 
-Class reference materials: [Data transformation cheat sheet](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf)
+Class reference materials: [Data transformation cheat sheet](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf), [R for Stata folks](https://www.matthieugomez.com/statar/manipulate-data.html)
 
 #### October 22 | Part 3
 
@@ -85,7 +85,7 @@ Part 3 will focus on data visualization. We will use `ggplot`, a visualization l
 
 At the end of Part 3, students should be able to produce a standard set of plots and manipulate plot aesthetics.
 
-Class reference materials: [Data visualization cheat sheet](https://www.rstudio.com/wp-content/uploads/2016/11/ggplot2-cheatsheet-2.1.pdf), [Coolors](https://coolors.co/), [R for Stata folks](https://johnricco.github.io/2016/06/14/stata-dplyr/)
+Class reference materials: [Data visualization cheat sheet](https://github.com/rstudio/cheatsheets/blob/master/data-visualization-2.1.pdf), [Coolors](https://coolors.co/)
 
 #### October 29 | Part 4
 
