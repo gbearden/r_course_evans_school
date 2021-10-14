@@ -61,7 +61,7 @@ Please let me know if you need any specific accommodations related to religious 
 
 ## Schedule
 
-#### October 8 | Part 1
+#### October 8 | [Part 1](https://gbearden.github.io/r_course_evans_school/slides/part_1/)
 
 Part 1 will focus on the basics of R. Students will learn about key R concepts like data types and the anatomy of a function, how to read (import) and write (export) data, and the essentials of writing successful code.
 
@@ -69,7 +69,7 @@ We will also begin to explore data summary techniques and troubleshooting tactic
 
 At the end of Part 1, students should be familiar with the R interface, know how to perform basic operations, calculate summary statistics, and walk through a series of steps to troubleshoot code.
 
-Course materials: [Base R cheat sheet](https://www.rstudio.com/wp-content/uploads/2016/05/base-r.pdf), [Data transformation cheat sheet](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf)
+Course materials: [Base R cheat sheet](https://iqss.github.io/dss-workshops/R/Rintro/base-r-cheat-sheet.pdf)
 
 #### October 15 | Part 2
 
@@ -77,7 +77,7 @@ Part 2 will focus on data processing. We will use a variety of methods to manipu
 
 At the end of Part 2, students should possess skills necessary to transform datasets so that data are suitable for analysis.
 
-Class reference materials: [Data transformation cheat sheet](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf)
+Class reference materials: [Data transformation cheat sheet](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf), [R for Stata folks](https://www.matthieugomez.com/statar/manipulate-data.html)
 
 #### October 22 | Part 3
 
@@ -85,7 +85,7 @@ Part 3 will focus on data visualization. We will use `ggplot`, a visualization l
 
 At the end of Part 3, students should be able to produce a standard set of plots and manipulate plot aesthetics.
 
-Class reference materials: [Data visualization cheat sheet](https://www.rstudio.com/wp-content/uploads/2016/11/ggplot2-cheatsheet-2.1.pdf), [Coolors](https://coolors.co/), [R for Stata folks](https://johnricco.github.io/2016/06/14/stata-dplyr/)
+Class reference materials: [Data visualization cheat sheet](https://github.com/rstudio/cheatsheets/blob/master/data-visualization-2.1.pdf), [Coolors](https://coolors.co/)
 
 #### October 29 | Part 4
 
@@ -116,11 +116,11 @@ R community members produce valuable content to help you learn how to program in
 * [R Studio](https://www.rstudio.com/). The R software we will use in the course.
 * [tidyverse](http://tidyverse.org/). The launch page for tidyverse.
 * [Cheat sheets](https://www.rstudio.com/resources/cheatsheets/)
-    + [Base R](https://www.rstudio.com/wp-content/uploads/2016/05/base-r.pdf). This is useful to get started.
+    + [Base R](https://iqss.github.io/dss-workshops/R/Rintro/base-r-cheat-sheet.pdf). This is useful to get started.
     + [Data transformation](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf). I use this all the time when working with dplyr and tidyr.
-    + [Data visualization](https://www.rstudio.com/wp-content/uploads/2016/11/ggplot2-cheatsheet-2.1.pdf). A great quick-reference for the ggplot library.
+    + [Data visualization](https://github.com/rstudio/cheatsheets/blob/master/data-visualization-2.1.pdf). A great quick-reference for the ggplot library.
     + [R Markdown](https://www.rstudio.com/wp-content/uploads/2016/03/rmarkdown-cheatsheet-2.0.pdf). A useful reference for using R Markdown.
-    + [Lubridate](http://blog.yhat.com/static/pdf/R_date_cheat_sheet.pdf). Dates in R are a pain in the butt. This cheat sheet and the lubridate library will make your life easier.  
+    + [Lubridate](https://evoldyn.gitlab.io/evomics-2018/ref-sheets/R_lubridate.pdf). Dates in R are a pain in the butt. This cheat sheet and the lubridate library will make your life easier.  
 * [RStudio Cloud setup](https://github.com/gbearden/r_course_evans_school/blob/master/rcloud_setup.md)  
 * [Karl Broman on data organization](http://kbroman.org/dataorg/). Prepare your data according to Karl's recommendations and R will become a lot easier. (The tip is relevant to all other KB recommendations.)
 * [Jose Manuel Magallanes on data collection and organization](https://www.amazon.com/Introduction-Science-Social-Policy-Research/dp/1107540259/ref=sr_1_1?ie=UTF8&qid=1504135785&sr=8-1&keywords=jose+manuel+magallanes). Jose teaches the Computational Thinking for Governance Analytics course at the Evans School. He published this book a few years ago.
