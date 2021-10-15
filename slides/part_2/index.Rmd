@@ -22,6 +22,7 @@ library(tidyverse)
 library(knitr)
 library(countdown)
 library(kableExtra)
+library(lubridate)
 options(scipen=999)
 
 opts_chunk$set(warning=FALSE, message=FALSE)
@@ -836,3 +837,47 @@ dif_uncertainty %>%
   filter(dif == max(dif))
 ```
 
+---
+class: inverse, middle, center
+
+# Dates
+
+---
+
+# Dates
+
+- Working with dates can be difficult  
+  - Date formats vary across datasets
+  - Sometimes dates include times, sometimes not
+  
+--
+
+- There are ways to make working with dates easier
+  - Use `lubridate` package
+  - Put elements of dates in distinct columns if possible  
+  - Remove time from date if possible
+  
+---
+
+# Dates
+
+- Create dates with `lubridate` functions (`ymd()`, `dmy()`, `mdy()`)
+  - Apply functions to character values ('2020-03-15')  
+  - Apply functions to concatenated tibble columns using `paste0()`
+
+--
+
+```r
+ymd('2020-03-15')
+dmy('15-03-2020')
+class(ymd('2020-03-15'))
+```
+
+```r
+climate %>% 
+  mutate(
+    date = ym(paste0(year, '-', month))
+  )
+```
+
+  
