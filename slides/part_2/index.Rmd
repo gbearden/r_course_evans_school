@@ -15,7 +15,7 @@ output:
 
 # Preamble
 
-- We'll use `%>%` when working with vectors
+- We'll use `%>%` when working with vectors  
 - Datasets  
   - [Kaggle](https://www.kaggle.com/datasets)
   - [Data.gov](https://www.data.gov/)
