@@ -13,7 +13,7 @@ output:
       countIncrementalSlides: false
 ---
 
-# Before we get started
+# Preamble
 
 - We'll use `%>%` when working with vectors
 - Datasets  
@@ -25,6 +25,10 @@ output:
   - [BuzzFeed](https://github.com/BuzzFeedNews)
   - BONUS dataset: [Great British Bakeoff](https://github.com/apreshill/bakeoff)  
 - [R for Stata users](https://www.matthieugomez.com/statar/manipulate-data.html)
+- Data management and multiple file versions  
+  - Manage versioning through in script
+  - Most file hosting services (like Dropbox) offer version control
+  - [Data Version Control](https://dvc.org/)
 
 ```{r setup, include=FALSE}
 library(tidyverse)
@@ -38,6 +42,15 @@ opts_chunk$set(warning=FALSE, message=FALSE)
 
 airbnb <- read_csv('https://bit.ly/3oadz2L', col_types = cols())
 climate <- read_csv('https://bit.ly/3kKErEb', col_types = cols())
+
+colombia <- climate %>% 
+  filter(! is.na(temp) & year > 2000 & country == 'Colombia') %>% 
+  transmute(
+    year
+    , month
+    , city
+    , fahrenheit = (temp * 9/5) + 32
+    )
 ```
 
 ---
@@ -131,7 +144,7 @@ countdown(minutes = 5, seconds = 0)
 
 **Exercise 1 - 5 minutes**  
 
-This code contains 5 mistakes. The code is supposed to create four new data objects called `reviews`, `price`, `med_reviews` and `max_price` and report the median number of reviews and highest cost/night for a Seattle Airbnb rental.    
+This code contains 5 mistakes. The code should create four new data objects called `reviews`, `price`, `med_reviews` and `max_price` and report the median number of reviews and highest cost/night for a Seattle Airbnb rental.      
 
 ![](figures/troubleshoot_solution_1.png)
 
@@ -381,7 +394,18 @@ airbnb %>%
 
 # Select, <span style="color:#6DA34D">create</span>, and rename variables 
 
-```{r, echo = TRUE, collapse=TRUE}
+```r
+airbnb %>% 
+  mutate(
+    cost_per_room = accommodates / price
+    , mean_price = mean(price)
+    , seattle_address = ifelse(address == 'Seattle', 'y', NA)
+    , large = ifelse(accommodates > 5, 'y', NA)
+    ) %>%
+  select(room_id, host_id, cost_per_room, mean_price, seattle_address, large)
+```
+
+```{r, echo = FALSE, collapse=TRUE}
 airbnb %>% 
   mutate(
     cost_per_room = accommodates / price
@@ -399,7 +423,7 @@ airbnb %>%
 
 <b>Exercise - 6 minutes</b>  
 - With the `climate` dataset, create variables called `high_uncertainty` and `winter`
-- In `high_uncertainty`, flag with a `1` all observations where `uncertainty` is greater than 1.5. All other records should have a `0`  
+- In `high_uncertainty`, flag with a `1` all observations where `uncertainty` is greater than 1.5. All other records should have a `0`.  
 - In `winter`, flag with a `1` all observations where month is a 1, 2, 12.  
 - Only report the following variables in the output: `country`, `city`, `high_uncertainty` and `winter`
 
@@ -434,6 +458,8 @@ climate %>%
 
 ---
 
+# Select, <span style="color:#6DA34D">create</span>, and rename variables 
+
 ```r
 climate %>% 
   mutate(
@@ -443,17 +469,14 @@ climate %>%
   select(country, city, high_uncertainty, winter)
 ```
 
-```{r, echo = TRUE, collapse=TRUE}
+```{r, echo = FALSE, collapse=TRUE}
 climate %>% 
   mutate(
     high_uncertainty = ifelse(uncertainty > 1.5, 1, 0)
     , winter = ifelse(month %in% c(1, 2, 12), 1, 0)
     ) %>%
   select(country, city, high_uncertainty, winter) %>%
-  head() %>% 
-  kbl() %>% 
-  kable_classic() %>% 
-  kable_styling(full_width = F, position = 'float_left')
+  head()
 ```
 
 ---
@@ -661,8 +684,8 @@ airbnb %>% sample_n(3) %>% select(room_id, host_id, address, room_type, price, n
 .pull-right[
 - Determine the following: 
   - The number of records that meet the above filtering conditions  
-  - The fahrenheit mean for the dataset
-  - The names of cities in the dataset
+  - The fahrenheit mean in `colombia`
+  - The names of cities in `colombia`
 ]
 
 ```{r, echo = FALSE}
@@ -697,10 +720,10 @@ colombia <- climate %>%
 
 - Determine the following: 
   - The number of records that meet the above filtering conditions  
-  - The fahrenheit mean for the dataset
-  - The names of cities in the dataset
+  - The fahrenheit mean in `colombia`
+  - The names of cities in `colombia`
 
-```r
+```{r, echo = TRUE, collapse=TRUE}
 nrow(colombia)
 colombia %>% pull(fahrenheit) %>% mean # OR mean(colombia$fahrenheit)
 colombia %>% pull(city) %>% unique # OR unique(colombia$city)
@@ -718,7 +741,7 @@ class: inverse, middle, center
 - Count, sum, average, and identify max and min values
 - Example questions you could answer
   - In `airbnb`, on average which city is most costly per night?   
-  - In `airbnb`, how many hosts offer each room type?
+  - In `airbnb`, how many listings of each room type are there?
   - In `airbnb`, on average how many more people does an 'Entire home/apt' accommodate than a 'Private room'?  
   - In `climate`, what's the average temperature by year in cities in China?  
   - In `climate`, to what extent does the range of uncertainty vary over time?  
@@ -752,26 +775,26 @@ airbnb %>%
 # group_by() and summarise()  
 
 **Example**  
-In `airbnb`, how many hosts offer each room type?
+In `airbnb`, how many listings of each room type are there?
 
 --
 
 ```r
 airbnb %>% 
   group_by(room_type) %>% 
-  summarise(n_hosts = n_distinct(host_id))
+  summarise(n_listings = n())
 ```
 
 --
 
-How do you update the code to count the number of hosts offering the three room types by city?
+How do you update the code to count the number of room type listings by city?
 
 --
 
 ```r
 airbnb %>% 
   group_by(room_type, address) %>% 
-  summarise(n_hosts = n_distinct(host_id))
+  summarise(n_listings = n())
 ```
 
 --
@@ -783,7 +806,7 @@ How do you further update the code to only see rows for Kirkland?
 ```r
 airbnb %>% 
   group_by(room_type, address) %>% 
-  summarise(n_hosts = n_distinct(host_id)) %>% 
+  summarise(n_listings = n()) %>% 
   filter(address == 'Kirkland')
 ```
 
@@ -792,18 +815,18 @@ airbnb %>%
 # group_by() and summarise()  
 
 **Example**  
-In `airbnb`, how many hosts offer each room type?
+In `airbnb`, how many listings of each room type are there?
 
-How would you create a variable that flags a deficit of hosts for the three `room_types` (let's say "deficit" is defined as fewer than 100 hosts)?
+How would you create a variable that flags a deficit of listings for the three `room_types` (let's say "deficit" is defined as fewer than 100 hosts)?
 
 --
 
 ```r
 airbnb %>% 
   group_by(room_type, address) %>% 
-  summarise(n_hosts = n_distinct(host_id)) %>% 
+  summarise(n_listings = n()) %>% 
   filter(address == 'Kirkland') %>% 
-  mutate(host_deficit = ifelse(n_hosts < 100, 'y', 'n'))
+  mutate(listings_deficit = ifelse(n_listings < 100, 'y', 'n'))
 ```
 
 ---
@@ -811,7 +834,7 @@ airbnb %>%
 # group_by() and summarise()  
 
 **Exercise - 10 minutes**  
-With `climate`, create a variable called `dif` that reports the difference between the smallest and largest uncertainty values for years after 1800. 
+With `climate`, create a new tibble called `dif_uncertainty`. The tibble should contain a variable called `dif` that tells you the difference between the smallest and largest uncertainty values for years after 1800. 
 - What is the largest difference in uncertainty? 
 - BONUS POINTS: In which year is the largest difference?
 
@@ -826,7 +849,7 @@ countdown(minutes = 10, seconds = 0)
 ---
 
 **Exercise - 10 minutes**  
-With `climate`, create a variable called `dif` that reports the difference between the smallest and largest uncertainty values for years after 1800. 
+With `climate`, create a new tibble called `dif_uncertainty`. The tibble should contain a variable called `dif` that tells you the difference between the smallest and largest uncertainty values for years after 1800. 
 - What is the largest difference in uncertainty?  
 - BONUS POINTS: In which year is the largest difference?  
 
@@ -882,7 +905,7 @@ Working with dates can be difficult
 
 There are ways to make working with dates easier
   - Use `lubridate` package
-    - Dates always formatted as "Date"
+    - Dates always formatted as "Date" type
   - Put components of dates in distinct columns if possible  
   - Remove time from date if possible
 
@@ -893,7 +916,7 @@ install.packages('lubridate')
 --
 
 - Create dates with `lubridate` functions (`ymd()`, `dmy()`, `mdy()`, `ym()`)
-  - Apply functions to character values (`'2020-03-15'`)  
+  - Apply functions to character values, `'2020-03-15'`  
   - Apply functions to concatenated tibble columns using `paste0()`
 
 --
@@ -931,7 +954,7 @@ From `climate`, produce a tibble called `turkey` that meets the following requir
 - Contains data for years 2000 through 2010
 - Contains three columns: `city`, `date`, and `temp`
 - `date` should be a date variable created from `year` and `month`
-- Arrange the dataset by `date` in descending order
+- Arrange the dataset by `date` in descending order (`arrange(desc(date))`)
 
 Report the mean monthly temperatures for one city in the dataset (you choose)
 
