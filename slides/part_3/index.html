@@ -24,7 +24,7 @@ class: center, middle, inverse, title-slide
 ---
 
 
-# Before we get started
+# Preamble
 
 SAVE FOR ANSWERING QUESTIONS HELD OVER FROM THE PREVIOUS CLASS
 
@@ -39,13 +39,16 @@ SAVE FOR ANSWERING QUESTIONS HELD OVER FROM THE PREVIOUS CLASS
 - Selecting, creating, and updating variables  
 - Subsetting tibbles/data frames  
 - Aggregation  
+- Dates
 
 ---
 
 # What we'll learn today  
 
 - Overview of ggplot2  
-- Building bar, line, and scatter plots
+- Building bar, line, and scatter plots  
+  - Aggregated data
+  - Disaggregated data
 - Customizing plots
 
 ---
@@ -89,7 +92,7 @@ climate %&gt;%
   arrange(city)
 ```
 
-<div class="countdown" id="timer_61648df9" style="right:0;bottom:0;" data-warnwhen="0">
+<div class="countdown" id="timer_6171fa2f" style="right:0;bottom:0;" data-warnwhen="0">
 <code class="countdown-time"><span class="countdown-digits minutes">05</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
 
@@ -110,11 +113,19 @@ class: inverse, middle, center
 
 ---
 
+Import `airbnb` data if you have not already
+
+```r
+airbnb &lt;- read_csv('https://bit.ly/3oadz2L', col_types = cols())
+```
+
+---
+
 # ggplot2
 
 - Yardstick for plotting data in R  
-- `tidyverse` package  
-- Virtually no limits to plot types  
+- Part of the `tidyverse` collection of packages  
+- Virtually no limits to plot types (when leveraging supplemental libraries)  
 - Plotting resources  
   - [ggplot2 Launch Page](http://ggplot2.tidyverse.org/)
   - [Top 50 ggplot2 Visualizations](http://r-statistics.co/Top50-Ggplot2-Visualizations-MasterList-R-Code.html)
@@ -153,6 +164,7 @@ Requests to learn another plot type?
 
 # Plot types
 
+.pull-left[
 1 discrete variable (plus other optional discrete and/or continuous variables)  
 
 &lt;img src="figures/stacked_bar.png" style="height: 150px"/&gt; &lt;img src="figures/bar.png" style="height: 150px"/&gt;  
@@ -160,11 +172,9 @@ Requests to learn another plot type?
 1 continuous variable  
 
 &lt;img src="figures/hist.png" style="height: 150px"/&gt;  
+]
 
----
-
-# Plot types
-
+.pull-right[
 2 continuous variables  
 
 &lt;img src="figures/scatter.png" style="height: 150px"/&gt;  
@@ -172,6 +182,7 @@ Requests to learn another plot type?
 1 continuous variable + date variable  
 
 &lt;img src="figures/line.png" style="height: 150px"/&gt;  
+]
 
 ---
 
@@ -198,6 +209,8 @@ install.packages('tidyverse')
 library(tidyverse)
 mpg %&gt;% ggplot(aes(displ, hwy))) + geom_point()
 ```
+
+--
 
 - If it still didn't work, install `ggplot2` and re-run the test code  
 
@@ -250,8 +263,8 @@ ggplot(airbnb) + geom_bar()
   - Lots of `aes()` arguments
 
 ```r
-airbnb %&gt;% ggplot(aes(x = address)) + geom_bar()
-airbnb %&gt;% ggplot() + geom_bar(aes(x = address))
+airbnb %&gt;% ggplot(aes()) + geom_bar()
+airbnb %&gt;% ggplot() + geom_bar(aes())
 ```
 
 --
@@ -268,11 +281,11 @@ aes(x = NULL, y = NULL, color = NULL
 
 # Geoms - Bar Plot
 
-- Mapping a character variable to `x`  
+Map a character variable to `x`  
 
 
 ```r
-airbnb %&gt;% ggplot(aes(x = address, fill = address)) + geom_bar()
+airbnb %&gt;% ggplot(aes(x = address)) + geom_bar()
 ```
 
 ![](index_files/figure-html/unnamed-chunk-3-1.png)&lt;!-- --&gt;
@@ -281,11 +294,11 @@ airbnb %&gt;% ggplot(aes(x = address, fill = address)) + geom_bar()
 
 # Geoms - Bar Plot
 
-- Mapping a second character variable to `fill` builds a stacked bar plot
+Map a character variable to `x`...and to `fill`
 
 
 ```r
-airbnb %&gt;% ggplot(aes(x = address, fill = room_type)) + geom_bar()
+airbnb %&gt;% ggplot(aes(x = address, fill = address)) + geom_bar()
 ```
 
 ![](index_files/figure-html/unnamed-chunk-4-1.png)&lt;!-- --&gt;
@@ -294,11 +307,25 @@ airbnb %&gt;% ggplot(aes(x = address, fill = room_type)) + geom_bar()
 
 # Geoms - Bar Plot
 
-- Other handy features when building bar plots  
-  - `stat` in `geom_bar()`: "count" vs. "identity" 
-  - `position`in `geom_bar()`: "stacked" vs. "dodge"
-  - `coord_flip()`
-  - `reorder()`
+Map a second character variable to `fill` to build a stacked bar plot
+
+
+```r
+airbnb %&gt;% ggplot(aes(x = address, fill = room_type)) + geom_bar()
+```
+
+![](index_files/figure-html/unnamed-chunk-5-1.png)&lt;!-- --&gt;
+
+---
+
+# Geoms - Bar Plot
+
+Other handy features when building bar plots  
+- `stat` in `geom_bar()`: "count" vs. "identity" 
+- `position`in `geom_bar()`: "stacked" vs. "dodge"
+- `coord_flip()`
+- `reorder()`
+- arguments outside of `aes()`
 
 .pull-left[
 ```r
@@ -333,13 +360,12 @@ airbnb %&gt;%
 
 # Geoms - Bar Plot
 
-- Other handy features when building bar plots  
-  - `stat` in `geom_bar()`: "count" vs. "identity" 
-  - `position`in `geom_bar()`: "stacked" vs. "dodge"
-  - `coord_flip()`
-  - `reorder()`
-
---
+Other handy features when building bar plots  
+- `stat` in `geom_bar()`: "count" vs. "identity" 
+- `position`in `geom_bar()`: "stacked" vs. "dodge"
+- `coord_flip()`
+- `reorder()`
+- arguments outside of `aes()`
 
 ```r
 airbnb %&gt;% 
@@ -358,53 +384,61 @@ airbnb %&gt;%
 
 ---
 
-# Geom - Bar Plot
+# Geoms - Bar Plot
 
-Exercise - 7 minutes
+Other handy features when building bar plots  
+- `stat` in `geom_bar()`: "count" vs. "identity" 
+- `position`in `geom_bar()`: "stacked" vs. "dodge"
+- `coord_flip()`
+- `reorder()`
+- arguments outside of `aes()`
 
-- Build a bar chart with `climate` data that shows the number of months with temperatures above and below 0 in 2000 in China
-- To complete the task, you'll need to:
-  - Subset your data using `filter()`
-  - Create a new variable called `temp_category` that tells whether a temperature is 'Below 0' or 'Above 0'
-  - Set the color of the bar segments to equal `temp_category`
-  
-
-<div class="countdown" id="timer_61648bd9" style="right:0;bottom:0;" data-warnwhen="0">
-<code class="countdown-time"><span class="countdown-digits minutes">07</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
-</div>
-
----
-
-# Geom - Bar Plot
-
-Exercise - 7 minutes
-
-- Build a bar chart with `climate` data that shows the number of months with temperatures above and below 0 in 2000 in China
-- To complete the task, you'll need to:
-  - Subset your data using `filter()`
-  - Create a new variable called `temp_category` that tells whether a temperature is 'Below 0' or 'Above 0'
-  - Set the color of the bar segments to equal `temp_category`
-  
 ```r
-climate %&gt;% 
-  filter(country == 'China' &amp; year == 2000) %&gt;% 
-  mutate(temp_category = ifelse(temp &lt; 0, 'Below 0', 'Above 0')) %&gt;%         
-  ggplot(aes(x = city, fill = temp_category)) + 
-  geom_bar()
+airbnb %&gt;% 
+  group_by(address) %&gt;%   
+  summarise(n = n()) %&gt;%
+  ggplot(
+    aes(
+      x = reorder(address, -n)
+      , y = n  
+      , fill = address
+      )
+    ) + 
+  geom_bar(stat = 'identity') 
 ```
 
 ---
 
+# Geoms - Bar Plot
+
+Other handy features when building bar plots  
+- arguments outside of `aes()`
+
 
 ```r
-climate %&gt;% 
-  filter(country == 'China' &amp; year == 2000) %&gt;% 
-  mutate(temp_category = ifelse(temp &lt; 0, 'Below 0', 'Above 0')) %&gt;% 
-  ggplot(aes(x = city, fill = temp_category)) + 
-  geom_bar()
+my_data &lt;- airbnb %&gt;% 
+  group_by(address) %&gt;% 
+  summarise(n = n())
+
+mean_count &lt;-  my_data %&gt;%
+  pull(n) %&gt;% 
+  mean()
+
+my_data %&gt;% 
+  ggplot(
+    aes(
+      x = reorder(address, -n)
+      , y = n  
+      )
+    ) + 
+  geom_bar(
+*   stat = 'identity', fill = '#CC3F0C' # coolors.co/generate
+*   , linetype = 'dashed', color = 'black', size = 1
+    ) + 
+* geom_hline(yintercept = mean_count, size = 1, color = '#FFBA08')
 ```
 
-![](index_files/figure-html/unnamed-chunk-6-1.png)&lt;!-- --&gt;
+---
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
