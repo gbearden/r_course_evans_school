@@ -77,7 +77,7 @@ Part 2 will focus on data processing. We will use a variety of methods to manipu
 
 At the end of Part 2, students should possess skills necessary to transform datasets so that data are suitable for analysis.
 
-Class reference materials: [Data transformation cheat sheet](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf), [R for Stata folks](https://www.matthieugomez.com/statar/manipulate-data.html)
+Class reference materials: [Data transformation cheat sheet](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf), [R for Stata users](https://www.matthieugomez.com/statar/manipulate-data.html)
 
 #### October 22 | Part 3
 

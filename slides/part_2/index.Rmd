@@ -15,7 +15,16 @@ output:
 
 # Before we get started
 
-SAVE FOR ANSWERING QUESTIONS HELD OVER FROM THE PREVIOUS CLASS
+- We'll use `%>%` when working with vectors
+- Datasets  
+  - [Kaggle](https://www.kaggle.com/datasets)
+  - [Data.gov](https://www.data.gov/)
+  - [Washington Post](https://github.com/orgs/washingtonpost/repositories?language=&q=data&sort=&type=)
+  - [fivethirtyeight](https://data.fivethirtyeight.com/)  
+  - [Awesome Public Datasets on Github](https://github.com/awesomedata/awesome-public-datasets)
+  - [BuzzFeed](https://github.com/BuzzFeedNews)
+  - BONUS dataset: [Great British Bakeoff](https://github.com/apreshill/bakeoff)  
+- [R for Stata users](https://www.matthieugomez.com/statar/manipulate-data.html)
 
 ```{r setup, include=FALSE}
 library(tidyverse)
@@ -39,9 +48,11 @@ climate <- read_csv('https://bit.ly/3kKErEb', col_types = cols())
 - Core R concepts  
   - Data types
   - Relationship between data and functions  
-- How to import data  
+- How to import and export data  
 - Regularly used data summary functions  
-- Assignment operator
+- Assignment operator (`<-`)
+- Chaining together functions with a pipe operator (`%>%`)
+- Using `select()` from the `tidyverse`
 - Troubleshooting basics  
 
 ---
@@ -49,10 +60,10 @@ climate <- read_csv('https://bit.ly/3kKErEb', col_types = cols())
 # What we'll learn today  
 
 - A bit more about troubleshooting
-- Chaining together functions with a pipe operator (`%>%`)
-- Selecting, creating, and updating variables  
+- Creating and updating variables  
 - Subsetting tibbles/data frames  
 - Aggregation  
+- Working with dates
 
 ---
 
@@ -72,8 +83,6 @@ Make sure...
 
 # Troubleshooting your R code
 
-So, how then do you "make sure" your code is error-free?
-
 - Run code line by line  
 
 --
@@ -90,7 +99,7 @@ So, how then do you "make sure" your code is error-free?
 
 **Exercise 1 - 5 minutes**  
 
-This code contains 5 mistakes. The code is supposed to create four new data objects called `reviews`, `price`, `med_reviews` and `max_price` and report the median number of reviews and highest cost/night for a Seattle Airbnb rental.    
+This code contains 5 mistakes. The code should create four new data objects called `reviews`, `price`, `med_reviews` and `max_price` and report the median number of reviews and highest cost/night for a Seattle Airbnb rental.    
 
 - Correct 5 coding mistakes  
 - Reference the previous slides for help  
@@ -238,10 +247,11 @@ airbnb %>%
 # Make your code as readable as possible
 
 - No firm, binding rule for using (or not using) the pipe operator with vectors
-  - Ask yourself: "which format is easiest to read?"
+  - General practice is to ask yourself: "which format is easiest to read?"
   - Depends on the number of functions  
   - Depends on whether you are pulling a variable of tibble that you are processing  
-    - `pull() == $`
+    - `pull() == $`  
+- In our class, we will use the `tidverse` grammar when working with vectors for consistency sake and ease of learning
   
 ```r
 length(unique(airbnb$address))
@@ -313,7 +323,7 @@ ifelse(x > y, 'yes', 'no')
 - A little more on `ifelse()`  
   - A logical test with a true-or-false outcome
   - To make comparisons use: `==`, `<`, `<=`, `>`, `>=`, `!=`, `%in%`, `!`, `is.na()`
-  - Concatenate strings of values with `c()`
+  - Concatenate values with `c()`
 
 --
 
@@ -419,11 +429,19 @@ climate %>%
     high_uncertainty = ifelse(uncertainty > 1.5, 1, 0)
     , winter = ifelse(month %in% c(1, 2, 12), 1, 0)
     ) %>%
-  select(country, city, high_uncertainty, winter) %>%
-  head()
+  select(country, city, high_uncertainty, winter)
 ```
 
 ---
+
+```r
+climate %>% 
+  mutate(
+    high_uncertainty = ifelse(uncertainty > 1.5, 1, 0)
+    , winter = ifelse(month %in% c(1, 2, 12), 1, 0)
+    ) %>%
+  select(country, city, high_uncertainty, winter)
+```
 
 ```{r, echo = TRUE, collapse=TRUE}
 climate %>% 
@@ -432,7 +450,10 @@ climate %>%
     , winter = ifelse(month %in% c(1, 2, 12), 1, 0)
     ) %>%
   select(country, city, high_uncertainty, winter) %>%
-  head()
+  head() %>% 
+  kbl() %>% 
+  kable_classic() %>% 
+  kable_styling(full_width = F, position = 'float_left')
 ```
 
 ---
@@ -560,26 +581,25 @@ climate %>%
 ---
 class: inverse, middle, center
 
-# Filter data frames
+# Filter tibbles
 
 ---
 
-# Filter data frames
+# Filter tibbles
 
 - Use `filter()` to subset your data
-- With `filter()`, you tell R to exclude/include data that meet a logical TRUE/FALSE condition
+- With `filter()`, you tell R to exclude/include rows that meet a logical TRUE/FALSE condition
 - Operators for conditions are the same as for `ifelse()`: `==`, `<`, `<=`, `>`, `>=`, `!=`, `%in%`, `!`, `is.na()`
 
 ```r
 airbnb %>% 
   filter(address != 'Seattle') %>% 
-  select(room_id, host_id, address) %>% 
-  tail(2)
+  select(room_id, host_id, address)
 ```
 
 ---
 
-# Filter data frames 
+# Filter tibbles 
 - You can stipulate multiple conditions with `filter()`
   - Use `&` for 'and' expressions
   - Use `|` for 'or' expressions
@@ -588,8 +608,7 @@ airbnb %>%
 ```r
 airbnb %>% 
   filter(rating == 5 & room_type == 'Private room') %>% 
-  select(room_id, host_id, address, room_type, rating, name) %>% 
-  head(5)
+  select(room_id, host_id, address, room_type, rating, name)
 ```
 
 --
@@ -603,13 +622,12 @@ airbnb %>%
       | (price > 50 & price < 100 & room_type == 'Entire home/apt')
       )
   ) %>% 
-  select(room_id, host_id, address, room_type, price, name) %>% 
-  head(5)
+  select(room_id, host_id, address, room_type, price, name)
 ```
 
 ---
 
-# Filter data frames
+# Filter tibbles
 - Other functions for subsetting your data
   - `head()`
   - `tail()`
@@ -632,10 +650,10 @@ airbnb %>% sample_n(3) %>% select(room_id, host_id, address, room_type, price, n
 # Exercise - 12 minutes
 
 .pull-left[
-- Create a dataset called `colombia` that meets these conditions  
+- Create a dataset called `colombia` that meets these conditions:  
   - Contains `temp` values not equal to `NA`  
   - Contains data for 'Colombia' only
-  - Contains no dates prior to January 2001
+  - Contains years prior to 2001
   - Contains a variable called `fahrenheit` that converts the `temp` value from celsius to fahrenheit. Use the formula: `(temp * 9/5) + 32` 
   - Contains 4 variables in total in the following order: `year`, `month`, `city`, `fahrenheit`  
 ]
@@ -684,8 +702,8 @@ colombia <- climate %>%
 
 ```r
 nrow(colombia)
-mean(colombia$fahrenheit) # OR colombia %>% pull(fahrenheit) %>% mean
-unique(colombia$city) # OR colombia %>% pull(city) %>% unique
+colombia %>% pull(fahrenheit) %>% mean # OR mean(colombia$fahrenheit)
+colombia %>% pull(city) %>% unique # OR unique(colombia$city)
 ```
 
 ---
@@ -713,7 +731,7 @@ class: inverse, middle, center
 - In `summarise()`, create a variable and define the variable with an aggregation function
 - Use `%>%` to 'link' `group_by()` and `summarise()`
 - Aggregation functions
-  - `n()`, `n_distinct()`, `sum()`, `mean()`, `max()`, `min()`, etc.
+  - `n()`, `n_distinct()`, `sum()`, `mean()`, `max()`, `min()`  
 - Perform multiple aggregations in a single `summarise()` function  
 
 --
@@ -735,6 +753,8 @@ airbnb %>%
 
 **Example**  
 In `airbnb`, how many hosts offer each room type?
+
+--
 
 ```r
 airbnb %>% 
@@ -774,18 +794,7 @@ airbnb %>%
 **Example**  
 In `airbnb`, how many hosts offer each room type?
 
-How do you further update the code to only see rows for Kirkland?
-
-```r
-airbnb %>% 
-  group_by(room_type, address) %>% 
-  summarise(n_hosts = n_distinct(host_id)) %>% 
-  filter(address == 'Kirkland')
-```
-
---
-
-How would you create a variable that flags a host deficit for types of rentals (let's say any number of hosts fewer than 100)?
+How would you create a variable that flags a deficit of hosts for the three `room_types` (let's say "deficit" is defined as fewer than 100 hosts)?
 
 --
 
@@ -830,9 +839,17 @@ dif_uncertainty <- climate %>%
     , max = max(uncertainty, na.rm = TRUE)
     ) %>%
   mutate(dif = max - min)
-  
-max(dif_uncertainty$dif)
+```
 
+--
+  
+```r
+max(dif_uncertainty$dif)
+```
+
+--
+
+```r
 dif_uncertainty %>% 
   filter(dif == max(dif))
 ```
@@ -846,23 +863,37 @@ class: inverse, middle, center
 
 # Dates
 
-- Working with dates can be difficult  
-  - Date formats vary across datasets
-  - Sometimes dates include times, sometimes not
-  
---
-
-- There are ways to make working with dates easier
-  - Use `lubridate` package
-  - Put elements of dates in distinct columns if possible  
-  - Remove time from date if possible
+Working with dates can be difficult  
+- Date formats vary across datasets
+  - POSIXct, POSIXlt, Date, Period, chron, yearmon, yearqtr, zoo, zooreg, timeDate, xts, its, ti, jul, and fts
+- Some formats contain metadata
+  - timezone, leap year, GMT adjustment
+- Some formats are quirky  
+  - For example, the month number for January in POSIXlt is 0
+- Sometimes dates include times, sometimes not
+  - Time can make it challenging to extract date components
+- Dates formatted as character strings look right, but often leads to data visualization mistakes and problems in analysis
+  - `sort(c('2021-10-02', '2021-1-22', '2021-3-20'))`  
+  - `sort(lubridate::ymd(c('2021-10-02', '2021-1-22', '2021-3-20')))`
   
 ---
 
 # Dates
 
-- Create dates with `lubridate` functions (`ymd()`, `dmy()`, `mdy()`)
-  - Apply functions to character values ('2020-03-15')  
+There are ways to make working with dates easier
+  - Use `lubridate` package
+    - Dates always formatted as "Date"
+  - Put components of dates in distinct columns if possible  
+  - Remove time from date if possible
+
+```r
+install.packages('lubridate')
+```
+
+--
+
+- Create dates with `lubridate` functions (`ymd()`, `dmy()`, `mdy()`, `ym()`)
+  - Apply functions to character values (`'2020-03-15'`)  
   - Apply functions to concatenated tibble columns using `paste0()`
 
 --
@@ -880,4 +911,53 @@ climate %>%
   )
 ```
 
-  
+---
+
+# Dates
+
+- Extract components from a date
+  - `year()`, `month()`, `day()`
+  - May be applied to multiple date formats/classes
+
+---
+
+# Dates
+
+**Exercise - 10 minutes**  
+
+From `climate`, produce a tibble called `turkey` that meets the following requirements:
+
+- Contains data for the country of Turkey only
+- Contains data for years 2000 through 2010
+- Contains three columns: `city`, `date`, and `temp`
+- `date` should be a date variable created from `year` and `month`
+- Arrange the dataset by `date` in descending order
+
+Report the mean monthly temperatures for one city in the dataset (you choose)
+
+```{r, echo = FALSE}
+countdown(minutes = 10, seconds = 0)
+```
+
+---
+
+```r
+turkey <- climate %>% 
+  filter(country == 'Turkey' & year %in% 2000:2010) %>% 
+  transmute(
+    city
+    , date = ym(paste0(year, '-', month))
+    , temp
+  ) %>% 
+  arrange(desc(date))
+```
+
+--
+
+```r
+turkey %>% 
+  filter(city == 'Ankara') %>% 
+  mutate(m = month(date)) %>% 
+  group_by(m) %>% 
+  summarise(mean_temp = mean(temp))
+```
