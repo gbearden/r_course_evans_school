@@ -357,7 +357,7 @@ ifelse(237 %in% 200:300, 'yes', 'no')
 - A little more on `ifelse()`  
   - A logical test with a true-or-false outcome
   - To make comparisons use: `==`, `<`, `<=`, `>`, `>=`, `!=`, `%in%`, `!`, `is.na()`
-  - Concatenate strings of values with `c()`
+  - Concatenate values with `c()`
 
 ```{r, echo = TRUE, collapse=TRUE}
 city_1 <- 'San Francisco'
@@ -519,8 +519,6 @@ climate %>%
   - `mutate()`: creates new variables (with new names) and keeps originals
 - Each variable transformation is comma-separated  
 
---
-
 **Example**
 - How do I rename `address` as `city`, `price` as `cost`, and `name` as `description` with one of the methods in `airbnb`?
 
@@ -571,8 +569,7 @@ airbnb %>%
 # Exercise - 6 minutes
 
 - With `climate`, create a tibble that meets the following conditions:  
-
-  - The contains three variables: `year`, `city`, `temp`
+  - The contains three variables: `year`, `location`, `temp`
   - Make no changes to `year` 
   - Rename `city` as `location`
   - In `temp`, change `NA` values to `0`  
@@ -586,8 +583,7 @@ countdown(minutes = 6, seconds = 0)
 # Exercise - 6 minutes
 
 - With `climate`, create a tibble that meets the following conditions:  
-
-  - The contains three variables: `year`, `city`, `temp`
+  - The contains three variables: `year`, `location`, `temp`
   - Make no changes to `year` 
   - Rename `city` as `location`
   - In `temp`, change `NA` values to `0`  
