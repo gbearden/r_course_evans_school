@@ -15,7 +15,8 @@ output:
 
 # Preamble
 
-SAVE FOR ANSWERING QUESTIONS HELD OVER FROM THE PREVIOUS CLASS
+- Reminder: Submit 2 “stakeholder-ready” data visualizations on November 11 or before
+- What are tibbles? Two-dimensional data just like Excel spreadsheets
 
 ```{r setup, include=FALSE}
 library(tidyverse)
@@ -23,6 +24,8 @@ library(knitr)
 library(countdown)
 library(kableExtra)
 library(formatR)
+library(scales)
+library(ggthemes)
 options(scipen=999)
 
 opts_chunk$set(warning=FALSE, message=FALSE)
@@ -40,7 +43,6 @@ climate <- read_csv('https://bit.ly/3kKErEb', col_types = cols())
 - Selecting, creating, and updating variables  
 - Subsetting tibbles/data frames  
 - Aggregation  
-- Dates
 
 ---
 
@@ -81,15 +83,15 @@ climate %>%
   fitler(
     country == 'Brazil' 
     & ! is.na(temp) 
-    & year < 200
-  ) %>% 
+    & year < 2000
+    ) %>% 
   mutate(century = ifese(year >= 1900, '20th Century', '19th Century')) %>% 
   group_by(century, city) %>% 
   summarise(
     mean_temp = mean(temp) 
     median_temp = median(temp)
     , max_temp = max(temp)
-    ) %>% 
+    ) 
   arrange(city)
 ```
 
@@ -117,7 +119,7 @@ class: inverse, middle, center
 Import `airbnb` data if you have not already
 
 ```r
-airbnb <- read_csv('https://bit.ly/3oadz2L', col_types = cols())
+airbnb <- read_csv('https://bit.ly/3oadz2L')
 ```
 
 ---
@@ -166,7 +168,7 @@ Requests to learn another plot type?
 # Plot types
 
 .pull-left[
-1 discrete variable (plus other optional discrete and/or continuous variables)  
+1 discrete variable (plus optional discrete and/or continuous variables)  
 
 <img src="figures/stacked_bar.png" style="height: 150px"/> <img src="figures/bar.png" style="height: 150px"/>  
 
@@ -180,7 +182,7 @@ Requests to learn another plot type?
 
 <img src="figures/scatter.png" style="height: 150px"/>  
 
-1 continuous variable + date variable  
+1 continuous variable + ordinal variable  
 
 <img src="figures/line.png" style="height: 150px"/>  
 ]
@@ -229,7 +231,7 @@ mpg %>% ggplot(aes(displ, hwy)) + geom_point()
 
 1. Pick your data
 2. Pick your chart type (geom)
-3. Program stuff like chart titles, axis names, axis types, and legends (scales)  
+3. Write code for stuff like chart titles, axis names, axis types, and legends (scales)  
 4. Make it pretty (themes)
 5. Keep tuning and reuse code
 
@@ -252,8 +254,7 @@ ggplot() + geom_line()      # create line plots
 - Your data is an argument in the `ggplot()` function  
 
 ```r
-airbnb %>% ggplot() + geom_bar()
-ggplot(airbnb) + geom_bar()
+airbnb %>% ggplot() + geom_bar() # ggplot(data = airbnb) + geom_bar()
 ```
 
 ---
@@ -263,11 +264,12 @@ ggplot(airbnb) + geom_bar()
 - Map your data to the plot with `aes()`
   - `aes()` maps the variables in your data to the plot
   - `aes()` can be an argument in `ggplot()` or the geom  
+  - In simpler plots, `aes()` should go in `ggplot()`
   - Lots of `aes()` arguments
 
 ```r
 airbnb %>% ggplot(aes()) + geom_bar()
-airbnb %>% ggplot() + geom_bar(aes())
+airbnb %>% ggplot() + geom_bar(aes()) # Alternate placement of aes()
 ```
 
 --
@@ -275,8 +277,7 @@ airbnb %>% ggplot() + geom_bar(aes())
 ```r
 aes(x = NULL, y = NULL, color = NULL
   , fill = NULL, alpha = NULL, label = NULL
-  , shape = NULL, size = NULL, group = NULL
-  , linetype = NULL
+  , shape = NULL, size = NULL, linetype = NULL
   )
 ```
 
@@ -433,15 +434,11 @@ my_data %>%
 ---
 # Geom - Bar Plot
 
-Exercise - 7 minutes
-
-- Build a bar chart with `climate` data that shows the number of months with temperatures above and below 0 in the year 2000 in China
+- Build a bar chart with `climate` data that shows the number of rows for the following countries: 'Brazil', 'China', 'India', 'Turkey', and 'United States'
 - To complete the task, you'll need to:
   - Subset your data using `filter()`
-  - Create a new variable called `temp_category` that tells whether a temperature is 'Below 0' or 'Above 0'
-  - Set the color of the bar segments to equal `temp_category`
-  
-**HINT**, you can complete the task by either aggregating your data or leaving it disaggregated
+  - Aggregate your data using `group_by()` and `summarise()`
+  - Set the color of the bars equal to `country`
   
 
 ```{r, echo = FALSE}
@@ -454,56 +451,32 @@ countdown(minutes = 7, seconds = 0)
 
 Exercise - 7 minutes
 
-- Build a bar chart with `climate` data that shows the number of months with temperatures above and below 0 in 2000 in China
+- Build a bar chart with `climate` data that shows the number of rows for the following countries: 'Brazil', 'China', 'India', 'Turkey', and 'United States'
 - To complete the task, you'll need to:
   - Subset your data using `filter()`
-  - Create a new variable called `temp_category` that tells whether a temperature is 'Below 0' or 'Above 0'
-  - Set the color of the bar segments to equal `temp_category`
+  - Aggregate your data using `group_by()` and `summarise()`
+  - Set the color of the bars equal to `country`
   
 ```r
 climate %>% 
-  filter(country == 'China' & year == 2000) %>% 
-  mutate(temp_category = ifelse(temp < 0, 'Below 0', 'Above 0')) %>%         
-  ggplot(aes(x = city, fill = temp_category)) + 
-  geom_bar()
-  
-airbnb %>% 
-  filter(room_type == 'Entire home/apt') %>% 
-  mutate(cost_group = ifelse(price > 100, 'expensive', 'cheap')) %>% 
-  ggplot(aes(x = cost_group, fill = address)) + 
-  geom_bar()
+  filter(country %in% c('Brazil', 'China', 'India', 'Turkey', 'United States')) %>% 
+  group_by(country) %>% 
+  summarise(n = n()) %>% 
+  ggplot(aes(x = reorder(country, -n), y = n, fill = country)) + 
+  geom_bar(stat = 'identity')
 ```
 
 ---
 
 # Geom - Bar Plot
 
-Exercise - 7 minutes
-
-- Build a bar chart with `climate` data that shows the number of months with temperatures above and below 0 in 2000 in China
-- To complete the task, you'll need to:
-  - Subset your data using `filter()`
-  - Create a new variable called `temp_category` that tells whether a temperature is 'Below 0' or 'Above 0'
-  - Set the color of the bar segments to equal `temp_category`
-
-```r
-climate %>% 
-  filter(country == 'China' & year == 2000) %>% 
-  mutate(temp_category = ifelse(temp < 0, 'Below 0', 'Above 0')) %>% 
-  group_by(city, temp_category) %>% 
-  summarise(n = n()) %>% 
-  ggplot(aes(x = reorder(city, n), y = n, fill = temp_category)) + 
-  geom_bar(stat = 'identity')
-```
-
----
-
 ```{r,  fig.height = 5, fig.width = 12, dpi = 300, echo = TRUE, collapse=TRUE}
 climate %>% 
-  filter(country == 'China' & year == 2000) %>% 
-  mutate(temp_category = ifelse(temp < 0, 'Below 0', 'Above 0')) %>% 
-  ggplot(aes(x = city, fill = temp_category)) + 
-  geom_bar()
+  filter(country %in% c('Brazil', 'China', 'India', 'Turkey', 'United States')) %>% 
+  group_by(country) %>% 
+  summarise(n = n()) %>% 
+  ggplot(aes(x = reorder(country, -n), y = n, fill = country)) + 
+  geom_bar(stat = 'identity')
 ```
 
 ---
@@ -536,7 +509,7 @@ ylab('Y Axis Title')
 
 # Axis, legend, and chart titles
 
-```{r, dpi=300, fig.height = 4, fig.width = 7, echo = TRUE, collapse=TRUE}
+```{r, dpi=300, fig.height = 4, fig.width = 9, echo = TRUE, collapse=TRUE}
 airbnb %>% 
   ggplot(aes(x = address, fill = room_type)) + 
   geom_bar() + 
@@ -547,15 +520,18 @@ airbnb %>%
 
 # Axis, legend, and chart titles
 
-Try adding axis names to the Chinese cities plot you made during the exercise
+Try adding axis names to the plot of countries made from the `climate` data
 
-```{r,  fig.height = 5, fig.width = 12, dpi = 300, echo = TRUE, collapse=TRUE}
+--
+
+```{r,  fig.height = 5, fig.width = 13, dpi = 300, echo = TRUE, collapse=TRUE}
 climate %>% 
-  filter(country == 'China' & year == 2000) %>% 
-  mutate(temp_category = ifelse(temp < 0, 'Below 0', 'Above 0')) %>% 
-  ggplot(aes(x = city, fill = temp_category)) + 
-  geom_bar() + 
-  labs(x = 'City', y = 'Number of Months (#)')
+  filter(country %in% c('Brazil', 'China', 'India', 'Turkey', 'United States')) %>% 
+  group_by(country) %>% 
+  summarise(n = n()) %>% 
+  ggplot(aes(x = reorder(country, -n), y = n, fill = country)) + 
+  geom_bar(stat = 'identity') + 
+  labs(x = 'Country', y = 'Number of Countries (#)')
 ```
 
 ---
@@ -580,7 +556,7 @@ labs(colour = 'Check out these colors')
 
 # Axis, legend, and chart titles
 
-```{r, dpi=300, fig.height = 4, fig.width = 7, echo = TRUE, collapse=TRUE}
+```{r, dpi=300, fig.height = 4, fig.width = 9, echo = TRUE, collapse=TRUE}
 airbnb %>% 
   ggplot(aes(x = address, fill = room_type)) + 
   geom_bar() + 
@@ -591,34 +567,18 @@ airbnb %>%
 
 # Axis, legend, and chart titles 
 
-Try removing the legend name from the Chinese cities plot
+Try removing the legend name from the plot of countries made from the `climate` data
 
-```{r,  fig.height = 5, fig.width = 12, dpi = 300, echo = TRUE, collapse=TRUE}
+--
+
+```{r, fig.height = 5, fig.width = 13, dpi = 300, echo = TRUE, collapse=TRUE}
 climate %>% 
-  filter(country == 'China' & year == 2000) %>% 
-  mutate(temp_category = ifelse(temp < 0, 'Below 0', 'Above 0')) %>% 
-  ggplot(aes(x = city, fill = temp_category)) + 
-  geom_bar() + 
-  labs(x = 'City', y = 'Number of Months (#)', fill = element_blank())
-```
-
----
-
-# Axis, legend, and chart titles 
-
-Try removing the legend name from the Chinese cities plot
-
-```r
-climate %>% 
-  filter(country == 'China' & year == 2000) %>% 
-  mutate(temp_category = ifelse(temp < 0, 'Below 0', 'Above 0')) %>% 
-  ggplot(aes(x = city, fill = temp_category)) + 
-  geom_bar() + 
-  labs(
-    x = 'City'
-    , y = 'Number of Months (#)'
-    , fill = element_blank()
-    )
+  filter(country %in% c('Brazil', 'China', 'India', 'Turkey', 'United States')) %>% 
+  group_by(country) %>% 
+  summarise(n = n()) %>% 
+  ggplot(aes(x = reorder(country, -n), y = n, fill = country)) + 
+  geom_bar(stat = 'identity') + 
+  labs(x = 'Country', y = 'Number of Observations (#)', fill = element_blank())
 ```
 
 ---
@@ -659,7 +619,7 @@ airbnb %>%
 
 # Axis, legend, and chart titles
 
-```{r,  fig.height = 4, fig.width = 7, dpi = 300, echo = FALSE, collapse=TRUE}
+```{r, dpi=300, fig.height = 4, fig.width = 9, echo = FALSE}
 airbnb %>% 
   ggplot(aes(x = address, fill = room_type)) + 
   geom_bar() + 
@@ -676,20 +636,40 @@ airbnb %>%
 
 # Axis, legend, and chart titles
 
-Try adding a title to the Chinese cities plot
+Try adding a title to the plot of countries made from the `climate` data
 
-```{r, echo = FALSE, collapse=TRUE}
+--
+
+```r
 climate %>% 
-  filter(country == 'China' & year == 2000) %>% 
-  mutate(temp_category = ifelse(temp < 0, 'Below 0', 'Above 0')) %>% 
-  ggplot(aes(x = city, fill = temp_category)) + 
-  geom_bar() + 
+  filter(country %in% c('Brazil', 'China', 'India', 'Turkey', 'United States')) %>% 
+  group_by(country) %>% 
+  summarise(n = n()) %>% 
+  ggplot(aes(x = reorder(country, -n), y = n, fill = country)) + 
+  geom_bar(stat = 'identity') + 
   labs(
-    x = 'City'
-    , y = 'Number of Months (#)'
+    x = 'Country'
+    , y = 'Number of Observations (#)'
     , fill = element_blank()
-    , title    = 'Months with Freezing Temperatures on Average in China'
+    , title = 'Number of observations by country'
     )
+```
+
+---
+
+# Axis, legend, and chart titles
+
+Try adding a title to the plot of countries made from the `climate` data
+
+```{r, fig.height = 5, fig.width = 13, dpi = 300, echo = FALSE}
+climate %>% 
+  filter(country %in% c('Brazil', 'China', 'India', 'Turkey', 'United States')) %>% 
+  group_by(country) %>% 
+  summarise(n = n()) %>% 
+  ggplot(aes(x = reorder(country, -n), y = n, fill = country)) + 
+  geom_bar(stat = 'identity') + 
+  labs(x = 'Country', y = 'Number of Observations (#)', fill = element_blank()
+       , title = 'Number of observations by country')
 ```
 
 ---
@@ -731,8 +711,60 @@ airbnb %>%
 
 # Axis units
 
-```{r, fig.height = 5, fig.width = 8, echo = FALSE, collapse=TRUE}
-### 
+```{r, dpi=300, fig.height = 4, fig.width = 9, echo = FALSE}
+airbnb %>% 
+  ggplot(aes(x = address, fill = room_type)) + 
+  geom_bar() + 
+  labs(
+    x = 'City'
+    , y = 'Number of Rentals (#)'
+    , fill = 'Check out these colors'
+    , title    = 'Room Types by City'
+    , subtitle = 'Shared Rooms are the Least Available Room Type'
+    ) + 
+  scale_y_continuous(labels = comma) 
+```
+
+---
+
+# Axis units
+
+Try adding commas to the y-axis of the plot you made from the `climate` data
+
+--
+
+```r
+climate %>% 
+  filter(country %in% c('Brazil', 'China', 'India', 'Turkey', 'United States')) %>% 
+  group_by(country) %>% 
+  summarise(n = n()) %>% 
+  ggplot(aes(x = reorder(country, -n), y = n, fill = country)) + 
+  geom_bar(stat = 'identity') + 
+  labs(
+    x = 'Country'
+    , y = 'Number of Observations (#)'
+    , fill = element_blank()
+    , title = 'Number of observations by country'
+    ) + 
+  scale_y_continuous(labels = comma) 
+```
+
+---
+
+# Axis units
+
+Try adding commas to the y-axis of the plot you made from the `climate` data
+
+```{r, fig.height = 5, fig.width = 13, dpi = 300, echo = FALSE}
+climate %>% 
+  filter(country %in% c('Brazil', 'China', 'India', 'Turkey', 'United States')) %>% 
+  group_by(country) %>% 
+  summarise(n = n()) %>% 
+  ggplot(aes(x = reorder(country, -n), y = n, fill = country)) + 
+  geom_bar(stat = 'identity') + 
+  labs(x = 'Country', y = 'Number of Observations (#)', fill = element_blank()
+       , title = 'Number of observations by country') + 
+  scale_y_continuous(labels = comma) 
 ```
 
 ---
@@ -771,12 +803,12 @@ theme_dark()
 Selected `ggthemes` themes
 
 ```r
-theme_stata() + scale_colour_stata() # scale_fill_stata()
-theme_economist() + scale_colour_economist() # scale_fill_economist()
-theme_fivethirtyeight() + scale_color_fivethirtyeight() # scale_fill_fivethirtyeight()
-theme_wsj() + scale_colour_wsj() # scale_fill_wsj()
-theme_pander() + scale_colour_pander() # scale_fill_pander()
-theme_hc(bgcolor = "darkunica") + scale_colour_hc("darkunica") # scale_fill_hc("darkunica")
+theme_stata() + scale_colour_stata() # also can use scale_fill_stata()
+theme_economist() + scale_colour_economist() 
+theme_fivethirtyeight() + scale_color_fivethirtyeight() 
+theme_wsj() + scale_colour_wsj() 
+theme_pander() + scale_colour_pander() 
+theme_hc(bgcolor = "darkunica") + scale_colour_hc("darkunica") 
 ```
 
 ---
@@ -794,7 +826,9 @@ airbnb %>%
     , title    = 'Room Types by City'
     , subtitle = 'Shared Rooms are the Least Available Room Type'
     ) + 
-  scale_y_continuous(labels = comma) 
+  scale_y_continuous(labels = comma) + 
+  theme_economist() + 
+  scale_fill_economist()
 ```
 
 ---
@@ -803,21 +837,20 @@ airbnb %>%
 
 Economist theme  
   
-```{r, fig.height = 4, fig.width = 6, echo = FALSE, collapse=TRUE}
-# covid %>% 
-#   filter(! mobility_data_type %in% NA) %>% 
-#   ggplot(aes(x = mobility_data_type, fill = mobility_data_type)) + 
-#   geom_bar() + 
-#   labs(
-#     x          = 'Mobility Data Type'
-#     , y        = 'Observations (#)'
-#     , fill     = element_blank()
-#     , title    = '2020 Covid-19 Mobility Types'
-#     , subtitle = 'Nearly two-thirds of mobility data are observed'
-#     ) + 
-#   scale_y_continuous(labels = comma) +
-#   theme_economist() + 
-#   scale_fill_economist()
+```{r, dpi=300, fig.height = 4, fig.width = 9, echo = FALSE}
+airbnb %>% 
+  ggplot(aes(x = address, fill = room_type)) + 
+  geom_bar() + 
+  labs(
+    x = 'City'
+    , y = 'Number of Rentals (#)'
+    , fill = 'Check out these colors'
+    , title    = 'Room Types by City'
+    , subtitle = 'Shared Rooms are the Least Available Room Type'
+    ) + 
+  scale_y_continuous(labels = comma) +
+  theme_economist() + 
+  scale_fill_economist()
 ```
 
 ---
@@ -830,26 +863,50 @@ Economist theme
 
 # Pre-built themes
 
-Try adding a theme to the `beat` plot  
+Try adding a theme to the plot you made from the `climate` data
 
-```{r, fig.height = 4, fig.width = 6, echo = FALSE, collapse=TRUE}
-# crime %>% 
-#   filter(
-#     beat %in% c('B3', 'E3', 'D2', 'R2', 'O1', 'C3', 'K3') &
-#     offense %in% c('Impersonation', 'Driving Under the Influence'
-#                   , 'Pocket-picking', 'Embezzlement')
-#     ) %>%
-#   ggplot(aes(beat, fill = offense)) + 
-#   geom_bar() + 
-#   labs(
-#   x = 'Seattle Beats'
-#   , y = 'Incidents by Offense\nClearance Group (#)'
-#   , fill = element_blank()
-#   , title = 'An Amazing Title'
-#   ) + 
-#   theme_wsj() + 
-#   scale_fill_wsj() + 
-#   guides(fill=guide_legend(nrow=2))
+--
+
+```r
+climate %>% 
+  filter(country %in% c('Brazil', 'China', 'India', 'Turkey', 'United States')) %>% 
+  group_by(country) %>% 
+  summarise(n = n()) %>% 
+  ggplot(aes(x = reorder(country, -n), y = n, fill = country)) + 
+  geom_bar(stat = 'identity') + 
+  labs(
+    x = 'Country'
+    , y = 'Number of Observations (#)'
+    , fill = element_blank()
+    , title = 'Number of observations by country'
+    ) + 
+  scale_y_continuous(labels = comma) +
+  theme_wsj() + 
+  scale_fill_wsj()
+```
+
+---
+
+# Pre-built themes
+
+Try adding a theme to the plot you made from the `climate` data
+
+```{r, fig.height = 5, fig.width = 13, dpi = 300, echo = FALSE}
+climate %>% 
+  filter(country %in% c('Brazil', 'China', 'India', 'Turkey', 'United States')) %>% 
+  group_by(country) %>% 
+  summarise(n = n()) %>% 
+  ggplot(aes(x = reorder(country, -n), y = n, fill = country)) + 
+  geom_bar(stat = 'identity') + 
+  labs(
+    x = 'Country'
+    , y = 'Number of Observations (#)'
+    , fill = element_blank()
+    , title = 'Number of observations by country'
+    ) + 
+  scale_y_continuous(labels = comma) +
+  theme_wsj() + 
+  scale_fill_wsj()
 ```
 
 ---
@@ -886,294 +943,94 @@ help(theme)
 
 ---
 
-# Exercise - 5 minutes
+# Exercise - 7 minutes
 
-We answered the two questions below in the previous class. How would you turn the tabular output data into a chart?
+The code on the right is the solution to the troubleshooting question from the beginning of class. 
 
-  - In `covid`, which `location` reports the largest number of estimated infections in September, excluding `'Global'` values?  
-  - In `crime`, of all `'ASSAULT OFFENSES'` values in `offense_parent_group` which `offense` value has the fewest incidents?   
+.pull-left[
+- Visualize the data as a bar plot
+- The x-axis should equal `city`
+- The y-axis should equal `mean_temp`
+- `fill` should be `century`
+- Dodge the bar segments
+- Feel free to use a theme, title the plot, update axis titles, or make an other aesthetic changes
+]
 
+.pull-right[
 ```r
-covid %>% 
-  group_by(month, location) %>% 
-  summarise(est_infections = sum(est_infections, na.rm = TRUE)) %>%
-  filter(month %in% 9 & ! location %in% 'Global') %>% 
-  arrange(desc(est_infections)) %>%
-  head() 
-```
-
----
-
-# Exercise - 5 minutes
-
-How would you turn the tabular output data into a chart?
-
-```r
-covid %>% 
-  group_by(month, location) %>% 
-  summarise(est_infections = sum(est_infections, na.rm = TRUE)) %>%
-  filter(month %in% 9 & ! location %in% 'Global') %>% 
-  arrange(desc(est_infections)) %>%
-  head() %>% 
-  ggplot(aes(x = reorder(location, est_infections), y = est_infections, fill = location)) + 
-  geom_bar(stat = "identity") + 
-  guides(fill=guide_legend(nrow=3)) + 
-  labs(x = 'Location', y = 'Estimated Infections (#)') + 
-  coord_flip() + # coord_flip() is a new function
-  ggthemes::theme_hc()
-```
-
----
-
-# Exercise - 5 minutes
-
-How would you turn the tabular output data into a chart?
-
-```{r, fig.height = 3, fig.width = 7, echo = FALSE, collapse=TRUE}
-# covid %>% 
-#   group_by(month, location) %>% 
-#   summarise(est_infections = sum(est_infections, na.rm = TRUE)) %>%
-#   filter(month %in% 9 & ! location %in% 'Global') %>% 
-#   arrange(desc(est_infections)) %>%
-#   head() %>% 
-#   ggplot(aes(x = reorder(location, est_infections), y = est_infections, fill = location)) + 
-#   geom_bar(stat = "identity") + 
-#   guides(fill=guide_legend(nrow=3)) + 
-#   labs(x = 'Location', y = 'Estimated Infections (#)') + 
-#   coord_flip() + # coord_flip() is a new function
-#   ggthemes::theme_hc()
-```
-
----
-
-# Exercise - 5 minutes
-
-How would you turn the tabular output data into a chart?
-
-```r
-covid %>% 
-  group_by(month, location) %>% 
-  summarise(est_infections = sum(est_infections, na.rm = TRUE)) %>%
-  filter(month %in% 9 & ! location %in% 'Global') %>% 
-  arrange(desc(est_infections)) %>%
-  head() %>% 
-  ggplot(aes(x = reorder(location, est_infections), y = est_infections, fill = location)) + 
-  geom_bar(stat = "identity") + 
-  guides(fill=guide_legend(nrow=3)) + 
-  labs(x = 'Location', y = 'Estimated Infections (#)') + 
-  coord_flip() + # coord_flip() is a new function
-  ggthemes::theme_hc()
-```
-
-New argument and functions
-
-```r
-geom_bar(stat = 'identity')       # IMPORTANT: use stat when working with aggregated data
-reorder(location, est_infections) # reorder() to sort rows/columns in your visualization
-coord_flip()                      # coord_flip(): x becomes y; y becomes x
-```
-
----
-
-# Exercise - 5 minutes
-
-We answered the two questions below in the previous class. How would you turn the tabular output data into a chart?
-
-  - In `covid`, which `location` reports the largest number of estimated infections in September, excluding `'Global'` values?  
-  - In `crime`, of all `'ASSAULT OFFENSES'` values in `offense_parent_group` which `offense` value has the fewest incidents?   
-
-```{r, echo = TRUE, collapse=TRUE}
-# crime %>% 
-#   group_by(offense_parent_group, offense) %>% 
-#   summarise(incident = n()) %>%
-#   filter(offense_parent_group %in% 'ASSAULT OFFENSES' & ! offense %in% NA)
-```
-
----
-
-# Exercise - 5 minutes
-
-How would you turn the tabular output data into a chart?
-
-```{r, fig.height = 3, fig.width = 10, echo = TRUE, collapse=TRUE}
-# crime %>% 
-#   group_by(offense_parent_group, offense) %>% 
-#   summarise(incident = n()) %>%
-#   filter(offense_parent_group %in% 'ASSAULT OFFENSES' & ! offense %in% NA) %>% 
-#   ggplot(aes(reorder(offense, -incident), incident)) +
-#   geom_bar(stat = 'identity') + 
-#   theme_classic()
-```
-
----
-
-# Exercise - 15 minutes
-- From the `crime` dataset, report the mean difference in `reported_date` and `occurred_date` values by `beat`.  
-  - The variable that tells us the difference between `reported_date` and `occurred_date` should be called `date_dif`  
-  - In your output of mean values by `beat` only report rows where the number of `beat` values in the dataset is greater than 3000  
-  - You'll use `transmute` and `filter` as well as `group_by` and `summarise` to solve this problem  
-  - The dataframe should have three variables: `beat`, `date_dif`, `n`  
-- <u>Create a bar plot that that shows `date_dif` values by `beat`</u>
-  
-  
-**Hint**
-```r
-crime %>% 
-  transmute(
-    beat
-    , date_dif = reported_date - occurred_date
+climate %>% 
+  filter(
+    country == 'Brazil' 
+    & ! is.na(temp) 
+    & year < 2000
   ) %>% 
-```
-  
----
-
-# Exercise - 15 minutes
-- From the `crime` dataset, report the mean difference in `reported_date` and `occurred_date` values by `beat`.  
-  - The variable that tells us the difference between `reported_date` and `occurred_date` should be called `date_dif`  
-  - In your output of mean values by `beat` only report rows where the number of `beat` values in the dataset is greater than 3000  
-  - You'll use `transmute` and `filter` as well as `group_by` and `summarise` to solve this problem  
-  - The dataframe should have three variables: `beat`, `date_dif`, `n`  
-- <u>Create a bar plot that that shows `date_dif` values by `beat`</u>
-  
-```r
-crime %>% 
-  transmute(
-    beat
-    , date_dif = reported_date - occurred_date
-  ) %>% 
-  group_by(beat) %>% 
+  mutate(century = ifelse(year >= 1900, '20th Century', '19th Century')) %>% 
+  group_by(century, city) %>%   
   summarise(
-    date_dif = mean(date_dif, na.rm = TRUE)
-    , n = n()
+    mean_temp = mean(temp) 
+    , median_temp = median(temp)
+    , max_temp = max(temp)
   ) %>% 
+  arrange(city)
+```
+]
+
+```{r, echo = FALSE}
+countdown(minutes = 7, seconds = 0, left = 0)
 ```
 
 ---
 
-# Exercise - 15 minutes
-- From the `crime` dataset, report the mean difference in `reported_date` and `occurred_date` values by `beat`.  
-  - The variable that tells us the difference between `reported_date` and `occurred_date` should be called `date_dif`  
-  - In your output of mean values by `beat` only report rows where the number of `beat` values in the dataset is greater than 3000  
-  - You'll use `transmute` and `filter` as well as `group_by` and `summarise` to solve this problem  
-  - The dataframe should have three variables: `beat`, `date_dif`, `n`  
-- <u>Create a bar plot that that shows `date_dif` values by `beat`</u>
-  
-```r
-crime %>% 
-  transmute(
-    beat
-    , date_dif = reported_date - occurred_date
-  ) %>% 
-  group_by(beat) %>% 
-  summarise(
-    date_dif = mean(date_dif, na.rm = TRUE)
-    , n = n()
-  ) %>% 
-  filter(n > 3000) %>% 
-```
-
----
-
-# Exercise - 15 minutes 
+# Exercise - 7 minutes
 
 ```r
-crime %>% 
-  transmute(
-    beat
-    , date_dif = reported_date - occurred_date
+climate %>% 
+  filter(
+    country == 'Brazil' 
+    & ! is.na(temp) 
+    & year < 2000
   ) %>% 
-  group_by(beat) %>% 
+  mutate(century = ifelse(year >= 1900, '20th Century', '19th Century')) %>% 
+  group_by(century, city) %>%   
   summarise(
-    date_dif = mean(date_dif, na.rm = TRUE)
-    , n = n()
+    mean_temp = mean(temp) 
+    , median_temp = median(temp)
+    , max_temp = max(temp)
   ) %>% 
-  filter(n > 3000) %>% 
-  ggplot(aes(x = beat, y = date_dif)) +
-  geom_bar(stat = 'identity')
+  arrange(city) %>% 
+  ggplot(aes(x = reorder(city, mean_temp), y = mean_temp, fill = century)) + 
+  geom_bar(stat = 'identity', position = 'dodge') + 
+  labs(x = 'City', y = 'Mean Temperature (Celcius)', fill = NULL) + 
+  theme_hc() + 
+  scale_fill_hc()
 ```
 
 ---
 
-# Exercise - 15 minutes 
+# Exercise - 7 minutes
 
-```{r, echo = FALSE, collapse=TRUE, warning=FALSE, message=FALSE}
-# crime %>% 
-#   transmute(
-#     beat
-#     , date_dif = reported_date - occurred_date
-#   ) %>% 
-#   group_by(beat) %>% 
-#   summarise(
-#     date_dif = mean(date_dif, na.rm = TRUE)
-#     , n = n()
-#   ) %>% 
-#   filter(n > 3000) %>% 
-#   ggplot(aes(x = beat, y = date_dif)) +
-#   geom_bar(stat = 'identity')
-```
-
----
-
-# Exercise - 5 minutes
-
-- Take an extra 5 minutes to do the following  
-  - Add a theme to your plot  
-  - Change the axis names 
-  - Add a plot title
-  - Arrange the `beat` columns by `date_dif`  
-  - Remove `NA` `beat` values
-
----
-
-# Exercise - 5 minutes
-
-```{r, echo = FALSE, collapse=TRUE, warning=FALSE, message=FALSE}
-# crime %>% 
-#   transmute(
-#     beat
-#     , date_dif = reported_date - occurred_date
-#   ) %>% 
-#   group_by(beat) %>% 
-#   summarise(
-#     date_dif = mean(date_dif, na.rm = TRUE)
-#     , n = n()
-#   ) %>% 
-#   filter(n > 3000 & ! beat %in% c(NA, 'UNKNOWN')) %>% 
-#   ggplot(aes(reorder(beat, -date_dif), date_dif)) +
-#   geom_bar(stat = 'identity') + 
-#   labs(
-#     y = 'Average delay in reporting (days)'
-#     , x = 'Beat'
-#     , title = 'Beat U3 sees the longest delay in events reporting'
-#     ) + 
-#   theme_classic()
-```
-
----
-
-# Exercise - 5 minutes
-
-```r
-crime %>% 
-  transmute(
-    beat
-    , date_dif = reported_date - occurred_date
+```{r,  fig.height = 5, fig.width = 13, dpi = 300, echo = FALSE}
+climate %>% 
+  filter(
+    country == 'Brazil' 
+    & ! is.na(temp) 
+    & year < 2000
   ) %>% 
-  group_by(beat) %>% 
+  mutate(century = ifelse(year >= 1900, '20th Century', '19th Century')) %>% 
+  group_by(century, city) %>%   
   summarise(
-    date_dif = mean(date_dif, na.rm = TRUE)
-    , n = n()
+    mean_temp = mean(temp) 
+    , median_temp = median(temp)
+    , max_temp = max(temp)
   ) %>% 
-  filter(n > 3000 & ! beat %in% c(NA, 'UNKNOWN')) %>% 
-  ggplot(aes(reorder(beat, -date_dif), date_dif)) +
-  geom_bar(stat = 'identity') + 
-  labs(
-    y = 'Average delay in reporting (days)'
-    , x = 'Beat'
-    , title = 'Beat U3 sees the longest delay in events reporting'
-    ) + 
-  theme_classic()
+  arrange(city) %>% 
+  ggplot(aes(x = reorder(city, mean_temp), y = mean_temp, fill = century)) + 
+  geom_bar(stat = 'identity', position = 'dodge') + 
+  labs(x = 'City', y = 'Mean Temperature (Celcius)', fill = NULL) + 
+  theme_hc() + 
+  scale_fill_hc()
 ```
+
 ---
 class: inverse, middle, center
 
@@ -1181,155 +1038,261 @@ class: inverse, middle, center
 
 ---
 
-# <img src="figures/hist.png" style="height: 100px"/>
+# <img src="figures/line.png" style="height: 70px"/>
 
-Histograms: 1 continuous variable  
+.pull-left[
+Line plot: 1 continuous variable + ordinal variable   
 
-- `bins` is the argument you use to indicate the number of columns in your histogram
+- Line plots are suited well to [dates](https://gbearden.github.io/r_course_evans_school/slides/part_2/#71), but may work well other ordered variables
+- `color` and `linetype` are other arguments you can use when building a line plot
 
-```{r, fig.height = 3, fig.width = 5, echo = TRUE, collapse=TRUE, warning=FALSE, message=FALSE}
+```r
 climate %>% 
-  ggplot(aes(uncertainty)) + 
-  geom_histogram() 
+  group_by(year) %>%
+  summarise(uncertainty = mean(uncertainty, na.rm = TRUE)) %>% 
+  ggplot(aes(x = year, y = uncertainty)) +
+  geom_line()
 ```
+]
+
+.pull-right[
+```{r, dpi = 300, fig.height = 3, fig.width = 5, echo = FALSE, warning=FALSE, message=FALSE}
+climate %>% 
+  group_by(year) %>%
+  summarise(uncertainty = mean(uncertainty, na.rm = TRUE)) %>% 
+  ggplot(aes(x = year, y = uncertainty)) +
+  geom_line()
+```
+]
 
 ---
 
-# <img src="figures/hist.png" style="height: 100px"/>
+# <img src="figures/line.png" style="height: 70px"/>
 
+.pull-left[
+Line plot: 1 continuous variable + ordinal variable   
+
+- Line plots are suited well to [dates](https://gbearden.github.io/r_course_evans_school/slides/part_2/#71), but may work well other ordered variables
+- `color` and `linetype` are other arguments you can use when building a line plot
+
+```r
+climate %>% 
+  group_by(year) %>%
+  summarise(uncertainty = mean(uncertainty, na.rm = TRUE)) %>% 
+  ggplot(aes(x = year, y = uncertainty)) +
+  geom_line()
+```
+]
+
+.pull-right[
+How would you make the line red? 
+
+```{r, dpi = 300, fig.height = 3, fig.width = 5, echo = FALSE, warning=FALSE, message=FALSE}
+climate %>% 
+  group_by(year) %>%
+  summarise(uncertainty = mean(uncertainty, na.rm = TRUE)) %>% 
+  ggplot(aes(x = year, y = uncertainty)) +
+  geom_line()
+```
+]
+
+---
+
+# <img src="figures/scatter.png" style="height: 70px"/>
+
+
+.pull-left[
+Scatterplots: 2 continuous variables 
+
+- When there are a lot of overlapping data, `alpha` is useful
+- `color`, `shape`, `size` are other arguments you can use when building a scatter plot
+
+```r
+climate %>% 
+  ggplot(
+    aes(
+      x = temp
+      , y = uncertainty
+      )
+    ) + 
+  geom_point(alpha = .1)
+```
+]
+
+.pull-right[
+```{r, dpi = 300, fig.height = 3, fig.width = 5, echo = FALSE, warning=FALSE, message=FALSE}
+climate %>% 
+  ggplot(
+    aes(
+      x = temp
+      , y = uncertainty
+      )
+    ) + 
+  geom_point(alpha = .1)
+```
+]
+
+---
+
+# <img src="figures/scatter.png" style="height: 70px"/>
+
+
+.pull-left[
+Scatterplots: 2 continuous variables 
+
+- When there are a lot of overlapping data, `alpha` is useful
+- `color`, `shape`, `size` are other arguments you can use when building a scatter plot
+
+```r
+climate %>% 
+  ggplot(
+    aes(
+      x = temp
+      , y = uncertainty
+      )
+    ) + 
+  geom_point(alpha = .1)
+```
+]
+
+.pull-right[
+Take a moment to create a scatterplot with `year` and `uncertainty` from `climate`
+]
+
+---
+
+# <img src="figures/hist.png" style="height: 70px"/>
+
+.pull-left[
 Histograms: 1 continuous variable  
 
 - `bins` is the argument you use to indicate the number of columns in your histogram
 
-```{r, fig.height = 3, fig.width = 5, echo = TRUE, collapse=TRUE, warning=FALSE, message=FALSE}
+```{r, dpi = 300, fig.height = 3, fig.width = 5, echo = TRUE, collapse=TRUE, warning=FALSE, message=FALSE}
 climate %>% 
   ggplot(aes(uncertainty)) + 
   geom_histogram(bins = 10) 
 ```
+]
+
+--
+
+.pull-right[
+Take a moment to create a histogram with any continuous variable from either `climate` or `airbnb`
+]
 
 ---
 
-# <img src="figures/scatter.png" style="height: 100px"/>
+# Exercise - 15 minutes
 
-Scatterplots: 2 continuous variables  
+- With `climate`, create a line plot of mean Fahrenheit temperatures for cities in Brazil
+  - Data should be for 1850 and onward
+  - Make line color equal to `city`
+  - Use the following formula to convert Celcius to Fahrenheit: `(temp * 9/5) + 32`
+  - Create the mean temperature with `summarise` and call it `mean_temp` 
+  - Feel free to change plot aesthetics as you see fit (add a theme; change axis, legend, or plot titles; change the color of lines for cities; etc.)
 
-```{r, fig.height = 3, fig.width = 5, echo = TRUE, collapse=TRUE, warning=FALSE, message=FALSE}
-climate %>% 
-  ggplot(aes(x = temp, y = uncertainty)) + 
-  geom_point(alpha = .1)
+```{r, echo = FALSE}
+countdown(minutes = 15, seconds = 0)
 ```
 
----
-
-# <img src="figures/scatter.png" style="height: 100px"/>
-
-Scatterplots: 2 continuous variables  
+--
 
 ```r
 climate %>% 
-  ggplot(aes(x = temp, y = uncertainty)) + 
-  geom_point()
+  filter() %>% 
+  group_by() %>% 
+  summarise()
 ```
 
 ---
 
-# <img src="figures/line.png" style="height: 100px"/>
+# Exercise - 15 minutes
 
-Line plot: 1 continuous variable + date variable   
-
-```{r, fig.height = 3, fig.width = 5, echo = TRUE, collapse=TRUE, warning=FALSE, message=FALSE}
+```r
 climate %>% 
-  mutate(date = lubridate::ym(paste0(year, '-', month))) %>% 
-  group_by(date) %>%
-  summarise(uncertainty = mean(uncertainty, na.rm = TRUE)) %>% 
-  ggplot(aes(x = date, y = uncertainty)) +
-  geom_line(stat = 'identity')
+  filter(country == 'Brazil' & year >= 1850) %>% 
+  mutate(temp = (temp * 9/5) + 32) %>% 
+  group_by(year, city) %>% 
+  summarise(mean_temp = mean(temp, na.rm = TRUE)) %>% 
+  ggplot(aes(x = year, y = mean_temp, color = city)) + 
+  geom_line(size = 1) + 
+  theme_bw() + 
+  ggthemes::scale_color_wsj() + 
+  labs(
+    x = 'Year'
+    , y = 'Mean Temperature'
+    , title = 'Temperatures in 6 Brazilian Cities, 1850 - present'
+    , color = NULL
+  )
 ```
 
 ---
 
-# Exercise - 5 minutes
+# Exercise - 15 minutes
+
+```{r, dpi = 300, fig.height = 4, fig.width = 6, echo = FALSE, warning=FALSE, message=FALSE}
+climate %>% 
+  filter(country == 'Brazil' & year >= 1850) %>% 
+  mutate(temp = (temp * 9/5) + 32) %>% 
+  group_by(year, city) %>% 
+  summarise(mean_temp = mean(temp, na.rm = TRUE)) %>% 
+  ggplot(aes(x = year, y = mean_temp, color = city)) + 
+  geom_line(size = 1) + 
+  theme_bw() + 
+  ggthemes::scale_color_wsj() + 
+  labs(
+    x = 'Year'
+    , y = 'Mean Temperature'
+    , title = 'Temperatures in 6 Brazilian Cities, 1850 - present'
+    , color = NULL
+  )
+```
+
+---
+
+# Exercise - 7 minutes
 
 - With `airbnb`, create a scatterplot that plots two numeric variables  
-- Include one `aes()` arguments in addition to `x` and `y`  
+- In addition to `x` and `y`, include another argument in `aes()`
    - For example, `size`, `shape`, `color` or `alpha`  
 - Use `group_by()` and `summarise()` if you would like  
 - Feel free to subset your data with `filter` or `sample_n()`
 
-```r
- airbnb %>% 
-  filter(address == 'Seattle') %>% 
-  group_by(room_type, accommodates, bathrooms) %>% 
-  summarise(n = n()) %>% 
-  ggplot(aes(x = bathrooms, y = accommodates, color = room_type)) + 
-  geom_line(size = 1) + 
-  theme_bw()
+```{r, echo = FALSE}
+countdown(minutes = 7, seconds = 0)
 ```
 
 ---
 
-# Exercise - 5 minutes
+# Exercise - 7 minutes
 
-```{r, fig.height = 3.5, fig.width = 6, echo = TRUE, collapse=TRUE, warning=FALSE, message=FALSE}
- # crime %>% 
- #  filter(! precinct %in% NA) %>%
- #  ggplot(aes(reported_date, occurred_date, color = precinct)) + 
- #  geom_point() + 
- #  theme_classic()
+```{r, dpi = 300, fig.height = 4, fig.width = 7, echo = FALSE, warning=FALSE, message=FALSE}
+airbnb %>% 
+  ggplot(aes(x = longitude, y = latitude, color = address)) + 
+  geom_point(alpha = .6) + 
+  theme_bw() + 
+  labs(
+    x = 'Longitude'
+    , y = 'Latitude'
+    , color = 'City'
+    , title = 'Coordinates of Seattle-area Airbnbs'
+  )
 ```
 
 ---
 
-# Exercise - 15 minutes
-
-- Create a plot from the `crime` dataset that shows the number of incidents by a character variable (you pick) and a time of day variable that indicates if the incident occurred in the AM or PM (first half or second half of the day)  
-  - Create a new variable with `mutate()` called `occurred_time_ampm` that tells whether an incident occurred in the AM or PM.  
-  - Make sure your axes are labeled correctly
-  - Give your chart a title
-  - Use `occurred_time_ampm` in the `color` or `fill` arguments in `aes()`
-  - Use a pre-built theme
-
----
-
-# Exercise - 15 minutes
-
-```{r, fig.height = 5, fig.width = 9, echo = FALSE, collapse=TRUE}
-# crime %>% 
-#   mutate(occurred_time_ampm = ifelse(occurred_time >= 1200, 'PM', 'AM')) %>% 
-#   filter(
-#     ! occurred_time_ampm %in% NA & 
-#     ! precinct %in% NA
-#     ) %>%
-#   group_by(precinct, occurred_time_ampm) %>%
-#   summarise(n = n()) %>%
-#   ungroup %>%
-#   ggplot(aes(reorder(precinct, n), n, fill = occurred_time_ampm)) + 
-#   geom_bar(stat = 'identity') + 
-#   coord_flip() + 
-#   theme_wsj() + 
-#   scale_fill_wsj() + 
-#   labs(title = 'Most incidents occur\nin the PM', fill = 'Time of Day')
-```
-
----
-
-# Exercise - 15 minutes
+# Exercise - 7 minutes
 
 ```r
-crime %>% 
-  mutate(occurred_time_ampm = ifelse(occurred_time >= 1200, 'PM', 'AM')) %>% 
-  filter(
-    ! occurred_time_ampm %in% NA & 
-    ! precinct %in% NA
-    ) %>%
-  group_by(precinct, occurred_time_ampm) %>%
-  summarise(n = n()) %>%
-  ungroup %>%
-  ggplot(aes(reorder(precinct, n), n, fill = occurred_time_ampm)) + 
-  geom_bar(stat = 'identity') + 
-  coord_flip() + 
-  theme_wsj() + 
-  scale_fill_wsj() + 
-  labs(title = 'Most incidents occur\nin the PM', fill = 'Time of Day')
+airbnb %>% 
+  ggplot(aes(x = longitude, y = latitude, color = address)) + 
+  geom_point(alpha = .6) + 
+  theme_bw() + 
+  labs(
+    x = 'Longitude'
+    , y = 'Latitude'
+    , color = 'City'
+    , title = 'Coordinates of Seattle-area Airbnbs'
+  )
 ```
-
