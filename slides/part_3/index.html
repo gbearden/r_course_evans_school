@@ -27,7 +27,8 @@ class: center, middle, inverse, title-slide
 # Preamble
 
 - Reminder: Submit 2 “stakeholder-ready” data visualizations on November 11 or before
-- What are tibbles? Two-dimensional data just like Excel spreadsheets
+- What are tibbles? 
+  - Two-dimensional data just like Excel spreadsheets
 
 
 
@@ -92,7 +93,7 @@ climate %&gt;%
   arrange(city)
 ```
 
-<div class="countdown" id="timer_617afcff" style="right:0;bottom:0;" data-warnwhen="0">
+<div class="countdown" id="timer_617b04c2" style="right:0;bottom:0;" data-warnwhen="0">
 <code class="countdown-time"><span class="countdown-digits minutes">05</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
 
@@ -259,7 +260,7 @@ airbnb %&gt;% ggplot() + geom_bar() # ggplot(data = airbnb) + geom_bar()
 - Map your data to the plot with `aes()`
   - `aes()` maps the variables in your data to the plot
   - `aes()` can be an argument in `ggplot()` or the geom  
-  - In simpler plots, `aes()` should go in `ggplot()`
+  - In simpler plots, `aes()` should be a `ggplot()` argument
   - Lots of `aes()` arguments
 
 ```r
@@ -447,7 +448,7 @@ my_data %&gt;%
   - Set the color of the bars equal to `country`
   
 
-<div class="countdown" id="timer_617afff3" style="right:0;bottom:0;" data-warnwhen="0">
+<div class="countdown" id="timer_617b0499" style="right:0;bottom:0;" data-warnwhen="0">
 <code class="countdown-time"><span class="countdown-digits minutes">07</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
 
@@ -759,8 +760,7 @@ class: inverse, middle, center
 - Change fonts
 - Change plot borders/boundaries and ticks
 - Pre-built themes vs. custom themes
-  - `ggplot2` themes
-  - `ggthemes` themes
+  - `ggplot2` and `ggthemes` themes
 
 ```r
 install.packages('ggthemes')
@@ -924,7 +924,7 @@ climate %&gt;%
 ```
 ]
 
-<div class="countdown" id="timer_617afeae" style="bottom:0;left:0;" data-warnwhen="0">
+<div class="countdown" id="timer_617b0416" style="bottom:0;left:0;" data-warnwhen="0">
 <code class="countdown-time"><span class="countdown-digits minutes">07</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
 
@@ -1103,7 +1103,7 @@ Take a moment to create a histogram with any continuous variable from either `cl
   - Create the mean temperature with `summarise` and call it `mean_temp` 
   - Feel free to change plot aesthetics as you see fit (add a theme; change axis, legend, or plot titles; change the color of lines for cities; etc.)
 
-<div class="countdown" id="timer_617afe2a" style="right:0;bottom:0;" data-warnwhen="0">
+<div class="countdown" id="timer_617b0427" style="right:0;bottom:0;" data-warnwhen="0">
 <code class="countdown-time"><span class="countdown-digits minutes">15</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
 
@@ -1154,7 +1154,7 @@ climate %&gt;%
 - Use `group_by()` and `summarise()` if you would like  
 - Feel free to subset your data with `filter` or `sample_n()`
 
-<div class="countdown" id="timer_617afe5f" style="right:0;bottom:0;" data-warnwhen="0">
+<div class="countdown" id="timer_617b0481" style="right:0;bottom:0;" data-warnwhen="0">
 <code class="countdown-time"><span class="countdown-digits minutes">07</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
 

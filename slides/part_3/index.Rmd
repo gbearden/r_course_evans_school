@@ -16,7 +16,8 @@ output:
 # Preamble
 
 - Reminder: Submit 2 “stakeholder-ready” data visualizations on November 11 or before
-- What are tibbles? Two-dimensional data just like Excel spreadsheets
+- What are tibbles? 
+  - Two-dimensional data just like Excel spreadsheets
 
 ```{r setup, include=FALSE}
 library(tidyverse)
@@ -264,7 +265,7 @@ airbnb %>% ggplot() + geom_bar() # ggplot(data = airbnb) + geom_bar()
 - Map your data to the plot with `aes()`
   - `aes()` maps the variables in your data to the plot
   - `aes()` can be an argument in `ggplot()` or the geom  
-  - In simpler plots, `aes()` should go in `ggplot()`
+  - In simpler plots, `aes()` should be a `ggplot()` argument
   - Lots of `aes()` arguments
 
 ```r
@@ -780,8 +781,7 @@ class: inverse, middle, center
 - Change fonts
 - Change plot borders/boundaries and ticks
 - Pre-built themes vs. custom themes
-  - `ggplot2` themes
-  - `ggthemes` themes
+  - `ggplot2` and `ggthemes` themes
 
 ```r
 install.packages('ggthemes')
