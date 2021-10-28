@@ -26,7 +26,9 @@ class: center, middle, inverse, title-slide
 
 # Preamble
 
-SAVE FOR ANSWERING QUESTIONS HELD OVER FROM THE PREVIOUS CLASS
+- Reminder: Submit 2 “stakeholder-ready” data visualizations on November 11 or before
+- What are tibbles? 
+  - Two-dimensional data just like Excel spreadsheets
 
 
 
@@ -39,7 +41,6 @@ SAVE FOR ANSWERING QUESTIONS HELD OVER FROM THE PREVIOUS CLASS
 - Selecting, creating, and updating variables  
 - Subsetting tibbles/data frames  
 - Aggregation  
-- Dates
 
 ---
 
@@ -80,19 +81,19 @@ climate %&gt;%
   fitler(
     country == 'Brazil' 
     &amp; ! is.na(temp) 
-    &amp; year &lt; 200
-  ) %&gt;% 
+    &amp; year &lt; 2000
+    ) %&gt;% 
   mutate(century = ifese(year &gt;= 1900, '20th Century', '19th Century')) %&gt;% 
   group_by(century, city) %&gt;% 
   summarise(
     mean_temp = mean(temp) 
     median_temp = median(temp)
     , max_temp = max(temp)
-    ) %&gt;% 
+    ) 
   arrange(city)
 ```
 
-<div class="countdown" id="timer_6171fa2f" style="right:0;bottom:0;" data-warnwhen="0">
+<div class="countdown" id="timer_617b04c2" style="right:0;bottom:0;" data-warnwhen="0">
 <code class="countdown-time"><span class="countdown-digits minutes">05</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
 
@@ -116,7 +117,7 @@ class: inverse, middle, center
 Import `airbnb` data if you have not already
 
 ```r
-airbnb &lt;- read_csv('https://bit.ly/3oadz2L', col_types = cols())
+airbnb &lt;- read_csv('https://bit.ly/3oadz2L')
 ```
 
 ---
@@ -165,7 +166,7 @@ Requests to learn another plot type?
 # Plot types
 
 .pull-left[
-1 discrete variable (plus other optional discrete and/or continuous variables)  
+1 discrete variable (plus optional discrete and/or continuous variables)  
 
 &lt;img src="figures/stacked_bar.png" style="height: 150px"/&gt; &lt;img src="figures/bar.png" style="height: 150px"/&gt;  
 
@@ -179,7 +180,7 @@ Requests to learn another plot type?
 
 &lt;img src="figures/scatter.png" style="height: 150px"/&gt;  
 
-1 continuous variable + date variable  
+1 continuous variable + ordinal variable  
 
 &lt;img src="figures/line.png" style="height: 150px"/&gt;  
 ]
@@ -226,7 +227,7 @@ mpg %&gt;% ggplot(aes(displ, hwy)) + geom_point()
 
 1. Pick your data
 2. Pick your chart type (geom)
-3. Program stuff like chart titles, axis names, axis types, and legends (scales)  
+3. Write code for stuff like chart titles, axis names, axis types, and legends (scales)  
 4. Make it pretty (themes)
 5. Keep tuning and reuse code
 
@@ -249,8 +250,7 @@ ggplot() + geom_line()      # create line plots
 - Your data is an argument in the `ggplot()` function  
 
 ```r
-airbnb %&gt;% ggplot() + geom_bar()
-ggplot(airbnb) + geom_bar()
+airbnb %&gt;% ggplot() + geom_bar() # ggplot(data = airbnb) + geom_bar()
 ```
 
 ---
@@ -260,11 +260,12 @@ ggplot(airbnb) + geom_bar()
 - Map your data to the plot with `aes()`
   - `aes()` maps the variables in your data to the plot
   - `aes()` can be an argument in `ggplot()` or the geom  
+  - In simpler plots, `aes()` should be a `ggplot()` argument
   - Lots of `aes()` arguments
 
 ```r
 airbnb %&gt;% ggplot(aes()) + geom_bar()
-airbnb %&gt;% ggplot() + geom_bar(aes())
+airbnb %&gt;% ggplot() + geom_bar(aes()) # Alternate placement of aes()
 ```
 
 --
@@ -272,8 +273,7 @@ airbnb %&gt;% ggplot() + geom_bar(aes())
 ```r
 aes(x = NULL, y = NULL, color = NULL
   , fill = NULL, alpha = NULL, label = NULL
-  , shape = NULL, size = NULL, group = NULL
-  , linetype = NULL
+  , shape = NULL, size = NULL, linetype = NULL
   )
 ```
 
@@ -439,6 +439,747 @@ my_data %&gt;%
 ```
 
 ---
+# Geom - Bar Plot
+
+- Build a bar chart with `climate` data that shows the number of rows for the following countries: 'Brazil', 'China', 'India', 'Turkey', and 'United States'
+- To complete the task, you'll need to:
+  - Subset your data using `filter()`
+  - Aggregate your data using `group_by()` and `summarise()`
+  - Set the color of the bars equal to `country`
+  
+
+<div class="countdown" id="timer_617b0499" style="right:0;bottom:0;" data-warnwhen="0">
+<code class="countdown-time"><span class="countdown-digits minutes">07</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
+</div>
+
+---
+
+# Geom - Bar Plot
+
+Exercise - 7 minutes
+
+- Build a bar chart with `climate` data that shows the number of rows for the following countries: 'Brazil', 'China', 'India', 'Turkey', and 'United States'
+- To complete the task, you'll need to:
+  - Subset your data using `filter()`
+  - Aggregate your data using `group_by()` and `summarise()`
+  - Set the color of the bars equal to `country`
+  
+```r
+climate %&gt;% 
+  filter(country %in% c('Brazil', 'China', 'India', 'Turkey', 'United States')) %&gt;% 
+  group_by(country) %&gt;% 
+  summarise(n = n()) %&gt;% 
+  ggplot(aes(x = reorder(country, -n), y = n, fill = country)) + 
+  geom_bar(stat = 'identity')
+```
+
+---
+
+# Geom - Bar Plot
+
+
+```r
+climate %&gt;% 
+  filter(country %in% c('Brazil', 'China', 'India', 'Turkey', 'United States')) %&gt;% 
+  group_by(country) %&gt;% 
+  summarise(n = n()) %&gt;% 
+  ggplot(aes(x = reorder(country, -n), y = n, fill = country)) + 
+  geom_bar(stat = 'identity')
+```
+
+![](index_files/figure-html/unnamed-chunk-9-1.png)&lt;!-- --&gt;
+
+---
+class: inverse, middle, center
+
+# Scales
+
+---
+
+# Axis, legend, and chart titles
+
+Axis names  
+
+- Keep names short-ish  
+- Consider including units in axis name  
+- It is possible you don't need an axis name
+
+2 options
+
+```r
+# Option 1
+labs(x = 'X Axis Title', y = 'Y Axis Title')
+
+# Option 2
+xlab('X Axis Title')
+ylab('Y Axis Title')
+```
+
+---
+
+# Axis, legend, and chart titles
+
+
+```r
+airbnb %&gt;% 
+  ggplot(aes(x = address, fill = room_type)) + 
+  geom_bar() + 
+  labs(x = 'City', y = 'Number of Rentals (#)')
+```
+
+![](index_files/figure-html/unnamed-chunk-10-1.png)&lt;!-- --&gt;
+
+---
+
+# Axis, legend, and chart titles
+
+Try adding axis names to the plot of countries made from the `climate` data
+
+--
+
+
+```r
+climate %&gt;% 
+  filter(country %in% c('Brazil', 'China', 'India', 'Turkey', 'United States')) %&gt;% 
+  group_by(country) %&gt;% 
+  summarise(n = n()) %&gt;% 
+  ggplot(aes(x = reorder(country, -n), y = n, fill = country)) + 
+  geom_bar(stat = 'identity') + 
+  labs(x = 'Country', y = 'Number of Countries (#)')
+```
+
+![](index_files/figure-html/unnamed-chunk-11-1.png)&lt;!-- --&gt;
+
+---
+
+# Axis, legend, and chart titles
+
+Legend names  
+
+- Keep names short  
+- Be mindful of what the legend is for
+  - Color? Fill? Size? etc.
+- Consider hiding the legend title for a clean look  
+
+```r
+labs(fill = '')
+labs(fill = element_blank())
+labs(fill = NULL)
+labs(colour = 'Check out these colors')
+```
+
+---
+
+# Axis, legend, and chart titles
+
+
+```r
+airbnb %&gt;% 
+  ggplot(aes(x = address, fill = room_type)) + 
+  geom_bar() + 
+  labs(x = 'City', y = 'Number of Rentals (#)', fill = 'Check out these colors')
+```
+
+![](index_files/figure-html/unnamed-chunk-12-1.png)&lt;!-- --&gt;
+
+---
+
+# Axis, legend, and chart titles 
+
+Try removing the legend name from the plot of countries made from the `climate` data
+
+--
+
+
+```r
+climate %&gt;% 
+  filter(country %in% c('Brazil', 'China', 'India', 'Turkey', 'United States')) %&gt;% 
+  group_by(country) %&gt;% 
+  summarise(n = n()) %&gt;% 
+  ggplot(aes(x = reorder(country, -n), y = n, fill = country)) + 
+  geom_bar(stat = 'identity') + 
+  labs(x = 'Country', y = 'Number of Observations (#)', fill = element_blank())
+```
+
+![](index_files/figure-html/unnamed-chunk-13-1.png)&lt;!-- --&gt;
+
+---
+
+# Axis, legend, and chart titles 
+
+Chart titles and subtitles
+
+- Consider making titles (or subtitles) descriptive
+- Don't over use subtitles
+
+```r
+# Option 1
+labs(title = NULL, subtitle = NULL)
+
+# Option 2
+ggtitle(title = NULL, subtitle = NULL)
+```
+
+---
+
+# Axis, legend, and chart titles
+
+```r
+airbnb %&gt;% 
+  ggplot(aes(x = address, fill = room_type)) + 
+  geom_bar() + 
+  labs(
+    x = 'City'
+    , y = 'Number of Rentals (#)'
+    , fill = 'Check out these colors'
+    , title    = 'Room Types by City'
+    , subtitle = 'Shared Rooms are the Least Available Room Type'
+    )
+```
+
+---
+
+# Axis, legend, and chart titles
+
+![](index_files/figure-html/unnamed-chunk-14-1.png)&lt;!-- --&gt;
+
+---
+
+# Axis, legend, and chart titles
+
+Try adding a title to the plot of countries made from the `climate` data
+
+--
+
+```r
+climate %&gt;% 
+  filter(country %in% c('Brazil', 'China', 'India', 'Turkey', 'United States')) %&gt;% 
+  group_by(country) %&gt;% 
+  summarise(n = n()) %&gt;% 
+  ggplot(aes(x = reorder(country, -n), y = n, fill = country)) + 
+  geom_bar(stat = 'identity') + 
+  labs(
+    x = 'Country'
+    , y = 'Number of Observations (#)'
+    , fill = element_blank()
+    , title = 'Number of observations by country'
+    )
+```
+
+---
+
+# Axis, legend, and chart titles
+
+Try adding a title to the plot of countries made from the `climate` data
+
+![](index_files/figure-html/unnamed-chunk-15-1.png)&lt;!-- --&gt;
+
+---
+
+# Axis units
+
+- Change axis units
+- This is a good idea and you should do it when its relevant
+- Good for x and y axes
+
+```r
+install.packages('scales')
+library(scales)
+
+scale_y_continuous(labels = percent) # Add a percentage sign to numbers on axis
+scale_y_continuous(labels = dollar)  # Add a dollar sign to numbers on axis
+scale_y_continuous(labels = comma)   # Add a comma to numbers on axis
+```
+
+---
+
+# Axis units
+
+```r
+airbnb %&gt;% 
+  ggplot(aes(x = address, fill = room_type)) + 
+  geom_bar() + 
+  labs(
+    x = 'City'
+    , y = 'Number of Rentals (#)'
+    , fill = 'Check out these colors'
+    , title    = 'Room Types by City'
+    , subtitle = 'Shared Rooms are the Least Available Room Type'
+    ) + 
+  scale_y_continuous(labels = comma) 
+```
+
+---
+
+# Axis units
+
+![](index_files/figure-html/unnamed-chunk-16-1.png)&lt;!-- --&gt;
+
+---
+
+# Axis units
+
+Try adding commas to the y-axis of the plot you made from the `climate` data
+
+--
+
+```r
+climate %&gt;% 
+  filter(country %in% c('Brazil', 'China', 'India', 'Turkey', 'United States')) %&gt;% 
+  group_by(country) %&gt;% 
+  summarise(n = n()) %&gt;% 
+  ggplot(aes(x = reorder(country, -n), y = n, fill = country)) + 
+  geom_bar(stat = 'identity') + 
+  labs(
+    x = 'Country'
+    , y = 'Number of Observations (#)'
+    , fill = element_blank()
+    , title = 'Number of observations by country'
+    ) + 
+  scale_y_continuous(labels = comma) 
+```
+
+---
+
+# Axis units
+
+Try adding commas to the y-axis of the plot you made from the `climate` data
+
+![](index_files/figure-html/unnamed-chunk-17-1.png)&lt;!-- --&gt;
+
+---
+class: inverse, middle, center
+
+# Themes
+
+---
+
+# Themes
+
+- Change layer and background colors
+- Change fonts
+- Change plot borders/boundaries and ticks
+- Pre-built themes vs. custom themes
+  - `ggplot2` and `ggthemes` themes
+
+```r
+install.packages('ggthemes')
+library(ggthemes)
+```
+
+---
+
+# Pre-built themes
+
+Selected `ggplot2` themes
+
+```r
+theme_classic()
+theme_bw()
+theme_minimal()
+theme_dark()
+```  
+Selected `ggthemes` themes
+
+```r
+theme_stata() + scale_colour_stata() # also can use scale_fill_stata()
+theme_economist() + scale_colour_economist() 
+theme_fivethirtyeight() + scale_color_fivethirtyeight() 
+theme_wsj() + scale_colour_wsj() 
+theme_pander() + scale_colour_pander() 
+theme_hc(bgcolor = "darkunica") + scale_colour_hc("darkunica") 
+```
+
+---
+
+# Pre-built themes
+
+```r
+airbnb %&gt;% 
+  ggplot(aes(x = address, fill = room_type)) + 
+  geom_bar() + 
+  labs(
+    x = 'City'
+    , y = 'Number of Rentals (#)'
+    , fill = 'Check out these colors'
+    , title    = 'Room Types by City'
+    , subtitle = 'Shared Rooms are the Least Available Room Type'
+    ) + 
+  scale_y_continuous(labels = comma) + 
+  theme_economist() + 
+  scale_fill_economist()
+```
+
+---
+
+# Pre-built themes
+
+Economist theme  
+  
+![](index_files/figure-html/unnamed-chunk-18-1.png)&lt;!-- --&gt;
+
+---
+
+# Pre-built themes
+
+&lt;img src="figures/plot_themes.png" style="height: 500px"/&gt;  
+
+---
+
+# Pre-built themes
+
+Try adding a theme to the plot you made from the `climate` data
+
+--
+
+```r
+climate %&gt;% 
+  filter(country %in% c('Brazil', 'China', 'India', 'Turkey', 'United States')) %&gt;% 
+  group_by(country) %&gt;% 
+  summarise(n = n()) %&gt;% 
+  ggplot(aes(x = reorder(country, -n), y = n, fill = country)) + 
+  geom_bar(stat = 'identity') + 
+  labs(
+    x = 'Country'
+    , y = 'Number of Observations (#)'
+    , fill = element_blank()
+    , title = 'Number of observations by country'
+    ) + 
+  scale_y_continuous(labels = comma) +
+  theme_wsj() + 
+  scale_fill_wsj()
+```
+
+---
+
+# Pre-built themes
+
+Try adding a theme to the plot you made from the `climate` data
+
+![](index_files/figure-html/unnamed-chunk-19-1.png)&lt;!-- --&gt;
+
+---
+
+# Custom themes
+
+- You can create custom themes with `theme()`
+- Greater control over chart aesthestics
+- Use custom themes in place of pre-built themes if pre-built themes don't cut it
+- Also, use custom themes to augment pre-built themes
+
+---
+
+# Custom themes
+
+```r
+theme(
+  plot.title         = element_text(size=14, face="bold", vjust=1)
+  , plot.background  = element_blank()
+  , panel.grid.major = element_blank()
+  , panel.grid.minor = element_blank()
+  , panel.border     = element_blank()
+  , panel.background = element_blank()
+  , axis.ticks       = element_blank()
+  , axis.text        = element_text(colour="black", size=12)
+  , axis.text.x      = element_text(angle=45, hjust=1)
+  , legend.title     = element_blank()
+  , legend.position  = "none"
+  , legend.text      = element_text(size=12)
+  )
+  
+help(theme)
+```
+
+---
+
+# Exercise - 7 minutes
+
+The code on the right is the solution to the troubleshooting question from the beginning of class. 
+
+.pull-left[
+- Visualize the data as a bar plot
+- The x-axis should equal `city`
+- The y-axis should equal `mean_temp`
+- `fill` should be `century`
+- Dodge the bar segments
+- Feel free to use a theme, title the plot, update axis titles, or make an other aesthetic changes
+]
+
+.pull-right[
+```r
+climate %&gt;% 
+  filter(
+    country == 'Brazil' 
+    &amp; ! is.na(temp) 
+    &amp; year &lt; 2000
+  ) %&gt;% 
+  mutate(century = ifelse(year &gt;= 1900, '20th Century', '19th Century')) %&gt;% 
+  group_by(century, city) %&gt;%   
+  summarise(
+    mean_temp = mean(temp) 
+    , median_temp = median(temp)
+    , max_temp = max(temp)
+  ) %&gt;% 
+  arrange(city)
+```
+]
+
+<div class="countdown" id="timer_617b0416" style="bottom:0;left:0;" data-warnwhen="0">
+<code class="countdown-time"><span class="countdown-digits minutes">07</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
+</div>
+
+---
+
+# Exercise - 7 minutes
+
+```r
+climate %&gt;% 
+  filter(
+    country == 'Brazil' 
+    &amp; ! is.na(temp) 
+    &amp; year &lt; 2000
+  ) %&gt;% 
+  mutate(century = ifelse(year &gt;= 1900, '20th Century', '19th Century')) %&gt;% 
+  group_by(century, city) %&gt;%   
+  summarise(
+    mean_temp = mean(temp) 
+    , median_temp = median(temp)
+    , max_temp = max(temp)
+  ) %&gt;% 
+  arrange(city) %&gt;% 
+  ggplot(aes(x = reorder(city, mean_temp), y = mean_temp, fill = century)) + 
+  geom_bar(stat = 'identity', position = 'dodge') + 
+  labs(x = 'City', y = 'Mean Temperature (Celcius)', fill = NULL) + 
+  theme_hc() + 
+  scale_fill_hc()
+```
+
+---
+
+# Exercise - 7 minutes
+
+![](index_files/figure-html/unnamed-chunk-21-1.png)&lt;!-- --&gt;
+
+---
+class: inverse, middle, center
+
+# Histograms, scatterplots, and line plots
+
+---
+
+# &lt;img src="figures/line.png" style="height: 70px"/&gt;
+
+.pull-left[
+Line plot: 1 continuous variable + ordinal variable   
+
+- Line plots are suited well to [dates](https://gbearden.github.io/r_course_evans_school/slides/part_2/#71), but may work well other ordered variables
+- `color` and `linetype` are other arguments you can use when building a line plot
+
+```r
+climate %&gt;% 
+  group_by(year) %&gt;%
+  summarise(uncertainty = mean(uncertainty, na.rm = TRUE)) %&gt;% 
+  ggplot(aes(x = year, y = uncertainty)) +
+  geom_line()
+```
+]
+
+.pull-right[
+![](index_files/figure-html/unnamed-chunk-22-1.png)&lt;!-- --&gt;
+]
+
+---
+
+# &lt;img src="figures/line.png" style="height: 70px"/&gt;
+
+.pull-left[
+Line plot: 1 continuous variable + ordinal variable   
+
+- Line plots are suited well to [dates](https://gbearden.github.io/r_course_evans_school/slides/part_2/#71), but may work well other ordered variables
+- `color` and `linetype` are other arguments you can use when building a line plot
+
+```r
+climate %&gt;% 
+  group_by(year) %&gt;%
+  summarise(uncertainty = mean(uncertainty, na.rm = TRUE)) %&gt;% 
+  ggplot(aes(x = year, y = uncertainty)) +
+  geom_line()
+```
+]
+
+.pull-right[
+How would you make the line red? 
+
+![](index_files/figure-html/unnamed-chunk-23-1.png)&lt;!-- --&gt;
+]
+
+---
+
+# &lt;img src="figures/scatter.png" style="height: 70px"/&gt;
+
+
+.pull-left[
+Scatterplots: 2 continuous variables 
+
+- When there are a lot of overlapping data, `alpha` is useful
+- `color`, `shape`, `size` are other arguments you can use when building a scatter plot
+
+```r
+climate %&gt;% 
+  ggplot(
+    aes(
+      x = temp
+      , y = uncertainty
+      )
+    ) + 
+  geom_point(alpha = .1)
+```
+]
+
+.pull-right[
+![](index_files/figure-html/unnamed-chunk-24-1.png)&lt;!-- --&gt;
+]
+
+---
+
+# &lt;img src="figures/scatter.png" style="height: 70px"/&gt;
+
+
+.pull-left[
+Scatterplots: 2 continuous variables 
+
+- When there are a lot of overlapping data, `alpha` is useful
+- `color`, `shape`, `size` are other arguments you can use when building a scatter plot
+
+```r
+climate %&gt;% 
+  ggplot(
+    aes(
+      x = temp
+      , y = uncertainty
+      )
+    ) + 
+  geom_point(alpha = .1)
+```
+]
+
+.pull-right[
+Take a moment to create a scatterplot with `year` and `uncertainty` from `climate`
+]
+
+---
+
+# &lt;img src="figures/hist.png" style="height: 70px"/&gt;
+
+.pull-left[
+Histograms: 1 continuous variable  
+
+- `bins` is the argument you use to indicate the number of columns in your histogram
+
+
+```r
+climate %&gt;% 
+  ggplot(aes(uncertainty)) + 
+  geom_histogram(bins = 10) 
+```
+
+![](index_files/figure-html/unnamed-chunk-25-1.png)&lt;!-- --&gt;
+]
+
+--
+
+.pull-right[
+Take a moment to create a histogram with any continuous variable from either `climate` or `airbnb`
+]
+
+---
+
+# Exercise - 15 minutes
+
+- With `climate`, create a line plot of mean Fahrenheit temperatures for cities in Brazil
+  - Data should be for 1850 and onward
+  - Make line color equal to `city`
+  - Use the following formula to convert Celcius to Fahrenheit: `(temp * 9/5) + 32`
+  - Create the mean temperature with `summarise` and call it `mean_temp` 
+  - Feel free to change plot aesthetics as you see fit (add a theme; change axis, legend, or plot titles; change the color of lines for cities; etc.)
+
+<div class="countdown" id="timer_617b0427" style="right:0;bottom:0;" data-warnwhen="0">
+<code class="countdown-time"><span class="countdown-digits minutes">15</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
+</div>
+
+--
+
+```r
+climate %&gt;% 
+  filter() %&gt;% 
+  group_by() %&gt;% 
+  summarise()
+```
+
+---
+
+# Exercise - 15 minutes
+
+```r
+climate %&gt;% 
+  filter(country == 'Brazil' &amp; year &gt;= 1850) %&gt;% 
+  mutate(temp = (temp * 9/5) + 32) %&gt;% 
+  group_by(year, city) %&gt;% 
+  summarise(mean_temp = mean(temp, na.rm = TRUE)) %&gt;% 
+  ggplot(aes(x = year, y = mean_temp, color = city)) + 
+  geom_line(size = 1) + 
+  theme_bw() + 
+  ggthemes::scale_color_wsj() + 
+  labs(
+    x = 'Year'
+    , y = 'Mean Temperature'
+    , title = 'Temperatures in 6 Brazilian Cities, 1850 - present'
+    , color = NULL
+  )
+```
+
+---
+
+# Exercise - 15 minutes
+
+![](index_files/figure-html/unnamed-chunk-27-1.png)&lt;!-- --&gt;
+
+---
+
+# Exercise - 7 minutes
+
+- With `airbnb`, create a scatterplot that plots two numeric variables  
+- In addition to `x` and `y`, include another argument in `aes()`
+   - For example, `size`, `shape`, `color` or `alpha`  
+- Use `group_by()` and `summarise()` if you would like  
+- Feel free to subset your data with `filter` or `sample_n()`
+
+<div class="countdown" id="timer_617b0481" style="right:0;bottom:0;" data-warnwhen="0">
+<code class="countdown-time"><span class="countdown-digits minutes">07</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
+</div>
+
+---
+
+# Exercise - 7 minutes
+
+![](index_files/figure-html/unnamed-chunk-29-1.png)&lt;!-- --&gt;
+
+---
+
+# Exercise - 7 minutes
+
+```r
+airbnb %&gt;% 
+  ggplot(aes(x = longitude, y = latitude, color = address)) + 
+  geom_point(alpha = .6) + 
+  theme_bw() + 
+  labs(
+    x = 'Longitude'
+    , y = 'Latitude'
+    , color = 'City'
+    , title = 'Coordinates of Seattle-area Airbnbs'
+  )
+```
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
