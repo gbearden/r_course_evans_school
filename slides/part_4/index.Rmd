@@ -36,6 +36,7 @@ opts_chunk$set(warning=FALSE, message=FALSE)
 
 airbnb <- read_csv('https://bit.ly/3oadz2L', col_types = cols())
 climate <- read_csv('https://bit.ly/3kKErEb', col_types = cols())
+checkin <- read_csv('https://bit.ly/3nQHlI0', col_types = cols())
 ```
 
 ---
@@ -578,7 +579,7 @@ climate %>%
 .pull-right[
 **Exercise #2 hint**
 
-```{r, echo = FALSE, warning=FALSE, message=FALSE}
+```{r, dpi = 300, echo = FALSE, warning=FALSE, message=FALSE}
 airbnb %>% 
   pivot_longer(c(bedrooms, bathrooms), names_to = 'characteristic', values_to = 'count') %>% 
   group_by(room_type, characteristic) %>% 
@@ -638,12 +639,113 @@ class: inverse, middle, center
 # Merging tibbles
 
 - Merge tibbles with `left_join()`, `inner_join()`, `right_join()`, and `full_join()`
-- Used for:
-  - Merging data from multiple sources
-  - Filtering
+- Used to...
+  - Merge data from multiple sources
+  - Filter
 - Arguments
   - `x`, left tibble
   - `y`, right tibble
   - `by`, keys used to "link" or merge tibbles
+
+--
+
+![](./figures/joins.jpg)
+---
+
+# Merging tibbles
+
+- Merge tibbles with `left_join()`, `inner_join()`, `right_join()`, and `full_join()`
+- Used to...
+  - Merge data from multiple sources
+  - Filter
+- Arguments
+  - `x`, left tibble
+  - `y`, right tibble
+  - `by`, keys used to "link" or merge tibbles
+
+`left_join()`
+- all `x` rows, matching `y` rows
+
+```r
+checkin <- read_csv('https://bit.ly/3nQHlI0')
+
+airbnb %>% 
+  filter(room_id %in% c(10209, 5682, 9596)) %>% 
+  select(room_id, host_id, address) %>% 
+  left_join(checkin, by = 'room_id')
+```
+
+---
+
+# Merging tibbles
+
+`inner_join()`
+- matching `x` rows, matching `y` rows
+
+```r
+airbnb %>% 
+  select(room_id, host_id, address) %>% 
+  inner_join(checkin, by = 'room_id') %>% 
+  filter(room_id %in% c(5682, 99999999))
+```
+
+`right_join()`
+- matching `x` rows, all `y` rows
+
+```r
+airbnb %>% 
+  select(room_id, host_id, address) %>% 
+  right_join(
+    checkin %>% 
+      filter(room_id %in% c(10209, 99999999))
+    , by = 'room_id'
+    )
+```
+
+---
+
+# Merging tibbles
+
+`full_join()`
+- all `x` rows, all `y` rows
+
+```r
+airbnb %>% 
+  filter(room_id %in% c(10209, 5682)) %>% 
+  select(room_id, host_id, address) %>% 
+  full_join(
+    checkin %>% 
+      filter(room_id %in% c(10209, 99999999))
+    , by = 'room_id'
+    )
+```
+
+---
+
+# Merging tibbles
+
+Create a line plot that shows number of check-ins over time. There should be a line for each `address` value.
+- Merge `airbnb` and `checkin`
+- You can use aggregated (with `group_by()` and `summarise()`) or disaggregated data (make sure `stat = 'identity'`) to create the plot
+
+If you build the plot without `group_by()` and `summaris()`, use `left_join()`, `inner_join()`, and `right_join()` and look at any warning messages that appear when you build the plot. What are they telling you?
+
+```{r, echo = FALSE}
+countdown(minutes = 7, seconds = 0)
+```
+
+```{r, dpi = 300, echo = FALSE, fig.height = 3.5, fig.width = 4, warning=FALSE, message=FALSE}
+airbnb %>% 
+  left_join(checkin, by = 'room_id') %>% 
+  ggplot(aes(x = check_in_date, color = address)) + 
+  geom_line(stat = 'count', size = 1) + 
+  theme_bw() + 
+  scale_color_few() + 
+  labs(
+    x = 'Check-in Date'
+    , y = 'Number of Check-ins (#)'
+    , color = element_blank()
+  )
+```
 
 

@@ -35,23 +35,22 @@ read_csv('data-raw/GlobalLandTemperaturesByMajorCity.csv', col_types = cols()) %
 x <- airbnb %>%
   transmute(
     room_id
-    , stays = round(runif(nrow(.), min = 1, 120), 0)
+    , stays = round(runif(nrow(.), min = 1, 200), 0)
   ) %>% 
   nest(stays_rows = -room_id) %>% 
   mutate(stays_rows = map(stays_rows, ~ .x %>% complete(stays = 1:stays)))
 
 x2 <- x %>% 
-  sample_frac(.75) %>% 
   unnest(cols = stays_rows) %>% 
   rowwise() %>% 
   mutate(
-    check_in_helper = case_when(stays == 1 ~ round(runif(1, min = 1, max = 364), 0))
-    , days_later = case_when(stays != 1 ~ round(runif(1, min = 2, max = 20), 0))
+    check_in_helper = case_when(stays == 1 ~ round(runif(1, min = 1, max = 1000), 0))
+    , days_later = case_when(stays != 1 ~ round(runif(1, min = 2, max = 7), 0))
   ) %>%
   ungroup
 
 x3 <- x2 %>%
-  mutate(check_in_date = case_when(stays == 1 ~ lubridate::ymd('2010-01-01') + lubridate::days(check_in_helper))) %>% 
+  mutate(check_in_date = case_when(stays == 1 ~ lubridate::ymd('2017-01-01') + lubridate::days(check_in_helper))) %>% 
   group_by(room_id) %>% 
   mutate(
     across(days_later, replace_na, 0)
@@ -65,5 +64,26 @@ x3 <- x2 %>%
   )
 
 x3 %>% 
-  select(room_id, check_in_date) %>% 
+  transmute(
+    room_id
+    , check_in_date
+    , day_of_week = lubridate::wday(check_in_date)
+    ) %>% 
+  nest(data = -day_of_week) %>% 
+  arrange(day_of_week) %>% 
+  mutate(data = map2(day_of_week, data, ~ if(.x %in% c(4, 7)) .y %>% sample_frac(.8)
+                                        else if(.x %in% c(1, 3)) .y %>% sample_frac(.7)
+                                        else if (.x == 2) .y %>% sample_frac(.6)
+                                        else .y)
+         ) %>% 
+  unnest(cols = data) %>% 
+  bind_rows(
+    tibble(
+      room_id = 99999999
+      , check_in_date = lubridate::ymd(c('2018-03-11', '2018-04-12', '2018-04-22', '2018-05-06', '2018-05-01'))
+      )
+  ) %>% 
+  filter(check_in_date >= '2018-01-01' & check_in_date < '2020-01-01') %>% 
+  select(room_id, check_in_date, day_of_week) %>% 
+  arrange(room_id, check_in_date) %>% 
   write_csv('data/airbnb_checkin.csv')

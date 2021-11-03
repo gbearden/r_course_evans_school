@@ -105,7 +105,7 @@ airbnb %&gt;%
   )
 ```
 
-<div class="countdown" id="timer_6180b55d" style="right:0;bottom:0;" data-warnwhen="0">
+<div class="countdown" id="timer_6181efab" style="right:0;bottom:0;" data-warnwhen="0">
 <code class="countdown-time"><span class="countdown-digits minutes">05</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
 
@@ -248,7 +248,7 @@ With the `airbnb` data, create a bar plot that shows counts of three different h
 ![](index_files/figure-html/unnamed-chunk-2-1.png)&lt;!-- --&gt;
 ]
 
-<div class="countdown" id="timer_6180b3aa" style="right:0;bottom:0;" data-warnwhen="0">
+<div class="countdown" id="timer_6181f22c" style="right:0;bottom:0;" data-warnwhen="0">
 <code class="countdown-time"><span class="countdown-digits minutes">10</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
 
@@ -378,7 +378,7 @@ Build on your code you from the previous exercise. Create a new variable that yo
 ![](index_files/figure-html/unnamed-chunk-6-1.png)&lt;!-- --&gt;
 ]
 
-<div class="countdown" id="timer_6180b3a3" style="right:0;bottom:0;" data-warnwhen="0">
+<div class="countdown" id="timer_6181f267" style="right:0;bottom:0;" data-warnwhen="0">
 <code class="countdown-time"><span class="countdown-digits minutes">07</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
 
@@ -507,7 +507,7 @@ Complete either Exercise #1 or #2 in 10 minutes. You pick.
 - The `names_to` variable you create with `pivot_longer()` should be the variable you use to color the bars and the bars should be unstacked (`position = 'dodge'`)
 - Update plot aesthetics as you'd like
 
-<div class="countdown" id="timer_6180b1fd" style="top:0;right:0;" data-warnwhen="0">
+<div class="countdown" id="timer_6181f0dc" style="top:0;right:0;" data-warnwhen="0">
 <code class="countdown-time"><span class="countdown-digits minutes">10</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
 
@@ -581,13 +581,102 @@ class: inverse, middle, center
 # Merging tibbles
 
 - Merge tibbles with `left_join()`, `inner_join()`, `right_join()`, and `full_join()`
-- Used for:
-  - Merging data from multiple sources
-  - Filtering
+- Used to...
+  - Merge data from multiple sources
+  - Filter
 - Arguments
   - `x`, left tibble
   - `y`, right tibble
   - `by`, keys used to "link" or merge tibbles
+
+--
+
+![](./figures/joins.jpg)
+---
+
+# Merging tibbles
+
+- Merge tibbles with `left_join()`, `inner_join()`, `right_join()`, and `full_join()`
+- Used to...
+  - Merge data from multiple sources
+  - Filter
+- Arguments
+  - `x`, left tibble
+  - `y`, right tibble
+  - `by`, keys used to "link" or merge tibbles
+
+`left_join()`
+- all `x` rows, matching `y` rows
+
+```r
+checkin &lt;- read_csv('https://bit.ly/3nQHlI0')
+
+airbnb %&gt;% 
+  filter(room_id %in% c(10209, 5682, 9596)) %&gt;% 
+  select(room_id, host_id, address) %&gt;% 
+  left_join(checkin, by = 'room_id')
+```
+
+---
+
+# Merging tibbles
+
+`inner_join()`
+- matching `x` rows, matching `y` rows
+
+```r
+airbnb %&gt;% 
+  select(room_id, host_id, address) %&gt;% 
+  inner_join(checkin, by = 'room_id') %&gt;% 
+  filter(room_id %in% c(5682, 99999999))
+```
+
+`right_join()`
+- matching `x` rows, all `y` rows
+
+```r
+airbnb %&gt;% 
+  select(room_id, host_id, address) %&gt;% 
+  right_join(
+    checkin %&gt;% 
+      filter(room_id %in% c(10209, 99999999))
+    , by = 'room_id'
+    )
+```
+
+---
+
+# Merging tibbles
+
+`full_join()`
+- all `x` rows, all `y` rows
+
+```r
+airbnb %&gt;% 
+  filter(room_id %in% c(10209, 5682)) %&gt;% 
+  select(room_id, host_id, address) %&gt;% 
+  full_join(
+    checkin %&gt;% 
+      filter(room_id %in% c(10209, 99999999))
+    , by = 'room_id'
+    )
+```
+
+---
+
+# Merging tibbles
+
+Create a line plot that shows number of check-ins over time. There should be a line for each `address` value.
+- Merge `airbnb` and `checkin`
+- You can use aggregated (with `group_by()` and `summarise()`) or disaggregated data (make sure `stat = 'identity'`) to create the plot
+
+If you build the plot without `group_by()` and `summaris()`, use `left_join()`, `inner_join()`, and `right_join()` and look at any warning messages that appear when you build the plot. What are they telling you?
+
+<div class="countdown" id="timer_6181f156" style="right:0;bottom:0;" data-warnwhen="0">
+<code class="countdown-time"><span class="countdown-digits minutes">07</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
+</div>
+
+![](index_files/figure-html/unnamed-chunk-12-1.png)&lt;!-- --&gt;
 
 
     </textarea>
