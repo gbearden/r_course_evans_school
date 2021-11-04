@@ -1,5 +1,5 @@
 ---
-title: "Part 4 - Adding more tools to your Tidyverse toolbox"
+title: "Part 4 - Adding tools to your Tidyverse toolbox"
 author: "Graham Bearden"
 institute: "University of Washington"
 date: "November 4, 2021"
@@ -17,10 +17,13 @@ output:
 
 - Reminder: Submit 2 “stakeholder-ready” data visualizations on November 11 or before
 - How do you clean up your RStudio environment?
-  - `rm()`
+  - `rm()` 
 - When I aggregate my data, it always says: "`summarise() has grouped output by [SOME_VARIABLE]. You can override using the .groups argument`." What does that mean?
   - grouping and ungrouping
-- Errors: good or bad?
+- You've put the package name and two colons before a function. What's that about?
+  - This is how you use functions from packages that you have not loaded with `library()`.
+  - For example, `tidyverse` includes the packages that Hadley Wickham and the RStudio team to be "essential" to tidy data processing and analysis. `scales` and `ggthemes` are excluded, but I like to use functions from the packages in my data visualization. 
+  - Hence, `ggthemes::scale_fill_few()` and `scales::percent()`
 
 ```{r setup, include=FALSE}
 library(tidyverse)
@@ -51,7 +54,7 @@ What does "Stakeholder-ready" mean?
 
 Other things to do when you submit your assignment
 - Use `ggsave()` to export plots
-- When you submit your assignment, submit your code and both plots
+- Submit your code along with both plots
 
 ---
 
@@ -71,7 +74,6 @@ Other things to do when you submit your assignment
 - How to "pivot" data, turning columns into rows and rows into columns
 - How to merge two datasets
 - Creating panels of plots with facets
-- Counting cumulatively with `cumsum()`
 
 ---
 
@@ -87,7 +89,7 @@ Other things to do when you submit your assignment
 
 # Troubleshooting exercise 
 
-This code contains 4 mistakes. The code is supposed to create a plot of rentals by latitude and longitude, excluding rentals without ratings. The colors of points should be from the high charts color palette (`hc`). *HINT: It is possible to successfully produce the plot after correcting 3 mistakes, but the colors of the points will be from the default colors palette, not from the high charts palette. Why?*  
+This code contains 4 mistakes. The code is supposed to create a plot of rentals by latitude and longitude, excluding rentals without ratings. The colors of points should be from the high charts color palette (`hc`). *HINT: It's possible to successfully produce the plot after correcting 3 mistakes, but the colors of the points will be from the default colors palette, not from the high charts palette. Why?*  
 
 ```r
 library(tidyverse)
@@ -117,9 +119,30 @@ countdown(minutes = 5, seconds = 0)
 
 # Troubleshooting exercise 
 
-This code contains 4 mistakes. The code is supposed to create a plot of rentals by latitude and longitude, excluding rentals without ratings. The colors of points should be from the high charts color palette (`hc`). *HINT: It is possible to successfully produce the plot after correcting 3 mistakes, but the colors of the points will be from the default colors palette, not from the high charts palette. Why?*  
+This code contains 4 mistakes. The code is supposed to create a plot of rentals by latitude and longitude, excluding rentals without ratings. The colors of points should be from the high charts color palette (`hc`). *HINT: It's possible to successfully produce the plot after correcting 3 mistakes, but the colors of the points will be from the default colors palette, not from the high charts palette. Why?*  
 
 ![](figures/troubleshooting_solution.png)
+
+---
+
+# Troubleshooting exercise 
+
+```{r fig.show='hide'}
+airbnb %>% 
+  filter(! is.na(rating)) %>% 
+  ggplot(aes(x = longitude, y = latitude, color = address)) + 
+  geom_point(alpha = .6) + 
+  scale_color_hc() + 
+  theme_bw() +
+  labs(
+    x = 'Longitude'
+    , y = 'Latitude'
+    , color = 'City'
+    , title = 'Coordinates of Seattle-area Airbnbs'
+  )
+  
+ggsave('lat_long.jpeg', device = 'jpeg', width = 9.87, height = 8.32, dpi = 300) #<<
+```
 
 ---
 class: inverse, middle, center
@@ -182,7 +205,7 @@ airbnb %>%
     price_cat = case_when(price < 100                  ~ 'low' # first formula
                           , price >= 100 & price < 200 ~ 'mid' # second formula
                           , price >= 200               ~ 'high') # third formula
-  )
+    )
 ```
 
 ---
@@ -191,7 +214,7 @@ airbnb %>%
 
 `case_when()`
 - All RHS values must be the same type (or class)
-  - `NA_character_`, `NA_integer_`, `NA_real_`
+  - `NA_character_`, `NA_integer_`, `NA_real_`, `NA`
 
 
 **This will not work**
@@ -199,8 +222,7 @@ airbnb %>%
 airbnb %>% 
   mutate(
     priv_share = case_when(room_type %in% c('Private room', 'Shared room') ~ price
-                          , room_type == 'Entire home/apt' ~ NA
-                          )
+                          , room_type == 'Entire home/apt' ~ NA)
     )
 ```
 
@@ -209,8 +231,7 @@ airbnb %>%
 airbnb %>% 
   mutate(
     priv_share = case_when(room_type %in% c('Private room', 'Shared room') ~ price
-                          , room_type == 'Entire home/apt' ~ NA_real_
-                          )
+                          , room_type == 'Entire home/apt' ~ NA_real_)
     )
 ```
 
@@ -229,8 +250,7 @@ airbnb %>%
   mutate(
     category = case_when(rating == 5 ~ 'High rating'
                         , accommodates >= 6 ~ 'Big!'
-                        , price >= 200 ~ 'Expensive'
-                        )
+                        , price >= 200 ~ 'Expensive')
     )
 ```
 
@@ -242,7 +262,7 @@ airbnb %>%
 With the `airbnb` data, create a bar plot that shows counts of three different home size categories. 
 - Begin by creating a new variable called `home_size`
 - `home_size` values should be `"Small"` (two bedrooms or fewer), `"Medium"` (three or four bedrooms), and `"Large"` (more than four bedrooms)
-- Only show `Entire home/apt` rentals
+- Only show `"Entire home/apt"` rentals
 - HINT: you can build this plot with aggregated or disaggregated data
   - Disaggregated is easier
 - Update the plot aesthetic, plot title, axis titles, etc. if you'd like
@@ -273,13 +293,17 @@ countdown(minutes = 10, seconds = 0)
 
 # More on writing logical conditions
 
+**Exercise solution**
+
+--
+
 ```r
 airbnb %>% 
   mutate(
     home_size = case_when(bedrooms <= 2 ~ 'Small'
                           , bedrooms %in% 3:4 ~ 'Medium'
                           , bedrooms > 4 ~ 'Large')
-  ) %>% 
+    ) %>% 
   filter(room_type == 'Entire home/apt') %>% 
   ggplot(aes(x = home_size)) +
   geom_bar(fill = 'orange') + 
@@ -295,7 +319,7 @@ airbnb %>%
 `ifelse()`  
 - A logical test with a true-or-false outcome
 - To make comparisons use: `==`, `<`, `<=`, `>`, `>=`, `!=`, `%in%`, `!`, `is.na()`
-- **Or use `str_detect()` to search for patterns over strings**
+  - **Or use `str_detect()` to search for patterns over strings**
 
 `str_detect()` has three arguments
 - `string`, where you are searching for the pattern
@@ -315,7 +339,7 @@ ifelse(str_detect(california, 'San'), 'yes', 'no')
 `ifelse()`  
 - A logical test with a true-or-false outcome
 - To make comparisons use: `==`, `<`, `<=`, `>`, `>=`, `!=`, `%in%`, `!`, `is.na()`
-- **Or use `str_detect()` to search for patterns over strings**
+  - **Or use `str_detect()` to search for patterns over strings**
 
 `str_detect()` has three arguments
 - `string`, where you are searching for the pattern
@@ -336,7 +360,7 @@ airbnb %>%
 
 # More on writing logical conditions
 
-`str_detect()` + `tolower()`  
+`str_detect()` and `tolower()` together  
 - Casing becomes a problem when searching over strings
 - `tolower()` solves that problem
 
@@ -362,7 +386,7 @@ airbnb %>%
   filter(str_detect(name, 'Cozy'))
 ```
 
--- 
+--
 
 Use multiple conditions to subset your data with `filter()`
 
@@ -374,7 +398,6 @@ airbnb %>%
   filter(str_detect(name, 'Cozy') | str_detect(name, 'Quiet'))
 ```
 
-
 ---
 
 # More on writing logical conditions
@@ -382,7 +405,7 @@ airbnb %>%
 .pull-left[
 Build on your code you from the previous exercise. Create a new variable that you can use to color bar segments, making your bar plot a stacked bar plot. 
 - Name the new variable `home_category`
-- `home_category` should include the following values: `"Lake"` (where any `name` value contain the word `"lake"`), `"Historic"` (where any `name` value contain the word `"historic"`), `"Modern"` (where any `name` value contain the word `"modern"`)  
+- `home_category` should include the following values: `"Lake"` (where any `name` value contains the word `"lake"`), `"Historic"` (where any `name` value contains the word `"historic"`), `"Modern"` (where any `name` value contains the word `"modern"`)  
 - Remember that `case_when()` will set `home_category` to `NA` if cases for `"Lake"`, `"Historic"`, or `"Modern"` are not met
 - Exclude rentals with `NA` `home_category` values from your plot. 
 ]
@@ -429,6 +452,10 @@ countdown(minutes = 7, seconds = 0)
 ---
 
 # More on writing logical conditions
+
+**Exercise solution**
+
+--
 
 ```r
 airbnb %>% 
@@ -486,7 +513,8 @@ class: inverse, middle, center
 
 `pivot_wider()`
 - Turn rows into columns
-  - Data may be *easier to read* when denormalized (or are in a wider format)
+  - Good use of screen space
+  - Data may be **easier to read** when denormalized (or are in a wider format)
   - Useful format when reporting + useful setting up calculations in specific situations
 - 3 arguments
   - `data`, your tibble  
@@ -515,7 +543,7 @@ airbnb %>%
 # Pivoting data 
 `pivot_longer()`
 - Turn columns into rows
-- Often "metrics" are *easier to analyze* when stored in only one column
+- Often data are **easier to analyze** when stored in columns
 - 4 arguments
   - `data`, Your tibble 
   - `cols`, which columns you want turn into rows
@@ -537,12 +565,13 @@ airbnb %>%
 
 # Pivoting data 
 
-Complete either Exercise #1 or #2 in 10 minutes. You pick.
+Complete either Exercise #1 or #2 in 10 minutes. You pick.  
+See hints on next slide.
 
 **Exercise #1**: With the `climate` data, report the mean temperatures for `"Angola"`, `"Ivory Coast"`, `"Ethiopia"`
 , and `"Kenya"` in the years `1850`, `1900`, `1950`, and `2000`
 - There should be one row per country
-- You should pivot the data so the years are columns like in the example below
+- You should pivot the data so the years are columns like in the example 
 - In this exercise you will use `filter()`, `group_by()`, `summarise()`, and `pivot_wider()`
 
 **Exercise #2**: With the `airbnb` data, create a bar plot that shows the average number of bathrooms and bedrooms by room type.
@@ -570,7 +599,7 @@ climate %>%
   ) %>% 
   group_by(country, year) %>% 
   summarise(temp = mean(temp), .groups = 'drop') %>% 
-  pivot_wider(names_from = year, values_from = temp) %>% 
+  pivot_wider(names_from = year, values_from = temp, names_sort = TRUE) %>% 
   mutate(across(.cols = ! contains('country'), ~ case_when(is.numeric(.x) ~ '-'))) %>% 
   as.data.frame
 ```
@@ -583,7 +612,7 @@ climate %>%
 airbnb %>% 
   pivot_longer(c(bedrooms, bathrooms), names_to = 'characteristic', values_to = 'count') %>% 
   group_by(room_type, characteristic) %>% 
-  summarise(mean_count = mean(count, na.rm = TRUE)) %>% 
+  summarise(mean_count = mean(count, na.rm = TRUE), .groups = 'drop') %>% 
   ggplot(aes(x = room_type, y = mean_count, fill = characteristic)) + 
   geom_bar(stat = 'identity', position = 'dodge') + 
   theme_bw() + 
@@ -596,7 +625,10 @@ airbnb %>%
 
 # Pivoting data 
 
-**Exercise #1**
+**Exercise #1 solution **
+
+--
+
 ```r
 climate %>% 
   filter(
@@ -612,7 +644,10 @@ climate %>%
 
 # Pivoting data 
 
-**Exercise #2**
+**Exercise #2 solution**
+
+--
+
 ```r
 airbnb %>% 
   pivot_longer(
@@ -670,7 +705,7 @@ class: inverse, middle, center
 checkin <- read_csv('https://bit.ly/3nQHlI0')
 
 airbnb %>% 
-  filter(room_id %in% c(10209, 5682, 9596)) %>% 
+  filter(room_id %in% c(9909, 1647216, 689309)) %>% 
   select(room_id, host_id, address) %>% 
   left_join(checkin, by = 'room_id')
 ```
@@ -686,7 +721,7 @@ airbnb %>%
 airbnb %>% 
   select(room_id, host_id, address) %>% 
   inner_join(checkin, by = 'room_id') %>% 
-  filter(room_id %in% c(5682, 99999999))
+  filter(room_id %in% c(9909, 99999999))
 ```
 
 `right_join()`
@@ -697,7 +732,7 @@ airbnb %>%
   select(room_id, host_id, address) %>% 
   right_join(
     checkin %>% 
-      filter(room_id %in% c(10209, 99999999))
+      filter(room_id %in% c(689309, 99999999))
     , by = 'room_id'
     )
 ```
@@ -711,11 +746,11 @@ airbnb %>%
 
 ```r
 airbnb %>% 
-  filter(room_id %in% c(10209, 5682)) %>% 
+  filter(room_id %in% c(689309, 9909)) %>% 
   select(room_id, host_id, address) %>% 
   full_join(
     checkin %>% 
-      filter(room_id %in% c(10209, 99999999))
+      filter(room_id %in% c(689309, 99999999))
     , by = 'room_id'
     )
 ```
@@ -728,13 +763,13 @@ Create a line plot that shows number of check-ins over time. There should be a l
 - Merge `airbnb` and `checkin`
 - You can use aggregated (with `group_by()` and `summarise()`) or disaggregated data (make sure `stat = 'identity'`) to create the plot
 
-If you build the plot without `group_by()` and `summaris()`, use `left_join()`, `inner_join()`, and `right_join()` and look at any warning messages that appear when you build the plot. What are they telling you?
+If you build the plot without `group_by()` and `summarise()`, use `left_join()`, `inner_join()`, and `right_join()` and look at any warning messages that appear when you build the plot. What are they telling you?
 
 ```{r, echo = FALSE}
 countdown(minutes = 7, seconds = 0)
 ```
 
-```{r, dpi = 300, echo = FALSE, fig.height = 3.5, fig.width = 4, warning=FALSE, message=FALSE}
+```{r, dpi = 200, echo = FALSE, fig.height=3, fig.width=5, out.width="45%", warning=FALSE, message=FALSE}
 airbnb %>% 
   left_join(checkin, by = 'room_id') %>% 
   ggplot(aes(x = check_in_date, color = address)) + 
@@ -748,4 +783,235 @@ airbnb %>%
   )
 ```
 
+---
 
+# Merging tibbles
+
+**Exercise solution**
+
+--
+
+```r
+airbnb %>% 
+  left_join(checkin, by = 'room_id') %>% 
+  ggplot(aes(x = check_in_date, color = address)) + 
+  geom_line(stat = 'count', size = 1) + 
+  theme_bw() + 
+  scale_color_few() + 
+  labs(
+    x = 'Check-in Date'
+    , y = 'Number of Check-ins (#)'
+    , color = element_blank()
+  )
+```
+
+---
+class: inverse, middle, center
+
+# Using panels in data visualizations
+
+---
+
+# Using panels in data visualizations
+
+- Create panels of plots with two functions from `ggplot2`: `facet_wrap()` and `facet_grid()`
+  - Allows for better curation and organization
+  - Useful when there is a lot of geom overlap
+  - Useful when you need more variables to tell a story than what can be plotted using `aes()`
+
+```{r, dpi = 300, out.width="40%", echo = FALSE, warning=FALSE, message=FALSE, fig.align='center'}
+airbnb %>% 
+  inner_join(checkin, by = 'room_id') %>% 
+  ggplot() + 
+  facet_wrap(. ~ address) + 
+  theme_bw() + 
+  theme(strip.text.x = element_text(size = 14))
+```
+
+---
+
+# Using panels in data visualizations
+
+- Create panels of plots with two functions from `ggplot2`: `facet_wrap()` and `facet_grid()`
+  - Allows for better curation and organization
+  - Useful when there is a lot of geom overlap
+  - Useful when you need more variables to tell a story than what can be plotted using `aes()`
+
+```{r, dpi = 300, out.width="40%", echo = FALSE, warning=FALSE, message=FALSE, fig.align='center'}
+airbnb %>% 
+  inner_join(checkin, by = 'room_id') %>% 
+  ggplot(aes(x = as.character(day_of_week), fill = room_type)) + 
+  geom_bar() + 
+  facet_wrap(. ~ address, scales = 'free_y') + 
+  theme_bw() + 
+  scale_fill_few() + 
+  labs(x = NULL, y = NULL) + 
+  theme(
+    strip.text.x = element_text(size = 14)
+    , axis.text = element_text(size = 12)
+    , legend.position = 'top'
+    , legend.title = element_blank()
+    )
+```
+
+---
+
+# Using panels in data visualizations
+
+When to use `facet_wrap()`
+- Probably the better choice if you want to create the panel matrix from a single variable
+- You want some control over axis lengths
+- You want control over the number of plots on each row
+  
+`facet_wrap()` arguments
+- `facets`, variable you use to create the panels
+  - Multiple ways to call variables, using `~` is the easiest
+- `nrow`, number of rows of panels
+- `ncol`, number of columns of panels
+- `scales`, indication of whether `x` and `y` axes should have the same lengths across panels; `"free"`, `"free_y"`, `"free_x"`
+
+```r
+airbnb %>% ggplot(aes(accommodates)) + geom_bar() + facet_wrap(. ~ address)
+airbnb %>% ggplot(aes(accommodates)) + geom_bar() + facet_wrap(. ~ address, scales = 'free_y')
+airbnb %>% ggplot(aes(accommodates)) + geom_bar() + facet_wrap(. ~ address, scales = 'free')
+airbnb %>% ggplot(aes(accommodates)) + geom_bar() + facet_wrap(. ~ address, scales = 'free_y', nrow = 1)
+```
+
+---
+
+# Using panels in data visualizations
+
+When to use `facet_grid()`
+- Probably the better choice if you want to create the panel matrix from two variables
+  
+`facet_grid()` arguments
+- `facets`, variable you use to create the panels
+  - Multiple ways to call variables, using `~` is the easiest
+  - Two-sided formula, LHS: rows, RHS: columns
+
+```r
+airbnb %>% ggplot() + facet_grid(. ~ address)
+airbnb %>% ggplot() + facet_grid(address ~ .)
+airbnb %>% ggplot() + facet_grid(address ~ room_type)
+airbnb %>% ggplot() + facet_grid(room_type ~ address)
+```
+
+---
+
+# Using panels in data visualizations
+
+**Quick practice: 1 of 2**
+
+We created this plot in the last class. Add `facet_wrap()` to show one panel per `city`.
+```r
+climate %>% 
+  filter(country == 'Brazil' & year >= 1850) %>% 
+  mutate(temp = (temp * 9/5) + 32) %>% 
+  group_by(year, city) %>% 
+  summarise(mean_temp = mean(temp, na.rm = TRUE), .groups = 'drop') %>% 
+  ggplot(aes(x = year, y = mean_temp, color = city)) + 
+  geom_line(size = 1) + 
+  theme_bw() + 
+  theme(legend.position = 'none') + 
+  scale_color_wsj()
+```
+
+---
+
+# Using panels in data visualizations
+
+**Quick practice: 2 of 2**
+
+We just created this plot. Add `facet_wrap()` to create 1 column of panels per `room_type`.
+```r
+airbnb %>% 
+    left_join(checkin, by = 'room_id') %>% 
+    ggplot(aes(x = check_in_date, color = address)) + 
+    geom_line(stat = 'count', size = 1) + 
+    theme_bw() + 
+    scale_color_few() + 
+    labs(
+        x = 'Check-in Date'
+        , y = 'Number of Check-ins (#)'
+        , color = element_blank()
+    ) 
+```
+
+---
+
+# Using panels in data visualization
+
+With `airbnb`, create a bar plot that shows the average `price` of rentals by `address`, `room_type`, and a variable you create that flags key terms used to describe a rental in `name`.
+- Call the variable you create `desc`. It should include the following values: `"Downtown"`, `"Spacious"`, `"Private"`, `"Peaceful"`, `"Beautiful"` when `name` contains them.
+  - Use `case_when()`, `str_detect()`, and `tolower()`
+- Exclude any rows with a `NA` value in `desc` and `"Shared room"` in `room_type`
+- In addition to the functions explicitly named above, you'll use `mutate()`, `filter()`, `group_by()`, `summarise()` as well as code required for building the plot
+- Use `facet_wrap()` to create a panel for each address
+- Unstack bars using `position = 'dodge'`
+- Remember if `stat = 'count'` or if `stat = 'identity'`
+
+See the plot on the next slide if that helps you develop the code.  
+
+```{r, echo = FALSE}
+countdown(minutes = 12, seconds = 0)
+```
+
+---
+
+# Using panels in data visualization
+
+```{r, dpi = 300, echo = FALSE, out.width = "70%", warning=FALSE, message=FALSE, fig.align='center'}
+airbnb %>%
+  mutate(desc = case_when(str_detect(tolower(name), 'downtown') ~ 'Downtown'
+                          , str_detect(tolower(name), 'spacious') ~ 'Spacious'
+                          , str_detect(tolower(name), 'private') ~ 'Private'
+                          , str_detect(tolower(name), 'peaceful') ~ 'Peaceful'
+                          , str_detect(tolower(name), 'beautiful') ~ 'Beautiful')
+         ) %>% 
+  filter(! is.na(desc) & room_type != 'Shared room') %>% 
+  group_by(address, room_type, desc) %>% 
+  summarise(mean_price = mean(price), .groups = 'drop') %>% 
+  ggplot(aes(x = room_type, y = mean_price, fill = desc)) + 
+  geom_bar(stat = 'identity', position = 'dodge') + 
+  facet_wrap(. ~ address) + 
+  theme_bw() + 
+  scale_fill_colorblind() + 
+  labs(
+    x = 'Room Type'
+    , y = 'Average Price'
+    , fill = element_blank()
+    , title = 'Average price by city and rental characteristic'
+  )
+```
+
+---
+
+# Using panels in data visualization
+
+**Exercise solution**
+
+--
+
+```r
+airbnb %>%
+  mutate(desc = case_when(str_detect(tolower(name), 'downtown') ~ 'Downtown'
+                          , str_detect(tolower(name), 'spacious') ~ 'Spacious'
+                          , str_detect(tolower(name), 'private') ~ 'Private'
+                          , str_detect(tolower(name), 'peaceful') ~ 'Peaceful'
+                          , str_detect(tolower(name), 'beautiful') ~ 'Beautiful')
+         ) %>% 
+  filter(! is.na(desc) & room_type != 'Shared room') %>% 
+  group_by(address, room_type, desc) %>% 
+  summarise(mean_price = mean(price), .groups = 'drop') %>% 
+  ggplot(aes(x = room_type, y = mean_price, fill = desc)) + 
+  geom_bar(stat = 'identity', position = 'dodge') + 
+  facet_wrap(. ~ address) + 
+  theme_bw() + 
+  scale_fill_colorblind() + 
+  labs(
+    x = 'Room Type'
+    , y = 'Average Price'
+    , fill = element_blank()
+    , title = 'Average price by city and rental characteristic'
+  )
+```
