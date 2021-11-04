@@ -81,9 +81,11 @@ x3 %>%
     tibble(
       room_id = 99999999
       , check_in_date = lubridate::ymd(c('2018-03-11', '2018-04-12', '2018-04-22', '2018-05-06', '2018-05-01'))
+      , day_of_week = lubridate::wday(check_in_date)
       )
   ) %>% 
   filter(check_in_date >= '2018-01-01' & check_in_date < '2020-01-01') %>% 
   select(room_id, check_in_date, day_of_week) %>% 
   arrange(room_id, check_in_date) %>% 
   write_csv('data/airbnb_checkin.csv')
+
