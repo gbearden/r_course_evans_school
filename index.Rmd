@@ -87,9 +87,9 @@ At the end of Part 3, students should be able to produce a standard set of plots
 
 Class reference materials: [Data visualization cheat sheet](https://github.com/rstudio/cheatsheets/blob/master/data-visualization-2.1.pdf), [Coolors](https://coolors.co/)
 
-#### October 29 | Part 4
+#### October 29 | [Part 4](https://gbearden.github.io/r_course_evans_school/slides/part_4/)
 
-Part 4 will build on Parts 2 and 3, introducing additional data processing and visualization skills simultaneously. 
+Part 4 will build on Parts 2 and 3, introducing additional data visualization skills and data processing skills used to better work with strings and reshape data. 
 
 At the end of Part 4, students should be able to prepare data for analysis and "stakeholder-ready" visualization using a broad set of coding skills.
 
