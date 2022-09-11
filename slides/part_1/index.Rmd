@@ -2,7 +2,7 @@
 title: "Part 1 - R Basics"
 author: "Graham Bearden"
 institute: "University of Washington"
-date: "October 14, 2021"
+date: "October 4, 2022"
 output:
   xaringan::moon_reader:
     lib_dir: libs
@@ -33,8 +33,8 @@ climate <- read_csv('https://bit.ly/3kKErEb', col_types = cols())
 # Set Up
 
 - Set up your machine to run R
-  - Install R ([on a Mac](https://cloud.r-project.org/bin/macosx/base/R-4.1.1.pkg) and [on a PC](https://cran.r-project.org/bin/windows/base/R-4.1.1-win.exe))
-  - Install RStudio ([on a Mac](https://download1.rstudio.org/desktop/macos/RStudio-1.4.1717.dmg) and [on a PC](https://download1.rstudio.org/desktop/windows/RStudio-1.4.1717.exe))
+  - Install R [on a Mac with an Intel chip](https://cran.r-project.org/bin/macosx/base/R-4.2.1.pkg), [on a Mac with an M1 chip](https://cran.r-project.org/bin/macosx/big-sur-arm64/base/R-4.2.1-arm64.pkg), or [on a PC](https://cran.r-project.org/bin/windows/base/R-4.2.1-win.exe)
+  - Install RStudio [on a Mac](https://download1.rstudio.org/desktop/macos/RStudio-2022.07.1-554.dmg) or [on a PC](https://download1.rstudio.org/desktop/windows/RStudio-2022.07.1-554.exe)
 
 ---
 
@@ -62,11 +62,12 @@ climate <- read_csv('https://bit.ly/3kKErEb', col_types = cols())
 # Quick Tour of R Studio
 
 - Open and save (locally) an R Notebook  
+  - Script vs. notebook
 - Run code from the notebook and the console  
+  - Console vs. notebooks/scripts
 - Make sure you can install packages
-  - 2 ways to install packages
-    - Command line/Console
-    - R Studio GUI
+  - Command line/Console
+  - R Studio GUI
 
 --
 
@@ -79,11 +80,12 @@ install.packages('tidyverse')
 # Quick Tour of R Studio
 
 - Open and save (locally) an R Notebook  
+  - Script vs. notebook
 - Run code from the notebook and the console  
+  - Console vs. notebooks/scripts
 - Make sure you can install packages
-  - 2 ways to install packages
-    - Command line/Console
-    - R Studio GUI
+  - Command line/Console
+  - R Studio GUI
 
 ![](./figures/r_studio_install_packages.png)
 
@@ -94,7 +96,7 @@ class: inverse, middle, center
 
 ---
 
-# <span style='color:#6DA34D'>Libraries</span>, functions, data
+# <img src="figures/toolbox.png" style="height: 50px"/> <span style='color:#6DA34D'>Libraries</span>, functions, data
 
 - Libraries (or packages) are collections of functions (and datasets)
 - Over 10,000 libraries on CRAN
@@ -106,7 +108,7 @@ library(tidyverse)
 
 ---
 
-# Libraries, <span style='color:#6DA34D'>functions</span>, data
+# <img src="figures/tools.png" style="height: 50px"/> Libraries, <span style='color:#6DA34D'>functions</span>, data
 
 - Functions perform operations in R
 ```r
@@ -119,7 +121,7 @@ sd(foo)
 
 ---
 
-# Libraries, <span style='color:#6DA34D'>functions</span>, data
+# <img src="figures/tools.png" style="height: 50px"/> Libraries, <span style='color:#6DA34D'>functions</span>, data
 
 - Functions perform operations in R
 ```{r, echo = TRUE, collapse=TRUE}
@@ -132,7 +134,7 @@ sd(foo)
 
 ---
 
-# Libraries, <span style='color:#6DA34D'>functions</span>, data
+# <img src="figures/tools.png" style="height: 50px"/> Libraries, <span style='color:#6DA34D'>functions</span>, data
 
 - Function arguments
   - Let's look at arguments in the `lm` and `min` functions  
@@ -157,7 +159,7 @@ cat_function <- function(love = TRUE){
 
 ---
 
-# Libraries, <span style='color:#6DA34D'>functions</span>, data
+# <img src="figures/tools.png" style="height: 50px"/> Libraries, <span style='color:#6DA34D'>functions</span>, data
 
 - Function arguments
   - Let's look at arguments in the `lm` and `min` functions  
@@ -174,7 +176,7 @@ sd(foo)
 
 ---
 
-# Libraries, <span style='color:#6DA34D'>functions</span>, data
+# <img src="figures/tools.png" style="height: 50px"/> Libraries, <span style='color:#6DA34D'>functions</span>, data
 
 - Function arguments
   - Let's look at arguments in the `lm` and `min` functions  
@@ -191,7 +193,7 @@ sd(foo)
 
 ---
 
-# Libraries, <span style='color:#6DA34D'>functions</span>, data
+# <img src="figures/tools.png" style="height: 50px"/> Libraries, <span style='color:#6DA34D'>functions</span>, data
 
 - Function arguments
   - Let's look at arguments in the `lm` and `min` functions  
@@ -208,7 +210,7 @@ sd(foo, na.rm = TRUE)
 
 ---
 
-# Libraries, functions, <span style='color:#6DA34D'>data</span>
+# <img src="figures/data.png" style="height: 50px"/> Libraries, functions, <span style='color:#6DA34D'>data</span>
 
 - Data type is an important concept in all types of programming
   - Creates a set of parameters for functions applied to data
@@ -237,7 +239,7 @@ class(as.factor(c('Washington', 'Oregon', 'Idaho')))
 
 ---
 
-# Libraries, functions, <span style='color:#6DA34D'>data</span>
+# <img src="figures/data.png" style="height: 50px"/> Libraries, functions, <span style='color:#6DA34D'>data</span>
 
 - Data type is an important concept in all types of programming
   - Creates a set of parameters for functions applied to data
@@ -262,7 +264,7 @@ class(as.factor(c('Washington', 'Oregon', 'Idaho')))
 
 ---
 
-# Libraries, functions, <span style='color:#6DA34D'>data</span>
+# <img src="figures/data.png" style="height: 50px"/> Libraries, functions, <span style='color:#6DA34D'>data</span>
 
 - Data type is an important concept in all types of programming
   - Creates a set of parameters for functions applied to data
@@ -287,7 +289,7 @@ class(as.factor(c('Washington', 'Oregon', 'Idaho')))
 
 ---
 
-# Libraries, functions, <span style='color:#6DA34D'>data</span> 
+# <img src="figures/data.png" style="height: 50px"/> Libraries, functions, <span style='color:#6DA34D'>data</span> 
 
 - Data types  
   -  **Vectors**, tibbles, data frames, matrices  
@@ -302,7 +304,7 @@ seq(from = 0, to = 100, by = 10)
 
 ---
 
-# Libraries, functions, <span style='color:#6DA34D'>data</span>
+# <img src="figures/data.png" style="height: 50px"/> Libraries, functions, <span style='color:#6DA34D'>data</span>
 
 - Data types  
   - **Vectors**, tibbles, data frames, matrices  
@@ -316,7 +318,7 @@ seq(from = 0, to = 100, by = 10)[6]
 
 ---
 
-# Libraries, functions, <span style='color:#6DA34D'>data</span>
+# <img src="figures/data.png" style="height: 50px"/> Libraries, functions, <span style='color:#6DA34D'>data</span>
 
 - Data types  
   - **Vectors**, tibbles, data frames, matrices  
@@ -330,7 +332,7 @@ seq(from = 0, to = 100, by = 10)[6]
 
 ---
 
-# Libraries, functions, <span style='color:#6DA34D'>data</span>
+# <img src="figures/data.png" style="height: 50px"/> Libraries, functions, <span style='color:#6DA34D'>data</span>
 
 - Data types  
   - Vectors, **tibbles**, data frames, matrices  
@@ -349,7 +351,7 @@ tibble(
 
 ---
 
-# Libraries, functions, <span style='color:#6DA34D'>data</span>
+# <img src="figures/data.png" style="height: 50px"/> Libraries, functions, <span style='color:#6DA34D'>data</span>
 
 - Call a specific variable by name or location in the tibble
   - Variables are vectors  
@@ -367,7 +369,7 @@ head(cars$speed, 7)
 
 ---
 
-# Libraries, functions, <span style='color:#6DA34D'>data</span>
+# <img src="figures/data.png" style="height: 50px"/> Libraries, functions, <span style='color:#6DA34D'>data</span>
 
 - Data types  
   - Vectors, tibbles, **data frames**, matrices
@@ -382,11 +384,11 @@ data.frame(
 
 ---
 
-# Libraries, functions, <span style='color:#6DA34D'>data</span>
+# <img src="figures/data.png" style="height: 50px"/> Libraries, functions, <span style='color:#6DA34D'>data</span>
 
 - Data types  
   - Vectors, tibbles, data frames, **matrices**
-- Matrices and tibbles have similar shapes
+- Matrices can have a third dimension
 - Traditionally matrices contained data of a single type
 - When it comes down to using a matrix or tibbles in our class, tibbles are the way to go
 
@@ -469,6 +471,7 @@ Get in the habit of running these functions when you open a new dataset
   - `arrange()` pairs nicely with subsetting functions to explore your data
 - `summary()` shows summary statistics on all variables in a dataset
   - Reported summary statistics depend on the variable type
+  - Min, max, mean, and median are reported for numeric variables 
 - `ls()` shows all variables in a tibble
   - You can also use `ls()` without calling an object between the parentheses to see all objects in your workspace
 - `str()` tells the variable type and selected variable values in a tibble for all variables
@@ -529,6 +532,7 @@ summary(airbnb)
 # Base R functions to explore vectors
 
 - `table()` shows you the distribution of values in a vector  
+  - Indexed by name and position  
 - `length()` tells you in the number of elements in a vector  
 - `unique()` shows you the unique values in a vector  
 - `sort()` orders values in a vector  
@@ -548,7 +552,7 @@ length(unique(airbnb$room_type))
 
 **Exercise 3 - 5 minutes**  
 - How many distinct `address` values are there?  
-- Which is the eighth `host_id` value after listing unique ids alphabetically?  
+- Which is the third `host_id` value after sorting unique ids alphabetically?  
 - Is 'yurt' a `room_type` value?  
 
 ```{r, echo = FALSE}
@@ -561,7 +565,7 @@ countdown(minutes = 5, seconds = 0)
 
 **Exercise 3 - 5 minutes**  
 - How many distinct `address` values are there?  
-- Which is the eighth `host_id` value after listing unique ids alphabetically?  
+- Which is the third `host_id` value after sorting unique ids alphabetically?  
 - Is 'yurt' a `room_type` value?  
 
 ```{r, echo = TRUE, collapse=TRUE}
@@ -571,7 +575,7 @@ length(unique(airbnb$address))
 --
 
 ```{r, echo = TRUE, collapse=TRUE}
-head(sort(unique(airbnb$host_id)), 8)
+head(sort(unique(airbnb$host_id)), 3)
 ```
 
 --
@@ -593,6 +597,7 @@ Make sure...
 - The variable type is correct to perform the function you call
   - For example you probably don't want to run `min()` on a character string
 - Your assignment operator looks like this: `<-`
+- You're running code inside a code chunk (in a notebook)
 
 ---
 

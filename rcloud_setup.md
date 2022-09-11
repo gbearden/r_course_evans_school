@@ -8,4 +8,4 @@ Follow the steps below to set up Rstudio Cloud.
 2. Create an RStudio account  
 3. Create a workspace  
 4. Create a project  
-5. Run the following code in the Rstudio console: `install.packages(c('tidyverse', 'ggthemes'))`  
+5. Run the following code in the RStudio console: `install.packages(c('tidyverse', 'ggthemes'))`  
