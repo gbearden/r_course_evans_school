@@ -2,7 +2,7 @@
 title: "Part 2 - Introduction to the Tidyverse"
 author: "Graham Bearden"
 institute: "University of Washington"
-date: "October 21, 2021"
+date: "October 11, 2021"
 output:
   xaringan::moon_reader:
     lib_dir: libs
@@ -13,9 +13,8 @@ output:
       countIncrementalSlides: false
 ---
 
-# Preamble
+# Announcements
 
-- We'll use `%>%` when working with vectors  
 - Datasets  
   - [Kaggle](https://www.kaggle.com/datasets)
   - [Data.gov](https://www.data.gov/)
@@ -64,9 +63,6 @@ colombia <- climate %>%
 - How to import and export data  
 - Regularly used data summary functions  
 - Assignment operator (`<-`)
-- Chaining together functions with a pipe operator (`%>%`)
-- Using `select()` from the `tidyverse`
-- Troubleshooting basics  
 
 ---
 
@@ -88,8 +84,8 @@ Make sure...
 - Arguments in your functions are comma-separated
 - Your functions have start and closing parentheses
 - You have start and end quotation marks where relevant
-- The variable type is correct to perform the function you call
-  - For example you probably don't want to run `min()` on a character string
+- The function is intended for the data type  
+  - For example you may not want to run `min()` on a character string of addresses  
 - Your assignment operator looks like this: `<-`
 
 ---
@@ -99,7 +95,7 @@ Make sure...
 - Run code line by line  
 
 --
-- Ensure the code finished running (`+`s vs. `>`s in the R console)  
+- Ensure the code isn't hanging (`+`s vs. `>`s in the R console)  
 
 --
 - Red "x" annotation beside line numbers (after saving your file)
@@ -158,9 +154,9 @@ class: inverse, middle, center
 # <span style="color:#6DA34D">Select</span>, create, and rename variables 
 
 - `select()` keeps the named variables from the dataset
-- You can also remove variables from the dataset with `-`
-- Let's keep it simple for now and not nest functions within `select()`  
-  - Exception: `everything()`
+- You can remove variables from the dataset with `-`
+- You may use selection helpers
+  - For example, `everything()`
 - Use `'``'` for multi-word variables and variable names that begin with numbers
 
 --
@@ -181,13 +177,14 @@ head(select(airbnb, host_id, reviews, rating, price), 3) %>%
 # <span style="color:#6DA34D">Select</span>, create, and rename variables 
 
 - `select()` keeps the named variables from the dataset
-- You can also remove variables from the dataset with `-`
-- Let's keep it simple for now and not nest functions within `select()`  
-  - Exception: `everything()`
+- You can remove variables from the dataset with `-`
+- You may use selection helpers
+  - For example, `everything()`
 - Use `'``'` for multi-word variables and variable names that begin with numbers
 
 ```r
-select(select(airbnb, host_id, reviews, rating, price), -rating)
+airbnb_2 <- select(airbnb, host_id, reviews, rating, price)
+select(airbnb_2, -rating)
 ```
 
 ```{r, echo = FALSE, collapse=TRUE}
@@ -202,13 +199,14 @@ head(select(select(airbnb, host_id, reviews, rating, price), -rating), 3) %>%
 # <span style="color:#6DA34D">Select</span>, create, and rename variables
 
 - `select()` keeps the named variables from the dataset
-- You can also remove variables from the dataset with `-`
-- Let's keep it simple for now and not nest functions within `select()`  
-  - Exception: `everything()`
+- You can remove variables from the dataset with `-`
+- You may use selection helpers
+  - For example, `everything()`
 - Use `'``'` for multi-word variables and variable names that begin with numbers
 
 ```r
-select(select(airbnb, host_id, reviews, rating, price), host_id, price, everything())
+airbnb_2 <- select(airbnb, host_id, reviews, rating, price)
+select(airbnb_2, host_id, price, everything())
 ```
 
 ```{r, echo = FALSE, collapse=TRUE}
@@ -223,8 +221,7 @@ head(select(select(airbnb, host_id, reviews, rating, price), host_id, price, eve
 # Make your code as readable as possible
 
 - A whole course could be taught on code format
-- **BOTTOM LINE (FOR OUR COURSE)**  
-  - Use the `tidyverse` pipe operator (`%>%`) when working with tibbles/data frames
+- For our course, use the pipe operator (`%>%`) when working with tibbles/data frames
 
 --
 
@@ -240,14 +237,22 @@ airbnb %>%
   select(host_id, price, everything())
 ```
 
+**Use pipes if possible, but this is okay** 
+```r
+airbnb_2 <- select(airbnb, host_id, reviews, rating, price)
+select(airbnb_2, host_id, price, everything())
+```
+
 ---
 
 # Make your code as readable as possible
 
-- Use the `tidyverse` pipe operator (`%>%`) when working with tibbles/data frames
+- Use the pipe operator (`%>%`) when working with tibbles/data frames
   - Easier to read and troubleshoot  
   - Easier to comment (write end of line comments or above line comments)
   - Modular
+  - Makes data management within your script easier  
+  - It's the present and future
 
 ```r
 airbnb %>%
@@ -277,7 +282,7 @@ airbnb %>% pull(address) %>% unique() %>% length()
 # Select, <span style="color:#6DA34D">create</span>, and rename variables
 
 - `mutate()` creates variables  
-- Create multiple variables in one go
+- Create multiple variables at once
 - Use functions you already learned within `mutate()`
   - `min()`, `max()`, `mean()`
   - `as.character()`, `as.factor()`, `as.numeric()`
@@ -288,8 +293,8 @@ airbnb %>% pull(address) %>% unique() %>% length()
 ```r
 airbnb %>% 
   mutate(
-    cost_per_room = accommodates / price
-    , mean_price = mean(price)
+    cost_per_room = accommodates / price,
+    mean_price = mean(price)
     ) 
 ```
 
@@ -298,7 +303,7 @@ airbnb %>%
 # Select, <span style="color:#6DA34D">create</span>, and rename variables 
 
 - `mutate()` creates variables
-- Create multiple variables in one go
+- Create multiple variables at once
 - Use functions you already learned within `mutate()`
   - `min()`, `max()`, `mean()`
   - `as.character()`, `as.factor()`, `as.numeric()`
@@ -316,7 +321,7 @@ ifelse(x > y, 'yes', 'no')
 # Select, <span style="color:#6DA34D">create</span>, and rename variables
 
 - `mutate()` creates variables
-- Create multiple variables in one go
+- Create multiple variables at once
 - Use functions you already learned within `mutate()`
   - `min()`, `max()`, `mean()`
   - `as.character()`, `as.factor()`, `as.numeric()`
@@ -374,7 +379,7 @@ ifelse(! 237 %in% 200:300, 'yes', 'no')
 # Select, <span style="color:#6DA34D">create</span>, and rename variables
 
 - `mutate()` creates variables
-- Create multiple variables in one go
+- Create multiple variables at once
 - Use functions you already learned within `mutate()`
   - `min()`, `max()`, `mean()`
   - `as.character()`, `as.factor()`, `as.numeric()`
@@ -383,10 +388,10 @@ ifelse(! 237 %in% 200:300, 'yes', 'no')
 ```r
 airbnb %>% 
   mutate(
-    cost_per_room = accommodates / price
-    , mean_price = mean(price)
-    , seattle_address = ifelse(address == 'Seattle', 'y', NA)
-    , large = ifelse(accommodates > 5, 'y', NA)
+    cost_per_room = accommodates / price,
+    mean_price = mean(price),
+    seattle_address = ifelse(address == 'Seattle', 'y', NA),
+    large = ifelse(accommodates > 5, 'y', NA)
     ) 
 ```
 
@@ -397,10 +402,10 @@ airbnb %>%
 ```r
 airbnb %>% 
   mutate(
-    cost_per_room = accommodates / price
-    , mean_price = mean(price)
-    , seattle_address = ifelse(address == 'Seattle', 'y', NA)
-    , large = ifelse(accommodates > 5, 'y', NA)
+    cost_per_room = accommodates / price,
+    mean_price = mean(price),
+    seattle_address = ifelse(address == 'Seattle', 'y', NA),
+    large = ifelse(accommodates > 5, 'y', NA)
     ) %>%
   select(room_id, host_id, cost_per_room, mean_price, seattle_address, large)
 ```
@@ -408,10 +413,10 @@ airbnb %>%
 ```{r, echo = FALSE, collapse=TRUE}
 airbnb %>% 
   mutate(
-    cost_per_room = accommodates / price
-    , mean_price = mean(price)
-    , seattle_address = ifelse(address == 'Seattle', 'y', NA)
-    , large = ifelse(accommodates > 5, 'y', NA)
+    cost_per_room = accommodates / price,
+    mean_price = mean(price),
+    seattle_address = ifelse(address == 'Seattle', 'y', NA),
+    large = ifelse(accommodates > 5, 'y', NA)
     ) %>%
   select(room_id, host_id, cost_per_room, mean_price, seattle_address, large) %>%
   head(5) 
@@ -450,8 +455,8 @@ countdown(minutes = 6, seconds = 0)
 ```r
 climate %>% 
   mutate(
-    high_uncertainty = ifelse(uncertainty > 1.5, 1, 0)
-    , winter = ifelse(month %in% c(1, 2, 12), 1, 0)
+    high_uncertainty = ifelse(uncertainty > 1.5, 1, 0),
+    winter = ifelse(month %in% c(1, 2, 12), 1, 0)
     ) %>%
   select(country, city, high_uncertainty, winter)
 ```
@@ -463,8 +468,8 @@ climate %>%
 ```r
 climate %>% 
   mutate(
-    high_uncertainty = ifelse(uncertainty > 1.5, 1, 0)
-    , winter = ifelse(month %in% c(1, 2, 12), 1, 0)
+    high_uncertainty = ifelse(uncertainty > 1.5, 1, 0),
+    winter = ifelse(month %in% c(1, 2, 12), 1, 0)
     ) %>%
   select(country, city, high_uncertainty, winter)
 ```
@@ -472,8 +477,8 @@ climate %>%
 ```{r, echo = FALSE, collapse=TRUE}
 climate %>% 
   mutate(
-    high_uncertainty = ifelse(uncertainty > 1.5, 1, 0)
-    , winter = ifelse(month %in% c(1, 2, 12), 1, 0)
+    high_uncertainty = ifelse(uncertainty > 1.5, 1, 0),
+    winter = ifelse(month %in% c(1, 2, 12), 1, 0)
     ) %>%
   select(country, city, high_uncertainty, winter) %>%
   head()
@@ -490,8 +495,8 @@ climate %>%
 ```r
 climate %>% 
   mutate(
-    high_uncertainty = ifelse(uncertainty > 1.5, 1, 0)
-    , winter = ifelse(month %in% c(1, 2, 12), 1, 0)
+    high_uncertainty = ifelse(uncertainty > 1.5, 1, 0),
+    winter = ifelse(month %in% c(1, 2, 12), 1, 0)
     ) %>%
   select(country, city, high_uncertainty, winter)
 ```
@@ -501,10 +506,10 @@ climate %>%
 ```r
 climate %>% 
   transmute(
-    country
-    , city
-    , high_uncertainty = ifelse(uncertainty > 1.5, 1, 0)
-    , winter = ifelse(month %in% c(1, 2, 12), 1, 0)
+    country,
+    city,
+    high_uncertainty = ifelse(uncertainty > 1.5, 1, 0),
+    winter = ifelse(month %in% c(1, 2, 12), 1, 0)
     )
 ```
 
@@ -527,9 +532,9 @@ climate %>%
 ```r
 airbnb %>% 
   rename(
-    city = address
-    , cost = price
-    , description = name
+    city = address,
+    cost = price,
+    description = name
     ) 
 ```
 
@@ -547,9 +552,9 @@ airbnb %>%
 ```r
 airbnb %>% 
   mutate(
-    city = address
-    , cost = price
-    , description = name
+    city = address,
+    cost = price,
+    description = name
     ) 
 ```
 
@@ -559,8 +564,8 @@ airbnb %>%
 airbnb %>% 
   transmute(
     city = address
-    , cost = price
-    , description = name
+    cost = price
+    description = name
     ) 
 ```
 
@@ -569,7 +574,7 @@ airbnb %>%
 # Exercise - 6 minutes
 
 - With `climate`, create a tibble that meets the following conditions:  
-  - The contains three variables: `year`, `location`, `temp`
+  - It contains three variables: `year`, `location`, `temp`
   - Make no changes to `year` 
   - Rename `city` as `location`
   - In `temp`, change `NA` values to `0`  
@@ -583,7 +588,7 @@ countdown(minutes = 6, seconds = 0)
 # Exercise - 6 minutes
 
 - With `climate`, create a tibble that meets the following conditions:  
-  - The contains three variables: `year`, `location`, `temp`
+  - It contains three variables: `year`, `location`, `temp`
   - Make no changes to `year` 
   - Rename `city` as `location`
   - In `temp`, change `NA` values to `0`  
@@ -592,8 +597,8 @@ countdown(minutes = 6, seconds = 0)
 climate %>% 
   transmute(
     year
-    , location = city
-    , temp = ifelse(is.na(temp), 0, temp)
+    location = city
+    temp = ifelse(is.na(temp), 0, temp)
     ) 
 ```
 
@@ -635,11 +640,11 @@ airbnb %>%
 ```r
 airbnb %>% 
   filter(
-    rating == 5
-    & (
-      (price < 50 & room_type == 'Private room')
-      | (price > 50 & price < 100 & room_type == 'Entire home/apt')
-      )
+    rating == 5 & 
+    (
+      (price < 50 & room_type == 'Private room') | 
+      (price > 50 & price < 100 & room_type == 'Entire home/apt')
+    )
   ) %>% 
   select(room_id, host_id, address, room_type, price, name)
 ```
@@ -703,10 +708,10 @@ countdown(minutes = 12, seconds = 0)
 colombia <- climate %>% 
   filter(! is.na(temp) & year > 2000 & country == 'Colombia') %>% 
   transmute(
-    year
-    , month
-    , city
-    , fahrenheit = (temp * 9/5) + 32
+    year,
+    month,
+    city,
+    fahrenheit = (temp * 9/5) + 32
     )
 ```
 
@@ -830,7 +835,7 @@ airbnb %>%
 # group_by() and summarise()  
 
 **Exercise - 10 minutes**  
-With `climate`, create a new tibble called `dif_uncertainty`. The tibble should contain a variable called `dif` that tells you the difference between the smallest and largest uncertainty values for years after 1800. 
+With `climate`, create a new tibble called `dif_uncertainty`. The tibble should contain a variable called `dif` that tells you the difference between the smallest and largest uncertainty values for all rows with years after 1800. 
 - What is the largest difference in uncertainty? 
 - BONUS POINTS: In which year is the largest difference?
 
@@ -845,7 +850,7 @@ countdown(minutes = 10, seconds = 0)
 ---
 
 **Exercise - 10 minutes**  
-With `climate`, create a new tibble called `dif_uncertainty`. The tibble should contain a variable called `dif` that tells you the difference between the smallest and largest uncertainty values for years after 1800. 
+With `climate`, create a new tibble called `dif_uncertainty`. The tibble should contain a variable called `dif` that tells you the difference between the smallest and largest uncertainty values for all rows with years after 1800. 
 - What is the largest difference in uncertainty?  
 - BONUS POINTS: In which year is the largest difference?  
 
@@ -854,8 +859,8 @@ dif_uncertainty <- climate %>%
   filter(year > 1800) %>% 
   group_by(year) %>%
   summarise(
-    min = min(uncertainty, na.rm = TRUE)
-    , max = max(uncertainty, na.rm = TRUE)
+    min = min(uncertainty, na.rm = TRUE),
+    max = max(uncertainty, na.rm = TRUE)
     ) %>%
   mutate(dif = max - min)
 ```
@@ -964,9 +969,9 @@ countdown(minutes = 10, seconds = 0)
 turkey <- climate %>% 
   filter(country == 'Turkey' & year %in% 2000:2010) %>% 
   transmute(
-    city
-    , date = ym(paste0(year, '-', month))
-    , temp
+    city,
+    date = ym(paste0(year, '-', month)),
+    temp
   ) %>% 
   arrange(desc(date))
 ```
