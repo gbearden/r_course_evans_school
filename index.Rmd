@@ -45,12 +45,12 @@ This is an introductory course designed for new R programmers. You will learn th
 
 Course materials are prepared in order to offer a survey of selected R functionality. Students interested in R programming that is more sophisticated and/or specialized than what is taught in the course are encouraged to seek additional opportunities to apply their R programming skills.
 
-This is an applied course that focuses on successful execution of code. While students should consider theory, style, and efficiency of R programming, getting the job done right will be the first priority.
+This is an applied course that focuses on successful execution of code. While students should consider theory, style, and efficiency of R programming, getting the job done right will be the first priority. 
 
 ## Course Expectations
 
 - Attend four classes. Class dates are 10/4, 10/11, 10/18, & 10/25. A full class is 2 hours and 50 minutes, breaks included.
-- Submit 2 "stakeholder-ready" data visualizations by November 4 or before.
+- Submit 2 "stakeholder-ready" data visualizations by November 4 or before
  
 ## Accomodations
 
