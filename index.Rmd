@@ -37,7 +37,7 @@ h4.date {
 
 **Time: 5:30-8:20pm**  
 **Class Dates: 10/4, 10/11, 10/18, 10/25**  
-**Location: [PAR 220](https://www.washington.edu/maps/#!/par)**
+**Location: [PAR 220](https://www.washington.edu/maps/#!/par)** 
 
 ## Course Overview
 
