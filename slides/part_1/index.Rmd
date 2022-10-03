@@ -41,9 +41,9 @@ climate <- read_csv('https://bit.ly/3kKErEb', col_types = cols())
 # Defining R and the R Programmer 
 
 - Typical uses for R
+  - Data preparation (cleaning, reshaping, creation)  
   - Data analysis
   - Data visualization
-  - Reshaping data
   - Automation
 - Mental models and programming
   - Excel/SPSS/Stata --> computational programming tools like R
@@ -86,8 +86,11 @@ install.packages('tidyverse')
 - Make sure you can install packages
   - Command line/Console
   - R Studio GUI
+  
+```{r, echo=FALSE, out.width="70%"}
+knitr::include_graphics("./figures/r_studio_install_packages.png")
+```
 
-![](./figures/r_studio_install_packages.png)
 
 --- 
 class: inverse, middle, center
@@ -112,11 +115,11 @@ library(tidyverse)
 
 - Functions perform operations in R
 ```r
-foo <- c(1,2,4)
-min(foo)
-mean(foo)
-max(foo)
-sd(foo)
+some_numbers <- c(1,2,4)
+min(some_numbers)
+mean(some_numbers)
+max(some_numbers)
+sd(some_numbers)
 ```
 
 ---
@@ -125,11 +128,11 @@ sd(foo)
 
 - Functions perform operations in R
 ```{r, echo = TRUE, collapse=TRUE}
-foo <- c(1,2,4)
-min(foo)
-mean(foo)
-max(foo)
-sd(foo)
+some_numbers <- c(1,2,4)
+min(some_numbers)
+mean(some_numbers)
+max(some_numbers)
+sd(some_numbers)
 ```
 
 ---
@@ -138,7 +141,7 @@ sd(foo)
 
 - Function arguments
   - Let's look at arguments in the `lm` and `min` functions  
-  - Arguments are function inputs that tell your function "how" and "to what" and state conditions for operations
+  - Arguments tell your function how and on what to perform an operation, and state conditions for operations  
   - Arguments are comma separated
 
 ```r
@@ -163,15 +166,15 @@ cat_function <- function(love = TRUE){
 
 - Function arguments
   - Let's look at arguments in the `lm` and `min` functions  
-  - Arguments are function inputs that tell your function "how" and "to what" and state conditions for operations
+  - Arguments tell your function how and on what to perform an operation, and state conditions for operations  
   - Arguments are comma separated
 
 ```r
-foo <- c(1, 2, NA, 4)
-min(foo)
-mean(foo)
-max(foo)
-sd(foo)
+some_numbers <- c(1, 2, NA, 4)
+min(some_numbers)
+mean(some_numbers)
+max(some_numbers)
+sd(some_numbers)
 ```
 
 ---
@@ -180,15 +183,15 @@ sd(foo)
 
 - Function arguments
   - Let's look at arguments in the `lm` and `min` functions  
-  - Arguments are function inputs that tell your function "how" and "to what" and state conditions for operations
+  - Arguments tell your function how and on what to perform an operation, and state conditions for operations  
   - Arguments are comma separated
 
 ```{r, echo = TRUE, collapse=TRUE}
-foo <- c(1,2,NA, 4)
-min(foo)
-mean(foo)
-max(foo)
-sd(foo)
+some_numbers <- c(1,2,NA, 4)
+min(some_numbers)
+mean(some_numbers)
+max(some_numbers)
+sd(some_numbers)
 ```
 
 ---
@@ -197,15 +200,15 @@ sd(foo)
 
 - Function arguments
   - Let's look at arguments in the `lm` and `min` functions  
-  - Arguments are function inputs that tell your function "how" and "to what" and state conditions for operations
+  - Arguments tell your function how and on what to perform an operation, and state conditions for operations  
   - Arguments are comma separated
 
 ```{r, echo = TRUE, collapse=TRUE}
-foo <- c(1,2,NA, 4)
-min(foo, na.rm = TRUE)
-mean(foo, na.rm = TRUE)
-max(foo, na.rm = TRUE)
-sd(foo, na.rm = TRUE)
+some_numbers <- c(1,2,NA, 4)
+min(some_numbers, na.rm = TRUE)
+mean(some_numbers, na.rm = TRUE)
+max(some_numbers, na.rm = TRUE)
+sd(some_numbers, na.rm = TRUE)
 ```
 
 ---
