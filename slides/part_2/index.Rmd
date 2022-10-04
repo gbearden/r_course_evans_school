@@ -13,22 +13,6 @@ output:
       countIncrementalSlides: false
 ---
 
-# Announcements
-
-- Datasets  
-  - [Kaggle](https://www.kaggle.com/datasets)
-  - [Data.gov](https://www.data.gov/)
-  - [Washington Post](https://github.com/orgs/washingtonpost/repositories?language=&q=data&sort=&type=)
-  - [fivethirtyeight](https://data.fivethirtyeight.com/)  
-  - [Awesome Public Datasets on Github](https://github.com/awesomedata/awesome-public-datasets)
-  - [BuzzFeed](https://github.com/BuzzFeedNews)
-  - BONUS dataset: [Great British Bakeoff](https://github.com/apreshill/bakeoff)  
-- [R for Stata users](https://www.matthieugomez.com/statar/manipulate-data.html)
-- Data management and multiple file versions  
-  - Manage versioning through in script
-  - Most file hosting services (like Dropbox) offer version control
-  - [Data Version Control](https://dvc.org/)
-
 ```{r setup, include=FALSE}
 library(tidyverse)
 library(knitr)
@@ -52,8 +36,6 @@ colombia <- climate %>%
     )
 ```
 
----
-
 # What we learned in the previous class
 
 - Getting up and running in RStudio  
@@ -68,7 +50,7 @@ colombia <- climate %>%
 
 # What we'll learn today  
 
-- A bit more about troubleshooting
+- More about troubleshooting
 - Creating and updating variables  
 - Subsetting tibbles/data frames  
 - Aggregation  
@@ -252,7 +234,7 @@ select(airbnb_2, host_id, price, everything())
   - Easier to comment (write end of line comments or above line comments)
   - Modular
   - Makes data management within your script easier  
-  - It's the present and future
+  - Style-wise, pipes are the present and future
 
 ```r
 airbnb %>%
