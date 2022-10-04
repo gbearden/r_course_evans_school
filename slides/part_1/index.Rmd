@@ -30,6 +30,19 @@ climate <- read_csv('https://bit.ly/3kKErEb', col_types = cols())
 
 ---
 
+# Evans School Community Commitments
+
+- Acknowledge, reflect on, and examine individual and systemic power, injustice,
+privilege, and biases  
+- Work and collaborate to expand our knowledge using empirical evidence, lived
+experience, storytelling, and other ways of knowing  
+- Embrace discomfort, non-closure, and disagreement  
+- Be accountable for the impact of our words and actions  
+- Give and receive feedback in a way that encourages listening, learning, and personal
+growth  
+
+---
+
 # Set Up
 
 - Set up your machine to run R
