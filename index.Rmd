@@ -68,8 +68,6 @@ We will also begin to explore data summary techniques and troubleshooting tactic
 
 At the end of Part 1, students should be familiar with the R interface, know how to perform basic operations, calculate summary statistics, and walk through a series of steps to troubleshoot code.
 
-If you'd like to stay sharp between Parts 1 and 2, here are some 100% optional exercises.
-
 Helpful materials for the class: [base R cheat sheet](https://iqss.github.io/dss-workshops/R/Rintro/base-r-cheat-sheet.pdf)
 
 #### October 11 | [Part 2](https://gbearden.github.io/r_course_evans_school/slides/part_2/)
