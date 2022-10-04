@@ -2,7 +2,7 @@
 title: "Part 2 - Introduction to the Tidyverse"
 author: "Graham Bearden"
 institute: "University of Washington"
-date: "October 11, 2021"
+date: "October 11, 2022"
 output:
   xaringan::moon_reader:
     lib_dir: libs
