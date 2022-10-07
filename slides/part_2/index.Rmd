@@ -36,15 +36,25 @@ colombia <- climate %>%
     )
 ```
 
+# Housekeeping
+
+- Workshop slides will always be available
+- Check out R for Stata users in the syllabus
+- Check out notes from the first class and an example script in the syllabus
+- You can learn enough SQL in 5-10 hours to include SQL skills on your resume
+
+---
+
 # What we learned in the previous class
 
 - Getting up and running in RStudio  
 - Core R concepts  
   - Data types
   - Relationship between data and functions  
-- How to import and export data  
+- How to import data  
 - Regularly used data summary functions  
 - Assignment operator (`<-`)
+- A bit about troubleshooting
 
 ---
 
@@ -66,9 +76,12 @@ Make sure...
 - Arguments in your functions are comma-separated
 - Your functions have start and closing parentheses
 - You have start and end quotation marks where relevant
-- The function is intended for the data type  
-  - For example you may not want to run `min()` on a character string of addresses  
+- The variable type is correct to perform the function you call
+  - For example you probably don't want to run `min()` on a character string  
+- Variables in your environment are spelled correctly  (`ls()`)  
 - Your assignment operator looks like this: `<-`
+- You're running code inside a code chunk (in a notebook)
+- The casing is right (for example, `read_csv()`, not `READ_CSV()`)  
 
 ---
 
@@ -203,7 +216,7 @@ head(select(select(airbnb, host_id, reviews, rating, price), host_id, price, eve
 # Make your code as readable as possible
 
 - A whole course could be taught on code format
-- For our course, use the pipe operator (`%>%`) when working with tibbles/data frames
+- For our course, use the pipe operator (`%>%`) when working with **tibbles/data frames**  
 
 --
 
@@ -229,7 +242,7 @@ select(airbnb_2, host_id, price, everything())
 
 # Make your code as readable as possible
 
-- Use the pipe operator (`%>%`) when working with tibbles/data frames
+- Use the pipe operator (`%>%`) when working with **tibbles/data frames**  
   - Easier to read and troubleshoot  
   - Easier to comment (write end of line comments or above line comments)
   - Modular
@@ -246,12 +259,12 @@ airbnb %>%
 
 # Make your code as readable as possible
 
-- No firm, binding rule for using (or not using) the pipe operator with vectors
+- No firm, binding rule for using (or not using) the pipe operator with **vectors**
   - General practice is to ask yourself: "which format is easiest to read?"
   - Depends on the number of functions  
   - Depends on whether you are pulling a variable of tibble that you are processing  
     - `pull() == $`  
-- In our class, we will use the `tidverse` grammar when working with vectors for consistency sake and ease of learning
+- In our class, we will use the `tidyverse` grammar when working with vectors for consistency sake and ease of learning
   
 ```r
 length(unique(airbnb$address))
@@ -410,7 +423,7 @@ airbnb %>%
 
 <b>Exercise - 6 minutes</b>  
 - With the `climate` dataset, create variables called `high_uncertainty` and `winter`
-- In `high_uncertainty`, flag with a `1` all observations where `uncertainty` is greater than 1.5. All other records should have a `0`.  
+- In `high_uncertainty`, flag with a `1` all observations where `uncertainty` is greater than 1.5. All other rows should have a `0`.  
 - In `winter`, flag with a `1` all observations where month is a 1, 2, 12.  
 - Only report the following variables in the output: `country`, `city`, `high_uncertainty` and `winter`
 
@@ -430,7 +443,7 @@ countdown(minutes = 6, seconds = 0)
 
 <b>Exercise - 6 minutes</b>  
 - With the `climate` dataset, create variables called `high_uncertainty` and `winter`
-- In `high_uncertainty`, flag with a `1` all observations where `uncertainty` is greater than 1.5. All other records should have a `0`  
+- In `high_uncertainty`, flag with a `1` all observations where `uncertainty` is greater than 1.5. All other rows should have a `0`  
 - In `winter`, flag with a `1` all observations where month is a 1, 2, 12.  
 - Only report the following variables in the output: `country`, `city`, `high_uncertainty` and `winter`
 
@@ -613,22 +626,8 @@ airbnb %>%
 
 ```r
 airbnb %>% 
-  filter(rating == 5 & room_type == 'Private room') %>% 
+  filter(price > 50 & price < 100 & room_type == 'Entire home/apt') %>% 
   select(room_id, host_id, address, room_type, rating, name)
-```
-
---
-
-```r
-airbnb %>% 
-  filter(
-    rating == 5 & 
-    (
-      (price < 50 & room_type == 'Private room') | 
-      (price > 50 & price < 100 & room_type == 'Entire home/apt')
-    )
-  ) %>% 
-  select(room_id, host_id, address, room_type, price, name)
 ```
 
 ---
@@ -666,7 +665,7 @@ airbnb %>% sample_n(3) %>% select(room_id, host_id, address, room_type, price, n
 
 .pull-right[
 - Determine the following: 
-  - The number of records that meet the above filtering conditions  
+  - The number of rows that meet the above filtering conditions  
   - The fahrenheit mean in `colombia`
   - The names of cities in `colombia`
 ]
@@ -702,7 +701,7 @@ colombia <- climate %>%
 # Exercise - 12 minutes
 
 - Determine the following: 
-  - The number of records that meet the above filtering conditions  
+  - The number of rows that meet the above filtering conditions  
   - The fahrenheit mean in `colombia`
   - The names of cities in `colombia`
 
