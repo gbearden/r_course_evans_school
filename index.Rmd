@@ -62,6 +62,8 @@ Please let me know if you need any specific accommodations related to religious 
 
 #### October 4 | [Part 1](https://gbearden.github.io/r_course_evans_school/slides/part_1/)
 
+[Notes](https://gbearden.github.io/r_course_evans_school/notes/part_1.Rmd)
+
 Part 1 will focus on the basics of R. Students will learn about key R concepts like data types and the anatomy of a function, how to read (import) and write (export) data, and the essentials of writing successful code.
 
 We will also begin to explore data summary techniques and troubleshooting tactics that students can use to solve coding errors.
