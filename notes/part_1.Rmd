@@ -15,7 +15,7 @@ I can also turn plain text into code with single tic marks (`foo <- 1:5`)
 
 ### Install packages
 
-You only need to install a package once. So no need to run `install.packages('tidyverse')` again. But save or remember this code for install other packages.
+You only need to install a package once. So no need to run `install.packages('tidyverse')` again. But save or remember this code for installing other packages.
 
 ```{r}
 install.packages('tidyverse')

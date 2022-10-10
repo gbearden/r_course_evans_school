@@ -62,15 +62,13 @@ Please let me know if you need any specific accommodations related to religious 
 
 #### October 4 | [Part 1](https://gbearden.github.io/r_course_evans_school/slides/part_1/)
 
-[Notes](https://gbearden.github.io/r_course_evans_school/notes/part_1.Rmd)
-
 Part 1 will focus on the basics of R. Students will learn about key R concepts like data types and the anatomy of a function, how to read (import) and write (export) data, and the essentials of writing successful code.
 
 We will also begin to explore data summary techniques and troubleshooting tactics that students can use to solve coding errors.
 
 At the end of Part 1, students should be familiar with the R interface, know how to perform basic operations, calculate summary statistics, and walk through a series of steps to troubleshoot code.
 
-Helpful materials for the class: [base R cheat sheet](https://iqss.github.io/dss-workshops/R/Rintro/base-r-cheat-sheet.pdf)
+Helpful materials: [class notes](https://github.com/gbearden/r_course_evans_school/blob/master/notes/part_1.Rmd), [example .R file](https://github.com/gbearden/r_course_evans_school/blob/master/notes/example_script.R), [base R cheat sheet](https://iqss.github.io/dss-workshops/R/Rintro/base-r-cheat-sheet.pdf)
 
 #### October 11 | [Part 2](https://gbearden.github.io/r_course_evans_school/slides/part_2/)
 
@@ -78,7 +76,7 @@ Part 2 will focus on data processing. We will use a variety of methods to manipu
 
 At the end of Part 2, students should possess skills necessary to transform datasets so that data are suitable for analysis.
 
-Helpful materials for the class: [data transformation cheat sheet](https://github.com/rstudio/cheatsheets/blob/main/data-transformation.pdf), [data tidying cheat sheet](https://github.com/rstudio/cheatsheets/blob/main/tidyr.pdf), [R for Stata users](https://www.matthieugomez.com/statar/manipulate-data.html)
+Helpful materials: [data transformation cheat sheet](https://github.com/rstudio/cheatsheets/blob/main/data-transformation.pdf), [data tidying cheat sheet](https://github.com/rstudio/cheatsheets/blob/main/tidyr.pdf), [R for Stata users](https://www.matthieugomez.com/statar/manipulate-data.html)
 
 #### October 18 | Part 3
 
@@ -86,7 +84,7 @@ Part 3 will focus on data visualization. We will use `ggplot`, a visualization l
 
 At the end of Part 3, students should be able to produce a standard set of plots and manipulate plot aesthetics.
 
-Helpful materials for the class: [data visualization cheat sheet](https://github.com/rstudio/cheatsheets/blob/master/data-visualization-2.1.pdf), [Coolors](https://coolors.co/)
+Helpful materials: [data visualization cheat sheet](https://github.com/rstudio/cheatsheets/blob/master/data-visualization-2.1.pdf), [Coolors](https://coolors.co/)
 
 #### October 25 | Part 4
 
