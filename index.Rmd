@@ -50,7 +50,7 @@ This is an applied course that focuses on successful execution of code. While st
 ## Course Expectations
 
 - Attend four classes. Class dates are 10/4, 10/11, 10/18, & 10/25. A full class is 2 hours and 50 minutes, breaks included.
-- Submit 2 "stakeholder-ready" data visualizations by November 4 or before
+- Submit 2 "stakeholder-ready" data visualizations by November 4 or before (See [example plots](https://github.com/gbearden/r_course_evans_school/blob/master/plots/))
  
 ## Accomodations
 
