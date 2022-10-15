@@ -34,7 +34,7 @@ colombia %>%
   theme(legend.position = 'top') + 
   ggthemes::scale_color_few()
 
-ggsave('plots/colombia.jpeg', device = 'jpeg', width = 7, height = 4.6, bg = "white")
+ggsave('plots/colombia.jpeg', device = 'jpeg', width = 5, height = 3, dpi = 150, units = "in", bg = "white")
 
 # ------------------------
 # Airbnb Price and Ratings
@@ -63,4 +63,4 @@ airbnb %>%
     ) + 
   ggthemes::scale_fill_calc()
   
-ggsave('plots/airbnb_price_ratings.jpeg', device = 'jpeg', width = 7, height = 4.6, bg = "white")
+ggsave('plots/airbnb_price_ratings.jpeg', device = 'jpeg', width = 5.5, height = 3, dpi = 150, units = "in", bg = "white")
