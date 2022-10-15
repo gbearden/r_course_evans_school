@@ -1,3 +1,18 @@
+library(tidyverse)
+
+# -----------
+# Import data 
+# -----------
+climate <- read_csv('https://bit.ly/3kKErEb', col_types = cols())
+
+colombia <- climate %>% 
+  filter(! is.na(temp) & year > 2000 & country == 'Colombia') %>% 
+  transmute(
+    year
+    , month
+    , city
+    , fahrenheit = (temp * 9/5) + 32
+  )
 
 # -------------------------------
 # Colombia Tempterature Line Plot
@@ -19,7 +34,7 @@ colombia %>%
   theme(legend.position = 'top') + 
   ggthemes::scale_color_few()
 
-ggsave('plots/colombia.jpeg', device = 'jpeg')
+ggsave('plots/colombia.jpeg', device = 'jpeg', width = 7, height = 4.6, bg = "white")
 
 # ------------------------
 # Airbnb Price and Ratings
@@ -48,4 +63,4 @@ airbnb %>%
     ) + 
   ggthemes::scale_fill_calc()
   
-ggsave('plots/airbnb_price_ratings.jpeg', device = 'jpeg')
+ggsave('plots/airbnb_price_ratings.jpeg', device = 'jpeg', width = 7, height = 4.6, bg = "white")
