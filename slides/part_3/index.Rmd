@@ -2,7 +2,7 @@
 title: "Part 3 - Data Visualization with ggplot2"
 author: "Graham Bearden"
 institute: "University of Washington"
-date: "October 28, 2021"
+date: "October 18, 2022"
 output:
   xaringan::moon_reader:
     lib_dir: libs
@@ -13,11 +13,11 @@ output:
       countIncrementalSlides: false
 ---
 
-# Preamble
+# Housekeeping
 
-- Reminder: Submit 2 “stakeholder-ready” data visualizations on November 11 or before
-- What are tibbles? 
-  - Two-dimensional data just like Excel spreadsheets
+- Reminder: Submit 2 “stakeholder-ready” data visualizations on November 4 or before  
+  - See examples [here](https://github.com/gbearden/r_course_evans_school/blob/master/plots/) on Github  
+- You only need to install packages once (`install.packages('tidyverse')`)  
 
 ```{r setup, include=FALSE}
 library(tidyverse)
@@ -43,13 +43,13 @@ climate <- read_csv('https://bit.ly/3kKErEb', col_types = cols())
 - Chaining together functions with a pipe operator (`%>%`)
 - Selecting, creating, and updating variables  
 - Subsetting tibbles/data frames  
-- Aggregation  
 
 ---
 
 # What we'll learn today  
 
 - Overview of ggplot2  
+- How to aggregate data  
 - Building bar, line, and scatter plots  
   - Aggregated data
   - Disaggregated data
@@ -71,7 +71,7 @@ climate <- read_csv('https://bit.ly/3kKErEb', col_types = cols())
 
 **Exercise 1 - 5 minutes**  
 
-This code contains 4 mistakes. The code is supposed to report the mean, median, and max temperatures for Brazilian cities in the 19th and 20th centuries.      
+This code contains 3 mistakes. The code is supposed to report the mean temperatures for Peru and Saudi Arabia before 1900.  
 
 --
 
@@ -80,20 +80,14 @@ library(tidyverse)
         
 climate <- read_csv('https://bit.ly/3kKErEb')
 
-climate %>% 
-  fitler(
-    country == 'Brazil' 
-    & ! is.na(temp) 
-    & year < 2000
-    ) %>% 
-  mutate(century = ifese(year >= 1900, '20th Century', '19th Century')) %>% 
-  group_by(century, city) %>% 
-  summarise(
-    mean_temp = mean(temp) 
-    median_temp = median(temp)
-    , max_temp = max(temp)
-    ) 
-  arrange(city)
+saudi <- climate %>% 
+  fiter(year < 1900 & country == 'Saudi Arabia')
+
+peru <- climate %>% 
+  filter(year < 1900 & country = 'Peru')
+
+saudi %>% pull(temp) %>% mean(na.rm = TRUE)
+peru %>% pull(temp) %>% mean(rm.na = TRUE)
 ```
 
 ```{r, echo = FALSE}
@@ -106,7 +100,7 @@ countdown(minutes = 5, seconds = 0)
 
 **Exercise 1 - 5 minutes**  
 
-This code contains 4 mistakes. The code is supposed to report the mean, median, and max temperatures for Brazilian cities in the 19th and 20th centuries.      
+This code contains 3 mistakes. The code is supposed to report the mean temperatures for Peru and Saudi Arabia before 1900.  
 
 ![](figures/troubleshoot_solution_1.png)
 
@@ -116,6 +110,8 @@ class: inverse, middle, center
 # Visualization with ggplot2
 
 ---
+
+# ggplot2
 
 Import `airbnb` data if you have not already
 
@@ -138,31 +134,9 @@ airbnb <- read_csv('https://bit.ly/3oadz2L')
 
 # Plot types
 
-<img src="figures/plots_1.png" style="height: 550px"/>
-
----
-
-# Plot types
-
-![](figures/plots_2.png)
-
----
-
-# Plot types
-
-![](figures/plots_3.png)
-
----
-
-# Plot types
-
 What we will learn
 
 <img src="figures/bar.png" style="height: 200px"/> <img src="figures/stacked_bar.png" style="height: 200px"/> <img src="figures/hist.png" style="height: 200px"/> <img src="figures/scatter.png" style="height: 200px"/> <img src="figures/line.png" style="height: 200px"/>
-
---
-
-Requests to learn another plot type?
 
 ---
 
@@ -187,6 +161,24 @@ Requests to learn another plot type?
 
 <img src="figures/line.png" style="height: 150px"/>  
 ]
+
+---
+
+# Plot types
+
+![](figures/plots_3.png)
+
+---
+
+# Plot types
+
+<img src="figures/plots_1.png" style="height: 550px"/>
+
+---
+
+# Plot types
+
+![](figures/plots_2.png)
 
 ---
 
@@ -277,8 +269,8 @@ airbnb %>% ggplot() + geom_bar(aes()) # Alternate placement of aes()
 
 ```r
 aes(x = NULL, y = NULL, color = NULL
-  , fill = NULL, alpha = NULL, label = NULL
-  , shape = NULL, size = NULL, linetype = NULL
+  , fill = NULL, alpha = NULL, linetype = NULL
+  , shape = NULL, size = NULL
   )
 ```
 
@@ -314,14 +306,173 @@ airbnb %>% ggplot(aes(x = address, fill = room_type)) + geom_bar()
 
 ---
 
-# Geoms - Bar Plot
+# Geom - Bar Plot
 
-Other handy features when building bar plots  
-- `stat` in `geom_bar()`: "count" vs. "identity" 
-- `position`in `geom_bar()`: "stacked" vs. "dodge"
-- `coord_flip()`
-- `reorder()`
-- arguments outside of `aes()`
+**Exercise**  
+- Build a bar chart with `climate` data that shows the number of rows for the following countries: 'Brazil', 'China', 'India', 'Turkey', and 'United States'
+- To complete the task, you'll need to:
+  - Subset your data using `filter()` (click [here](https://gbearden.github.io/r_course_evans_school/slides/part_2/#44) for help)  
+  - Set the color of the bars equal to `country`
+  
+```r
+climate <- read_csv('https://bit.ly/3kKErEb')
+```
+  
+
+```{r, echo = FALSE}
+countdown(minutes = 7, seconds = 0)
+```
+
+---
+
+# Geom - Bar Plot
+
+**Exercise**  
+- Build a bar chart with `climate` data that shows the number of rows for the following countries: 'Brazil', 'China', 'India', 'Turkey', and 'United States'
+- To complete the task, you'll need to:
+  - Subset your data using `filter()` (click [here](https://gbearden.github.io/r_course_evans_school/slides/part_2/#44) for help)  
+  - Set the color of the bars equal to `country`
+  
+```r
+climate %>% 
+  filter(country %in% c('Brazil', 'China', 'India', 'Turkey', 'United States')) %>% 
+  ggplot(aes(x = country, fill = country)) + 
+  geom_bar()
+```
+
+---
+
+# Geom - Bar Plot
+
+```{r,  fig.height = 5, fig.width = 12, dpi = 300, echo = TRUE, collapse=TRUE}
+climate %>% 
+  filter(country %in% c('Brazil', 'China', 'India', 'Turkey', 'United States')) %>% 
+  ggplot(aes(x = country, fill = country)) + 
+  geom_bar()
+```
+
+---
+class: inverse, middle, center
+
+# Aggregate data with group_by() and summarise()
+
+---
+
+# group_by() and summarise() 
+
+- Count, sum, average, and identify max and min values  
+- Powerful in combination with plotting code!  
+- Example questions you could answer
+  - In `airbnb`, on **average** which city is most costly per night?   
+  - In `airbnb`, **how many** listings of each room type are there?
+  - In `airbnb`, what's **the total** number of people to stay in each room type?  
+  - In `climate`, what's the **average** temperature by year in cities in China?  
+  - In `climate`, what's the **smallest** level of uncertainty by year and country?  
+
+---
+
+# group_by() and summarise()  
+
+- In `group_by()`, list the variables by which you want to aggregate data
+- In `summarise()`, create a variable and define the variable with an aggregation function
+- Use `%>%` to 'link' `group_by()` and `summarise()`
+- Aggregation functions
+  - `n()`, `n_distinct()`, `sum()`, `mean()`, `max()`, `min()`  
+- Perform multiple aggregations in a single `summarise()` function  
+
+--
+
+**Example**  
+In `airbnb`, on average which city is most costly per night?   
+
+--
+
+```r
+airbnb %>% 
+  group_by(address) %>% 
+  summarise(mean_cost = mean(price))
+```
+
+---
+
+# group_by() and summarise()  
+
+**Example**  
+In `airbnb`, how many listings of each room type are there?
+
+--
+
+```r
+airbnb %>% 
+  group_by(room_type) %>% 
+  summarise(n_listings = n())
+```
+
+--
+
+How do you update the code to count the number of room type listings by city?
+
+--
+
+```r
+airbnb %>% 
+  group_by(room_type, address) %>% 
+  summarise(n_listings = n())
+```
+
+--
+
+How do you further update the code to only see rows for Kirkland?
+
+--
+
+```r
+airbnb %>% 
+  group_by(room_type, address) %>% 
+  summarise(n_listings = n()) %>% 
+  filter(address == 'Kirkland')
+```
+
+---
+
+# group_by() and summarise()  
+
+**Example**  
+In `airbnb`, how many listings of each room type are there?
+
+```r
+airbnb %>% 
+  group_by(room_type, address) %>% 
+  summarise(n_listings = n()) %>% 
+  filter(address == 'Kirkland')
+```
+
+Building on the code above, how would you create a variable that indicates whether there is a deficit of listings for the three `room_types` (let's say "deficit" is defined as fewer than 100 hosts)?
+
+---
+
+# group_by() and summarise()  
+
+**Example**  
+In `airbnb`, how many listings of each room type are there?
+
+Building on the code above, how would you create a variable that indicates whether there is a deficit of listings for the three `room_types` (let's say "deficit" is defined as fewer than 100 hosts)?
+
+```r
+airbnb %>% 
+  group_by(room_type, address) %>% 
+  summarise(n_listings = n()) %>% 
+  filter(address == 'Kirkland') %>% 
+  mutate(listings_deficit = ifelse(n_listings < 100, 'y', 'n'))
+```
+
+---
+
+# group_by() and summarise() + ggplot()
+
+`stat` in `geom_bar()`: "count" vs. "identity"  
+- `stat = 'count'` tells R to count the number of rows for values in `x` and visualize them  
+- `stat = 'identity'` tells R to visualize the number in `y`  
 
 .pull-left[
 ```r
@@ -333,48 +484,68 @@ airbnb %>%
       )
     ) + 
   geom_bar()
-```
-]
+```]  
 .pull-right[
 ```{r, fig.show='hide'}
-airbnb %>% 
-  group_by(address) %>%   #<<
-  summarise(n = n()) %>%   #<<
-  ggplot(
-    aes(
-      x = address
-      , y = n   #<<
-      , fill = address
-      )
-    ) + 
-  geom_bar(stat = 'identity')   #<<
+  airbnb %>% 
+    group_by(address) %>%   #<<
+    summarise(count = n()) %>%   #<<
+    ggplot(
+      aes(
+        x = address
+        , y = count   #<<
+        , fill = address
+        )
+      ) + 
+    geom_bar(stat = 'identity')   #<<
 ```
 ]
-  
+
+---
+
+# Exercise
+
+Create a bar plot from the data frame containing the aggregated data that we just produced. Set the color of the bars to be equal to the listing deficit variable.  
+
+```r
+airbnb %>% 
+  group_by(room_type, address) %>% 
+  summarise(n_listings = n()) %>% 
+  filter(address == 'Kirkland') %>% 
+  mutate(listings_deficit = ifelse(n_listings < 100, 'y', 'n'))
+```
+
+```{r, echo = FALSE}
+countdown(minutes = 5, seconds = 0)
+```
+
+---
+
+# group_by() and summarise() + ggplot()
+
+```{r,  fig.height = 5, fig.width = 12, dpi = 300, echo = TRUE, collapse=TRUE}
+airbnb %>% 
+  group_by(room_type, address) %>% 
+  summarise(n_listings = n()) %>% 
+  filter(address == 'Kirkland') %>% 
+  mutate(listings_deficit = ifelse(n_listings < 100, 'y', 'n')) %>% 
+  ggplot(aes(x = room_type, y = n_listings, fill = listings_deficit)) + 
+  geom_bar(stat = 'identity')
+```
+
 ---
 
 # Geoms - Bar Plot
 
 Other handy features when building bar plots  
-- `stat` in `geom_bar()`: "count" vs. "identity" 
 - `position`in `geom_bar()`: "stacked" vs. "dodge"
-- `coord_flip()`
 - `reorder()`
 - arguments outside of `aes()`
 
-```r
+```{r, fig.show='hide'}
 airbnb %>% 
   ggplot(aes(x = address, fill = room_type)) + 
-  geom_bar(position = 'dodge')
-```
-
---
-
-```r
-airbnb %>% 
-  ggplot(aes(x = address, fill = room_type)) + 
-  geom_bar() + 
-  coord_flip()
+  geom_bar(position = 'dodge')  #<<
 ```
 
 ---
@@ -382,19 +553,17 @@ airbnb %>%
 # Geoms - Bar Plot
 
 Other handy features when building bar plots  
-- `stat` in `geom_bar()`: "count" vs. "identity" 
 - `position`in `geom_bar()`: "stacked" vs. "dodge"
-- `coord_flip()`
 - `reorder()`
 - arguments outside of `aes()`
 
-```r
+```{r, fig.show='hide'}
 airbnb %>% 
   group_by(address) %>%   
   summarise(n = n()) %>%
   ggplot(
     aes(
-      x = reorder(address, -n)
+      x = reorder(address, -n)  #<<
       , y = n  
       , fill = address
       )
@@ -407,16 +576,14 @@ airbnb %>%
 # Geoms - Bar Plot
 
 Other handy features when building bar plots  
+- `position`in `geom_bar()`: "stacked" vs. "dodge"
+- `reorder()`
 - arguments outside of `aes()`
 
 ```{r, fig.show='hide'}
 my_data <- airbnb %>% 
   group_by(address) %>% 
   summarise(n = n())
-
-mean_count <-  my_data %>%
-  pull(n) %>% 
-  mean()
 
 my_data %>% 
   ggplot(
@@ -426,37 +593,24 @@ my_data %>%
       )
     ) + 
   geom_bar(
-    stat = 'identity', fill = '#CC3F0C' # coolors.co/generate #<<
+    stat = 'identity', fill = '#CC3F0C', alpha = .5 # coolors.co/generate #<<
     , linetype = 'dashed', color = 'black', size = 1 #<<
-    ) + 
-  geom_hline(yintercept = mean_count, size = 1, color = '#FFBA08') #<<
+    ) 
 ```
 
 ---
-# Geom - Bar Plot
 
-- Build a bar chart with `climate` data that shows the number of rows for the following countries: 'Brazil', 'China', 'India', 'Turkey', and 'United States'
-- To complete the task, you'll need to:
-  - Subset your data using `filter()`
-  - Aggregate your data using `group_by()` and `summarise()`
-  - Set the color of the bars equal to `country`
-  
+# Exercise
+
+- Update the bar chart you built that shows the number of rows for 'Brazil', 'China', 'India', 'Turkey', and 'United States'
+  - The updated version of the plot should use `group_by()` and `summarise()` and `stat` should be `'identity'` in `geom_bar()`
+  - Use `reorder()` to update the order of the bars  
 
 ```{r, echo = FALSE}
-countdown(minutes = 7, seconds = 0)
+countdown(minutes = 5, seconds = 0)
 ```
-
----
-
-# Geom - Bar Plot
-
-Exercise - 7 minutes
-
-- Build a bar chart with `climate` data that shows the number of rows for the following countries: 'Brazil', 'China', 'India', 'Turkey', and 'United States'
-- To complete the task, you'll need to:
-  - Subset your data using `filter()`
-  - Aggregate your data using `group_by()` and `summarise()`
-  - Set the color of the bars equal to `country`
+  
+--
   
 ```r
 climate %>% 
@@ -943,9 +1097,9 @@ help(theme)
 
 ---
 
-# Exercise - 7 minutes
+# Exercise
 
-The code on the right is the solution to the troubleshooting question from the beginning of class. 
+The code on the right produces a data frame from which you'll build a plot. 
 
 .pull-left[
 - Visualize the data as a bar plot
@@ -981,7 +1135,7 @@ countdown(minutes = 7, seconds = 0, left = 0)
 
 ---
 
-# Exercise - 7 minutes
+# Exercise 
 
 ```r
 climate %>% 
@@ -1007,7 +1161,7 @@ climate %>%
 
 ---
 
-# Exercise - 7 minutes
+# Exercise 
 
 ```{r,  fig.height = 5, fig.width = 13, dpi = 300, echo = FALSE}
 climate %>% 
@@ -1183,17 +1337,17 @@ Take a moment to create a histogram with any continuous variable from either `cl
 
 ---
 
-# Exercise - 15 minutes
+# Exercise
 
 - With `climate`, create a line plot of mean Fahrenheit temperatures for cities in Brazil
   - Data should be for 1850 and onward
-  - Make line color equal to `city`
-  - Use the following formula to convert Celcius to Fahrenheit: `(temp * 9/5) + 32`
+  - Use the following formula to convert Celsius to Fahrenheit: `(temp * 9/5) + 32`
   - Create the mean temperature with `summarise` and call it `mean_temp` 
+  - Make line color equal to `city`
   - Feel free to change plot aesthetics as you see fit (add a theme; change axis, legend, or plot titles; change the color of lines for cities; etc.)
 
 ```{r, echo = FALSE}
-countdown(minutes = 15, seconds = 0)
+countdown(minutes = 15, seconds = 0, left = 0)
 ```
 
 --
@@ -1201,13 +1355,14 @@ countdown(minutes = 15, seconds = 0)
 ```r
 climate %>% 
   filter() %>% 
+  mutate() %>% 
   group_by() %>% 
   summarise()
 ```
 
 ---
 
-# Exercise - 15 minutes
+# Exercise
 
 ```r
 climate %>% 
@@ -1229,7 +1384,7 @@ climate %>%
 
 ---
 
-# Exercise - 15 minutes
+# Exercise
 
 ```{r, dpi = 300, fig.height = 4, fig.width = 6, echo = FALSE, warning=FALSE, message=FALSE}
 climate %>% 
@@ -1251,7 +1406,7 @@ climate %>%
 
 ---
 
-# Exercise - 7 minutes
+# Exercise
 
 - With `airbnb`, create a scatterplot that plots two numeric variables  
 - In addition to `x` and `y`, include another argument in `aes()`
@@ -1260,12 +1415,12 @@ climate %>%
 - Feel free to subset your data with `filter` or `sample_n()`
 
 ```{r, echo = FALSE}
-countdown(minutes = 7, seconds = 0)
+countdown(minutes = 7, seconds = 0, left = 0)
 ```
 
 ---
 
-# Exercise - 7 minutes
+# Exercise
 
 ```{r, dpi = 300, fig.height = 4, fig.width = 7, echo = FALSE, warning=FALSE, message=FALSE}
 airbnb %>% 
@@ -1282,7 +1437,7 @@ airbnb %>%
 
 ---
 
-# Exercise - 7 minutes
+# Exercise
 
 ```r
 airbnb %>% 
