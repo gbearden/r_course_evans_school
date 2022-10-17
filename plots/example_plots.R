@@ -3,6 +3,8 @@ library(tidyverse)
 # -----------
 # Import data 
 # -----------
+
+airbnb <- read_csv('https://bit.ly/3oadz2L', col_types = cols())
 climate <- read_csv('https://bit.ly/3kKErEb', col_types = cols())
 
 colombia <- climate %>% 
