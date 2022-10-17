@@ -78,7 +78,7 @@ At the end of Part 2, students should possess skills necessary to transform data
 
 Helpful materials: [data transformation cheat sheet](https://github.com/rstudio/cheatsheets/blob/main/data-transformation.pdf), [data tidying cheat sheet](https://github.com/rstudio/cheatsheets/blob/main/tidyr.pdf), [R for Stata users](https://www.matthieugomez.com/statar/manipulate-data.html)
 
-#### October 18 | Part 3
+#### October 18 | [Part 3](https://gbearden.github.io/r_course_evans_school/slides/part_3/)
 
 Part 3 will focus on data visualization. We will use `ggplot`, a visualization library that is part of the `tidyverse`, to build many plot types. The modularity of `ggplot` plotting functions will be emphasized as will the distinction between visualizing aggregated and non-aggregated data.
 
