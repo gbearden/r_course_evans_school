@@ -1,0 +1,141 @@
+---
+title: "R class - Part 2"
+output: html_notebook
+---
+
+### Load the tidyverse, airbnb data, and climate data
+
+```r
+library(tidyverse)
+airbnb <- read_csv('https://bit.ly/3oadz2L')
+climate <- read_csv('https://bit.ly/3kKErEb')
+```
+
+
+### Save data locally
+
+```{r}
+write_csv(x = airbnb, file = 'airbnb.csv')
+# save your data locally using %>% 
+# airbnb %>% write_csv(file = 'airbnb.csv')
+```
+
+### Working Directory
+
+Use`getwd()` to see where your working directory path and `setwd()` to change your working directory
+
+```{r}
+getwd()
+setwd('/Users/grahambearden/projects/r_course_evans_school/')
+```
+
+### Solution to the troubleshooting exercise
+
+```{r}
+library(tidyverse)
+airbnb <- read_csv('https://bit.ly/3oadz2L')
+reviews <- airbnb$reviews
+price <- airbnb$price
+med_reviews <- median(reviews)
+max_price <- max(price)
+med_reviews
+max_price
+```
+
+### Create a new data object called `airbnb_new`
+
+```{r}
+airbnb_new <- airbnb %>% 
+  select(host_id, reviews, rating, price, accommodates) %>% 
+  mutate(
+    cost_per_person = price / accommodates,
+    mean_price = mean(price)
+    )
+
+airbnb_new
+```
+
+### `%in%` is really useful! 
+
+You can it to search for a single value in a longer vector.
+
+```{r}
+city_1 <- 'San Francisco'
+city_2 <- 'Portland'
+california <- c('San Francisco', 'Los Angeles', 'San Diego')
+ifelse(! city_2 %in% california, 'california city', 'non-california')
+
+airbnb %>% 
+  select(host_id, address, reviews, rating, price, accommodates) %>% 
+  mutate(
+    cost_per_room = accommodates / price,
+    mean_price = mean(price),
+    seattle_address = ifelse(address == 'Seattle', 1, 0),
+    large = ifelse(accommodates > 5, 1, 0)
+    ) 
+
+```
+
+```{r}
+high_uncertainty <- climate %>% 
+  mutate(
+    high_uncertainty = ifelse(uncertainty > 1.5, 1, 0),
+    winter = ifelse(month %in% c(1, 2, 12), 1, 0)
+    ) %>%
+  select(country, city, uncertainty, high_uncertainty, month, winter)
+```
+
+### Calculate % of rentals in Seattle
+
+```{r}
+num_seattle_address <- airbnb %>% 
+  mutate(seattle_address = ifelse(address == 'Seattle', 1, 0)) %>% 
+  pull(seattle_address) %>% 
+  sum()
+
+num_obs <- nrow(airbnb)
+
+num_seattle_address / num_obs # percent of rentals in Seattle
+```
+
+### `transmute()` combines `mutate()`  and `select()`
+
+Almost always when I see `mutate()` and `select()` in my code, I replace it with `transmute()`.
+
+```{r}
+airbnb %>% 
+  transmute(
+    city = address,
+    cost = price,
+    description = name
+    )
+```
+
+```{r}
+climate %>% 
+  transmute(
+    year,
+    location = city,
+    temp = ifelse(is.na(temp), 0, temp)
+    )
+```
+
+### You can use more than one condition when subsetting your data.
+
+Use `&` and `|` for multiple conditions
+
+```{r}
+airbnb %>% 
+  filter(price > 50 & price < 100 & room_type == 'Entire home/apt') %>% 
+  select(room_id, host_id, address, room_type, rating, name, price)
+```
+
+The code above and below do the same thing.
+
+```{r}
+airbnb %>% 
+  filter(price > 50) %>% 
+  filter(price < 100) %>% 
+  filter(room_type == 'Entire home/apt') %>% 
+  select(room_id, host_id, address, room_type, rating, name, price)
+```
