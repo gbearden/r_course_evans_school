@@ -76,7 +76,7 @@ Part 2 will focus on data processing. We will use a variety of methods to manipu
 
 At the end of Part 2, students should possess skills necessary to transform datasets so that data are suitable for analysis.
 
-Helpful materials: [data transformation cheat sheet](https://github.com/rstudio/cheatsheets/blob/main/data-transformation.pdf), [data tidying cheat sheet](https://github.com/rstudio/cheatsheets/blob/main/tidyr.pdf), [R for Stata users](https://www.matthieugomez.com/statar/manipulate-data.html)
+Helpful materials: [class notes](https://github.com/gbearden/r_course_evans_school/blob/master/notes/part_1.Rmd), [data transformation cheat sheet](https://github.com/rstudio/cheatsheets/blob/main/data-transformation.pdf), [data tidying cheat sheet](https://github.com/rstudio/cheatsheets/blob/main/tidyr.pdf), [R for Stata users](https://www.matthieugomez.com/statar/manipulate-data.html)
 
 #### October 18 | [Part 3](https://gbearden.github.io/r_course_evans_school/slides/part_3/)
 
