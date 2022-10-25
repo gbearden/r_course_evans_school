@@ -2,7 +2,7 @@
 title: "Part 4 - Adding tools to your Tidyverse toolbox"
 author: "Graham Bearden"
 institute: "University of Washington"
-date: "November 4, 2021"
+date: "October 25, 2022"
 output:
   xaringan::moon_reader:
     lib_dir: libs
@@ -13,17 +13,12 @@ output:
       countIncrementalSlides: false
 ---
 
-# Preamble
+```{css, echo=FALSE}
+.small { font-size: 90% }
+.smaller { font-size: 80% }
+```
 
-- Reminder: Submit 2 “stakeholder-ready” data visualizations on November 11 or before
-- How do you clean up your RStudio environment?
-  - `rm()` 
-- When I aggregate my data, it always says: "`summarise() has grouped output by [SOME_VARIABLE]. You can override using the .groups argument`." What does that mean?
-  - grouping and ungrouping
-- You've put the package name and two colons before a function. What's that about?
-  - This is how you use functions from packages that you have not loaded with `library()`.
-  - For example, `tidyverse` includes the packages that Hadley Wickham and the RStudio team to be "essential" to tidy data processing and analysis. `scales` and `ggthemes` are excluded, but I like to use functions from the packages in my data visualization. 
-  - Hence, `ggthemes::scale_fill_few()` and `scales::percent()`
+# Housekeeping
 
 ```{r setup, include=FALSE}
 library(tidyverse)
@@ -37,31 +32,57 @@ options(scipen=999)
 
 opts_chunk$set(warning=FALSE, message=FALSE)
 
+extra_css <- list(
+  ".small" = list("font-size" = "90%"),
+  ".smaller" = list("font-size" = "80%")
+  )
+
+xaringanthemer::style_extra_css(css = extra_css, outfile = "custom.css")
+
 airbnb <- read_csv('https://bit.ly/3oadz2L', col_types = cols())
 climate <- read_csv('https://bit.ly/3kKErEb', col_types = cols())
 checkin <- read_csv('https://bit.ly/3nQHlI0', col_types = cols())
 ```
 
+- Reminder: Submit 2 “stakeholder-ready” data visualizations and your code on November 4 or before  
+  - See examples [here](https://github.com/gbearden/r_course_evans_school/blob/master/plots/) on Github  
+- What does "Stakeholder-ready" mean?  
+  - Write a plot title
+  - Label the axes 
+  - Use a theme
+  - Do not include `NA`s in the plot (geom or legend)  
+- The error message <span style="color:red">`could not find function "%>%"`</span> means you need to run `library(tidyverse)`  
+- How do you clean up your RStudio environment?  
+  - `rm()` 
+
 ---
 
-# Preamble
+# Housekeeping
 
-What does "Stakeholder-ready" mean?
-- Write a plot title
-- Label the axes 
-- Use a theme
-- Do not include `NA`s in the plot (geom or legend)  
-
-Other things to do when you submit your assignment
-- Use `ggsave()` to export plots
-- Submit your code along with both plots
+- There are lots of amazing analytics and data science jobs...and the best ones are hard to get. Spend 30 minutes browsing people in the Evans School group on LinkedIn, find/connect with alumni who have jobs or work at places that interest you, and start networking  
+- Datasets  
+  - [Kaggle](https://www.kaggle.com/datasets)
+  - [Data.gov](https://www.data.gov/)
+  - [Washington Post](https://github.com/orgs/washingtonpost/repositories?language=&q=data&sort=&type=)
+  - [fivethirtyeight](https://data.fivethirtyeight.com/)  
+  - [Awesome Public Datasets on Github](https://github.com/awesomedata/awesome-public-datasets)
+  - [BuzzFeed](https://github.com/BuzzFeedNews)  
+  - [Google Dataset Search](https://datasetsearch.research.google.com/)
+  - BONUS dataset: [Great British Bakeoff](https://github.com/apreshill/bakeoff)  
+  
+Data for the class
+```r
+airbnb <- read_csv('https://bit.ly/3oadz2L', col_types = cols())
+climate <- read_csv('https://bit.ly/3kKErEb', col_types = cols())
+```
 
 ---
 
 # What we learned in the previous class
 
 - Overview of ggplot2  
-- Building bar, line, scatter, and histogram plots  
+- How to aggregate data  
+- Building bar plots
   - Aggregated data
   - Disaggregated data
 - Customizing plots
@@ -70,8 +91,9 @@ Other things to do when you submit your assignment
 
 # What we'll learn today  
 
-- More ways to use logical conditions for filtering and changing variable values
+- Build line and scatter plots  
 - How to "pivot" data, turning columns into rows and rows into columns
+- More ways to use logical conditions for filtering and changing variable values
 - How to merge two datasets
 - Creating panels of plots with facets
 
@@ -89,26 +111,25 @@ Other things to do when you submit your assignment
 
 # Troubleshooting exercise 
 
-This code contains 4 mistakes. The code is supposed to create a plot of rentals by latitude and longitude, excluding rentals without ratings. The colors of points should be from the high charts color palette (`hc`). *HINT: It's possible to successfully produce the plot after correcting 3 mistakes, but the colors of the points will be from the default colors palette, not from the high charts palette. Why?*  
+.smaller[This code contains 3 mistakes. The code is supposed to create a plot of rentals by city and room type, excluding rentals without ratings with bar colors from the `calc` palette. It's possible to successfully produce the plot after correcting 2 mistakes, but the inside color of the bars will be from the default colors palette, not from the `calc` palette. Make sure you bars are colored using the palette function.]  
 
 ```r
-library(tidyverse)
-library(ggthemes)
-        
-airbnb <- read_csv('https://bit.ly/3oadz2L')
-
 airbnb %>% 
-  filter(! is.na(rating) %>% 
-  ggplot(aes(x = longitude, y = latitude, color = adress)) + 
-  geom_point(alpha = .6) + 
-  scale_fill_hc() + 
-  theme_bw() 
+  filter(! is.na(rating)) %>% 
+  select(room_type, address, price) %>% 
+  group_by(room, address) %>% 
+  summarise(price = mean(price)) %>% 
+  ggplot(aes(x = address, y = price, fill = room_type)) + 
+  geom_bar(stat = 'identity', position = 'dodge', alpha = .8) + 
+  scale_y_continuous(label = dollar) + 
   labs(
-    x = 'Longitude'
-    , y = 'Latitude'
-    , color = 'City'
-    , title = 'Coordinates of Seattle-area Airbnbs'
-  )
+    x = NULL,
+    fill = NULL,
+    y = 'Cost ($)'
+    title = 'Average Cost by City and Room Type'
+  ) + 
+  theme_minimal() + 
+  scale_color_calc()
 ```
 
 ```{r, echo = FALSE}
@@ -119,7 +140,7 @@ countdown(minutes = 5, seconds = 0)
 
 # Troubleshooting exercise 
 
-This code contains 4 mistakes. The code is supposed to create a plot of rentals by latitude and longitude, excluding rentals without ratings. The colors of points should be from the high charts color palette (`hc`). *HINT: It's possible to successfully produce the plot after correcting 3 mistakes, but the colors of the points will be from the default colors palette, not from the high charts palette. Why?*  
+.smaller[This code contains 3 mistakes. The code is supposed to create a plot of rentals by city and room type, excluding rentals without ratings with bar colors from the `calc` palette. It's possible to successfully produce the plot after correcting 2 mistakes, but the inside color of the bars will be from the default colors palette, not from the `calc` palette. Make sure you bars are colored using the palette function.]  
 
 ![](figures/troubleshooting_solution.png)
 
@@ -130,18 +151,267 @@ This code contains 4 mistakes. The code is supposed to create a plot of rentals 
 ```{r fig.show='hide'}
 airbnb %>% 
   filter(! is.na(rating)) %>% 
+  select(room_type, address, price) %>% 
+  group_by(room_type, address) %>% 
+  summarise(price = mean(price)) %>% 
+  ggplot(aes(x = address, y = price, fill = room_type)) + 
+  geom_bar(stat = 'identity', position = 'dodge', alpha = .8) + 
+  scale_y_continuous(label = dollar) + 
+  labs(
+    x = NULL,
+    fill = NULL,
+    y = 'Cost ($)',
+    title = 'Average Cost by City and Room Type'
+  ) + 
+  theme_minimal() + 
+  scale_fill_calc()
+```
+
+---
+class: inverse, middle, center
+
+# Scatterplots and line plots
+
+---
+
+# <img src="figures/line.png" style="height: 70px"/>
+
+.pull-left[
+Line plot: 1 continuous variable + ordinal variable   
+
+- Line plots are suited well to [dates](https://gbearden.github.io/r_course_evans_school/slides/part_2/#71), but may work well other ordered variables
+- `color` and `linetype` are other arguments you can use when building a line plot
+
+```r
+climate %>% 
+  group_by(year) %>%
+  summarise(uncertainty = mean(uncertainty, na.rm = TRUE)) %>% 
+  ggplot(aes(x = year, y = uncertainty)) +
+  geom_line()
+```
+]
+
+.pull-right[
+```{r, dpi = 300, fig.height = 3, fig.width = 5, echo = FALSE, warning=FALSE, message=FALSE}
+climate %>% 
+  group_by(year) %>%
+  summarise(uncertainty = mean(uncertainty, na.rm = TRUE)) %>% 
+  ggplot(aes(x = year, y = uncertainty)) +
+  geom_line()
+```
+]
+
+---
+
+# <img src="figures/line.png" style="height: 70px"/>
+
+.pull-left[
+Line plot: 1 continuous variable + ordinal variable   
+
+- Line plots are suited well to [dates](https://gbearden.github.io/r_course_evans_school/slides/part_2/#71), but may work well other ordered variables
+- `color` and `linetype` are other arguments you can use when building a line plot
+
+```r
+climate %>% 
+  group_by(year) %>%
+  summarise(uncertainty = mean(uncertainty, na.rm = TRUE)) %>% 
+  ggplot(aes(x = year, y = uncertainty)) +
+  geom_line()
+```
+]
+
+.pull-right[
+How would you make the line red? 
+
+```{r, dpi = 300, fig.height = 3, fig.width = 5, echo = FALSE, warning=FALSE, message=FALSE}
+climate %>% 
+  group_by(year) %>%
+  summarise(uncertainty = mean(uncertainty, na.rm = TRUE)) %>% 
+  ggplot(aes(x = year, y = uncertainty)) +
+  geom_line()
+```
+]
+
+---
+
+# <img src="figures/scatter.png" style="height: 70px"/>
+
+
+.pull-left[
+Scatterplots: 2 continuous variables 
+
+- When there are a lot of overlapping data, `alpha` is useful
+- `color`, `shape`, `size` are other arguments you can use when building a scatter plot
+
+```r
+climate %>% 
+  ggplot(
+    aes(
+      x = temp
+      , y = uncertainty
+      )
+    ) + 
+  geom_point(alpha = .1)
+```
+]
+
+.pull-right[
+```{r, dpi = 300, fig.height = 3, fig.width = 5, echo = FALSE, warning=FALSE, message=FALSE}
+climate %>% 
+  ggplot(
+    aes(
+      x = temp
+      , y = uncertainty
+      )
+    ) + 
+  geom_point(alpha = .1)
+```
+]
+
+---
+
+# <img src="figures/scatter.png" style="height: 70px"/>
+
+
+.pull-left[
+Scatterplots: 2 continuous variables 
+
+- When there are a lot of overlapping data, `alpha` is useful
+- `color`, `shape`, `size` are other arguments you can use when building a scatter plot
+
+```r
+climate %>% 
+  ggplot(
+    aes(
+      x = temp
+      , y = uncertainty
+      )
+    ) + 
+  geom_point(alpha = .1)
+```
+]
+
+.pull-right[
+Take a moment to create a scatterplot with `year` and `uncertainty` from `climate`
+]
+
+---
+
+# Exercise
+
+- With `airbnb`, create a scatterplot that plots two numeric variables  
+- In addition to `x` and `y`, include another argument in `aes()`
+   - For example, `size`, `shape`, `color` or `alpha`  
+- Use `group_by()` and `summarise()` if you would like  
+- Feel free to subset your data with `filter` or `sample_n()`
+
+```{r, echo = FALSE}
+countdown(minutes = 7, seconds = 0, left = 0)
+```
+
+---
+
+# Exercise
+
+```{r, dpi = 300, fig.height = 4, fig.width = 7, echo = FALSE, warning=FALSE, message=FALSE}
+airbnb %>% 
   ggplot(aes(x = longitude, y = latitude, color = address)) + 
   geom_point(alpha = .6) + 
-  scale_color_hc() + 
-  theme_bw() +
+  theme_bw() + 
   labs(
     x = 'Longitude'
     , y = 'Latitude'
     , color = 'City'
     , title = 'Coordinates of Seattle-area Airbnbs'
   )
-  
-ggsave('lat_long.jpeg', device = 'jpeg', width = 9.87, height = 8.32, dpi = 300) #<<
+```
+
+---
+
+# Exercise
+
+```r
+airbnb %>% 
+  ggplot(aes(x = longitude, y = latitude, color = address)) + 
+  geom_point(alpha = .6) + 
+  theme_bw() + 
+  labs(
+    x = 'Longitude'
+    , y = 'Latitude'
+    , color = 'City'
+    , title = 'Coordinates of Seattle-area Airbnbs'
+  )
+```
+
+---
+
+# Exercise
+
+- With `climate`, create a line plot of mean Fahrenheit temperatures for cities in Brazil
+  - Data should be for 1850 and onward ([help](https://gbearden.github.io/r_course_evans_school/slides/part_2/#44))  
+  - Use the following formula to convert Celsius to Fahrenheit: `(temp * 9/5) + 32` ([help](https://gbearden.github.io/r_course_evans_school/slides/part_2/#28))  
+  - Create the mean temperature with `summarise` and call it `mean_temp` ([help](https://gbearden.github.io/r_course_evans_school/slides/part_3/#33))  
+  - Make line color equal to `city`
+  - Feel free to change plot aesthetics as you see fit (add a theme; change axis, legend, or plot titles; change the color of lines for cities; etc.)  
+  - *Click forward once for a hint on the functions required to prepare the data*  
+  - *Click forward twice to see the plot you'll create*
+
+```{r, echo = FALSE}
+countdown(minutes = 15, seconds = 0, left = 0)
+```
+
+--
+
+```r
+climate %>% 
+  filter() %>% 
+  mutate() %>% 
+  group_by() %>% 
+  summarise()
+```
+
+---
+
+# Exercise
+
+```{r, dpi = 300, fig.height = 4, fig.width = 6, echo = FALSE, warning=FALSE, message=FALSE}
+climate %>% 
+  filter(country == 'Brazil' & year >= 1850) %>% 
+  mutate(temp = (temp * 9/5) + 32) %>% 
+  group_by(year, city) %>% 
+  summarise(mean_temp = mean(temp, na.rm = TRUE)) %>% 
+  ggplot(aes(x = year, y = mean_temp, color = city)) + 
+  geom_line(size = 1) + 
+  theme_bw() + 
+  scale_color_wsj() + 
+  labs(
+    x = 'Year'
+    , y = 'Mean Temperature'
+    , title = 'Temperatures in 6 Brazilian Cities, 1850 - present'
+    , color = NULL
+  )
+```
+
+---
+
+# Exercise
+
+```r
+climate %>% 
+  filter(country == 'Brazil' & year >= 1850) %>% 
+  mutate(temp = (temp * 9/5) + 32) %>% 
+  group_by(year, city) %>% 
+  summarise(mean_temp = mean(temp, na.rm = TRUE)) %>% 
+  ggplot(aes(x = year, y = mean_temp, color = city)) + 
+  geom_line(size = 1) + 
+  theme_bw() + 
+  scale_color_wsj() + 
+  labs(
+    x = 'Year'
+    , y = 'Mean Temperature'
+    , title = 'Temperatures in 6 Brazilian Cities, 1850 - present'
+    , color = NULL
+  )
 ```
 
 ---
@@ -216,7 +486,6 @@ airbnb %>%
 - All RHS values must be the same type (or class)
   - `NA_character_`, `NA_integer_`, `NA_real_`, `NA`
 
-
 **This will not work**
 ```r
 airbnb %>% 
@@ -256,7 +525,7 @@ airbnb %>%
 
 ---
 
-# More on writing logical conditions
+# Exercise
 
 .pull-left[
 With the `airbnb` data, create a bar plot that shows counts of three different home size categories. 
@@ -265,7 +534,7 @@ With the `airbnb` data, create a bar plot that shows counts of three different h
 - Only show `"Entire home/apt"` rentals
 - HINT: you can build this plot with aggregated or disaggregated data
   - Disaggregated is easier
-- Update the plot aesthetic, plot title, axis titles, etc. if you'd like
+- Update the bar [colors](https://coolors.co/generate), plot title, axis titles, etc. if you'd like
 ]
 
 .pull-right[
@@ -278,7 +547,7 @@ airbnb %>%
   ) %>% 
   filter(room_type == 'Entire home/apt') %>% 
   ggplot(aes(x = home_size)) +
-  geom_bar(fill = 'orange') + 
+  geom_bar(fill = '#7C98B3') + 
   scale_y_continuous(labels = comma) + 
   theme_hc() + 
   labs(x = 'Home Size', y = 'Number of Homes')
@@ -291,11 +560,7 @@ countdown(minutes = 10, seconds = 0)
 
 ---
 
-# More on writing logical conditions
-
-**Exercise solution**
-
---
+# Exercise
 
 ```r
 airbnb %>% 
@@ -306,7 +571,7 @@ airbnb %>%
     ) %>% 
   filter(room_type == 'Entire home/apt') %>% 
   ggplot(aes(x = home_size)) +
-  geom_bar(fill = 'orange') + 
+  geom_bar(fill = '#7C98B3') + 
   scale_y_continuous(labels = comma) + 
   theme_hc() + 
   labs(x = 'Home Size', y = 'Number of Homes')
@@ -329,7 +594,8 @@ airbnb %>%
 ```{r, echo = TRUE, collapse=TRUE}
 california <- c('San Francisco', 'Los Angeles', 'San Diego')
 
-ifelse(str_detect(california, 'San'), 'yes', 'no')
+ifelse(str_detect(california, 'San'), TRUE, NA)
+case_when(str_detect(california, 'San') ~ TRUE)
 ```
 
 ---
@@ -400,7 +666,7 @@ airbnb %>%
 
 ---
 
-# More on writing logical conditions
+# Exercise
 
 .pull-left[
 Build on your code you from the previous exercise. Create a new variable that you can use to color bar segments, making your bar plot a stacked bar plot. 
@@ -438,7 +704,7 @@ airbnb %>%
   ) %>% 
   filter(room_type == 'Entire home/apt') %>% 
   ggplot(aes(x = home_size)) +
-  geom_bar(fill = 'orange') + 
+  geom_bar(fill = '#7C98B3') + 
   scale_y_continuous(labels = comma) + 
   theme_hc() + 
   labs(x = 'Home Size', y = 'Number of Homes', title = 'Old Plot')
@@ -446,16 +712,12 @@ airbnb %>%
 ]
 
 ```{r, echo = FALSE}
-countdown(minutes = 7, seconds = 0)
+countdown(minutes = 10, seconds = 0)
 ```
 
 ---
 
-# More on writing logical conditions
-
-**Exercise solution**
-
---
+# Exercise
 
 ```r
 airbnb %>% 
@@ -489,10 +751,10 @@ class: inverse, middle, center
 
 # Pivoting data
 
-- `pivot_wider()` and `pivot_longer()` are the functions we use to reshape data
+- `pivot_longer()` and `pivot_wider()` are the functions we use to reshape data
 - Reshape means to turn...
-  - Rows into columns (with `pivot_wider()`), so the new dataset is wider and has fewer rows than the old dataset
   - Columns into rows (with `pivot_longer()`), so the new dataset is narrower, has more rows, and fewer columns than the old dataset
+  - Rows into columns (with `pivot_wider()`), so the new dataset is wider and has fewer rows than the old dataset
   
 <img src="http://garrettgman.github.io/images/tidy-9.png" style="height: 350px"/>
 
@@ -500,12 +762,35 @@ class: inverse, middle, center
 
 # Pivoting data 
 
-- `pivot_wider()` and `pivot_longer()` are the functions we use to reshape data
+- `pivot_longer()` and `pivot_wider()` are the functions we use to reshape data
 - Reshape means to turn...
-  - Rows into columns (with `pivot_wider()`), so the new dataset is wider and has fewer rows than the old dataset
   - Columns into rows (with `pivot_longer()`), so the new dataset is narrower, has more rows, and fewer columns than the old dataset
+  - Rows into columns (with `pivot_wider()`), so the new dataset is wider and has fewer rows than the old dataset
   
 <img src="http://garrettgman.github.io/images/tidy-8.png" style="height: 400px"/>
+
+---
+
+# Pivoting data 
+`pivot_longer()`
+- Turn columns into rows
+- Often data are **easier to analyze** when stored in columns
+- 4 arguments
+  - `data`, Your tibble 
+  - `cols`, which columns you want turn into rows
+  - `names_to`, name of column for column names
+  - `values_to`, name of column for values in columns
+  
+```r
+airbnb %>% 
+  select(room_id, host_id, room_type, address, reviews, rating) %>% 
+  pivot_longer(
+    cols = c(reviews, rating)
+    , names_to = 'rental_characteristics'
+    , values_to = 'values'
+    )
+  
+```
 
 ---
 
@@ -536,29 +821,6 @@ airbnb %>%
   summarise(number_of_rentals = n(), .groups = 'drop') %>% 
   pivot_wider(names_from = room_type, values_from = number_of_rentals) %>%
   mutate(private_or_shared = `Private room` + `Shared room`)
-```
-
----
-
-# Pivoting data 
-`pivot_longer()`
-- Turn columns into rows
-- Often data are **easier to analyze** when stored in columns
-- 4 arguments
-  - `data`, Your tibble 
-  - `cols`, which columns you want turn into rows
-  - `names_to`, name of column for column names
-  - `values_to`, name of column for values in columns
-  
-```r
-airbnb %>% 
-  select(room_id, host_id, room_type, address, reviews, rating) %>% 
-  pivot_longer(
-    cols = c(reviews, rating)
-    , names_to = 'rental_characteristics'
-    , values_to = 'values'
-    )
-  
 ```
 
 ---
@@ -757,7 +1019,7 @@ airbnb %>%
 
 ---
 
-# Merging tibbles
+# Exercise
 
 Create a line plot that shows number of check-ins over time. There should be a line for each `address` value.
 - Merge `airbnb` and `checkin`
@@ -785,11 +1047,7 @@ airbnb %>%
 
 ---
 
-# Merging tibbles
-
-**Exercise solution**
-
---
+# Exercise
 
 ```r
 airbnb %>% 
@@ -939,7 +1197,7 @@ airbnb %>%
 
 ---
 
-# Using panels in data visualization
+# Exercise
 
 With `airbnb`, create a bar plot that shows the average `price` of rentals by `address`, `room_type`, and a variable you create that flags key terms used to describe a rental in `name`.
 - Call the variable you create `desc`. It should include the following values: `"Downtown"`, `"Spacious"`, `"Private"`, `"Peaceful"`, `"Beautiful"` when `name` contains them.
@@ -958,7 +1216,7 @@ countdown(minutes = 12, seconds = 0)
 
 ---
 
-# Using panels in data visualization
+# Exercise
 
 ```{r, dpi = 300, echo = FALSE, out.width = "70%", warning=FALSE, message=FALSE, fig.align='center'}
 airbnb %>%
@@ -973,6 +1231,7 @@ airbnb %>%
   summarise(mean_price = mean(price), .groups = 'drop') %>% 
   ggplot(aes(x = room_type, y = mean_price, fill = desc)) + 
   geom_bar(stat = 'identity', position = 'dodge') + 
+  scale_y_continuous(labels = dollar) + 
   facet_wrap(. ~ address) + 
   theme_bw() + 
   scale_fill_colorblind() + 
@@ -986,32 +1245,30 @@ airbnb %>%
 
 ---
 
-# Using panels in data visualization
-
-**Exercise solution**
+# Exercise
 
 --
 
 ```r
 airbnb %>%
-  mutate(desc = case_when(str_detect(tolower(name), 'downtown') ~ 'Downtown'
-                          , str_detect(tolower(name), 'spacious') ~ 'Spacious'
-                          , str_detect(tolower(name), 'private') ~ 'Private'
-                          , str_detect(tolower(name), 'peaceful') ~ 'Peaceful'
-                          , str_detect(tolower(name), 'beautiful') ~ 'Beautiful')
-         ) %>% 
+  mutate(desc = case_when(str_detect(tolower(name), 'downtown')    ~ 'Downtown'
+                          , str_detect(tolower(name), 'spacious')  ~ 'Spacious'
+                          , str_detect(tolower(name), 'private')   ~ 'Private'
+                          , str_detect(tolower(name), 'peaceful')  ~ 'Peaceful'
+                          , str_detect(tolower(name), 'beautiful') ~ 'Beautiful')) %>% 
   filter(! is.na(desc) & room_type != 'Shared room') %>% 
   group_by(address, room_type, desc) %>% 
   summarise(mean_price = mean(price), .groups = 'drop') %>% 
   ggplot(aes(x = room_type, y = mean_price, fill = desc)) + 
-  geom_bar(stat = 'identity', position = 'dodge') + 
+  geom_bar(stat = 'identity', position = position_dodge(preserve = 'single')) + 
   facet_wrap(. ~ address) + 
   theme_bw() + 
+  scale_y_continuous(labels = dollar) + 
   scale_fill_colorblind() + 
   labs(
-    x = 'Room Type'
-    , y = 'Average Price'
-    , fill = element_blank()
+    x       = 'Room Type'
+    , y     = 'Average Price'
+    , fill  = element_blank()
     , title = 'Average price by city and rental characteristic'
   )
 ```
