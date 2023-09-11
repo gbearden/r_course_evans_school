@@ -2,7 +2,7 @@
 title: "Introduction to Data Processing and Visualization Design in R"
 date: "gbearden@uw.edu"
 author: "Graham Bearden"
-subtitle: "Autumn 2022"
+subtitle: "Autumn 2023"
 output: html_document
 ---
 
@@ -36,7 +36,7 @@ h4.date {
 ## Schedule Overview
 
 **Time: 5:30-8:20pm**  
-**Class Dates: 10/4, 10/11, 10/18, 10/25**  
+**Class Dates: 10/3, 10/10, 10/17, 10/24**  
 **Location: [PAR 220](https://www.washington.edu/maps/#!/par)** 
 
 ## Course Overview
@@ -45,12 +45,12 @@ This is an introductory course designed for new R programmers. You will learn th
 
 Course materials are prepared in order to offer a survey of selected R functionality. Students interested in R programming that is more sophisticated and/or specialized than what is taught in the course are encouraged to seek additional opportunities to apply their R programming skills.
 
-This is an applied course that focuses on successful execution of code. While students should consider theory, style, and efficiency of R programming, getting the job done right will be the first priority. 
+This is an applied course that focuses on successful execution of code. While students should consider theory, style, and efficiency of R programming, getting the job done right will be the first priority. Often ChatGPT is a helpful complementary tool that aids in writing R code, so we'll use it on occasion in the course. 
 
 ## Course Expectations
 
-- Attend four classes. Class dates are 10/4, 10/11, 10/18, & 10/25. A full class is 2 hours and 50 minutes, breaks included.
-- Submit 2 "stakeholder-ready" data visualizations by November 4 or before (See [example plots](https://github.com/gbearden/r_course_evans_school/blob/master/plots/))
+- Attend four classes. Class dates are 10/3, 10/10, 10/17, 10/24. A full class is 2 hours and 50 minutes, breaks included.
+- Submit 2 "stakeholder-ready" data visualizations by October 27 or before (See [example plots](https://github.com/gbearden/r_course_evans_school/blob/master/plots/))
  
 ## Accomodations
 
@@ -60,17 +60,17 @@ Please let me know if you need any specific accommodations related to religious 
 
 ## Schedule
 
-#### October 4 | [Part 1](https://gbearden.github.io/r_course_evans_school/slides/part_1/)
+#### October 3 | Part 1
 
 Part 1 will focus on the basics of R. Students will learn about key R concepts like data types and the anatomy of a function, how to read (import) and write (export) data, and the essentials of writing successful code.
 
-We will also begin to explore data summary techniques and troubleshooting tactics that students can use to solve coding errors.
+We will also begin to explore data summary techniques and troubleshooting tactics that students can use to solve coding errors. 
 
 At the end of Part 1, students should be familiar with the R interface, know how to perform basic operations, calculate summary statistics, and walk through a series of steps to troubleshoot code.
 
 Helpful materials: [class notes](https://github.com/gbearden/r_course_evans_school/blob/master/notes/part_1.Rmd), [example .R file](https://github.com/gbearden/r_course_evans_school/blob/master/notes/example_script.R), [base R cheat sheet](https://iqss.github.io/dss-workshops/R/Rintro/base-r-cheat-sheet.pdf)
 
-#### October 11 | [Part 2](https://gbearden.github.io/r_course_evans_school/slides/part_2/)
+#### October 10 | Part 2
 
 Part 2 will focus on data processing. We will use a variety of methods to manipulate data and prepare it for analysis. The `tidyverse` will be emphasized. Students will learn how to manipulate data at various levels, including at the dataset-level, the variable-level, and the value-level.
 
@@ -78,7 +78,7 @@ At the end of Part 2, students should possess skills necessary to transform data
 
 Helpful materials: [class notes](https://github.com/gbearden/r_course_evans_school/blob/master/notes/part_1.Rmd), [data transformation cheat sheet](https://github.com/rstudio/cheatsheets/blob/main/data-transformation.pdf), [data tidying cheat sheet](https://github.com/rstudio/cheatsheets/blob/main/tidyr.pdf), [R for Stata users](https://www.matthieugomez.com/statar/manipulate-data.html)
 
-#### October 18 | [Part 3](https://gbearden.github.io/r_course_evans_school/slides/part_3/)
+#### October 17 | Part 3
 
 Part 3 will focus on data visualization. We will use `ggplot`, a visualization library that is part of the `tidyverse`, to build many plot types. The modularity of `ggplot` plotting functions will be emphasized as will the distinction between visualizing aggregated and non-aggregated data.
 
@@ -86,7 +86,7 @@ At the end of Part 3, students should be able to produce a standard set of plots
 
 Helpful materials: [data visualization cheat sheet](https://github.com/rstudio/cheatsheets/blob/master/data-visualization-2.1.pdf), [Coolors](https://coolors.co/)
 
-#### October 25 | [Part 4](https://gbearden.github.io/r_course_evans_school/slides/part_4/)
+#### October 24 | Part 4
 
 Part 4 will build on Parts 2 and 3, introducing additional data visualization and data processing skills used to better work with strings and reshape data. 
 
@@ -105,31 +105,34 @@ We will use the datasets below in our workshop. ([Here](https://github.com/gbear
 
 If you have not downloaded R and RStudio already, use the links below to set up your machines.
 
-* Install R [on a Mac with an Intel chip](https://cran.r-project.org/bin/macosx/base/R-4.2.1.pkg), [on a Mac with an M1 chip](https://cran.r-project.org/bin/macosx/big-sur-arm64/base/R-4.2.1-arm64.pkg), or [on a PC](https://cran.r-project.org/bin/windows/base/R-4.2.1-win.exe)
-* Install RStudio [on a Mac](https://download1.rstudio.org/desktop/macos/RStudio-2022.07.1-554.dmg) or [on a PC](https://download1.rstudio.org/desktop/windows/RStudio-2022.07.1-554.exe)
+* Install R [on a Mac with an Intel chip](https://cran.rstudio.com/bin/macosx/big-sur-x86_64/base/R-4.3.1-x86_64.pkg), [on a Mac with an M1/M2 chip](https://cran.rstudio.com/bin/macosx/big-sur-arm64/base/R-4.3.1-arm64.pkg), or [on a PC](https://cran.rstudio.com/bin/windows/base/R-4.3.1-win.exe)
+* Install RStudio [on a Mac](https://download1.rstudio.org/electron/macos/RStudio-2023.06.2-561.dmg) or [on a PC](https://download1.rstudio.org/electron/windows/RStudio-2023.06.2-561.exe)
+
+## ChatGPT
+
+Click [here](https://chat.openai.com/auth/login) to sign up or log in to ChatGPT. We will use ChatGPT to troubleshoot, document, and write R code. Click [here](https://openai.com/blog/chatgpt) to learn about ChatGPT if you're unfamiliar with it.
 
 ## Reference Materials
 
 R community members produce valuable content to help you learn how to program in R. Here are some of my favorite resources that you might find useful as a new R programmer:
 
-* [RStudio](https://www.rstudio.com/). The R IDE (integrated development environment) we will use in the course.
+* [RStudio](https://posit.co/). The R IDE (integrated development environment) we will use in the course.
 * [tidyverse](http://tidyverse.org/). The launch page for tidyverse.
-* [Cheat sheets](https://www.rstudio.com/resources/cheatsheets/)
+* [Cheat sheets](https://posit.co/resources/cheatsheets/) (often these are available in other languages in case that's useful)
     + [Base R](https://iqss.github.io/dss-workshops/R/Rintro/base-r-cheat-sheet.pdf). This is useful to get started.
-    + [Data transformation](https://github.com/rstudio/cheatsheets/blob/main/data-transformation.pdf). I use this all the time when working with dplyr.
-    + [Data tidying](https://github.com/rstudio/cheatsheets/blob/main/tidyr.pdf). If the dplyr cheat sheet were Batman, the tidyr cheat sheet is Robin.
-    + [Data visualization](https://github.com/rstudio/cheatsheets/blob/master/data-visualization-2.1.pdf). A great quick-reference for the ggplot library.
-    + [R Markdown](https://www.rstudio.com/wp-content/uploads/2016/03/rmarkdown-cheatsheet-2.0.pdf). A useful reference for using R Markdown.
-    + [Lubridate](https://github.com/rstudio/cheatsheets/blob/main/lubridate.pdf). Dates in R are a pain in the butt. This cheat sheet and the lubridate library will make your life easier.  
+    + [Data transformation](https://rstudio.github.io/cheatsheets/data-transformation.pdf). I use this all the time when working with dplyr.
+    + [Data tidying](https://rstudio.github.io/cheatsheets/tidyr.pdf). If the dplyr cheat sheet were Batman, the tidyr cheat sheet is Robin.
+    + [Data visualization](https://rstudio.github.io/cheatsheets/data-visualization.pdf). A great quick-reference for the ggplot library.
+    + [R Markdown](https://rstudio.github.io/cheatsheets/rmarkdown.pdf). A useful reference for using R Markdown.
+    + [Lubridate](https://rstudio.github.io/cheatsheets/lubridate.pdf). Dates in R are a pain in the butt. This cheat sheet and the lubridate library will make your life easier.  
 * [Karl Broman on data organization](http://kbroman.org/dataorg/). Prepare your data according to Karl's recommendations and R will become a lot easier. (The tip is relevant to all other KB recommendations.)
 * [Jose Manuel Magallanes on data collection and organization](https://www.amazon.com/Introduction-Science-Social-Policy-Research/dp/1107540259/ref=sr_1_1?ie=UTF8&qid=1504135785&sr=8-1&keywords=jose+manuel+magallanes). Jose teaches the Computational Thinking for Governance Analytics course at the Evans School. He published this book a few years ago.
 * [R Bloggers](https://www.r-bloggers.com/). All things R. Folks from various industries - many of whom are super smart with impressive R experience - share tips, tricks, and anecdotes here.
 * [stackoverflow](https://stackoverflow.com/questions/tagged/r). This is where you come when you get stuck. Google the problem you are having and you'll see a possible solution on the stackoverflow site. Guaranteed.
 * [Google R Style Guide](https://google.github.io/styleguide/Rguide.xml). Your code can get really messy really quickly. This guide can help.
 * [Coolors](https://coolors.co/). I love this site. It is great inspiration when building plots.
-* [Top 50 ggplot2 Visualizations](http://r-statistics.co/Top50-Ggplot2-Visualizations-MasterList-R-Code.html). Check this out when you want to produce new plot types. It is full of good ideas.
 * [Github](https://github.com/). If you're serious about any sort of programming, you should create a Github account.
 * [RStudio Cloud setup](https://github.com/gbearden/r_course_evans_school/blob/master/rcloud_setup.md)  
  
 ---
-Here are syllabi from previous quarters: [Autumn 2021](https://github.com/gbearden/r_course_evans_school/blob/master/archive/syllabus_a21.md), [Autumn 2020](https://github.com/gbearden/r_course_evans_school/blob/master/archive/syllabus_a20.md), [Autumn 2019](https://github.com/gbearden/r_course_evans_school/blob/master/archive/syllabus_a19.md), [Autumn 2018](https://github.com/gbearden/r_course_evans_school/blob/master/archive/syllabus_a18.md), [Winter 2018](https://github.com/gbearden/r_course_evans_school/blob/master/archive/syllabus_w18.md)
+Here are syllabi from previous quarters: [Autumn 2022](https://github.com/gbearden/r_course_evans_school/blob/master/archive/syllabus_a22.md), [Autumn 2021](https://github.com/gbearden/r_course_evans_school/blob/master/archive/syllabus_a21.md), [Autumn 2020](https://github.com/gbearden/r_course_evans_school/blob/master/archive/syllabus_a20.md), [Autumn 2019](https://github.com/gbearden/r_course_evans_school/blob/master/archive/syllabus_a19.md), [Autumn 2018](https://github.com/gbearden/r_course_evans_school/blob/master/archive/syllabus_a18.md), [Winter 2018](https://github.com/gbearden/r_course_evans_school/blob/master/archive/syllabus_w18.md)
