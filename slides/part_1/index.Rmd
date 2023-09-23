@@ -2,7 +2,7 @@
 title: "Part 1 - R Basics"
 author: "Graham Bearden"
 institute: "University of Washington"
-date: "October 4, 2022"
+date: "October 3, 2023"
 output:
   xaringan::moon_reader:
     lib_dir: libs
@@ -30,40 +30,30 @@ climate <- read_csv('https://bit.ly/3kKErEb', col_types = cols())
 
 ---
 
-# Evans School Community Commitments
-
-- Acknowledge, reflect on, and examine individual and systemic power, injustice,
-privilege, and biases  
-- Work and collaborate to expand our knowledge using empirical evidence, lived
-experience, storytelling, and other ways of knowing  
-- Embrace discomfort, non-closure, and disagreement  
-- Be accountable for the impact of our words and actions  
-- Give and receive feedback in a way that encourages listening, learning, and personal
-growth  
-
----
-
 # Set Up
 
 - Set up your machine to run R
-  - Install R [on a Mac with an Intel chip](https://cran.r-project.org/bin/macosx/base/R-4.2.1.pkg), [on a Mac with an M1 chip](https://cran.r-project.org/bin/macosx/big-sur-arm64/base/R-4.2.1-arm64.pkg), or [on a PC](https://cran.r-project.org/bin/windows/base/R-4.2.1-win.exe)
-  - Install RStudio [on a Mac](https://download1.rstudio.org/desktop/macos/RStudio-2022.07.1-554.dmg) or [on a PC](https://download1.rstudio.org/desktop/windows/RStudio-2022.07.1-554.exe)
+  - Install R [on a Mac with an Intel chip](https://cran.rstudio.com/bin/macosx/big-sur-x86_64/base/R-4.3.1-x86_64.pkg), [on a Mac with an M1/M2 chip](https://cran.rstudio.com/bin/macosx/big-sur-arm64/base/R-4.3.1-arm64.pkg), or [on a PC](https://cran.rstudio.com/bin/windows/base/R-4.3.1-win.exe)
+  - Install RStudio [on a Mac](https://download1.rstudio.org/electron/macos/RStudio-2023.06.2-561.dmg) or [on a PC](https://download1.rstudio.org/electron/windows/RStudio-2023.06.2-561.exe)
+- Create a [ChatGPT](https://chat.openai.com/auth/login) account
 
 ---
 
-# Defining R and the R Programmer 
+# R and the R Programmer 
 
 - Typical uses for R
   - Data preparation (cleaning, reshaping, creation)  
   - Data analysis
   - Data visualization
   - Automation
-- Mental models and programming
+  - Productizing
+- Mental models and analysis tools
   - Excel/SPSS/Stata --> computational programming tools like R
 - What all R programmers do
   - Google for answers
   - Borrow code
   - Ask friends and pros for help
+  - Ask ChatGPT
 - Useful references (see Reference Materials in the [syllabus](https://gbearden.github.io/r_course_evans_school/) for more)
   - help()
   - ??
@@ -74,8 +64,9 @@ growth
 
 # Quick Tour of R Studio
 
-- Open and save (locally) an R Notebook  
-  - Script vs. notebook
+- Script vs. notebook  
+  - Scripts are good for code development, running code in production, version control, and multi-file analyses
+  - Notebooks are good for sharing analysis, documentation, mixed code in a single file
 - Run code from the notebook and the console  
   - Console vs. notebooks/scripts
 - Make sure you can install packages
@@ -92,18 +83,18 @@ install.packages('tidyverse')
 
 # Quick Tour of R Studio
 
-- Open and save (locally) an R Notebook  
-  - Script vs. notebook
+- Script vs. notebook  
+  - Scripts are good for code development, running code in production, version control, and multi-file analyses
+  - Notebooks are good for sharing analysis, documentation, mixed code in a single file
 - Run code from the notebook and the console  
   - Console vs. notebooks/scripts
 - Make sure you can install packages
   - Command line/Console
   - R Studio GUI
   
-```{r, echo=FALSE, out.width="70%"}
+```{r, echo=FALSE, out.width="60%"}
 knitr::include_graphics("./figures/r_studio_install_packages.png")
 ```
-
 
 --- 
 class: inverse, middle, center
@@ -115,7 +106,7 @@ class: inverse, middle, center
 # <img src="figures/toolbox.png" style="height: 50px"/> <span style='color:#6DA34D'>Libraries</span>, functions, data
 
 - Libraries (or packages) are collections of functions (and datasets)
-- Over 18,000 libraries on CRAN
+- ~20,000 libraries on [CRAN](https://cran.r-project.org/web/packages/)
 
 ```r
 install.packages('tidyverse')
@@ -129,6 +120,7 @@ library(tidyverse)
 - Functions perform operations in R
 ```r
 some_numbers <- c(1,2,4)
+# min(), mean(), max(), and sd() are functions. c() is actually a function too!
 min(some_numbers)
 mean(some_numbers)
 max(some_numbers)
@@ -142,6 +134,7 @@ sd(some_numbers)
 - Functions perform operations in R
 ```{r, echo = TRUE, collapse=TRUE}
 some_numbers <- c(1,2,4)
+# min(), mean(), max(), and sd() are functions. c() is actually a function too!
 min(some_numbers)
 mean(some_numbers)
 max(some_numbers)
@@ -153,24 +146,13 @@ sd(some_numbers)
 # <img src="figures/tools.png" style="height: 50px"/> Libraries, <span style='color:#6DA34D'>functions</span>, data
 
 - Function arguments
-  - Let's look at arguments in the `lm` and `min` functions  
-  - Arguments tell your function how and on what to perform an operation, and state conditions for operations  
+  - Let's look at arguments in the `lm()` and `min()` functions  
+  - Arguments are used to specify data and customize an operation
   - Arguments are comma separated
 
 ```r
 help(lm)
 help(min)
-
-cat_function <- function(love = TRUE){
-  # SOURCE: https://hilaryparker.com/category/data-analysis/
-  
-  if(love == TRUE){
-      print('I love cats!')
-  }
-  else {
-      print('I am not a cool person.') 
-  }
-}
 ```
 
 ---
@@ -179,7 +161,7 @@ cat_function <- function(love = TRUE){
 
 - Function arguments
   - Let's look at arguments in the `lm` and `min` functions  
-  - Arguments tell your function how and on what to perform an operation, and state conditions for operations  
+  - Arguments are used to specify data and custom what the function does 
   - Arguments are comma separated
 
 ```r
@@ -196,7 +178,7 @@ sd(some_numbers)
 
 - Function arguments
   - Let's look at arguments in the `lm` and `min` functions  
-  - Arguments tell your function how and on what to perform an operation, and state conditions for operations  
+  - Arguments are used to specify data and custom what the function does  
   - Arguments are comma separated
 
 ```{r, echo = TRUE, collapse=TRUE}
@@ -213,7 +195,7 @@ sd(some_numbers)
 
 - Function arguments
   - Let's look at arguments in the `lm` and `min` functions  
-  - Arguments tell your function how and on what to perform an operation, and state conditions for operations  
+  - Arguments are used to specify data and custom what the function does  
   - Arguments are comma separated
 
 ```{r, echo = TRUE, collapse=TRUE}
@@ -226,13 +208,98 @@ sd(some_numbers, na.rm = TRUE)
 
 ---
 
+# <img src="figures/tools.png" style="height: 50px"/> Libraries, <span style='color:#6DA34D'>functions</span>, data
+
+**Exercise - 5 minutes**  
+- Ask [ChatGPT](https://chat.openai.com/) to write a function that sums two numbers
+- Copy and paste the function into your R script
+- Run the code in the command line to create the function
+- Try to use the function!
+
+```{r, echo = FALSE}
+countdown(minutes = 5, seconds = 0)
+```
+
+---
+
+# <img src="figures/tools.png" style="height: 50px"/> Libraries, <span style='color:#6DA34D'>functions</span>, data
+
+**Exercise - 5 minutes**  
+- Ask [ChatGPT](https://chat.openai.com/) to write a function that sums two numbers
+- Copy and paste the function into your R script
+- Run the code in the command line to create the function
+- Try to use the function!
+
+```r
+# A function called sum_two_numbers that takes two arguments.
+# Argument 'x' represents the first number to be added.
+# Argument 'y' represents the second number to be added.
+
+sum_two_numbers <- function(x, y) {
+  # Calculate the sum of x and y and store it in the variable 'result'
+  result <- x + y
+  
+  # Return the result as the output of the function
+  return(result)
+}
+```
+
+---
+
 # <img src="figures/data.png" style="height: 50px"/> Libraries, functions, <span style='color:#6DA34D'>data</span>
 
-- Data type is an important concept in all types of programming
-  - Creates a set of parameters for functions applied to data
+- Data type is an important concept in all programming languages
+  - Creates a set of rules for inputs and outputs  
 - Data types  
-  - Vectors, tibbles, data frames, matrices
+  - Vectors, tibbles, data frames
+      - `str_subset()` removes a value from a string
+      - `filter()` removes an observation from a tibble or data frame
   - Integers, numbers, characters, factors
+      - You can sum integers and numbers, but not character strings
+  
+--
+
+Confirm data type
+
+```r
+class(c('Washington', 'Oregon', 'Idaho'))
+is.character(c('Washington', 'Oregon', 'Idaho'))
+is.factor(c('Washington', 'Oregon', 'Idaho'))
+```
+
+---
+
+# <img src="figures/data.png" style="height: 50px"/> Libraries, functions, <span style='color:#6DA34D'>data</span>
+
+- Data type is an important concept in all programming languages
+  - Creates a set of rules for inputs and outputs  
+- Data types  
+  - Vectors, tibbles, data frames
+      - `str_subset()` removes a value from a string
+      - `filter()` removes an observation from a tibble or data frame
+  - Integers, numbers, characters, factors
+      - You can sum integers and numbers, but not character strings
+  
+Confirm data type
+
+```{r, echo = TRUE, collapse=TRUE}
+class(c('Washington', 'Oregon', 'Idaho'))
+is.character(c('Washington', 'Oregon', 'Idaho'))
+is.factor(c('Washington', 'Oregon', 'Idaho'))
+```
+
+---
+
+# <img src="figures/data.png" style="height: 50px"/> Libraries, functions, <span style='color:#6DA34D'>data</span>
+
+- Data type is an important concept in all programming languages
+  - Creates a set of rules for inputs and outputs  
+- Data types  
+  - Vectors, tibbles, data frames
+      - `str_subset()` removes a value from a string
+      - `filter()` removes an observation from a tibble or data frame
+  - Integers, numbers, characters, factors
+      - You can sum integers and numbers, but not character strings
   
 --
 
@@ -257,45 +324,15 @@ class(as.factor(c('Washington', 'Oregon', 'Idaho')))
 
 # <img src="figures/data.png" style="height: 50px"/> Libraries, functions, <span style='color:#6DA34D'>data</span>
 
-- Data type is an important concept in all types of programming
-  - Creates a set of parameters for functions applied to data
+- Data type is an important concept in all programming languages
+  - Creates a set of rules for inputs and outputs  
 - Data types  
-  - Vectors, tibbles, data frames, matrices  
+  - Vectors, tibbles, data frames
+      - `str_subset()` removes a value from a string
+      - `filter()` removes an observation from a tibble or data frame
   - Integers, numbers, characters, factors
+      - You can sum integers and numbers, but not character strings
   
-Confirm data type
-
-```{r, echo = TRUE, collapse=TRUE}
-class(c('Washington', 'Oregon', 'Idaho'))
-is.character(c('Washington', 'Oregon', 'Idaho'))
-is.factor(c('Washington', 'Oregon', 'Idaho'))
-```
-
-Coerce data type
-
-```r
-as.factor(c('Washington', 'Oregon', 'Idaho'))
-class(as.factor(c('Washington', 'Oregon', 'Idaho')))
-```
-
----
-
-# <img src="figures/data.png" style="height: 50px"/> Libraries, functions, <span style='color:#6DA34D'>data</span>
-
-- Data type is an important concept in all types of programming
-  - Creates a set of parameters for functions applied to data
-- Data types  
-  - Vectors, tibbles, data frames, matrices  
-  - Integers, numbers, characters, factors
-  
-Confirm data type
-
-```{r, echo = TRUE, collapse=TRUE}
-class(c('Washington', 'Oregon', 'Idaho'))
-is.character(c('Washington', 'Oregon', 'Idaho'))
-is.factor(c('Washington', 'Oregon', 'Idaho'))
-```
-
 Coerce data type
 
 ```{r, echo = TRUE, collapse=TRUE}
@@ -308,7 +345,7 @@ class(as.factor(c('Washington', 'Oregon', 'Idaho')))
 # <img src="figures/data.png" style="height: 50px"/> Libraries, functions, <span style='color:#6DA34D'>data</span> 
 
 - Data types  
-  -  **Vectors**, tibbles, data frames, matrices  
+  -  **Vectors**, tibbles, data frames
 - Vectors contain 1 or more values in a string  
 - Call a specific element by its location in a vector  
 ```{r, echo = TRUE, collapse=TRUE}
@@ -323,7 +360,7 @@ seq(from = 0, to = 100, by = 10)
 # <img src="figures/data.png" style="height: 50px"/> Libraries, functions, <span style='color:#6DA34D'>data</span>
 
 - Data types  
-  - **Vectors**, tibbles, data frames, matrices  
+  - **Vectors**, tibbles, data frames
 - Vectors contain 1 or more values in a string  
 - Call a specific element by its location in a vector  
 
@@ -337,7 +374,7 @@ seq(from = 0, to = 100, by = 10)[6]
 # <img src="figures/data.png" style="height: 50px"/> Libraries, functions, <span style='color:#6DA34D'>data</span>
 
 - Data types  
-  - **Vectors**, tibbles, data frames, matrices  
+  - **Vectors**, tibbles, data frames
 - Vectors contain 1 or more values in a string  
 - Call a specific element by its location in a vector  
 
@@ -351,7 +388,7 @@ seq(from = 0, to = 100, by = 10)[6]
 # <img src="figures/data.png" style="height: 50px"/> Libraries, functions, <span style='color:#6DA34D'>data</span>
 
 - Data types  
-  - Vectors, **tibbles**, data frames, matrices  
+  - Vectors, **tibbles**, data frames
 - Tibbles look a little like spreadsheets
 - Tibbles contain metadata on the dataset
   - Dimensions
@@ -375,12 +412,12 @@ tibble(
   - Also able to call the column (or row) by index number
 
 ```r
-cars$speed
-cars[,1]
+starwars$name
+starwars[,1]
 ```
 
 ```{r, echo = FALSE, collapse=FALSE}
-head(cars$speed, 7)
+head(starwars$name, 7)
 ```
 
 ---
@@ -388,7 +425,7 @@ head(cars$speed, 7)
 # <img src="figures/data.png" style="height: 50px"/> Libraries, functions, <span style='color:#6DA34D'>data</span>
 
 - Data types  
-  - Vectors, tibbles, **data frames**, matrices
+  - Vectors, tibbles, **data frames**
 - Data frames are like tibbles minus metadata (and truncated print)
 ```{r, echo = TRUE, collapse=TRUE}
 data.frame(
@@ -396,20 +433,6 @@ data.frame(
   , y = c(4:6)
   , z = c('Washington', 'Oregon', 'Idaho')
   )
-```
-
----
-
-# <img src="figures/data.png" style="height: 50px"/> Libraries, functions, <span style='color:#6DA34D'>data</span>
-
-- Data types  
-  - Vectors, tibbles, data frames, **matrices**
-- Matrices can have a third dimension
-- Traditionally matrices contained data of a single type
-- When it comes down to using a matrix or tibbles in our class, tibbles are the way to go
-
-```{r, echo = TRUE, collapse=TRUE}
-matrix(data = 1:6, nrow = 3, ncol = 2)
 ```
 
 ---
@@ -425,7 +448,7 @@ You are an analyst at the City of Seattle. City leadership wants to develop new 
 
 --
 
-**Exercise 1 - 5 minutes**  
+**Exercise - 5 minutes**  
 - What type of data object is `airbnb`?  
 - What is the fewest number of `reviews` for a property?  
 - What is the average number of `reviews` for a property?  
@@ -446,7 +469,7 @@ countdown(minutes = 5, seconds = 0)
 
 # Let's apply what we learned to real data
 
-**Exercise 1 - 5 minutes**  
+**Exercise - 5 minutes**  
 - What type of data object is `airbnb`?  
 - What is the fewest number of `reviews` for a property?  
 - What is the average number of `reviews` for a property?  
@@ -614,6 +637,15 @@ Make sure...
   - For example you probably don't want to run `min()` on a character string
 - Your assignment operator looks like this: `<-`
 - You're running code inside a code chunk (in a notebook)
+
+--
+
+Feel free to ask ChatGPT why you see an error!
+
+```
+Why does this code throw an error in R? 
+[Your code]
+```
 
 ---
 
