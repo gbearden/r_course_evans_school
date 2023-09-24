@@ -2,11 +2,11 @@
 title: "Part 2 - Introduction to the Tidyverse"
 author: "Graham Bearden"
 institute: "University of Washington"
-date: "October 11, 2022"
+date: "October 10, 2023"
 output:
   xaringan::moon_reader:
     lib_dir: libs
-    css: [default, metropolis, metropolis-fonts]
+    css: [default, metropolis, metropolis-fonts, "https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"]
     nature:
       highlightStyle: github
       highlightLines: true
@@ -38,10 +38,7 @@ colombia <- climate %>%
 
 # Housekeeping
 
-- Workshop slides will always be available
-- Check out R for Stata users in the syllabus
-- Check out notes from the first class and an example script in the syllabus
-- You can learn enough SQL in 5-10 hours to include SQL skills on your resume
+- [...]
 
 ---
 
@@ -64,7 +61,6 @@ colombia <- climate %>%
 - Creating and updating variables  
 - Subsetting tibbles/data frames  
 - Aggregation  
-- Working with dates
 
 ---
 
@@ -135,9 +131,13 @@ countdown(minutes = 5, seconds = 0)
 
 **Exercise 1 - 5 minutes**  
 
-This code contains 5 mistakes. The code should create four new data objects called `reviews`, `price`, `med_reviews` and `max_price` and report the median number of reviews and highest cost/night for a Seattle Airbnb rental.      
+This code contains 5 mistakes. The code should create four new data objects called `reviews`, `price`, `med_reviews` and `max_price` and report the median number of reviews and highest cost/night for a Seattle Airbnb rental.  
 
 ![](figures/troubleshoot_solution_1.png)
+--
+
+<br>
+Is [ChatGPT](https://chat.openai.com/) able to help troubleshoot?
 
 ---
 class: inverse, middle, center
@@ -215,7 +215,7 @@ head(select(select(airbnb, host_id, reviews, rating, price), host_id, price, eve
 
 # Make your code as readable as possible
 
-- A whole course could be taught on code format
+- A whole course could be taught on formatting code
 - For our course, use the pipe operator (`%>%`) when working with **tibbles/data frames**  
 
 --
@@ -257,23 +257,6 @@ airbnb %>%
 
 ---
 
-# Make your code as readable as possible
-
-- No firm, binding rule for using (or not using) the pipe operator with **vectors**
-  - General practice is to ask yourself: "which format is easiest to read?"
-  - Depends on the number of functions  
-  - Depends on whether you are pulling a variable of tibble that you are processing  
-    - `pull() == $`  
-- In our class, we will use the `tidyverse` grammar when working with vectors for consistency sake and ease of learning
-  
-```r
-length(unique(airbnb$address))
-airbnb$address %>% unique() %>% length()
-airbnb %>% pull(address) %>% unique() %>% length()
-```
-
----
-
 # Select, <span style="color:#6DA34D">create</span>, and rename variables
 
 - `mutate()` creates variables  
@@ -281,14 +264,14 @@ airbnb %>% pull(address) %>% unique() %>% length()
 - Use functions you already learned within `mutate()`
   - `min()`, `max()`, `mean()`
   - `as.character()`, `as.factor()`, `as.numeric()`
-- Use `ifelse()` within `mutate()`
+- Use `if_else()` within `mutate()`
 
 --
 
 ```r
 airbnb %>% 
   mutate(
-    cost_per_room = price / accommodates,
+    cost_per_num_accom = price / accommodates,
     mean_price = mean(price)
     ) 
 ```
@@ -302,13 +285,13 @@ airbnb %>%
 - Use functions you already learned within `mutate()`
   - `min()`, `max()`, `mean()`
   - `as.character()`, `as.factor()`, `as.numeric()`
-- Use `ifelse()` within `mutate()`
+- Use `if_else()` within `mutate()`
 
 ```r
 x <- c(1, 2, 3)
 y <- c(4, 5, 1)
 
-ifelse(x > y, 'yes', 'no')
+if_else(x > y, 'yes', 'no')
 ```
 
 ---
@@ -320,22 +303,24 @@ ifelse(x > y, 'yes', 'no')
 - Use functions you already learned within `mutate()`
   - `min()`, `max()`, `mean()`
   - `as.character()`, `as.factor()`, `as.numeric()`
-- Use `ifelse()` within `mutate()`
+- Use `if_else()` within `mutate()`
 
 ```{r, echo = TRUE, collapse=TRUE}
 x <- c(1, 2, 3)
 y <- c(4, 5, 1)
 
-ifelse(x > y, 'yes', 'no')
+if_else(x > y, 'yes', 'no')
 ```
 
 ---
 
 # Select, <span style="color:#6DA34D">create</span>, and rename variables
 
-- A little more on `ifelse()`  
+- A little more on `if_else()`  
   - A logical test with a true-or-false outcome
   - To make comparisons use: `==`, `<`, `<=`, `>`, `>=`, `!=`, `%in%`, `!`, `is.na()`
+     - `==` 1 to 1 equivalency test
+     - `%in%` lets you search for equivalency over a string
   - Concatenate values with `c()`
 
 --
@@ -345,18 +330,20 @@ city_1 <- 'San Francisco'
 city_2 <- 'Portland'
 california <- c('San Francisco', 'Los Angeles', 'San Diego')
 
-ifelse(city_1 %in% california, 'yes', 'no')
-ifelse(city_2 %in% california, 'yes', 'no')
-ifelse(237 %in% 200:300, 'yes', 'no')
+if_else(city_1 %in% california, 'yes', 'no')
+if_else(city_2 %in% california, 'yes', 'no')
+if_else(237 %in% 200:300, 'yes', 'no')
 ```
 
 ---
 
 # Select, <span style="color:#6DA34D">create</span>, and rename variables
 
-- A little more on `ifelse()`  
+- A little more on `if_else()`  
   - A logical test with a true-or-false outcome
   - To make comparisons use: `==`, `<`, `<=`, `>`, `>=`, `!=`, `%in%`, `!`, `is.na()`
+     - `==` 1 to 1 equivalency test
+     - `%in%` lets you search for equivalency over a string
   - Concatenate values with `c()`
 
 ```{r, echo = TRUE, collapse=TRUE}
@@ -364,9 +351,9 @@ city_1 <- 'San Francisco'
 city_2 <- 'Portland'
 california <- c('San Francisco', 'Los Angeles', 'San Diego')
 
-ifelse(! city_1 %in% california, 'yes', 'no')
-ifelse(! city_2 %in% california, 'yes', 'no')
-ifelse(! 237 %in% 200:300, 'yes', 'no')
+if_else(! city_1 %in% california, 'yes', 'no')
+if_else(! city_2 %in% california, 'yes', 'no')
+if_else(! 237 %in% 200:300, 'yes', 'no')
 ```
 
 ---
@@ -378,15 +365,15 @@ ifelse(! 237 %in% 200:300, 'yes', 'no')
 - Use functions you already learned within `mutate()`
   - `min()`, `max()`, `mean()`
   - `as.character()`, `as.factor()`, `as.numeric()`
-- Use `ifelse()` within `mutate()`
+- Use `if_else()` within `mutate()`
 
 ```r
 airbnb %>% 
   mutate(
-    cost_per_room = price / accommodates,
+    cost_per_num_accom = price / accommodates,
     mean_price = mean(price),
-    seattle_address = ifelse(address == 'Seattle', 'y', NA),
-    large = ifelse(accommodates > 5, 'y', NA)
+    seattle_address = if_else(address == 'Seattle', 'y', NA),
+    large = if_else(accommodates > 5, 'y', NA)
     ) 
 ```
 
@@ -397,23 +384,23 @@ airbnb %>%
 ```r
 airbnb %>% 
   mutate(
-    cost_per_room = price / accommodates,
+    cost_per_num_accom = price / accommodates,
     mean_price = mean(price),
-    seattle_address = ifelse(address == 'Seattle', 'y', NA),
-    large = ifelse(accommodates > 5, 'y', NA)
+    seattle_address = if_else(address == 'Seattle', 'y', NA),
+    large = if_else(accommodates > 5, 'y', NA)
     ) %>%
-  select(room_id, host_id, cost_per_room, mean_price, seattle_address, large)
+  select(room_id, host_id, cost_per_num_accom, mean_price, seattle_address, large)
 ```
 
 ```{r, echo = FALSE, collapse=TRUE}
 airbnb %>% 
   mutate(
-    cost_per_room = price / accommodates,
+    cost_per_num_accom = price / accommodates,
     mean_price = mean(price),
-    seattle_address = ifelse(address == 'Seattle', 'y', NA),
-    large = ifelse(accommodates > 5, 'y', NA)
+    seattle_address = if_else(address == 'Seattle', 'y', NA),
+    large = if_else(accommodates > 5, 'y', NA)
     ) %>%
-  select(room_id, host_id, cost_per_room, mean_price, seattle_address, large) %>%
+  select(room_id, host_id, cost_per_num_accom, mean_price, seattle_address, large) %>%
   head(5) 
 ```
 
@@ -450,8 +437,8 @@ countdown(minutes = 6, seconds = 0)
 ```r
 climate %>% 
   mutate(
-    high_uncertainty = ifelse(uncertainty > 1.5, 1, 0),
-    winter = ifelse(month %in% c(1, 2, 12), 1, 0)
+    high_uncertainty = if_else(uncertainty > 1.5, 1, 0),
+    winter = if_else(month %in% c(1, 2, 12), 1, 0)
     ) %>%
   select(country, city, high_uncertainty, winter)
 ```
@@ -463,8 +450,8 @@ climate %>%
 ```r
 climate %>% 
   mutate(
-    high_uncertainty = ifelse(uncertainty > 1.5, 1, 0),
-    winter = ifelse(month %in% c(1, 2, 12), 1, 0)
+    high_uncertainty = if_else(uncertainty > 1.5, 1, 0),
+    winter = if_else(month %in% c(1, 2, 12), 1, 0)
     ) %>%
   select(country, city, high_uncertainty, winter)
 ```
@@ -472,12 +459,24 @@ climate %>%
 ```{r, echo = FALSE, collapse=TRUE}
 climate %>% 
   mutate(
-    high_uncertainty = ifelse(uncertainty > 1.5, 1, 0),
-    winter = ifelse(month %in% c(1, 2, 12), 1, 0)
+    high_uncertainty = if_else(uncertainty > 1.5, 1, 0),
+    winter = if_else(month %in% c(1, 2, 12), 1, 0)
     ) %>%
   select(country, city, high_uncertainty, winter) %>%
   head()
 ```
+
+<div class="animate__animated animate__bounce" style="color: #363457; background-color: white">
+  <p id="clickToShow" style="display: none;">Nice job! Now take a moment to ask ChatGPT to annotate your code.</p>
+  <button id="revealButton">Do Not Push</button>
+</div>
+
+<script>
+// JavaScript to reveal the hidden text on button click
+document.getElementById('revealButton').addEventListener('click', function() {
+  document.getElementById('clickToShow').style.display = 'block';
+});
+</script>
 
 ---
 
@@ -490,8 +489,8 @@ climate %>%
 ```r
 climate %>% 
   mutate(
-    high_uncertainty = ifelse(uncertainty > 1.5, 1, 0),
-    winter = ifelse(month %in% c(1, 2, 12), 1, 0)
+    high_uncertainty = if_else(uncertainty > 1.5, 1, 0),
+    winter = if_else(month %in% c(1, 2, 12), 1, 0)
     ) %>%
   select(country, city, high_uncertainty, winter)
 ```
@@ -503,8 +502,8 @@ climate %>%
   transmute(
     country,
     city,
-    high_uncertainty = ifelse(uncertainty > 1.5, 1, 0),
-    winter = ifelse(month %in% c(1, 2, 12), 1, 0)
+    high_uncertainty = if_else(uncertainty > 1.5, 1, 0),
+    winter = if_else(month %in% c(1, 2, 12), 1, 0)
     )
 ```
 
@@ -593,7 +592,7 @@ climate %>%
   transmute(
     year
     location = city
-    temp = ifelse(is.na(temp), 0, temp)
+    temp = if_else(is.na(temp), 0, temp)
     ) 
 ```
 
@@ -608,7 +607,7 @@ class: inverse, middle, center
 
 - Use `filter()` to subset your data
 - With `filter()`, you tell R to exclude/include rows that meet a logical TRUE/FALSE condition
-- Operators for conditions are the same as for `ifelse()`: `==`, `<`, `<=`, `>`, `>=`, `!=`, `%in%`, `!`, `is.na()`
+- Operators for conditions are the same as for `if_else()`: `==`, `<`, `<=`, `>`, `>=`, `!=`, `%in%`, `!`, `is.na()`
 
 ```r
 airbnb %>% 
@@ -661,6 +660,7 @@ airbnb %>% sample_n(3) %>% select(room_id, host_id, address, room_type, price, n
   - Contains no dates prior to January 2001
   - Contains a variable called `fahrenheit` that converts the `temp` value from celsius to fahrenheit. Use the formula: `(temp * 9/5) + 32` 
   - Contains 4 variables in total in the following order: `year`, `month`, `city`, `fahrenheit`  
+  - With extra time, annotate your code (feel free to use ChatGPT)  
 ]
 
 .pull-right[
@@ -684,6 +684,7 @@ countdown(minutes = 12, seconds = 0)
   - Contains no dates prior to January 2001
   - Contains a variable called `fahrenheit` that converts the `temp` value from celsius to fahrenheit. Use the formula: `(temp * 9/5) + 32` 
   - Contains 4 variables in total in the following order: `year`, `month`, `city`, `fahrenheit`  
+  - With extra time, annotate your code (feel free to use ChatGPT)  
 
 ```r
 colombia <- climate %>% 
