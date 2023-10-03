@@ -1,0 +1,29 @@
+---
+title: "Part 2 - Introduction to the Tidyverse"
+author: "Graham Bearden"
+institute: "University of Washington"
+date: "October 10, 2023"
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    css: [default, metropolis, metropolis-fonts]
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+# Make your code as readable as possible
+
+- No firm, binding rule for using (or not using) the pipe operator with **vectors**
+  - General practice is to ask yourself: "which format is easiest to read?"
+  - Depends on the number of functions  
+  - Depends on whether you are pulling a variable of tibble that you are processing  
+    - `pull() == $`  
+- In our class, we will use the `tidyverse` grammar when working with vectors for consistency sake and ease of learning
+  
+```r
+length(unique(airbnb$address))
+airbnb$address %>% unique() %>% length()
+airbnb %>% pull(address) %>% unique() %>% length()
+```
