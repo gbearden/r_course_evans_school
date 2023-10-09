@@ -1,0 +1,86 @@
+---
+title: "Part 2 - Introduction to the Tidyverse"
+author: "Graham Bearden"
+institute: "University of Washington"
+date: "October 10, 2023"
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    css: [default, metropolis, metropolis-fonts, "https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"]
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library(knitr)
+library(countdown)
+library(kableExtra)
+library(lubridate)
+options(scipen=999)
+
+opts_chunk$set(warning=FALSE, message=FALSE)
+
+airbnb <- read_csv('https://bit.ly/3oadz2L', col_types = cols())
+climate <- read_csv('https://bit.ly/3kKErEb', col_types = cols())
+
+colombia <- climate %>% 
+  filter(! is.na(temp) & year > 2000 & country == 'Colombia') %>% 
+  transmute(
+    year
+    , month
+    , city
+    , fahrenheit = (temp * 9/5) + 32
+    )
+```
+
+# Dates
+
+- Extract components from a date
+  - `year()`, `month()`, `day()`
+  - May be applied to multiple date formats/classes
+
+---
+
+# Dates
+
+**Exercise - 10 minutes**  
+
+From `climate`, produce a tibble called `turkey` that meets the following requirements:
+
+- Contains data for the country of Turkey only
+- Contains data for years 2000 through 2010
+- Contains three columns: `city`, `date`, and `temp`
+- `date` should be a date variable created from `year` and `month`
+- Arrange the dataset by `date` in descending order (`arrange(desc(date))`)
+
+Report the mean monthly temperatures for one city in the dataset (you choose)
+
+```{r, echo = FALSE}
+countdown(minutes = 10, seconds = 0)
+```
+
+---
+
+```r
+turkey <- climate %>% 
+  filter(country == 'Turkey' & year %in% 2000:2010) %>% 
+  transmute(
+    city,
+    date = ym(paste0(year, '-', month)),
+    temp
+  ) %>% 
+  arrange(desc(date))
+```
+
+--
+
+```r
+turkey %>% 
+  filter(city == 'Ankara') %>% 
+  mutate(m = month(date)) %>% 
+  group_by(m) %>% 
+  summarise(mean_temp = mean(temp))
+```
