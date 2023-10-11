@@ -1,6 +1,5 @@
-# --------------
-# Example script
-# --------------
+
+# Example Script ----------------------------------------------------------
 
 # Load library
 library(tidyverse)

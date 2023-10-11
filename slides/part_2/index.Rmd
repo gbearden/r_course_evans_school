@@ -36,12 +36,6 @@ colombia <- climate %>%
     )
 ```
 
-# Housekeeping
-
-- [...]
-
----
-
 # What we learned in the previous class
 
 - Getting up and running in RStudio  
@@ -51,13 +45,12 @@ colombia <- climate %>%
 - How to import data  
 - Regularly used data summary functions  
 - Assignment operator (`<-`)
-- A bit about troubleshooting
 
 ---
 
 # What we'll learn today  
 
-- More about troubleshooting
+- A bit about troubleshooting
 - Creating and updating variables  
 - Subsetting tibbles/data frames  
 - Aggregation  
@@ -73,71 +66,85 @@ Make sure...
 - Your functions have start and closing parentheses
 - You have start and end quotation marks where relevant
 - The variable type is correct to perform the function you call
-  - For example you probably don't want to run `min()` on a character string  
-- Variables in your environment are spelled correctly  (`ls()`)  
+  - For example you probably don't want to run `min()` on a character string
 - Your assignment operator looks like this: `<-`
 - You're running code inside a code chunk (in a notebook)
-- The casing is right (for example, `read_csv()`, not `READ_CSV()`)  
+
+--
+
+Also, feel free to ask ChatGPT why you see an error!
+
+```
+Why does this code throw an error in R? 
+[Your code]
+```
 
 ---
 
-# Troubleshooting your R code
+# Refresher with climate data
 
-- Run code line by line  
-
---
-- Ensure the code isn't hanging (`+`s vs. `>`s in the R console)  
-
---
-- Red "x" annotation beside line numbers (after saving your file)
-
-![](./figures/red_x_example.png)
-
----
-
-# Troubleshooting exercise 
-
-**Exercise 1 - 5 minutes**  
-
-This code contains 5 mistakes. The code should create four new data objects called `reviews`, `price`, `med_reviews` and `max_price` and report the median number of reviews and highest cost/night for a Seattle Airbnb rental.    
-
-- Correct 5 coding mistakes  
-- Reference the previous slides for help  
+By day you're an analyst at the City of Seattle; by night you're a climate analyst at the Earth Institute. Over the next four weeks, you will analyze [climate data](https://www.kaggle.com/sohelranaccselab/global-climate-change) to answer questions that help the Earth Institute understand temperature and temperature change in cities and countries around the world. Use slides [38](https://gbearden.github.io/r_course_evans_school/slides/part_1/#38) and [44](https://gbearden.github.io/r_course_evans_school/slides/part_1/#44) from the previous class to help answer these questions.
 
 --
 
+**Exercise - 10 minutes**  
+- What is the earliest `year` in the `climate` dataset?  
+- What is the range of `uncertainty` values?  
+- How many cities and countries are in the dataset?  
+- In how many rows in the dataset is Japan the `country` value?  
+
+--
+
+<b>Begin the exercise by importing the climate dataset in R Studio</b>  
 ```r
-library(tidyverse
-        
-airbnb < read_csv('https://bit.ly/3oadz2L')
-
-reviews <- airbnb$review
-price <- airbnb$price
-
-med_reviews <- median(reviews)
-max_price <- MAX(price)
-
-med_reviews
-max.price
+climate <- read_csv('https://bit.ly/3kKErEb')
 ```
 
 ```{r, echo = FALSE}
-countdown(minutes = 5, seconds = 0)
+countdown(minutes = 10, seconds = 0)
 ```
 
 ---
 
-# Troubleshooting exercise 
+# Refresher with climate data
 
-**Exercise 1 - 5 minutes**  
+**Exercise - 10 minutes**  
+- What is the earliest `year` in the `climate` dataset?  
+- What is the range of `uncertainty` values?  
+- How many cities and countries are in the dataset?  
+- In how many rows in the dataset is Japan the `country` value?  
 
-This code contains 5 mistakes. The code should create four new data objects called `reviews`, `price`, `med_reviews` and `max_price` and report the median number of reviews and highest cost/night for a Seattle Airbnb rental.  
+```{r, echo = TRUE, collapse=TRUE}
+min(climate$year)
+```
 
-![](figures/troubleshoot_solution_1.png)
 --
 
-<br>
-Is [ChatGPT](https://chat.openai.com/) able to help troubleshoot?
+```{r, echo = TRUE, collapse=TRUE}
+min(climate$uncertainty, na.rm = TRUE)
+max(climate$uncertainty, na.rm = TRUE)
+```
+
+--
+
+```{r, echo = TRUE, collapse=TRUE}
+length(unique(climate$city))
+length(unique(climate$country))
+```
+
+---
+
+# Refresher with climate data
+
+**Exercise - 10 minutes**  
+- What is the earliest `year` in the `climate` dataset?  
+- What is the range of `uncertainty` values?  
+- How many cities and countries are in the dataset?  
+- In how many rows in the dataset is Japan the `country` value?  
+
+```{r, echo = TRUE, collapse=TRUE}
+table(climate$country)['Japan']
+```
 
 ---
 class: inverse, middle, center
@@ -150,7 +157,7 @@ class: inverse, middle, center
 
 - `select()` keeps the named variables from the dataset
 - You can remove variables from the dataset with `-`
-- You may use selection helpers
+- You may use [selection helpers](https://dplyr.tidyverse.org/reference/select.html)
   - For example, `everything()`
 - Use `'``'` for multi-word variables and variable names that begin with numbers
 
@@ -173,7 +180,7 @@ head(select(airbnb, host_id, reviews, rating, price), 3) %>%
 
 - `select()` keeps the named variables from the dataset
 - You can remove variables from the dataset with `-`
-- You may use selection helpers
+- You may use [selection helpers](https://dplyr.tidyverse.org/reference/select.html)
   - For example, `everything()`
 - Use `'``'` for multi-word variables and variable names that begin with numbers
 
@@ -195,7 +202,7 @@ head(select(select(airbnb, host_id, reviews, rating, price), -rating), 3) %>%
 
 - `select()` keeps the named variables from the dataset
 - You can remove variables from the dataset with `-`
-- You may use selection helpers
+- You may use [selection helpers](https://dplyr.tidyverse.org/reference/select.html)
   - For example, `everything()`
 - Use `'``'` for multi-word variables and variable names that begin with numbers
 
@@ -708,114 +715,150 @@ colombia <- climate %>%
 
 ```{r, echo = TRUE, collapse=TRUE}
 nrow(colombia)
-colombia %>% pull(fahrenheit) %>% mean # OR mean(colombia$fahrenheit)
-colombia %>% pull(city) %>% unique # OR unique(colombia$city)
+mean(colombia$fahrenheit) # colombia %>% pull(fahrenheit) %>% mean()
+unique(colombia$city) # colombia %>% pull(city) %>% unique()
 ```
 
 ---
 class: inverse, middle, center
 
-# Dates
+# Aggregate data with group_by() and summarise()
 
 ---
 
-# Dates
+# group_by() and summarise() 
 
-Working with dates can be difficult  
-- Date formats vary across datasets
-  - POSIXct, POSIXlt, Date, Period, chron, yearmon, yearqtr, zoo, zooreg, timeDate, xts, its, ti, jul, and fts
-- Some formats contain metadata
-  - timezone, leap year, GMT adjustment
-- Some formats are quirky  
-  - For example, the month number for January in POSIXlt is 0
-- Sometimes dates include times, sometimes not
-  - Time can make it challenging to extract date components
-- Dates formatted as character strings look right, but often leads to data visualization mistakes and problems in analysis
-  - `sort(c('2021-10-02', '2021-1-22', '2021-3-20'))`  
-  - `sort(lubridate::ymd(c('2021-10-02', '2021-1-22', '2021-3-20')))`
-  
+- Count, sum, average, and identify max and min values  
+- Powerful in combination with plotting code!  
+- Example questions you could answer
+  - In `airbnb`, on **average** which city is most costly per night?   
+  - In `airbnb`, **how many** listings of each room type are there?
+  - In `airbnb`, what's **the total** number of people to stay in each room type?  
+  - In `climate`, what's the **average** temperature by year in cities in China?  
+  - In `climate`, what's the **smallest** level of uncertainty by year and country?  
+
 ---
 
-# Dates
+# group_by() and summarise()  
 
-There are ways to make working with dates easier
-  - Use `lubridate` package
-    - Dates always formatted as "Date" type
-  - Put components of dates in distinct columns if possible  
-  - Remove time from date if possible
-
-```r
-install.packages('lubridate')
-```
+- In `group_by()`, list the variables by which you want to aggregate data
+- In `summarise()`, create a variable and define the variable with an aggregation function
+- Use `%>%` to 'link' `group_by()` and `summarise()`
+- Aggregation functions
+  - `n()`, `n_distinct()`, `sum()`, `mean()`, `max()`, `min()`  
+- Perform multiple aggregations in a single `summarise()` function  
 
 --
 
-- Create dates with `lubridate` functions (`ymd()`, `dmy()`, `mdy()`, `ym()`)
-  - Apply functions to character values, `'2020-03-15'`  
-  - Apply functions to concatenated tibble columns using `paste0()`
+**Example**  
+In `airbnb`, on average which city is most costly per night?   
 
 --
 
 ```r
-ymd('2020-03-15')
-dmy('15-03-2020')
-class(ymd('2020-03-15'))
+airbnb %>% 
+  group_by(address) %>% 
+  summarise(mean_cost = mean(price))
 ```
+
+---
+
+# group_by() and summarise()  
+
+**Example**  
+In `airbnb`, how many listings of each room type are there?
+
+--
+
+```r
+airbnb %>% 
+  group_by(room_type) %>% 
+  summarise(n_listings = n())
+```
+
+--
+
+How do you update the code to count the number of room type listings by city?
+
+--
+
+```r
+airbnb %>% 
+  group_by(room_type, address) %>% 
+  summarise(n_listings = n())
+```
+
+--
+
+How do you further update the code to only see rows for Kirkland?
+
+--
+
+```r
+airbnb %>% 
+  group_by(room_type, address) %>% 
+  summarise(n_listings = n()) %>% 
+  filter(address == 'Kirkland')
+```
+
+---
+
+# group_by() and summarise()  
+
+**Example**  
+In `airbnb`, how many listings of each room type are there?
+
+```r
+airbnb %>% 
+  group_by(room_type, address) %>% 
+  summarise(n_listings = n()) %>% 
+  filter(address == 'Kirkland')
+```
+
+Building on the code above, how would you create a variable that indicates whether there is a deficit of listings for the three `room_types` (let's say "deficit" is defined as fewer than 100 hosts)?
+
+---
+
+# group_by() and summarise()  
+
+**Example**  
+In `airbnb`, how many listings of each room type are there?
+
+Building on the code above, how would you create a variable that indicates whether there is a deficit of listings for the three `room_types` (let's say "deficit" is defined as fewer than 100 hosts)?
+
+```r
+airbnb %>% 
+  group_by(room_type, address) %>% 
+  summarise(n_listings = n()) %>% 
+  filter(address == 'Kirkland') %>% 
+  mutate(listings_deficit = ifelse(n_listings < 100, 'y', 'n'))
+```
+
+---
+
+# Exercise - 6 minutes
+
+- With the `climate` dataset, calculate the monthly mean temperature for all cities in China  
+- The output should only contain `month` and `mean_temp` variables
+
+```r
+climate <- read_csv('https://bit.ly/3kKErEb')
+```
+
+```{r, echo = FALSE}
+countdown(minutes = 6, seconds = 0)
+```
+
+---
+
+# Exercise - 6 minutes
+
+- With the `climate` dataset, calculate the monthly mean temperature for all cities in China  
+- The output should only contain `month` and `mean_temp` variables
 
 ```r
 climate %>% 
-  mutate(
-    date = ym(paste0(year, '-', month))
-  )
-```
-
----
-
-# Dates
-
-- Extract components from a date
-  - `year()`, `month()`, `day()`
-  - May be applied to multiple date formats/classes
-
----
-
-# Dates
-
-**Exercise - 10 minutes**  
-
-From `climate`, produce a tibble called `turkey` that meets the following requirements:
-
-- Contains data for the country of Turkey only
-- Contains data for years 2000 through 2010
-- Contains three columns: `city`, `date`, and `temp`
-- `date` should be a date variable created from `year` and `month`
-- Arrange the dataset by `date` in descending order (`arrange(desc(date))`)
-
-Report the mean monthly temperatures for one city in the dataset (you choose)
-
-```{r, echo = FALSE}
-countdown(minutes = 10, seconds = 0)
-```
-
----
-
-```r
-turkey <- climate %>% 
-  filter(country == 'Turkey' & year %in% 2000:2010) %>% 
-  transmute(
-    city,
-    date = ym(paste0(year, '-', month)),
-    temp
-  ) %>% 
-  arrange(desc(date))
-```
-
---
-
-```r
-turkey %>% 
-  filter(city == 'Ankara') %>% 
-  mutate(m = month(date)) %>% 
-  group_by(m) %>% 
-  summarise(mean_temp = mean(temp))
+  filter(country == 'China') %>% 
+  group_by(month) %>% 
+  summarise(mean_temp = mean(temp, na.rm = TRUE))
 ```

@@ -68,7 +68,7 @@ We will also begin to explore data summary techniques and troubleshooting tactic
 
 At the end of first class, students should be familiar with the R interface, know how to perform basic operations, calculate summary statistics, and walk through a series of steps to troubleshoot code.
 
-Helpful materials: [class notes](https://github.com/gbearden/r_course_evans_school/blob/master/notes/part_1.Rmd), [example .R file](https://github.com/gbearden/r_course_evans_school/blob/master/notes/example_script.R), [base R cheat sheet](https://iqss.github.io/dss-workshops/R/Rintro/base-r-cheat-sheet.pdf)
+Helpful materials: [class notes](https://github.com/gbearden/r_course_evans_school/blob/master/notes/class_1.R), [example .R file](https://github.com/gbearden/r_course_evans_school/blob/master/notes/example_script.R), [base R cheat sheet](https://iqss.github.io/dss-workshops/R/Rintro/base-r-cheat-sheet.pdf)
 
 #### [October 10](https://gbearden.github.io/r_course_evans_school/slides/part_2/)
 
@@ -76,7 +76,7 @@ The second class will focus on data processing. We will use a variety of methods
 
 At the end of second class, students should possess skills necessary to transform datasets so that data are suitable for analysis.
 
-Helpful materials: [class notes](https://github.com/gbearden/r_course_evans_school/blob/master/notes/part_1.Rmd), [data transformation cheat sheet](https://github.com/rstudio/cheatsheets/blob/main/data-transformation.pdf), [data tidying cheat sheet](https://github.com/rstudio/cheatsheets/blob/main/tidyr.pdf), [R for Stata users](https://www.matthieugomez.com/statar/manipulate-data.html)
+Helpful materials: [data transformation cheat sheet](https://github.com/rstudio/cheatsheets/blob/main/data-transformation.pdf), [data tidying cheat sheet](https://github.com/rstudio/cheatsheets/blob/main/tidyr.pdf), [R for Stata users](https://www.matthieugomez.com/statar/manipulate-data.html)
 
 #### October 17
 
