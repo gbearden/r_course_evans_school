@@ -40,6 +40,9 @@ wacky_palette <- c("#FF0099", "#00CCFF", "#FF9900", "#33FF33", "#FF33CC", "#FFFF
 
 # Housekeeping
 
+- You can access notes from the first and second class in the syllabus  
+- [Example script](https://gbearden.github.io/r_course_evans_school/help/example_glm.R) for creating a logistic regression (or classifier model) with tidymodels
+
 ---
 
 # What we learned in the previous class
