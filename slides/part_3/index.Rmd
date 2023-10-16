@@ -2,7 +2,7 @@
 title: "Part 3 - Data Visualization with ggplot2"
 author: "Graham Bearden"
 institute: "University of Washington"
-date: "October 18, 2022"
+date: "October 17, 2023"
 output:
   xaringan::moon_reader:
     lib_dir: libs
@@ -12,12 +12,6 @@ output:
       highlightLines: true
       countIncrementalSlides: false
 ---
-
-# Housekeeping
-
-- Reminder: Submit 2 “stakeholder-ready” data visualizations on November 4 or before  
-  - See examples [here](https://github.com/gbearden/r_course_evans_school/blob/master/plots/) on Github  
-- You only need to install packages once (`install.packages('tidyverse')`)  
 
 ```{r setup, include=FALSE}
 library(tidyverse)
@@ -31,17 +25,30 @@ options(scipen=999)
 
 opts_chunk$set(warning=FALSE, message=FALSE)
 
+extra_css <- list(
+  ".small" = list("font-size" = "90%"),
+  ".smaller" = list("font-size" = "80%")
+  )
+
+xaringanthemer::style_extra_css(css = extra_css, outfile = "custom.css")
+
 airbnb <- read_csv('https://bit.ly/3oadz2L', col_types = cols())
 climate <- read_csv('https://bit.ly/3kKErEb', col_types = cols())
+
+wacky_palette <- c("#FF0099", "#00CCFF", "#FF9900", "#33FF33", "#FF33CC", "#FFFF66", "#6600CC")
 ```
+
+# Housekeeping
+
+- You can access notes from the first and second class in the syllabus  
+- [Example script](https://gbearden.github.io/r_course_evans_school/help/example_glm.R) for creating a logistic regression (or classifier model) with tidymodels
 
 ---
 
 # What we learned in the previous class
 
-- A bit more about troubleshooting
-- Chaining together functions with a pipe operator (`%>%`)
-- Selecting, creating, and updating variables  
+- A bit about troubleshooting
+- Creating and updating variables  
 - Subsetting tibbles/data frames  
 
 ---
@@ -63,17 +70,9 @@ climate <- read_csv('https://bit.ly/3kKErEb', col_types = cols())
 - Ensure the code finished running (`+`s vs. `>`s in the R console)  
 - Red "x" annotation beside line numbers (after saving your file)
 
-![](./figures/red_x_example.png)
-
----
-
-# Troubleshooting exercise 
-
-**Exercise 1 - 5 minutes**  
+--
 
 This code contains 3 mistakes. The code is supposed to report the mean temperatures for Peru and Saudi Arabia before 1900.  
-
---
 
 ```r
 library(tidyverse)
@@ -90,19 +89,15 @@ saudi %>% pull(temp) %>% mean(na.rm = TRUE)
 peru %>% pull(temp) %>% mean(rm.na = TRUE)
 ```
 
-```{r, echo = FALSE}
-countdown(minutes = 5, seconds = 0)
-```
-
 ---
 
-# Troubleshooting exercise 
+# A reminder on troubleshooting
 
-**Exercise 1 - 5 minutes**  
+- Run code line by line  
+- Ensure the code finished running (`+`s vs. `>`s in the R console)  
+- Red "x" annotation beside line numbers (after saving your file)
 
-This code contains 3 mistakes. The code is supposed to report the mean temperatures for Peru and Saudi Arabia before 1900.  
-
-![](figures/troubleshoot_solution_1.png)
+![](./figures/red_x_example.png)
 
 ---
 class: inverse, middle, center
@@ -128,7 +123,7 @@ airbnb <- read_csv('https://bit.ly/3oadz2L')
 - Virtually no limits to plot types (when leveraging supplemental libraries)  
 - Plotting resources  
   - [ggplot2 Launch Page](http://ggplot2.tidyverse.org/)
-  - [Top 50 ggplot2 Visualizations](http://r-statistics.co/Top50-Ggplot2-Visualizations-MasterList-R-Code.html)
+  - [Visualization Gallery](https://r-graph-gallery.com/)
 
 ---
 
@@ -186,13 +181,13 @@ What we will learn
 
 ```r
 library(tidyverse)
-mpg %>% ggplot() + geom_point(aes(displ, hwy))
+starwars %>% filter(mass < 1000) %>% ggplot() + geom_point(aes(height, mass))
 ```
 
 --
 
 ```{r, echo = FALSE, collapse=TRUE, fig.height = 4, fig.width = 7, dpi=300}
-mpg %>% ggplot() + geom_point(aes(displ, hwy))
+starwars %>% filter(mass < 1000) %>% ggplot() + geom_point(aes(height, mass))
 ```
 
 ---
@@ -205,7 +200,7 @@ mpg %>% ggplot() + geom_point(aes(displ, hwy))
 ```r
 install.packages('tidyverse')
 library(tidyverse)
-mpg %>% ggplot(aes(displ, hwy))) + geom_point()
+starwars %>% filter(mass < 1000) %>% ggplot() + geom_point(aes(height, mass))
 ```
 
 --
@@ -215,7 +210,7 @@ mpg %>% ggplot(aes(displ, hwy))) + geom_point()
 ```r
 install.packages('ggplot2')
 library(ggplot2)
-mpg %>% ggplot(aes(displ, hwy)) + geom_point()
+starwars %>% filter(mass < 1000) %>% ggplot() + geom_point(aes(height, mass))
 ```
 
 ---
@@ -261,8 +256,8 @@ airbnb %>% ggplot() + geom_bar() # ggplot(data = airbnb) + geom_bar()
   - Lots of `aes()` arguments
 
 ```r
-airbnb %>% ggplot(aes()) + geom_bar()
-airbnb %>% ggplot() + geom_bar(aes()) # Alternate placement of aes()
+airbnb %>% ggplot(mapping = aes()) + geom_bar()
+airbnb %>% ggplot() + geom_bar(mapping = aes()) # Alternate placement of aes()
 ```
 
 --
@@ -311,7 +306,7 @@ airbnb %>% ggplot(aes(x = address, fill = room_type)) + geom_bar()
 **Exercise**  
 - Build a bar chart with `climate` data that shows the number of rows for the following countries: 'Brazil', 'China', 'India', 'Turkey', and 'United States'
 - To complete the task, you'll need to:
-  - Subset your data using `filter()` (click [here](https://gbearden.github.io/r_course_evans_school/slides/part_2/#44) for help)  
+  - Subset your data using `filter()` (click [here](https://gbearden.github.io/r_course_evans_school/slides/part_2/#43) for help)  
   - Set the color of the bars equal to `country`
   
 ```r
@@ -463,7 +458,7 @@ airbnb %>%
   group_by(room_type, address) %>% 
   summarise(n_listings = n()) %>% 
   filter(address == 'Kirkland') %>% 
-  mutate(listings_deficit = ifelse(n_listings < 100, 'y', 'n'))
+  mutate(listings_deficit = if_else(n_listings < 100, 'y', 'n'))
 ```
 
 ---
@@ -479,8 +474,8 @@ airbnb %>%
 airbnb %>% 
   ggplot(
     aes(
-      x = address
-      , fill = address
+      x = address,
+      fill = address
       )
     ) + 
   geom_bar()
@@ -492,9 +487,9 @@ airbnb %>%
     summarise(count = n()) %>%   #<<
     ggplot(
       aes(
-        x = address
-        , y = count   #<<
-        , fill = address
+        x = address,
+        y = count,   #<<
+        fill = address
         )
       ) + 
     geom_bar(stat = 'identity')   #<<
@@ -505,14 +500,14 @@ airbnb %>%
 
 # Exercise
 
-Create a bar plot from the data frame containing the aggregated data that we just produced. Set the color of the bars to be equal to the listing deficit variable.  
+Create a bar plot from the tibble containing the aggregated data that we just produced. Set the color of the bars to be equal to the listing deficit variable.  
 
 ```r
 airbnb %>% 
   group_by(room_type, address) %>% 
   summarise(n_listings = n()) %>% 
   filter(address == 'Kirkland') %>% 
-  mutate(listings_deficit = ifelse(n_listings < 100, 'y', 'n'))
+  mutate(listings_deficit = if_else(n_listings < 100, 'y', 'n'))
 ```
 
 ```{r, echo = FALSE}
@@ -528,7 +523,7 @@ airbnb %>%
   group_by(room_type, address) %>% 
   summarise(n_listings = n()) %>% 
   filter(address == 'Kirkland') %>% 
-  mutate(listings_deficit = ifelse(n_listings < 100, 'y', 'n')) %>% 
+  mutate(listings_deficit = if_else(n_listings < 100, 'y', 'n')) %>% 
   ggplot(aes(x = room_type, y = n_listings, fill = listings_deficit)) + 
   geom_bar(stat = 'identity')
 ```
@@ -563,9 +558,9 @@ airbnb %>%
   summarise(n = n()) %>%
   ggplot(
     aes(
-      x = reorder(address, -n)  #<<
-      , y = n  
-      , fill = address
+      x = reorder(address, -n),  #<<
+      y = n,  
+      fill = address
       )
     ) + 
   geom_bar(stat = 'identity') 
@@ -588,8 +583,8 @@ my_data <- airbnb %>%
 my_data %>% 
   ggplot(
     aes(
-      x = reorder(address, -n)
-      , y = n  
+      x = reorder(address, -n),
+      y = n  
       )
     ) + 
   geom_bar(
@@ -762,11 +757,11 @@ airbnb %>%
   ggplot(aes(x = address, fill = room_type)) + 
   geom_bar() + 
   labs(
-    x = 'City'
-    , y = 'Number of Rentals (#)'
-    , fill = 'Check out these colors'
-    , title    = 'Room Types by City'
-    , subtitle = 'Shared Rooms are the Least Available Room Type'
+    x = 'City',
+    y = 'Number of Rentals (#)',
+    fill = 'Check out these colors',
+    title = 'Room Types by City',
+    subtitle = 'Shared Rooms are the Least Available Room Type'
     )
 ```
 
@@ -803,10 +798,10 @@ climate %>%
   ggplot(aes(x = reorder(country, -n), y = n, fill = country)) + 
   geom_bar(stat = 'identity') + 
   labs(
-    x = 'Country'
-    , y = 'Number of Observations (#)'
-    , fill = element_blank()
-    , title = 'Number of observations by country'
+    x = 'Country',
+    y = 'Number of Observations (#)',
+    fill = element_blank(),
+    title = 'Number of observations by country'
     )
 ```
 
@@ -823,8 +818,8 @@ climate %>%
   summarise(n = n()) %>% 
   ggplot(aes(x = reorder(country, -n), y = n, fill = country)) + 
   geom_bar(stat = 'identity') + 
-  labs(x = 'Country', y = 'Number of Observations (#)', fill = element_blank()
-       , title = 'Number of observations by country')
+  labs(x = 'Country', y = 'Number of Observations (#)', fill = element_blank(), 
+       title = 'Number of observations by country')
 ```
 
 ---
@@ -1078,18 +1073,18 @@ climate %>%
 
 ```r
 theme(
-  plot.title         = element_text(size=14, face="bold", vjust=1)
-  , plot.background  = element_blank()
-  , panel.grid.major = element_blank()
-  , panel.grid.minor = element_blank()
-  , panel.border     = element_blank()
-  , panel.background = element_blank()
-  , axis.ticks       = element_blank()
-  , axis.text        = element_text(colour="black", size=12)
-  , axis.text.x      = element_text(angle=45, hjust=1)
-  , legend.title     = element_blank()
-  , legend.position  = "none"
-  , legend.text      = element_text(size=12)
+  plot.title       = element_text(size = 14, face = "bold", vjust = 1),
+  plot.background  = element_blank(), 
+  panel.grid.major = element_blank(), 
+  panel.grid.minor = element_blank(), 
+  panel.border     = element_blank(), 
+  panel.background = element_blank(), 
+  axis.ticks       = element_blank(), 
+  axis.text        = element_text(colour = "black", size = 12), 
+  axis.text.x      = element_text(angle = 45, hjust = 1), 
+  legend.title     = element_blank(), 
+  legend.position  = "none", 
+  legend.text      = element_text(size = 12)
   )
   
 help(theme)
@@ -1097,9 +1092,69 @@ help(theme)
 
 ---
 
+# Custom color palettes
+
+- Custom color palettes are a good option if you need to follow a design standard
+- You can use the `values` argument in `scale_*_manual()` to apply your own color palette
+- [coolors.co](https://coolors.co/) and [ChatGPT](https://chat.openai.com/) are great resources for color palettes
+
+---
+
+# Custom color palettes 
+
+Try asking ChatGPT to create a color palette that you can when building plots. Once you have a palette, try replacing the pre-built palette you just added to the plot created with `climate`.
+
+--
+
+My prompt: *Create a wacky, bold color palette with 7 colors in R. Colors should be hex codes.*  
+
+Here's the palette ChatGPT created for me
+
+```r
+wacky_palette <- c("#FF0099", "#00CCFF", "#FF9900",  
+  "#33FF33", "#FF33CC", "#FFFF66", "#6600CC")  
+  
+climate %>% 
+  filter(country %in% c('Brazil', 'China', 'India', 'Turkey', 'United States')) %>% 
+  group_by(country) %>% 
+  summarise(n = n()) %>% 
+  ggplot(aes(x = reorder(country, -n), y = n, fill = country)) + 
+  geom_bar(stat = 'identity') + 
+  labs(
+    x = 'Country', y = 'Number of Observations (#)',
+    fill = element_blank(), title = 'Number of observations by country'
+    ) + 
+  scale_y_continuous(labels = comma) +
+  theme_wsj() + 
+  scale_fill_manual(values = wacky_palette)
+```
+
+---
+
+```{r, fig.height = 5, fig.width = 13, dpi = 300, echo = FALSE}
+wacky_palette <- c("#FF0099", "#00CCFF", "#FF9900",  
+  "#33FF33", "#FF33CC", "#FFFF66", "#6600CC")  
+  
+climate %>% 
+  filter(country %in% c('Brazil', 'China', 'India', 'Turkey', 'United States')) %>% 
+  group_by(country) %>% 
+  summarise(n = n()) %>% 
+  ggplot(aes(x = reorder(country, -n), y = n, fill = country)) + 
+  geom_bar(stat = 'identity') + 
+  labs(
+    x = 'Country', y = 'Number of Observations (#)',
+    fill = element_blank(), title = 'Number of observations by country'
+    ) + 
+  scale_y_continuous(labels = comma) +
+  theme_wsj() + 
+  scale_fill_manual(values = wacky_palette)
+```
+
+---
+
 # Exercise
 
-The code on the right produces a data frame from which you'll build a plot. 
+The code on the right produces a tibble from which you'll build a plot. 
 
 .pull-left[
 - Visualize the data as a bar plot
@@ -1107,7 +1162,7 @@ The code on the right produces a data frame from which you'll build a plot.
 - The y-axis should equal `mean_temp`
 - `fill` should be `century`
 - Dodge the bar segments
-- Feel free to use a theme, title the plot, update axis titles, or make an other aesthetic changes
+- Try using your color palette, adding a theme, titling the plot, and updating axis titles
 ]
 
 .pull-right[
@@ -1118,7 +1173,7 @@ climate %>%
     & ! is.na(temp) 
     & year < 2000
   ) %>% 
-  mutate(century = ifelse(year >= 1900, '20th Century', '19th Century')) %>% 
+  mutate(century = if_else(year >= 1900, '20th Century', '19th Century')) %>% 
   group_by(century, city) %>%   
   summarise(
     mean_temp = mean(temp) 
@@ -1144,7 +1199,7 @@ climate %>%
     & ! is.na(temp) 
     & year < 2000
   ) %>% 
-  mutate(century = ifelse(year >= 1900, '20th Century', '19th Century')) %>% 
+  mutate(century = if_else(year >= 1900, '20th Century', '19th Century')) %>% 
   group_by(century, city) %>%   
   summarise(
     mean_temp = mean(temp) 
@@ -1156,7 +1211,7 @@ climate %>%
   geom_bar(stat = 'identity', position = 'dodge') + 
   labs(x = 'City', y = 'Mean Temperature (Celcius)', fill = NULL) + 
   theme_hc() + 
-  scale_fill_hc()
+  scale_fill_manual(values = wacky_palette)
 ```
 
 ---
@@ -1170,7 +1225,7 @@ climate %>%
     & ! is.na(temp) 
     & year < 2000
   ) %>% 
-  mutate(century = ifelse(year >= 1900, '20th Century', '19th Century')) %>% 
+  mutate(century = if_else(year >= 1900, '20th Century', '19th Century')) %>% 
   group_by(century, city) %>%   
   summarise(
     mean_temp = mean(temp) 
@@ -1182,5 +1237,5 @@ climate %>%
   geom_bar(stat = 'identity', position = 'dodge') + 
   labs(x = 'City', y = 'Mean Temperature (Celcius)', fill = NULL) + 
   theme_hc() + 
-  scale_fill_hc()
+  scale_fill_manual(values = wacky_palette)
 ```
