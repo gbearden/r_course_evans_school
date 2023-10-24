@@ -1,8 +1,8 @@
 ---
-title: "Part 4 - Adding tools to your Tidyverse toolbox"
+title: "Part 4 - More data visualization and adding tools to your Tidyverse toolbox"
 author: "Graham Bearden"
 institute: "University of Washington"
-date: "October 25, 2022"
+date: "October 24, 2022"
 output:
   xaringan::moon_reader:
     lib_dir: libs
@@ -17,8 +17,6 @@ output:
 .small { font-size: 90% }
 .smaller { font-size: 80% }
 ```
-
-# Housekeeping
 
 ```{r setup, include=FALSE}
 library(tidyverse)
@@ -39,27 +37,23 @@ extra_css <- list(
 
 xaringanthemer::style_extra_css(css = extra_css, outfile = "custom.css")
 
+wacky_palette <- c("#FF0099", "#00CCFF", "#FF9900", "#33FF33", "#FF33CC", "#FFFF66", "#6600CC")
+
 airbnb <- read_csv('https://bit.ly/3oadz2L', col_types = cols())
 climate <- read_csv('https://bit.ly/3kKErEb', col_types = cols())
 checkin <- read_csv('https://bit.ly/3nQHlI0', col_types = cols())
 ```
 
-- Reminder: Submit 2 “stakeholder-ready” data visualizations and your code on November 4 or before  
+# Housekeeping
+
+- Reminder: Submit 2 “stakeholder-ready” data visualizations and your code on November 3 or before  
+  - The assignment has been added to Canvas
   - See examples [here](https://github.com/gbearden/r_course_evans_school/blob/master/plots/) on Github  
 - What does "Stakeholder-ready" mean?  
   - Write a plot title
   - Label the axes 
   - Use a theme
   - Do not include `NA`s in the plot (geom or legend)  
-- The error message <span style="color:red">`could not find function "%>%"`</span> means you need to run `library(tidyverse)`  
-- How do you clean up your RStudio environment?  
-  - `rm()` 
-
----
-
-# Housekeeping
-
-- There are lots of amazing analytics and data science jobs...and the best ones are hard to get. Spend 30 minutes browsing people in the Evans School group on LinkedIn, find/connect with alumni who have jobs or work at places that interest you, and start networking  
 - Datasets  
   - [Kaggle](https://www.kaggle.com/datasets)
   - [Data.gov](https://www.data.gov/)
@@ -69,11 +63,22 @@ checkin <- read_csv('https://bit.ly/3nQHlI0', col_types = cols())
   - [BuzzFeed](https://github.com/BuzzFeedNews)  
   - [Google Dataset Search](https://datasetsearch.research.google.com/)
   - BONUS dataset: [Great British Bakeoff](https://github.com/apreshill/bakeoff)  
-  
-Data for the class
+
+---
+
+# Housekeeping
+
+- Stay in touch! 
+  - Feel free to connect with me on LinkedIn
+  - Discussing data science/analytics careers
+- The error message <span style="color:red">`could not find function "%>%"`</span> means you need to run `library(tidyverse)`  
+- How do you clean up your RStudio environment?  
+  - `rm()` 
+
+Data for class
 ```r
-airbnb <- read_csv('https://bit.ly/3oadz2L', col_types = cols())
-climate <- read_csv('https://bit.ly/3kKErEb', col_types = cols())
+airbnb <- read_csv('https://bit.ly/3oadz2L')
+climate <- read_csv('https://bit.ly/3kKErEb')
 ```
 
 ---
@@ -91,15 +96,14 @@ climate <- read_csv('https://bit.ly/3kKErEb', col_types = cols())
 
 # What we'll learn today  
 
+- Running code in an R Notebook
+- Adding themes to plots
 - Build line and scatter plots  
-- How to "pivot" data, turning columns into rows and rows into columns
 - More ways to use logical conditions for filtering and changing variable values
-- How to merge two datasets
-- Creating panels of plots with facets
 
 ---
 
-# A reminder on troubleshooting
+# A few reminders
 
 - Run code line by line  
 - Ensure the code finished running (`+`s vs. `>`s in the R console)  
@@ -109,62 +113,380 @@ climate <- read_csv('https://bit.ly/3kKErEb', col_types = cols())
 
 ---
 
-# Troubleshooting exercise 
+# A few reminders
 
-.smaller[This code contains 3 mistakes. The code is supposed to create a plot of rentals by city and room type, excluding rentals without ratings with bar colors from the `calc` palette. It's possible to successfully produce the plot after correcting 2 mistakes, but the inside color of the bars will be from the default colors palette, not from the `calc` palette. Make sure you bars are colored using the palette function.]  
+```r
+# Use %in% to include multiple countries in your subsetted data
+# Example 1
+climate %>% 
+  filter(country %in% c('Brazil', 'China', 'India', 'Turkey', 'United States'))
+
+# Example 2
+countries <- c('Brazil', 'China', 'India', 'Turkey', 'United States')
+climate %>% 
+  filter(country %in% countries)
+
+# Use == to include one country in your subsetted data  
+# Example 3
+climate %>% 
+  filter(country == "Brazil")
+  
+# Example 4
+one_country <- "Brazil"
+climate %>% 
+  filter(country == one_country)
+```
+
+---
+
+# A few reminders
+
+```r
+# stat = "count"
+airbnb %>% 
+  ggplot(
+    aes(
+      x = address,
+      fill = address
+      )
+    ) + 
+  geom_bar()
+  
+# stat = "identity"
+airbnb %>% 
+  group_by(address) %>% 
+  summarise(count = n()) %>%
+  ggplot(
+    aes(
+      x = address,
+      y = count,
+      fill = address
+      )
+    ) + 
+  geom_bar(stat = 'identity')
+```
+
+---
+class: inverse, middle, center
+
+# Themes
+
+---
+
+# Themes
+
+- Change layer and background colors
+- Change fonts
+- Change plot borders/boundaries and ticks
+- Pre-built themes vs. custom themes
+  - `ggplot2` and `ggthemes` themes
+
+```r
+install.packages('ggthemes')
+library(ggthemes)
+```
+
+---
+
+# Pre-built themes
+
+Selected `ggplot2` themes
+
+```r
+theme_classic()
+theme_bw()
+theme_minimal()
+theme_dark()
+```  
+Selected `ggthemes` themes
+
+```r
+theme_stata() + scale_colour_stata() # also can use scale_fill_stata()
+theme_economist() + scale_colour_economist() 
+theme_fivethirtyeight() + scale_color_fivethirtyeight() 
+theme_wsj() + scale_colour_wsj() 
+theme_pander() + scale_colour_pander() 
+theme_hc(bgcolor = "darkunica") + scale_colour_hc("darkunica") 
+```
+
+---
+
+# Pre-built themes
 
 ```r
 airbnb %>% 
-  filter(! is.na(rating)) %>% 
-  select(room_type, address, price) %>% 
-  group_by(room, address) %>% 
-  summarise(price = mean(price)) %>% 
-  ggplot(aes(x = address, y = price, fill = room_type)) + 
-  geom_bar(stat = 'identity', position = 'dodge', alpha = .8) + 
-  scale_y_continuous(label = dollar) + 
+  ggplot(aes(x = address, fill = room_type)) + 
+  geom_bar() + 
   labs(
-    x = NULL,
-    fill = NULL,
-    y = 'Cost ($)'
-    title = 'Average Cost by City and Room Type'
-  ) + 
-  theme_minimal() + 
-  scale_color_calc()
+    x = 'City'
+    , y = 'Number of Rentals (#)'
+    , fill = 'Check out these colors'
+    , title    = 'Room Types by City'
+    , subtitle = 'Shared Rooms are the Least Available Room Type'
+    ) + 
+  scale_y_continuous(labels = comma) + 
+  theme_economist() + 
+  scale_fill_economist()
 ```
+
+---
+
+# Pre-built themes
+
+Economist theme  
+  
+```{r, dpi=300, fig.height = 4, fig.width = 9, echo = FALSE}
+airbnb %>% 
+  ggplot(aes(x = address, fill = room_type)) + 
+  geom_bar() + 
+  labs(
+    x = 'City'
+    , y = 'Number of Rentals (#)'
+    , fill = 'Check out these colors'
+    , title    = 'Room Types by City'
+    , subtitle = 'Shared Rooms are the Least Available Room Type'
+    ) + 
+  scale_y_continuous(labels = comma) +
+  theme_economist() + 
+  scale_fill_economist()
+```
+
+---
+
+# Pre-built themes
+
+<img src="figures/plot_themes.png" style="height: 500px"/>  
+
+---
+
+# Pre-built themes
+
+Try adding a theme to the plot you made from the `climate` data in the last class
+
+--
+
+```r
+climate %>% 
+  filter(country %in% c('Brazil', 'China', 'India', 'Turkey', 'United States')) %>% 
+  group_by(country) %>% 
+  summarise(n = n()) %>% 
+  ggplot(aes(x = reorder(country, -n), y = n, fill = country)) + 
+  geom_bar(stat = 'identity') + 
+  labs(
+    x = 'Country'
+    , y = 'Number of Observations (#)'
+    , fill = element_blank()
+    , title = 'Number of observations by country'
+    ) + 
+  scale_y_continuous(labels = comma) +
+  theme_wsj() + 
+  scale_fill_wsj()
+```
+
+---
+
+# Pre-built themes
+
+Try adding a theme to the plot you made from the `climate` data in the last class
+
+```{r, fig.height = 5, fig.width = 13, dpi = 300, echo = FALSE}
+climate %>% 
+  filter(country %in% c('Brazil', 'China', 'India', 'Turkey', 'United States')) %>% 
+  group_by(country) %>% 
+  summarise(n = n()) %>% 
+  ggplot(aes(x = reorder(country, -n), y = n, fill = country)) + 
+  geom_bar(stat = 'identity') + 
+  labs(
+    x = 'Country'
+    , y = 'Number of Observations (#)'
+    , fill = element_blank()
+    , title = 'Number of observations by country'
+    ) + 
+  scale_y_continuous(labels = comma) +
+  theme_wsj() + 
+  scale_fill_wsj()
+```
+
+---
+
+# Custom themes
+
+- You can create custom themes with `theme()`
+- Greater control over chart aesthestics
+- Use custom themes in place of pre-built themes if pre-built themes don't cut it
+- Also, use custom themes to augment pre-built themes
+
+---
+
+# Custom themes
+
+```r
+theme(
+  plot.title       = element_text(size = 14, face = "bold", vjust = 1),
+  plot.background  = element_blank(), 
+  panel.grid.major = element_blank(), 
+  panel.grid.minor = element_blank(), 
+  panel.border     = element_blank(), 
+  panel.background = element_blank(), 
+  axis.ticks       = element_blank(), 
+  axis.text        = element_text(colour = "black", size = 12), 
+  axis.text.x      = element_text(angle = 45, hjust = 1), 
+  legend.title     = element_blank(), 
+  legend.position  = "none", 
+  legend.text      = element_text(size = 12)
+  )
+  
+help(theme)
+```
+
+---
+
+# Custom color palettes
+
+- Custom color palettes are a good option if you need to follow a design standard
+- You can use the `values` argument in `scale_*_manual()` to apply your own color palette
+- [coolors.co](https://coolors.co/) and [ChatGPT](https://chat.openai.com/) are great resources for color palettes
+
+---
+
+# Custom color palettes 
+
+Try asking [ChatGPT](https://chat.openai.com/) to create a color palette that you can when building plots. Once you have a palette, try replacing the pre-built palette you just added to the plot created with `climate`.
+
+--
+
+My prompt: *Create a wacky, bold color palette with 7 colors in R. Colors should be hex codes.*  
+
+Here's the palette ChatGPT created for me
+
+```r
+wacky_palette <- c("#FF0099", "#00CCFF", "#FF9900",  
+  "#33FF33", "#FF33CC", "#FFFF66", "#6600CC")  
+  
+climate %>% 
+  filter(country %in% c('Brazil', 'China', 'India', 'Turkey', 'United States')) %>% 
+  group_by(country) %>% 
+  summarise(n = n()) %>% 
+  ggplot(aes(x = reorder(country, -n), y = n, fill = country)) + 
+  geom_bar(stat = 'identity') + 
+  labs(
+    x = 'Country', y = 'Number of Observations (#)',
+    fill = element_blank(), title = 'Number of observations by country'
+    ) + 
+  scale_y_continuous(labels = comma) +
+  theme_wsj() + 
+  scale_fill_manual(values = wacky_palette)
+```
+
+---
+
+```{r, fig.height = 5, fig.width = 13, dpi = 300, echo = FALSE}
+wacky_palette <- c("#FF0099", "#00CCFF", "#FF9900",  
+  "#33FF33", "#FF33CC", "#FFFF66", "#6600CC")  
+  
+climate %>% 
+  filter(country %in% c('Brazil', 'China', 'India', 'Turkey', 'United States')) %>% 
+  group_by(country) %>% 
+  summarise(n = n()) %>% 
+  ggplot(aes(x = reorder(country, -n), y = n, fill = country)) + 
+  geom_bar(stat = 'identity') + 
+  labs(
+    x = 'Country', y = 'Number of Observations (#)',
+    fill = element_blank(), title = 'Number of observations by country'
+    ) + 
+  scale_y_continuous(labels = comma) +
+  theme_wsj() + 
+  scale_fill_manual(values = wacky_palette)
+```
+
+---
+
+# Exercise
+
+The code on the right produces a tibble from which you'll build a plot. 
+
+.pull-left[
+- Visualize the data as a bar plot
+- The x-axis should equal `city`
+- The y-axis should equal `mean_temp`
+- `fill` should be `century`
+- Dodge the bar segments by adding `position = "dodge"` to `geom_bar()`
+- Try using your color palette, adding a theme, titling the plot, and updating axis titles
+]
+
+.pull-right[
+```r
+climate %>% 
+  filter(
+    country == 'Brazil' 
+    & ! is.na(temp) 
+    & year < 2000
+  ) %>% 
+  mutate(century = if_else(year >= 1900, '20th Century', '19th Century')) %>% 
+  group_by(century, city) %>%   
+  summarise(
+    mean_temp = mean(temp) 
+    , median_temp = median(temp)
+    , max_temp = max(temp)
+  ) %>% 
+  arrange(city)
+```
+]
 
 ```{r, echo = FALSE}
-countdown(minutes = 5, seconds = 0)
+countdown(minutes = 7, seconds = 0, left = 0)
 ```
 
 ---
 
-# Troubleshooting exercise 
+# Exercise 
 
-.smaller[This code contains 3 mistakes. The code is supposed to create a plot of rentals by city and room type, excluding rentals without ratings with bar colors from the `calc` palette. It's possible to successfully produce the plot after correcting 2 mistakes, but the inside color of the bars will be from the default colors palette, not from the `calc` palette. Make sure you bars are colored using the palette function.]  
-
-![](figures/troubleshooting_solution.png)
+```r
+climate %>% 
+  filter(
+    country == 'Brazil' 
+    & ! is.na(temp) 
+    & year < 2000
+  ) %>% 
+  mutate(century = if_else(year >= 1900, '20th Century', '19th Century')) %>% 
+  group_by(century, city) %>%   
+  summarise(
+    mean_temp = mean(temp) 
+    , median_temp = median(temp)
+    , max_temp = max(temp)
+  ) %>% 
+  arrange(city) %>% 
+  ggplot(aes(x = reorder(city, mean_temp), y = mean_temp, fill = century)) + 
+  geom_bar(stat = 'identity', position = 'dodge') + 
+  labs(x = 'City', y = 'Mean Temperature (Celcius)', fill = NULL) + 
+  theme_hc() + 
+  scale_fill_manual(values = wacky_palette)
+```
 
 ---
 
-# Troubleshooting exercise 
+# Exercise 
 
-```{r fig.show='hide'}
-airbnb %>% 
-  filter(! is.na(rating)) %>% 
-  select(room_type, address, price) %>% 
-  group_by(room_type, address) %>% 
-  summarise(price = mean(price)) %>% 
-  ggplot(aes(x = address, y = price, fill = room_type)) + 
-  geom_bar(stat = 'identity', position = 'dodge', alpha = .8) + 
-  scale_y_continuous(label = dollar) + 
-  labs(
-    x = NULL,
-    fill = NULL,
-    y = 'Cost ($)',
-    title = 'Average Cost by City and Room Type'
-  ) + 
-  theme_minimal() + 
-  scale_fill_calc()
+```{r,  fig.height = 5, fig.width = 13, dpi = 300, echo = FALSE}
+climate %>% 
+  filter(
+    country == 'Brazil' 
+    & ! is.na(temp) 
+    & year < 2000
+  ) %>% 
+  mutate(century = if_else(year >= 1900, '20th Century', '19th Century')) %>% 
+  group_by(century, city) %>%   
+  summarise(
+    mean_temp = mean(temp) 
+    , median_temp = median(temp)
+    , max_temp = max(temp)
+  ) %>% 
+  arrange(city) %>% 
+  ggplot(aes(x = reorder(city, mean_temp), y = mean_temp, fill = century)) + 
+  geom_bar(stat = 'identity', position = 'dodge') + 
+  labs(x = 'City', y = 'Mean Temperature (Celcius)', fill = NULL) + 
+  theme_hc() + 
+  scale_fill_manual(values = wacky_palette)
 ```
 
 ---
@@ -423,14 +745,14 @@ class: inverse, middle, center
 
 # More on writing logical conditions
 
-`ifelse()`  
+`if_else()`  
 - A logical test with a true-or-false outcome
 - To make comparisons use: `==`, `<`, `<=`, `>`, `>=`, `!=`, `%in%`, `!`, `is.na()`
 - Concatenate values with `c()`
 
 --
 
-...`ifelse()` is really powerful, but what do you do if there are more than two possible outcomes?
+...`if_else()` is really powerful, but what do you do if there are more than two possible outcomes?
 
 --
 
@@ -442,10 +764,10 @@ class: inverse, middle, center
 
 # More on writing logical conditions
 
-`case_when()` is similar to `ifelse()` in some ways, but differences abound.
+`case_when()` is similar to `if_else()` in some ways, but differences abound.
 
 ```r
-airbnb %>% mutate(expensive = ifelse(price > 100, 'y', NA))
+airbnb %>% mutate(expensive = if_else(price > 100, 'y', NA))
 airbnb %>% mutate(expensive = case_when(price > 100 ~ 'y'))
 ```
 
@@ -581,28 +903,27 @@ airbnb %>%
 
 # More on writing logical conditions
 
-`ifelse()`  
+`if_else()`  
 - A logical test with a true-or-false outcome
 - To make comparisons use: `==`, `<`, `<=`, `>`, `>=`, `!=`, `%in%`, `!`, `is.na()`
   - **Or use `str_detect()` to search for patterns over strings**
 
-`str_detect()` has three arguments
+`str_detect()` arguments
 - `string`, where you are searching for the pattern
 - `pattern`, the pattern to look for
-- `negate`, whether you want to return matches or non-matches 
 
 ```{r, echo = TRUE, collapse=TRUE}
 california <- c('San Francisco', 'Los Angeles', 'San Diego')
 
-ifelse(str_detect(california, 'San'), TRUE, NA)
-case_when(str_detect(california, 'San') ~ TRUE)
+if_else(str_detect(string = california, pattern = 'San'), TRUE, NA)
+case_when(str_detect(string = california, pattern = 'San') ~ TRUE)
 ```
 
 ---
 
 # More on writing logical conditions
 
-`ifelse()`  
+`if_else()`  
 - A logical test with a true-or-false outcome
 - To make comparisons use: `==`, `<`, `<=`, `>`, `>=`, `!=`, `%in%`, `!`, `is.na()`
   - **Or use `str_detect()` to search for patterns over strings**
@@ -610,7 +931,6 @@ case_when(str_detect(california, 'San') ~ TRUE)
 `str_detect()` has three arguments
 - `string`, where you are searching for the pattern
 - `pattern`, the pattern to look for
-- `negate`, whether you want to return matches or non-matches 
 
 ```r
 airbnb %>% 
@@ -618,7 +938,7 @@ airbnb %>%
     room_id
     , reviews
     , price
-    , cozy = ifelse(str_detect(name, 'cozy'), 'so cozy', 'not so cozy')
+    , cozy = if_else(str_detect(string = name, pattern = 'cozy'), 'so cozy', 'not so cozy')
     )
 ```
 
@@ -636,8 +956,8 @@ airbnb %>%
     room_id
     , reviews
     , price
-    , urban_1 = ifelse(str_detect(name, 'urban'), 'so urban', 'not so urban')
-    , urban_2 = ifelse(str_detect(tolower(name), 'urban'), 'so urban', 'not so urban')
+    , urban_1 = if_else(str_detect(string = name, pattern = 'urban'), 'so urban', 'not so urban')
+    , urban_2 = if_else(str_detect(string = tolower(name), pattern = 'urban'), 'so urban', 'not so urban')
     )
 ```
 
@@ -645,7 +965,7 @@ airbnb %>%
 
 # More on writing logical conditions
 
-Use `str_detect()` with `ifelse()`, `case_when()`, or `filter()`
+Use `str_detect()` with `if_else()`, `case_when()`, or `filter()`
 
 ```r
 airbnb %>% 
