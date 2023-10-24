@@ -50,7 +50,7 @@ This is an applied course that focuses on successful execution of code. While st
 ## Course Expectations
 
 - Attend four classes. Class dates are 10/3, 10/10, 10/17, 10/24. A full class is 2 hours and 50 minutes, breaks included.
-- Submit 2 "stakeholder-ready" data visualizations by October 27 or before (See [example plots](https://github.com/gbearden/r_course_evans_school/blob/master/plots/))
+- Submit 2 "stakeholder-ready" data visualizations by November 3 or before (See [example plots](https://github.com/gbearden/r_course_evans_school/blob/master/plots/))
  
 ## Accomodations
 
@@ -84,9 +84,9 @@ The third class will focus on data visualization. We will use `ggplot`, a visual
 
 At the end of third class, students should be able to produce a standard set of plots and manipulate plot aesthetics.
 
-Helpful materials: [data visualization cheat sheet](https://github.com/rstudio/cheatsheets/blob/master/data-visualization-2.1.pdf), [Coolors](https://coolors.co/)
+Helpful materials: [class notes](https://github.com/gbearden/r_course_evans_school/blob/master/notes/class_3.R), [data visualization cheat sheet](https://github.com/rstudio/cheatsheets/blob/master/data-visualization-2.1.pdf), [Coolors](https://coolors.co/)
 
-#### October 24
+#### [October 24](https://gbearden.github.io/r_course_evans_school/slides/part_4/)
 
 The fourth class will build on the skills students learned in previous lessons, introducing additional data visualization and data processing skills used to better work with strings and reshape data. 
 
