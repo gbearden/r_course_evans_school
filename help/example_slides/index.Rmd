@@ -1,0 +1,72 @@
+---
+title: "Title Slide"
+author: "Your Name"
+date: "April 1, 2067"
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    css: [default, metropolis, metropolis-fonts]
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library(knitr)
+# Load more libraries...
+options(scipen=999)
+
+opts_chunk$set(warning=FALSE, message=FALSE)
+
+# Import your data here 
+# airbnb <- read_csv('https://bit.ly/3oadz2L', col_types = cols())
+# climate <- read_csv('https://bit.ly/3kKErEb', col_types = cols())
+```
+
+class: inverse, middle, center
+
+# A Title Slide
+
+---
+
+# An image with some bullet points
+
+- a, b, c
+- d, e, f
+- g, h, i
+
+```{r, echo=FALSE, out.width="50%"}
+knitr::include_graphics("plots/midjourney_hp.png")
+```
+
+---
+
+# Sample R code
+
+Here is some R code that DOESN'T execute
+
+```r
+starwars %>% 
+  filter(mass < 500) %>% 
+  mutate(species = replace_na(species, "No Species")) %>% 
+  ggplot(aes(x = height, y = mass, color = species)) + 
+  geom_point(size = 2) + 
+  labs(color = NULL)
+```
+
+---
+
+# Sample R code
+
+Here is some R code that DOES execute
+
+```{r,  fig.height = 5, fig.width = 13, dpi = 300, echo = FALSE}
+starwars %>% 
+  filter(mass < 500) %>% 
+  mutate(species = replace_na(species, "No Species")) %>% 
+  ggplot(aes(x = height, y = mass, color = species)) + 
+  geom_point(size = 2) + 
+  labs(color = NULL)
+```
