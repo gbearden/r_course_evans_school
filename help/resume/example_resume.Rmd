@@ -1,0 +1,53 @@
+---
+output: 
+  pdf_document:
+    latex_engine: pdflatex
+    template: cv-latex.tex
+geometry: margin=.7in
+
+title: "Resume"
+author: Your Name
+
+fontawesome: yes
+email: you@uw.edu
+github: delete_if_do_not_have_github
+linkedin: linkedin_id
+phone: "206 550 1234"
+updated: no
+
+keywords: R Markdown, resume, template
+
+fontfamily: mathpazo
+fontfamilyoptions: sc, osf
+fontsize: 11pt
+urlcolor: blue
+---
+\thispagestyle{empty}
+
+# Skills and experience summary
+
+- xx years of experience...
+- Skills: data visualization, ...
+- Tools: R, Stata, ...
+- Languages: ...
+
+# Experience 
+
+**Company 1**, Seattle, WA \hfill 2023 - current  
+Role  
+
+- Description 1  
+- Description 2  
+- Description 3  
+
+**Company 2**, Seattle, WA \hfill 2022 - 2023  
+Role  
+
+- Description 1  
+- Description 2  
+- Description 3  
+
+# Education
+
+**M.P.A.**   
+*Evans School of Public Policy and Governance, University of Washington*, Seattle, WA
