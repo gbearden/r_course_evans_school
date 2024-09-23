@@ -2,7 +2,7 @@
 title: "Introduction to Data Processing and Visualization Design in R"
 date: "gbearden@uw.edu"
 author: "Graham Bearden"
-subtitle: "Autumn 2024"
+subtitle: "Autumn 2023"
 output: html_document
 ---
 
@@ -45,7 +45,7 @@ This is an introductory course designed for new R programmers. You will learn th
 
 Course materials are prepared in order to offer a survey of selected R functionality. Students interested in R programming that is more sophisticated and/or specialized than what is taught in the course are encouraged to seek additional opportunities to apply their R programming skills.
 
-This is an applied course that focuses on successful execution of code. While students should consider theory, style, and efficiency of R programming, getting the job done right will be the first priority.  
+This is an applied course that focuses on successful execution of code. While students should consider theory, style, and efficiency of R programming, getting the job done right will be the first priority. Often ChatGPT is a helpful tool that aids in writing R code, so we'll use it on occasion in the course. 
 
 ## Course Expectations
 
@@ -60,7 +60,7 @@ Please let me know if you need any specific accommodations related to religious 
 
 ## Schedule
 
-#### October 3
+#### [October 3](https://gbearden.github.io/r_course_evans_school/slides/part_1/)
 
 The first class will focus on the basics of R. Students will learn about key R concepts like data types and the anatomy of a function, how to read (import) and write (export) data, and the essentials of writing successful code.
 
@@ -68,25 +68,25 @@ We will also begin to explore data summary techniques and troubleshooting tactic
 
 At the end of first class, students should be familiar with the R interface, know how to perform basic operations, calculate summary statistics, and walk through a series of steps to troubleshoot code.
 
-Helpful materials: [example .R file](https://github.com/gbearden/r_course_evans_school/blob/master/notes/example_script.R), [base R cheat sheet](https://iqss.github.io/dss-workshops/R/Rintro/base-r-cheat-sheet.pdf)
+Helpful materials: [class notes](https://github.com/gbearden/r_course_evans_school/blob/master/notes/class_1.R), [example .R file](https://github.com/gbearden/r_course_evans_school/blob/master/notes/example_script.R), [base R cheat sheet](https://iqss.github.io/dss-workshops/R/Rintro/base-r-cheat-sheet.pdf)
 
-#### October 10
+#### [October 10](https://gbearden.github.io/r_course_evans_school/slides/part_2/)
 
 The second class will focus on data processing. We will use a variety of methods to manipulate data and prepare it for analysis. The `tidyverse` will be emphasized. Students will learn how to manipulate data at various levels, including at the dataset-level, the variable-level, and the value-level.
 
 At the end of second class, students should possess skills necessary to transform datasets so that data are suitable for analysis.
 
-Helpful materials: [data transformation cheat sheet](https://github.com/rstudio/cheatsheets/blob/main/data-transformation.pdf), [data tidying cheat sheet](https://github.com/rstudio/cheatsheets/blob/main/tidyr.pdf), [R for Stata users](https://www.matthieugomez.com/statar/manipulate-data.html)
+Helpful materials: [class notes](https://github.com/gbearden/r_course_evans_school/blob/master/notes/class_2.R), [data transformation cheat sheet](https://github.com/rstudio/cheatsheets/blob/main/data-transformation.pdf), [data tidying cheat sheet](https://github.com/rstudio/cheatsheets/blob/main/tidyr.pdf), [R for Stata users](https://www.matthieugomez.com/statar/manipulate-data.html)
 
-#### October 17
+#### [October 17](https://gbearden.github.io/r_course_evans_school/slides/part_3/)
 
-The third class will focus on data visualization. We will use `ggplot`, a visualization library that is part of the `tidyverse`, to build many types of plots. The modularity of `ggplot` plotting functions will be emphasized as will the distinction between visualizing aggregated and non-aggregated data.
+The third class will focus on data visualization. We will use `ggplot`, a visualization library that is part of the `tidyverse`, to build many plot types. The modularity of `ggplot` plotting functions will be emphasized as will the distinction between visualizing aggregated and non-aggregated data.
 
 At the end of third class, students should be able to produce a standard set of plots and manipulate plot aesthetics.
 
-Helpful materials: [data visualization cheat sheet](https://github.com/rstudio/cheatsheets/blob/master/data-visualization-2.1.pdf), [Coolors](https://coolors.co/)
+Helpful materials: [class notes](https://github.com/gbearden/r_course_evans_school/blob/master/notes/class_3.R), [data visualization cheat sheet](https://github.com/rstudio/cheatsheets/blob/master/data-visualization-2.1.pdf), [Coolors](https://coolors.co/)
 
-#### October 24
+#### [October 24](https://gbearden.github.io/r_course_evans_school/slides/part_4/)
 
 The fourth class will build on the skills students learned in previous lessons, introducing additional data visualization and data processing skills used to better work with strings and reshape data. 
 
@@ -105,12 +105,12 @@ We will use the datasets below in our workshop. ([Here](https://github.com/gbear
 
 If you have not downloaded R and RStudio already, use the links below to set up your machines.
 
-* Install R [on a Mac with an Intel chip](https://cran.rstudio.com/bin/macosx/big-sur-x86_64/base/R-4.4.1-x86_64.pkg), [on a Mac with a silicon M1/M2/M3 chip](https://cran.rstudio.com/bin/macosx/big-sur-arm64/base/R-4.4.1-arm64.pkg), or [on a PC](https://cran.rstudio.com/bin/windows/base/R-4.4.1-win.exe)
-* Install RStudio [on a Mac](https://download1.rstudio.org/electron/macos/RStudio-2024.04.2-764.dmg) or [on a PC](https://download1.rstudio.org/electron/windows/RStudio-2024.04.2-764.exe)
+* Install R [on a Mac with an Intel chip](https://cran.rstudio.com/bin/macosx/big-sur-x86_64/base/R-4.3.1-x86_64.pkg), [on a Mac with an M1/M2 chip](https://cran.rstudio.com/bin/macosx/big-sur-arm64/base/R-4.3.1-arm64.pkg), or [on a PC](https://cran.rstudio.com/bin/windows/base/R-4.3.1-win.exe)
+* Install RStudio [on a Mac](https://download1.rstudio.org/electron/macos/RStudio-2023.06.2-561.dmg) or [on a PC](https://download1.rstudio.org/electron/windows/RStudio-2023.06.2-561.exe)
 
-## AI Assistants
+## ChatGPT
 
-We will use an AI Assistant to troubleshoot, document, and write R code. Sign up or log in to [Perplexity](https://www.perplexity.ai/) or [ChatGPT](https://chat.openai.com/auth/login), or feel free to use any of the other AI assistant. 
+Click [here](https://chat.openai.com/auth/login) to sign up or log in to ChatGPT. We will use ChatGPT to troubleshoot, document, and write R code. Click [here](https://openai.com/blog/chatgpt) to learn about ChatGPT if you're unfamiliar with it.
 
 ## Reference Materials
 
@@ -135,4 +135,4 @@ R community members produce valuable content to help you learn how to program in
 * [RStudio Cloud setup](https://github.com/gbearden/r_course_evans_school/blob/master/rcloud_setup.md)  
  
 ---
-Here are syllabi from previous quarters: [Autumn 2023](https://github.com/gbearden/r_course_evans_school/blob/master/archive/syllabus_a23.md), [Autumn 2022](https://github.com/gbearden/r_course_evans_school/blob/master/archive/syllabus_a22.md), [Autumn 2021](https://github.com/gbearden/r_course_evans_school/blob/master/archive/syllabus_a21.md), [Autumn 2020](https://github.com/gbearden/r_course_evans_school/blob/master/archive/syllabus_a20.md), [Autumn 2019](https://github.com/gbearden/r_course_evans_school/blob/master/archive/syllabus_a19.md), [Autumn 2018](https://github.com/gbearden/r_course_evans_school/blob/master/archive/syllabus_a18.md), [Winter 2018](https://github.com/gbearden/r_course_evans_school/blob/master/archive/syllabus_w18.md)
+Here are syllabi from previous quarters: [Autumn 2022](https://github.com/gbearden/r_course_evans_school/blob/master/archive/syllabus_a22.md), [Autumn 2021](https://github.com/gbearden/r_course_evans_school/blob/master/archive/syllabus_a21.md), [Autumn 2020](https://github.com/gbearden/r_course_evans_school/blob/master/archive/syllabus_a20.md), [Autumn 2019](https://github.com/gbearden/r_course_evans_school/blob/master/archive/syllabus_a19.md), [Autumn 2018](https://github.com/gbearden/r_course_evans_school/blob/master/archive/syllabus_a18.md), [Winter 2018](https://github.com/gbearden/r_course_evans_school/blob/master/archive/syllabus_w18.md)

@@ -4,8 +4,8 @@
     <title>Part 1 - R Basics</title>
     <meta charset="utf-8" />
     <meta name="author" content="Graham Bearden" />
-    <meta name="date" content="2023-10-03" />
-    <script src="libs/header-attrs-2.20/header-attrs.js"></script>
+    <meta name="date" content="2024-10-03" />
+    <script src="libs/header-attrs-2.27/header-attrs.js"></script>
     <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
     <link href="libs/remark-css-0.0.1/metropolis.css" rel="stylesheet" />
     <link href="libs/remark-css-0.0.1/metropolis-fonts.css" rel="stylesheet" />
@@ -26,7 +26,7 @@ class: center, middle, inverse, title-slide
 ### University of Washington
 ]
 .date[
-### October 3, 2023
+### October 3, 2024
 ]
 
 ---
@@ -42,9 +42,9 @@ class: inverse, middle, center
 # Set Up
 
 - Set up your machine to run R
-  - Install R [on a Mac with an Intel chip](https://cran.rstudio.com/bin/macosx/big-sur-x86_64/base/R-4.3.1-x86_64.pkg), [on a Mac with an M1/M2 chip](https://cran.rstudio.com/bin/macosx/big-sur-arm64/base/R-4.3.1-arm64.pkg), or [on a PC](https://cran.rstudio.com/bin/windows/base/R-4.3.1-win.exe)
-  - Install RStudio [on a Mac](https://download1.rstudio.org/electron/macos/RStudio-2023.06.2-561.dmg) or [on a PC](https://download1.rstudio.org/electron/windows/RStudio-2023.06.2-561.exe)
-- Create a [ChatGPT](https://chat.openai.com/auth/login) account
+  - Install R [on a Mac with an Intel chip](https://cran.rstudio.com/bin/macosx/big-sur-x86_64/base/R-4.4.1-x86_64.pkg), [on a Mac with a silicon M1/M2/M3 chip](https://cran.rstudio.com/bin/macosx/big-sur-arm64/base/R-4.4.1-arm64.pkg), or [on a PC](https://cran.rstudio.com/bin/windows/base/R-4.4.1-win.exe)
+  - Install RStudio [on a Mac](https://download1.rstudio.org/electron/macos/RStudio-2024.04.2-764.dmg) or [on a PC](https://download1.rstudio.org/electron/windows/RStudio-2024.04.2-764.exe)
+- Create a [ChatGPT](https://chat.openai.com/auth/login) or [Perplexity](https://www.perplexity.ai/) account
 
 ---
 
@@ -62,7 +62,7 @@ class: inverse, middle, center
   - Google for answers
   - Borrow code
   - Ask friends and pros for help
-  - Ask ChatGPT
+  - Ask ChatGPT, Perplexity, or another AI assistant
 - Useful references (see Reference Materials in the [syllabus](https://gbearden.github.io/r_course_evans_school/) for more)
   - help()
   - ??
@@ -113,7 +113,7 @@ class: inverse, middle, center
 # &lt;img src="figures/toolbox.png" style="height: 50px"/&gt; &lt;span style='color:#6DA34D'&gt;Libraries&lt;/span&gt;, functions, data
 
 - Libraries (or packages) are collections of functions (and datasets)
-- ~20,000 libraries on [CRAN](https://cran.r-project.org/web/packages/)
+- ~21,000 libraries on [CRAN](https://cran.r-project.org/web/packages/)
 
 ```r
 install.packages('tidyverse')
@@ -140,15 +140,24 @@ sd(some_numbers)
 
 - Functions perform operations in R
 
-```r
+``` r
 some_numbers &lt;- c(1,2,4)
 # min(), mean(), max(), and sd() are functions. c() is actually a function too!
 min(some_numbers)
 ## [1] 1
+```
+
+``` r
 mean(some_numbers)
 ## [1] 2.333333
+```
+
+``` r
 max(some_numbers)
 ## [1] 4
+```
+
+``` r
 sd(some_numbers)
 ## [1] 1.527525
 ```
@@ -158,7 +167,7 @@ sd(some_numbers)
 # &lt;img src="figures/tools.png" style="height: 50px"/&gt; Libraries, &lt;span style='color:#6DA34D'&gt;functions&lt;/span&gt;, data
 
 - Function arguments
-  - Let's look at arguments in the `lm()` and `min()` functions  
+  - Let's look at arguments in the `lm` and `min` functions  
   - Arguments are used to specify data and customize an operation
   - Arguments are comma separated
 
@@ -194,14 +203,23 @@ sd(some_numbers)
   - Arguments are comma separated
 
 
-```r
+``` r
 some_numbers &lt;- c(1,2,NA, 4)
 min(some_numbers)
 ## [1] NA
+```
+
+``` r
 mean(some_numbers)
 ## [1] NA
+```
+
+``` r
 max(some_numbers)
 ## [1] NA
+```
+
+``` r
 sd(some_numbers)
 ## [1] NA
 ```
@@ -216,14 +234,23 @@ sd(some_numbers)
   - Arguments are comma separated
 
 
-```r
+``` r
 some_numbers &lt;- c(1,2,NA, 4)
 min(some_numbers, na.rm = TRUE)
 ## [1] 1
+```
+
+``` r
 mean(some_numbers, na.rm = TRUE)
 ## [1] 2.333333
+```
+
+``` r
 max(some_numbers, na.rm = TRUE)
 ## [1] 4
+```
+
+``` r
 sd(some_numbers, na.rm = TRUE)
 ## [1] 1.527525
 ```
@@ -232,13 +259,35 @@ sd(some_numbers, na.rm = TRUE)
 
 # &lt;img src="figures/tools.png" style="height: 50px"/&gt; Libraries, &lt;span style='color:#6DA34D'&gt;functions&lt;/span&gt;, data
 
+- Anatomy of a function
+
+```r
+compute_mean &lt;- function(x) { 
+  
+  # Calculate the sum of all values in `x`
+  x_sum &lt;- sum(x, na.rm = TRUE)
+  # Count the number of values in `x`
+  x_len &lt;- length(x)
+  # Divide `x_sum` by `x_len`
+  x_mean &lt;- x_sum / x_len
+  
+  # `return` is used to tell R the output of the function
+  return(x_mean)
+  
+  }
+```
+
+---
+
+# &lt;img src="figures/tools.png" style="height: 50px"/&gt; Libraries, &lt;span style='color:#6DA34D'&gt;functions&lt;/span&gt;, data
+
 **Exercise - 5 minutes**  
-- Ask [ChatGPT](https://chat.openai.com/) to write a function that sums two numbers
+- Ask [ChatGPT](https://chat.openai.com/) or [Perplexity](https://www.perplexity.ai/) to write a function that sums two numbers
 - Copy and paste the function into your R script
 - Run the code in the command line to create the function
 - Try to use the function!
 
-<div class="countdown" id="timer_a88ce64c" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
+<div class="countdown" id="timer_8f0065ae" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
 <div class="countdown-controls"><button class="countdown-bump-down">&minus;</button><button class="countdown-bump-up">&plus;</button></div>
 <code class="countdown-time"><span class="countdown-digits minutes">05</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
@@ -248,7 +297,7 @@ sd(some_numbers, na.rm = TRUE)
 # &lt;img src="figures/tools.png" style="height: 50px"/&gt; Libraries, &lt;span style='color:#6DA34D'&gt;functions&lt;/span&gt;, data
 
 **Exercise - 5 minutes**  
-- Ask [ChatGPT](https://chat.openai.com/) to write a function that sums two numbers
+- Ask [ChatGPT](https://chat.openai.com/) or [Perplexity](https://www.perplexity.ai/) to write a function that sums two numbers
 - Copy and paste the function into your R script
 - Run the code in the command line to create the function
 - Try to use the function!
@@ -306,11 +355,17 @@ is.factor(c('Washington', 'Oregon', 'Idaho'))
 Confirm data type
 
 
-```r
+``` r
 class(c('Washington', 'Oregon', 'Idaho'))
 ## [1] "character"
+```
+
+``` r
 is.character(c('Washington', 'Oregon', 'Idaho'))
 ## [1] TRUE
+```
+
+``` r
 is.factor(c('Washington', 'Oregon', 'Idaho'))
 ## [1] FALSE
 ```
@@ -363,10 +418,13 @@ class(as.factor(c('Washington', 'Oregon', 'Idaho')))
 Coerce data type
 
 
-```r
+``` r
 as.factor(c('Washington', 'Oregon', 'Idaho'))
 ## [1] Washington Oregon     Idaho     
 ## Levels: Idaho Oregon Washington
+```
+
+``` r
 class(as.factor(c('Washington', 'Oregon', 'Idaho')))
 ## [1] "factor"
 ```
@@ -380,13 +438,22 @@ class(as.factor(c('Washington', 'Oregon', 'Idaho')))
 - Vectors contain 1 or more values in a string  
 - Call a specific element by its location in a vector  
 
-```r
+``` r
 c('Washington', 'Oregon', 'Idaho')
 ## [1] "Washington" "Oregon"     "Idaho"
+```
+
+``` r
 1:10
 ##  [1]  1  2  3  4  5  6  7  8  9 10
+```
+
+``` r
 rep(1:2, times = 2)
 ## [1] 1 2 1 2
+```
+
+``` r
 seq(from = 0, to = 100, by = 10)
 ##  [1]   0  10  20  30  40  50  60  70  80  90 100
 ```
@@ -415,9 +482,12 @@ seq(from = 0, to = 100, by = 10)[6]
 - Call a specific element by its location in a vector  
 
 
-```r
+``` r
 c('Washington', 'Oregon', 'Idaho')[2]
 ## [1] "Oregon"
+```
+
+``` r
 seq(from = 0, to = 100, by = 10)[6]
 ## [1] 50
 ```
@@ -434,7 +504,7 @@ seq(from = 0, to = 100, by = 10)[6]
   - Variable types
 - Truncate variable names and values 
 
-```r
+``` r
 tibble(
   x = c(1:3)
   , y = c(4:6)
@@ -466,7 +536,7 @@ starwars[,1]
 ```
 ## [1] "Luke Skywalker"     "C-3PO"              "R2-D2"             
 ## [4] "Darth Vader"        "Leia Organa"        "Owen Lars"         
-## [7] "Beru Whitesun lars"
+## [7] "Beru Whitesun Lars"
 ```
 
 ---
@@ -477,7 +547,7 @@ starwars[,1]
   - Vectors, tibbles, **data frames**
 - Data frames are like tibbles minus metadata (and truncated print)
 
-```r
+``` r
 data.frame(
   x = c(1:3)
   , y = c(4:6)
@@ -515,7 +585,7 @@ To answer the questions, import the Seattle `airbnb` dataset.
 airbnb &lt;- read_csv('https://bit.ly/3oadz2L')
 ```
 
-<div class="countdown" id="timer_41c77269" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
+<div class="countdown" id="timer_f3ae9a1d" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
 <div class="countdown-controls"><button class="countdown-bump-down">&minus;</button><button class="countdown-bump-up">&plus;</button></div>
 <code class="countdown-time"><span class="countdown-digits minutes">05</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
@@ -531,7 +601,7 @@ airbnb &lt;- read_csv('https://bit.ly/3oadz2L')
 - What is the range of number of `bathrooms` in the `airbnb` data?  
 
 
-```r
+``` r
 class(airbnb)
 ## [1] "spec_tbl_df" "tbl_df"      "tbl"         "data.frame"
 ```
@@ -539,9 +609,12 @@ class(airbnb)
 --
 
 
-```r
+``` r
 min(airbnb$reviews)
 ## [1] 0
+```
+
+``` r
 mean(airbnb$reviews)
 ## [1] 48.15021
 ```
@@ -549,9 +622,12 @@ mean(airbnb$reviews)
 --
 
 
-```r
+``` r
 min(airbnb$bathrooms, na.rm = TRUE)
 ## [1] 0
+```
+
+``` r
 max(airbnb$bathrooms, na.rm = TRUE)
 ## [1] 8
 ```
@@ -592,7 +668,7 @@ Get in the habit of running these functions when you open a new dataset
 
 &lt;i&gt;Hint: There are multiple ways to answers these questions with the functions you know&lt;/i&gt;
 
-<div class="countdown" id="timer_86fd67b3" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
+<div class="countdown" id="timer_5614bdc8" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
 <div class="countdown-controls"><button class="countdown-bump-down">&minus;</button><button class="countdown-bump-up">&plus;</button></div>
 <code class="countdown-time"><span class="countdown-digits minutes">05</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
@@ -607,7 +683,7 @@ Get in the habit of running these functions when you open a new dataset
 - How many variables are in `airbnb`?  
 
 
-```r
+``` r
 nrow(airbnb)
 ## [1] 7423
 ```
@@ -615,7 +691,7 @@ nrow(airbnb)
 --
 
 
-```r
+``` r
 median(airbnb$rating, na.rm = TRUE)
 ## [1] 5
 ```
@@ -623,7 +699,7 @@ median(airbnb$rating, na.rm = TRUE)
 --
 
 
-```r
+``` r
 ncol(airbnb)
 ## [1] 14
 ```
@@ -664,7 +740,7 @@ length(unique(airbnb$room_type))
 - Which is the third `host_id` value after sorting unique ids alphabetically?  
 - Is 'yurt' a `room_type` value?  
 
-<div class="countdown" id="timer_3b837e52" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
+<div class="countdown" id="timer_18cf1f73" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
 <div class="countdown-controls"><button class="countdown-bump-down">&minus;</button><button class="countdown-bump-up">&plus;</button></div>
 <code class="countdown-time"><span class="countdown-digits minutes">05</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
@@ -679,7 +755,7 @@ length(unique(airbnb$room_type))
 - Is 'yurt' a `room_type` value?  
 
 
-```r
+``` r
 length(unique(airbnb$address))
 ## [1] 4
 ```
@@ -687,7 +763,7 @@ length(unique(airbnb$address))
 --
 
 
-```r
+``` r
 head(sort(unique(airbnb$host_id)), 3)
 ## [1] 2536 4193 4797
 ```
@@ -695,7 +771,7 @@ head(sort(unique(airbnb$host_id)), 3)
 --
 
 
-```r
+``` r
 unique(airbnb$room_type)
 ## [1] "Entire home/apt" "Private room"    "Shared room"
 ```
@@ -745,7 +821,7 @@ By day you're an analyst at the City of Seattle; by night you're a climate analy
 climate &lt;- read_csv('https://bit.ly/3kKErEb')
 ```
 
-<div class="countdown" id="timer_7e4fa41b" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
+<div class="countdown" id="timer_d1657915" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
 <div class="countdown-controls"><button class="countdown-bump-down">&minus;</button><button class="countdown-bump-up">&plus;</button></div>
 <code class="countdown-time"><span class="countdown-digits minutes">10</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
@@ -761,7 +837,7 @@ climate &lt;- read_csv('https://bit.ly/3kKErEb')
 - In how many rows in the dataset is Japan the `country` value?  
 
 
-```r
+``` r
 min(climate$year)
 ## [1] 1743
 ```
@@ -769,9 +845,12 @@ min(climate$year)
 --
 
 
-```r
+``` r
 min(climate$uncertainty, na.rm = TRUE)
 ## [1] 0.04
+```
+
+``` r
 max(climate$uncertainty, na.rm = TRUE)
 ## [1] 14.037
 ```
@@ -779,9 +858,12 @@ max(climate$uncertainty, na.rm = TRUE)
 --
 
 
-```r
+``` r
 length(unique(climate$city))
 ## [1] 100
+```
+
+``` r
 length(unique(climate$country))
 ## [1] 49
 ```
@@ -797,7 +879,7 @@ length(unique(climate$country))
 - In how many rows in the dataset is Japan the `country` value?  
 
 
-```r
+``` r
 table(climate$country)['Japan']
 ## Japan 
 ##  4095
