@@ -26,6 +26,7 @@ opts_chunk$set(warning=FALSE, message=FALSE)
 
 airbnb <- read_csv('https://bit.ly/3oadz2L', col_types = cols())
 climate <- read_csv('https://bit.ly/3kKErEb', col_types = cols())
+mba <- read_csv("https://bit.ly/4evYpeW", col_types = cols())
 ```
 
 ---
@@ -147,7 +148,7 @@ sd(some_numbers)
 
 - Function arguments
   - Let's look at arguments in the `lm` and `min` functions  
-  - Arguments are used to specify data and customize an operation
+  - Arguments are used to specify the data and operation
   - Arguments are comma separated
 
 ```r
@@ -161,7 +162,7 @@ help(min)
 
 - Function arguments
   - Let's look at arguments in the `lm` and `min` functions  
-  - Arguments are used to specify data and custom what the function does 
+  - Arguments are used to specify the data and operation
   - Arguments are comma separated
 
 ```r
@@ -178,7 +179,7 @@ sd(some_numbers)
 
 - Function arguments
   - Let's look at arguments in the `lm` and `min` functions  
-  - Arguments are used to specify data and custom what the function does  
+  - Arguments are used to specify the data and operation
   - Arguments are comma separated
 
 ```{r, echo = TRUE, collapse=TRUE}
@@ -195,7 +196,7 @@ sd(some_numbers)
 
 - Function arguments
   - Let's look at arguments in the `lm` and `min` functions  
-  - Arguments are used to specify data and custom what the function does  
+  - Arguments are used to specify the data and operation
   - Arguments are comma separated
 
 ```{r, echo = TRUE, collapse=TRUE}
@@ -214,17 +215,21 @@ sd(some_numbers, na.rm = TRUE)
 
 ```r
 compute_mean <- function(x) { 
-  
   # Calculate the sum of all values in `x`
   x_sum <- sum(x, na.rm = TRUE)
+  
+  # We'll learn more about the ! operator later
+  # Just know that the code below used to create `x_clean` removes NA values
+  x_clean <- x[!is.na(x)]
+  
   # Count the number of values in `x`
-  x_len <- length(x)
+  x_len <- length(x_clean)
+  
   # Divide `x_sum` by `x_len`
   x_mean <- x_sum / x_len
   
   # `return` is used to tell R the output of the function
   return(x_mean)
-  
   }
 ```
 
@@ -322,8 +327,6 @@ is.factor(c('Washington', 'Oregon', 'Idaho'))
       - `filter()` removes an observation from a tibble or data frame
   - Integers, numbers, characters, factors
       - You can sum integers and numbers, but not character strings
-  
---
 
 Confirm data type
 
@@ -734,4 +737,69 @@ length(unique(climate$country))
 
 ```{r, echo = TRUE, collapse=TRUE}
 table(climate$country)['Japan']
+```
+
+---
+
+# More practice - MBA admissions
+
+You can find the a description of the synthetic MBA admissions data [here](https://www.kaggle.com/datasets/taweilo/mba-admission-dataset). The data were generated from the University of Pennsylvania Wharton Class of 2025.
+
+--
+
+**Exercise 4 - 8 minutes**  
+- What is the lowest `gpa` in the `mba` dataset?  
+- What is the average number of years of work experience (`work_exp`)?  
+- How many applicants are international students?  
+- In how many rows in the dataset is Consulting the `work_industry` value?  
+
+--
+
+<b>Begin the exercise by importing the mba admissions dataset in R Studio</b>  
+```r
+mba <- read_csv("https://bit.ly/4evYpeW")
+```
+
+```{r, echo = FALSE}
+countdown(minutes = 8, seconds = 0)
+```
+
+---
+
+# More practice - MBA admissions
+
+**Exercise 4 - 8 minutes**  
+- What is the lowest `gpa` in the `mba` dataset?  
+- What is the average number of years of work experience (`work_exp`)?  
+- How many applicants are international students?  
+- In how many rows in the dataset is Consulting the `work_industry` value?  
+
+```{r, echo = TRUE, collapse=TRUE}
+min(mba$gpa)
+```
+
+--
+
+```{r, echo = TRUE, collapse=TRUE}
+mean(mba$work_exp, na.rm = TRUE)
+```
+
+--
+
+```{r, echo = TRUE, collapse=TRUE}
+table(mba$international)
+```
+
+---
+
+# More practice - MBA admissions
+
+**Exercise 4 - 8 minutes**  
+- What is the lowest `gpa` in the `mba` dataset?  
+- What is the average number of years of work experience (`work_exp`)?  
+- How many applicants are international students?  
+- In how many rows in the dataset is Consulting the `work_industry` value?  
+
+```{r, echo = TRUE, collapse=TRUE}
+table(mba$work_industry)['Consulting']
 ```
