@@ -1,6 +1,9 @@
 library(tidyverse)
 library(magrittr)
 
+# MBA Admissions
+# Source: https://www.kaggle.com/datasets/taweilo/mba-admission-dataset
+
 # Process Airbnb dataset
 
 read_csv('data-raw/seattle_airbnb.csv', col_types = cols()) %>% 
@@ -71,10 +74,12 @@ x3 %>%
     ) %>% 
   nest(data = -day_of_week) %>% 
   arrange(day_of_week) %>% 
-  mutate(data = map2(day_of_week, data, ~ if(.x %in% c(4, 7)) .y %>% sample_frac(.8)
-                                        else if(.x %in% c(1, 3)) .y %>% sample_frac(.7)
-                                        else if (.x == 2) .y %>% sample_frac(.6)
-                                        else .y)
+  mutate(
+    data = map2(day_of_week, data, ~ 
+                  if(.x %in% c(4, 7)) .y %>% sample_frac(.8)
+                else if(.x %in% c(1, 3)) .y %>% sample_frac(.7)
+                else if (.x == 2) .y %>% sample_frac(.6)
+                else .y)
          ) %>% 
   unnest(cols = data) %>% 
   bind_rows(
