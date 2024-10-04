@@ -276,7 +276,7 @@ sum_two_numbers <- function(x, y) {
 # <img src="figures/data.png" style="height: 50px"/> Libraries, functions, <span style='color:#6DA34D'>data</span>
 
 - Data type is an important concept in all programming languages
-  - Creates a set of rules for inputs and outputs  
+  - Creates a set of rules for what operations can be executed  
 - Data types  
   - Vectors, tibbles, data frames
       - `str_subset()` removes a value from a string
@@ -299,7 +299,7 @@ is.factor(c('Washington', 'Oregon', 'Idaho'))
 # <img src="figures/data.png" style="height: 50px"/> Libraries, functions, <span style='color:#6DA34D'>data</span>
 
 - Data type is an important concept in all programming languages
-  - Creates a set of rules for inputs and outputs  
+  - Creates a set of rules for what operations can be executed  
 - Data types  
   - Vectors, tibbles, data frames
       - `str_subset()` removes a value from a string
@@ -320,7 +320,7 @@ is.factor(c('Washington', 'Oregon', 'Idaho'))
 # <img src="figures/data.png" style="height: 50px"/> Libraries, functions, <span style='color:#6DA34D'>data</span>
 
 - Data type is an important concept in all programming languages
-  - Creates a set of rules for inputs and outputs  
+  - Creates a set of rules for what operations can be executed  
 - Data types  
   - Vectors, tibbles, data frames
       - `str_subset()` removes a value from a string
@@ -350,7 +350,7 @@ class(as.factor(c('Washington', 'Oregon', 'Idaho')))
 # <img src="figures/data.png" style="height: 50px"/> Libraries, functions, <span style='color:#6DA34D'>data</span>
 
 - Data type is an important concept in all programming languages
-  - Creates a set of rules for inputs and outputs  
+  - Creates a set of rules for what operations can be executed  
 - Data types  
   - Vectors, tibbles, data frames
       - `str_subset()` removes a value from a string

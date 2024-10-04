@@ -96,7 +96,7 @@ At the end of the fourth class, students should be able to prepare data for anal
 
 We will use the datasets below in our workshop. ([Here](https://github.com/gbearden/r_course_evans_school/blob/master/data/process_course_data.r) is code to prepare the temperature and Airbnb data.)
 
-* [Global Temperatures Source](https://www.kaggle.com/sohelranaccselab/global-climate-change)
+* [Global Temperatures Source](https://www.kaggle.com/)
   * [Global Temperatures Dataset](https://raw.githubusercontent.com/gbearden/r_course_evans_school/master/data/global_temperatures.csv)
 * [Seattle Airbnb Source](https://www.kaggle.com/shanelev/seattle-airbnb-listings)  
   * [Seattle Airbnb Dataset](https://raw.githubusercontent.com/gbearden/r_course_evans_school/master/data/seattle_airbnb.csv)
@@ -126,7 +126,7 @@ R community members produce valuable content to help you learn how to program in
     + [R Markdown](https://rstudio.github.io/cheatsheets/rmarkdown.pdf). A useful reference for using R Markdown.
     + [Lubridate](https://rstudio.github.io/cheatsheets/lubridate.pdf). Dates in R are a pain in the butt. This cheat sheet and the lubridate library will make your life easier.  
 * [Karl Broman on data organization](http://kbroman.org/dataorg/). Prepare your data according to Karl's recommendations and R will become a lot easier. (The tip is relevant to all other KB recommendations.)
-* [Jose Manuel Magallanes on data collection and organization](https://www.amazon.com/Introduction-Science-Social-Policy-Research/dp/1107540259/ref=sr_1_1?ie=UTF8&qid=1504135785&sr=8-1&keywords=jose+manuel+magallanes). Jose teaches the Computational Thinking for Governance Analytics course at the Evans School. He published this book a few years ago.
+* [Jose Manuel Magallanes on data collection and organization](https://www.amazon.com/Introduction-Science-Social-Policy-Research/dp/1107540259/ref=sr_1_1?ie=UTF8&qid=1504135785&sr=8-1&keywords=jose+manuel+magallanes). Jose taught the Computational Thinking for Governance Analytics course at the Evans School. He published this book a few years ago.
 * [R Bloggers](https://www.r-bloggers.com/). All things R. Folks from various industries - many of whom are super smart with impressive R experience - share tips, tricks, and anecdotes here.
 * [stackoverflow](https://stackoverflow.com/questions/tagged/r). This is where you come when you get stuck. Google the problem you are having and you'll see a possible solution on the stackoverflow site. Guaranteed.
 * [Google R Style Guide](https://google.github.io/styleguide/Rguide.xml). Your code can get really messy really quickly. This guide can help.
