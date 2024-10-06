@@ -1,0 +1,216 @@
+---
+title: "Class 4"
+output: html_notebook
+---
+
+# Header 1
+## Header 2
+### Header 3
+#### Header 4
+
+Anything outside of chunk is a comment.
+
+```{r}
+airbnb <- read_csv('https://bit.ly/3oadz2L')
+climate <- read_csv('https://bit.ly/3kKErEb')
+```
+
+
+```{r}
+# Cmd+Option+I
+# This is a code chunk
+
+climate %>% 
+  filter(country %in% c('Brazil', 'China', 'India', 'Turkey', 'United States'))
+```
+
+
+```{r}
+airbnb %>% 
+  group_by(address) %>% 
+  summarise(
+    count = n()
+    ) %>%
+  ggplot(
+    aes(
+      x = address,
+      y = count, # Use y
+      fill = address
+      )
+    ) + 
+  geom_bar(stat = 'identity')
+```
+
+
+```{r}
+climate %>% 
+  filter(country %in% c('Brazil', 'China', 'India', 'Turkey', 'United States')) %>% 
+  group_by(country) %>% 
+  summarise(n = n()) %>% 
+  ggplot(aes(x = reorder(country, -n), y = n, fill = country)) + 
+  geom_bar(stat = 'identity') + 
+  labs(
+    x = 'Country'
+    , y = 'Number of Observations (#)'
+    , fill = element_blank()
+    , title = 'Number of observations by country'
+  ) + 
+  scale_y_continuous(labels = comma)
+
+```
+
+```{r}
+library(ggthemes)
+library(scales)
+
+airbnb %>% 
+  ggplot(aes(x = address, fill = room_type)) + 
+  geom_bar() + 
+  labs(
+    x = 'City'
+    , y = 'Number of Rentals (#)'
+    , fill = 'Check out these colors'
+    , title    = 'Room Types by City'
+    , subtitle = 'Shared Rooms are the Least Available Room Type'
+    ) + 
+  scale_y_continuous(labels = comma) + 
+  theme_economist() + 
+  scale_fill_manual(values = c("#2a9d8f", "#e9c46a" ,"#f4a261")) # scale_color_manual()
+```
+
+```{r}
+wacky_palette <- c("#FF0099", "#00CCFF", "#FF9900",  
+  "#33FF33", "#FF33CC", "#FFFF66", "#6600CC")  
+
+# \n is the code for a line break. 
+climate %>% 
+  filter(country %in% c('Brazil', 'China', 'India', 'Turkey', 'United States')) %>% 
+  group_by(country) %>% 
+  summarise(n = n()) %>% 
+  ggplot(aes(x = reorder(country, -n), y = n, fill = country)) + 
+  geom_bar(stat = 'identity') + 
+  labs(
+    x = 'Country', y = 'Number of Observations (#)', title = 'Number of observations by\ncountry',
+    fill = NULL
+    ) + 
+  scale_y_continuous(labels = comma) +
+  theme_wsj() + 
+  scale_fill_manual(values = wacky_palette)
+```
+
+```{r}
+climate %>% 
+  filter(
+    country == 'Brazil' 
+    & ! is.na(temp) 
+    & year < 2000
+  ) %>% 
+  mutate(century = if_else(year >= 1900, '20th Century', '19th Century')) %>% 
+  group_by(century, city) %>%   
+  summarise(
+    mean_temp = mean(temp) 
+    , median_temp = median(temp)
+    , max_temp = max(temp)
+  ) %>% 
+  arrange(city) %>%
+  ggplot(
+    aes(
+      x = reorder(city, -mean_temp), # Change the order of the bar, use "-" if desired
+      y = mean_temp, 
+      fill = century
+      )
+    ) + 
+  geom_bar(
+    stat = 'identity', 
+    position = 'dodge'
+    ) + 
+  labs(
+    x = 'City',
+    y = 'Mean Temperature (Celcius)', 
+    fill = NULL
+    ) + 
+  theme_hc() + 
+  scale_fill_manual(values = wacky_palette)
+```
+
+```{r}
+climate %>%
+  # filter(country %in% c("Ivory Coast", "China")) %>% 
+  group_by(year) %>%
+  summarise(uncertainty = mean(uncertainty, na.rm = TRUE)) %>% 
+  ggplot(
+    # Variables in aes() are used to map data to the plot
+    aes(
+      x = year, 
+      y = uncertainty,
+      )
+    ) +
+  geom_line(
+    color = "red",
+    linewidth = 1.5,
+    linetype = "dashed",
+    alpha = .6 # changes the transparency of the line/object
+    ) 
+# geom_bar(stat = "identity")
+```
+
+```{r}
+climate %>% 
+  ggplot(
+    aes(
+      x = temp
+      , y = uncertainty
+      )
+    ) + 
+  geom_point(alpha = .1)
+```
+
+
+```{r}
+airbnb %>% 
+  ggplot(aes(x = longitude, y = latitude, color = as.character(rating))) + 
+  geom_point(alpha = .6) + 
+  theme_bw() + 
+  labs(
+    x = 'Longitude'
+    , y = 'Latitude'
+    , title = 'Coordinates of Seattle-area Airbnbs'
+  )
+
+airbnb %>% 
+  mutate(rating_str = as.character(rating)) %>% 
+  ggplot(aes(x = longitude, y = latitude, color = rating_str)) + 
+  geom_point(alpha = .6) + 
+  theme_bw() + 
+  labs(
+    x = 'Longitude'
+    , y = 'Latitude'
+    , title = 'Coordinates of Seattle-area Airbnbs'
+    , color = 'Rating'
+  )
+```
+
+```{r}
+climate %>% 
+  filter(country == 'Brazil' & year >= 1850) %>% 
+  mutate(temp = (temp * 9/5) + 32) %>% 
+  group_by(year, city) %>% 
+  summarise(mean_temp = mean(temp, na.rm = TRUE)) %>% 
+  ggplot(aes(x = year, y = mean_temp, color = city)) + 
+  geom_line(linewidth = 1) + 
+  theme_bw() + 
+  scale_color_wsj() + 
+  labs(
+    x = 'Year'
+    , y = 'Mean Temperature'
+    , title = 'Temperatures in 6 Brazilian Cities, 1850 - present'
+    , color = NULL
+  )
+```
+
+```{r}
+airbnb %>% 
+  mutate(price_cat = if_else(price < 100, 'low', 'high')) %>% 
+  select(price_cat, price, everything())
+```
+

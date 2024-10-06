@@ -1,134 +1,87 @@
+# Write comments like this.
+# Everything that follow the hash is a comment in an R script.
 
-# Class 1
+# Short-cut to run code
+# command + return
 
+# Install tidyverse or any package with install.packages()
+install.packages("tidyverse")
 
-# Shortcuts ---------------------------------------------------------------
-
-# shift + control + c shortcut to comment
-# shift + control + r add section title 
-# control + enter OR command + enter to run a line of code
-
-
-# Installing tidyverse ----------------------------------------------------
-# You only have to do this once
-install.packages('tidyverse')
-
-
-# Loading tidyverse -------------------------------------------------------
-# You have to do this every time
+# Load library
 library(tidyverse)
 
+# Built-in datasets
+cars
+starwars # dataset that ships with tidyverse
 
-# Basics ------------------------------------------------------------------
+# Import data with read_csv()
+# Here we import data from a URL. You can also import a local file.
+airbnb <- read_csv('https://bit.ly/3oadz2L')
 
-# Example of how to create a variable.
-# You'll see "a" in the Environment tab
-a <- 1
+# Import climate data
+climate <- read_csv('https://bit.ly/3kKErEb')
 
-# Example of using descriptive statistics functions and the na.rm argument
-some_numbers <- c(1,2, NA, 4)
+# Use help to learn more about functions
+help(c)
 
+# Create a data object with `<-`
+some_numbers <- c(1, 2, 4)
+
+# min(), mean(), max(), and sd() are functions. c() is actually a function too!
+# Compute descriptive statistics
 min(some_numbers)
-mean(some_numbers)
+mean(some_numbers, na.rm = TRUE)
 max(some_numbers)
 sd(some_numbers)
-sum(some_numbers, na.rm = TRUE)
 
-# Use help() to look at the local dictionary
-help(lm)
-help(min)
-
-
-# Create a function with ChatGPT ------------------------------------------
-# Just about all functions have a body, output, and arguments
-
-# A function called sum_two_numbers that takes two arguments.
-# Argument 'x' represents the first number to be added.
-# Argument 'y' represents the second number to be added.
-
-sum_two_numbers <- function(x, y) {
-  # Calculate the sum of x and y and store it in the variable 'result'
-  result <- x + y
-  # Return the result as the output of the function
-  return(result)
+# My custom mean function
+# All functions have a body and an output
+# Functions are created using function() 
+compute_mean <- function(x) { 
+  # Calculate the sum of all values in `x`
+  x_sum <- sum(x, na.rm = TRUE)
+  # We'll learn more about the ! operator later
+  # Just know that the code below used to create `x_clean` removes NA values
+  x_clean <- x[!is.na(x)]
+  # Count the number of values in `x`
+  x_len <- length(x_clean)
+  # Divide `x_sum` by `x_len`
+  x_mean <- x_sum / x_len
+  # `return` is used to tell R the output of the function
+  return(x_mean)
 }
 
-sum_two_numbers(x = 1, y = 4)
+compute_mean(x = some_numbers)
 
 
-# Checking data types -----------------------------------------------------
-# Checking data types is important. Functions often work with specific data
-# types. The wrong data could result in the wrong output or an error.
-
-states <- c('Washington', 'Oregon', 'Idaho')
-
-class(states)
+pnw <- c('Washington', 'Oregon', 'Idaho')
+class(pnw)
 class(c('Washington', 'Oregon', 'Idaho'))
 
-is.factor(states)
-
-
-# Tibbles! ----------------------------------------------------------------
-# Tibbles are like spreadsheets in Excel, but they also contain metadata.
-# Specifically, they contain information about variable types and the dimensions
-# of the 2x2 data
-
+# Create a tibble with the tibble() function
 tibble(
   x = c(1:3)
   , y = c(4:6)
   , z = c('Washington', 'Oregon', 'Idaho')
 )
 
-# Note that the data frame does not include the tibble metadata
-data.frame(
-  x = c(1:3)
-  , y = c(4:6)
-  , z = c('Washington', 'Oregon', 'Idaho')
-)
+# Refer to specific variable in a tibble with $ or the index like starwars[,1]
+# Continue my comment here.
+max(starwars$height, na.rm = TRUE)
+starwars[,1]
 
+# Coerce characters into factors when using summary
+summary(as.factor(starwars$homeworld))
+table(starwars$homeworld)["Iridonia"]
 
+# See names of columns with ls()
+ls(starwars)
+ls(airbnb)
 
-starwars[,1] # pulls name from starwars using the index. Still a tibble column.
-starwars$name # pull name from starwars using $. Creates a string.
-starwars[1:2,] # The first two rows of a tibble.
+# Count the number of variables in the data
+num_vars <- length(ls(airbnb))
 
+# Sort alphabetically the values in a string
+sort(starwars$name)
 
-# Exercise 1 --------------------------------------------------------------
-
-# Load data
-airbnb <- read_csv('https://bit.ly/3oadz2L')
-
-# See slides for questions and answers
-
-
-# Functions to explore tibbles and vectors --------------------------------
-# tibbles
-head(airbnb)
-tail(airbnb, n = 2)
-
-arrange(airbnb, address)
-arrange(.data = airbnb, address)
-arrange(airbnb, desc(reviews))
-
-airbnb$room_type
-
-summary(airbnb)
-
-head(arrange(airbnb, bathrooms), n = 4)
-
-airbnb_asc_bathrooms <- arrange(airbnb, bathrooms)
-head(airbnb_asc_bathrooms, n = 4)
-
-airbnb
-airbnb_asc_bathrooms
-
-# dim(), nrow(), and ncol()
-dim(airbnb)
-nrow(airbnb)
-ncol(airbnb)
-
-# Vectors
-length(airbnb$host_id)
-
-sort(unique(airbnb$bedrooms))
 
