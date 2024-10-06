@@ -68,9 +68,9 @@ We will also begin to explore data summary techniques and troubleshooting tactic
 
 At the end of first class, students should be familiar with the R interface, know how to perform basic operations, calculate summary statistics, and walk through a series of steps to troubleshoot code.
 
-Helpful materials: [example .R file](https://github.com/gbearden/r_course_evans_school/blob/master/notes/example_script.R), [base R cheat sheet](https://iqss.github.io/dss-workshops/R/Rintro/base-r-cheat-sheet.pdf)
+Helpful materials: [example .R file](https://github.com/gbearden/r_course_evans_school/blob/master/notes/example_script.R), [base R cheat sheet](https://iqss.github.io/dss-workshops/R/Rintro/base-r-cheat-sheet.pdf), [notes](https://github.com/gbearden/r_course_evans_school/blob/master/notes/class_1.R)
 
-#### October 10
+#### [October 10](https://gbearden.github.io/r_course_evans_school/slides/part_2/)
 
 The second class will focus on data processing. We will use a variety of methods to manipulate data and prepare it for analysis. The `tidyverse` will be emphasized. Students will learn how to manipulate data at various levels, including at the dataset-level, the variable-level, and the value-level.
 
