@@ -2,7 +2,7 @@
 title: "Part 2 - Introduction to the Tidyverse"
 author: "Graham Bearden"
 institute: "University of Washington"
-date: "October 10, 2023"
+date: "October 10, 2024"
 output:
   xaringan::moon_reader:
     lib_dir: libs
@@ -25,9 +25,10 @@ opts_chunk$set(warning=FALSE, message=FALSE)
 
 airbnb <- read_csv('https://bit.ly/3oadz2L', col_types = cols())
 climate <- read_csv('https://bit.ly/3kKErEb', col_types = cols())
+mba <- read_csv("https://bit.ly/4evYpeW", col_types = cols())
 
-colombia <- climate %>% 
-  filter(! is.na(temp) & year > 2000 & country == 'Colombia') %>% 
+colombia <- climate |> 
+  filter(! is.na(temp) & year > 2000 & country == 'Colombia') |> 
   transmute(
     year
     , month
@@ -45,19 +46,20 @@ colombia <- climate %>%
 - How to import data  
 - Regularly used data summary functions  
 - Assignment operator (`<-`)
+- Basic troubleshooting
 
 ---
 
 # What we'll learn today  
 
-- A bit about troubleshooting
 - Creating and updating variables  
 - Subsetting tibbles/data frames  
 - Aggregation  
+- Reshaping (or pivoting) data
 
 ---
 
-# Troubleshooting your R code
+# Reminder on how to troubleshoot code
 
 Make sure...
 
@@ -81,69 +83,67 @@ Why does this code throw an error in R?
 
 ---
 
-# Refresher with climate data
+# Refresher with MBA admissions data
 
-By day you're an analyst at the City of Seattle; by night you're a climate analyst at the Earth Institute. Over the next four weeks, you will analyze [climate data](https://www.kaggle.com/sohelranaccselab/global-climate-change) to answer questions that help the Earth Institute understand temperature and temperature change in cities and countries around the world. Use slides [38](https://gbearden.github.io/r_course_evans_school/slides/part_1/#38) and [44](https://gbearden.github.io/r_course_evans_school/slides/part_1/#44) from the previous class to help answer these questions.
-
---
-
-**Exercise - 10 minutes**  
-- What is the earliest `year` in the `climate` dataset?  
-- What is the range of `uncertainty` values?  
-- How many cities and countries are in the dataset?  
-- In how many rows in the dataset is Japan the `country` value?  
+You can find the a description of the MBA admissions data [here](https://www.kaggle.com/datasets/taweilo/mba-admission-dataset). The data were generated from the University of Pennsylvania Wharton Class of 2025. Use slides functions to explore [tibbles](https://gbearden.github.io/r_course_evans_school/slides/part_1/#38) and [vectors](https://gbearden.github.io/r_course_evans_school/slides/part_1/#44) from the previous class to help answer these questions.
 
 --
 
-<b>Begin the exercise by importing the climate dataset in R Studio</b>  
+**Exercise 1 - 8 minutes**  
+- What is the lowest `gpa` in the `mba` dataset?  
+- What is the average number of years of work experience (`work_exp`)?  
+- How many applicants are international students?  
+- In how many rows in the dataset is Consulting the `work_industry` value?  
+
+--
+
+<b>Begin the exercise by importing the mba admissions dataset in R Studio</b>  
 ```r
-climate <- read_csv('https://bit.ly/3kKErEb')
+mba <- read_csv("https://bit.ly/4evYpeW")
 ```
 
 ```{r, echo = FALSE}
-countdown(minutes = 10, seconds = 0)
+countdown(minutes = 8, seconds = 0)
 ```
 
 ---
 
-# Refresher with climate data
+# Refresher with MBA admissions data
 
-**Exercise - 10 minutes**  
-- What is the earliest `year` in the `climate` dataset?  
-- What is the range of `uncertainty` values?  
-- How many cities and countries are in the dataset?  
-- In how many rows in the dataset is Japan the `country` value?  
+**Exercise 1 - 8 minutes**  
+- What is the lowest `gpa` in the `mba` dataset?  
+- What is the average number of years of work experience (`work_exp`)?  
+- How many applicants are international students?  
+- In how many rows in the dataset is Consulting the `work_industry` value?  
 
 ```{r, echo = TRUE, collapse=TRUE}
-min(climate$year)
+min(mba$gpa)
 ```
 
 --
 
 ```{r, echo = TRUE, collapse=TRUE}
-min(climate$uncertainty, na.rm = TRUE)
-max(climate$uncertainty, na.rm = TRUE)
+mean(mba$work_exp, na.rm = TRUE)
 ```
 
 --
 
 ```{r, echo = TRUE, collapse=TRUE}
-length(unique(climate$city))
-length(unique(climate$country))
+table(mba$international)
 ```
 
 ---
 
-# Refresher with climate data
+# Refresher with MBA admissions data
 
-**Exercise - 10 minutes**  
-- What is the earliest `year` in the `climate` dataset?  
-- What is the range of `uncertainty` values?  
-- How many cities and countries are in the dataset?  
-- In how many rows in the dataset is Japan the `country` value?  
+**Exercise 1 - 8 minutes**  
+- What is the lowest `gpa` in the `mba` dataset?  
+- What is the average number of years of work experience (`work_exp`)?  
+- How many applicants are international students?  
+- In how many rows in the dataset is Consulting the `work_industry` value?  
 
 ```{r, echo = TRUE, collapse=TRUE}
-table(climate$country)['Japan']
+table(mba$work_industry)['Consulting']
 ```
 
 ---
@@ -168,9 +168,9 @@ select(airbnb, host_id, reviews, rating, price)
 ```
 
 ```{r, echo = FALSE, collapse=TRUE}
-head(select(airbnb, host_id, reviews, rating, price), 3) %>% 
-  kbl() %>% 
-  kable_classic() %>% 
+head(select(airbnb, host_id, reviews, rating, price), 3) |> 
+  kbl() |> 
+  kable_classic() |> 
   kable_styling(full_width = F, position = 'float_left')
 ```
 
@@ -190,9 +190,9 @@ select(airbnb_2, -rating)
 ```
 
 ```{r, echo = FALSE, collapse=TRUE}
-head(select(select(airbnb, host_id, reviews, rating, price), -rating), 3) %>% 
-  kbl() %>% 
-  kable_classic() %>% 
+head(select(select(airbnb, host_id, reviews, rating, price), -rating), 3) |> 
+  kbl() |> 
+  kable_classic() |> 
   kable_styling(full_width = F, position = 'float_left')
 ```
 
@@ -212,9 +212,9 @@ select(airbnb_2, host_id, price, everything())
 ```
 
 ```{r, echo = FALSE, collapse=TRUE}
-head(select(select(airbnb, host_id, reviews, rating, price), host_id, price, everything()), 3) %>% 
-  kbl() %>% 
-  kable_classic() %>% 
+head(select(select(airbnb, host_id, reviews, rating, price), host_id, price, everything()), 3) |> 
+  kbl() |> 
+  kable_classic() |> 
   kable_styling(full_width = F, position = 'float_left')
 ```
 
@@ -222,8 +222,8 @@ head(select(select(airbnb, host_id, reviews, rating, price), host_id, price, eve
 
 # Make your code as readable as possible
 
-- A whole course could be taught on formatting code
-- For our course, use the pipe operator (`%>%`) when working with **tibbles/data frames**  
+- A whole course could be taught on how to format code
+- For our course, use the pipe operator (`|>`) when working with **tibbles/data frames**  
 
 --
 
@@ -234,31 +234,34 @@ select(select(airbnb, host_id, reviews, rating, price), host_id, price, everythi
 
 **Good** 
 ```r
-airbnb %>%
-  select(host_id, reviews, rating, price) %>% 
-  select(host_id, price, everything())
+airbnb |>
+  select(host_id, reviews, rating, price) |> 
+  select(host_id, price, everything()) 
 ```
 
 **Use pipes if possible, but this is okay** 
 ```r
 airbnb_2 <- select(airbnb, host_id, reviews, rating, price)
-select(airbnb_2, host_id, price, everything())
+select(airbnb_2, host_id, price, everything()) 
 ```
 
 ---
 
 # Make your code as readable as possible
 
-- Use the pipe operator (`%>%`) when working with **tibbles/data frames**  
+- Use the pipe operator (`|>`) when working with **tibbles/data frames**  
   - Easier to read and troubleshoot  
   - Easier to comment (write end of line comments or above line comments)
   - Modular
   - Makes data management within your script easier  
   - Style-wise, pipes are the present and future
+- Do not use the operator when you need to:  
+  - Refer to a data object created at an intermediate step
+  - Process more than 1 distinct data object
 
 ```r
-airbnb %>%
-  select(host_id, reviews, rating, price) %>% 
+airbnb |>
+  select(host_id, reviews, rating, price) |> 
   select(host_id, price, everything()) 
 ```
 
@@ -276,7 +279,7 @@ airbnb %>%
 --
 
 ```r
-airbnb %>% 
+airbnb |> 
   mutate(
     cost_per_num_accom = price / accommodates,
     mean_price = mean(price)
@@ -375,7 +378,7 @@ if_else(! 237 %in% 200:300, 'yes', 'no')
 - Use `if_else()` within `mutate()`
 
 ```r
-airbnb %>% 
+airbnb |> 
   mutate(
     cost_per_num_accom = price / accommodates,
     mean_price = mean(price),
@@ -389,25 +392,25 @@ airbnb %>%
 # Select, <span style="color:#6DA34D">create</span>, and rename variables 
 
 ```r
-airbnb %>% 
+airbnb |> 
   mutate(
     cost_per_num_accom = price / accommodates,
     mean_price = mean(price),
     seattle_address = if_else(address == 'Seattle', 'y', NA),
     large = if_else(accommodates > 5, 'y', NA)
-    ) %>%
+    ) |>
   select(room_id, host_id, cost_per_num_accom, mean_price, seattle_address, large)
 ```
 
 ```{r, echo = FALSE, collapse=TRUE}
-airbnb %>% 
+airbnb |> 
   mutate(
     cost_per_num_accom = price / accommodates,
     mean_price = mean(price),
     seattle_address = if_else(address == 'Seattle', 'y', NA),
     large = if_else(accommodates > 5, 'y', NA)
-    ) %>%
-  select(room_id, host_id, cost_per_num_accom, mean_price, seattle_address, large) %>%
+    ) |>
+  select(room_id, host_id, cost_per_num_accom, mean_price, seattle_address, large) |>
   head(5) 
 ```
 
@@ -442,11 +445,11 @@ countdown(minutes = 6, seconds = 0)
 - Only report the following variables in the output: `country`, `city`, `high_uncertainty` and `winter`
 
 ```r
-climate %>% 
+climate |> 
   mutate(
     high_uncertainty = if_else(uncertainty > 1.5, 1, 0),
     winter = if_else(month %in% c(1, 2, 12), 1, 0)
-    ) %>%
+    ) |>
   select(country, city, high_uncertainty, winter)
 ```
 
@@ -455,21 +458,21 @@ climate %>%
 # Select, <span style="color:#6DA34D">create</span>, and rename variables 
 
 ```r
-climate %>% 
+climate |> 
   mutate(
     high_uncertainty = if_else(uncertainty > 1.5, 1, 0),
     winter = if_else(month %in% c(1, 2, 12), 1, 0)
-    ) %>%
+    ) |>
   select(country, city, high_uncertainty, winter)
 ```
 
 ```{r, echo = FALSE, collapse=TRUE}
-climate %>% 
+climate |> 
   mutate(
     high_uncertainty = if_else(uncertainty > 1.5, 1, 0),
     winter = if_else(month %in% c(1, 2, 12), 1, 0)
-    ) %>%
-  select(country, city, high_uncertainty, winter) %>%
+    ) |>
+  select(country, city, high_uncertainty, winter) |>
   head()
 ```
 
@@ -494,18 +497,18 @@ document.getElementById('revealButton').addEventListener('click', function() {
 --
 
 ```r
-climate %>% 
+climate |> 
   mutate(
     high_uncertainty = if_else(uncertainty > 1.5, 1, 0),
     winter = if_else(month %in% c(1, 2, 12), 1, 0)
-    ) %>%
+    ) |>
   select(country, city, high_uncertainty, winter)
 ```
 
 --
 
 ```r
-climate %>% 
+climate |> 
   transmute(
     country,
     city,
@@ -531,7 +534,7 @@ climate %>%
 --
 
 ```r
-airbnb %>% 
+airbnb |> 
   rename(
     city = address,
     cost = price,
@@ -551,7 +554,7 @@ airbnb %>%
 - Each variable transformation is comma-separated  
 
 ```r
-airbnb %>% 
+airbnb |> 
   mutate(
     city = address,
     cost = price,
@@ -562,10 +565,10 @@ airbnb %>%
 --
 
 ```r
-airbnb %>% 
+airbnb |> 
   transmute(
-    city = address
-    cost = price
+    city = address,
+    cost = price,
     description = name
     ) 
 ```
@@ -595,10 +598,10 @@ countdown(minutes = 6, seconds = 0)
   - In `temp`, change `NA` values to `0`  
 
 ```r
-climate %>% 
+climate |> 
   transmute(
-    year
-    location = city
+    year,
+    location = city,
     temp = if_else(is.na(temp), 0, temp)
     ) 
 ```
@@ -617,8 +620,8 @@ class: inverse, middle, center
 - Operators for conditions are the same as for `if_else()`: `==`, `<`, `<=`, `>`, `>=`, `!=`, `%in%`, `!`, `is.na()`
 
 ```r
-airbnb %>% 
-  filter(address != 'Seattle') %>% 
+airbnb |> 
+  filter(address != 'Seattle') |> 
   select(room_id, host_id, address)
 ```
 
@@ -631,8 +634,8 @@ airbnb %>%
   - If there are two or more sets of conditions, wrap conditions in `()` or use more than one `filter()`
 
 ```r
-airbnb %>% 
-  filter(price > 50 & price < 100 & room_type == 'Entire home/apt') %>% 
+airbnb |> 
+  filter(price > 50 & price < 100 & room_type == 'Entire home/apt') |> 
   select(room_id, host_id, address, room_type, rating, name)
 ```
 
@@ -647,13 +650,13 @@ airbnb %>%
 --
 
 ```{r, echo = TRUE, collapse=TRUE}
-airbnb %>% sample_n(3) %>% select(room_id, host_id, address, room_type, price, name)
+airbnb |> sample_n(3) |> select(room_id, host_id, address, room_type, price, name)
 ```
 
 --
 
 ```{r, echo = TRUE, collapse=TRUE}
-airbnb %>% sample_n(3) %>% select(room_id, host_id, address, room_type, price, name)
+airbnb |> sample_n(3) |> select(room_id, host_id, address, room_type, price, name)
 ```
 
 ---
@@ -694,8 +697,8 @@ countdown(minutes = 12, seconds = 0)
   - With extra time, annotate your code (feel free to use ChatGPT)  
 
 ```r
-colombia <- climate %>% 
-  filter(! is.na(temp) & year > 2000 & country == 'Colombia') %>% 
+colombia <- climate |> 
+  filter(! is.na(temp) & year > 2000 & country == 'Colombia') |> 
   transmute(
     year,
     month,
@@ -715,8 +718,8 @@ colombia <- climate %>%
 
 ```{r, echo = TRUE, collapse=TRUE}
 nrow(colombia)
-mean(colombia$fahrenheit) # colombia %>% pull(fahrenheit) %>% mean()
-unique(colombia$city) # colombia %>% pull(city) %>% unique()
+mean(colombia$fahrenheit) # colombia |> pull(fahrenheit) |> mean()
+unique(colombia$city) # colombia |> pull(city) |> unique()
 ```
 
 ---
@@ -743,7 +746,7 @@ class: inverse, middle, center
 
 - In `group_by()`, list the variables by which you want to aggregate data
 - In `summarise()`, create a variable and define the variable with an aggregation function
-- Use `%>%` to 'link' `group_by()` and `summarise()`
+- Use `|>` to 'link' `group_by()` and `summarise()`
 - Aggregation functions
   - `n()`, `n_distinct()`, `sum()`, `mean()`, `max()`, `min()`  
 - Perform multiple aggregations in a single `summarise()` function  
@@ -756,8 +759,8 @@ In `airbnb`, on average which city is most costly per night?
 --
 
 ```r
-airbnb %>% 
-  group_by(address) %>% 
+airbnb |> 
+  group_by(address) |> 
   summarise(mean_cost = mean(price))
 ```
 
@@ -771,8 +774,8 @@ In `airbnb`, how many listings of each room type are there?
 --
 
 ```r
-airbnb %>% 
-  group_by(room_type) %>% 
+airbnb |> 
+  group_by(room_type) |> 
   summarise(n_listings = n())
 ```
 
@@ -783,8 +786,8 @@ How do you update the code to count the number of room type listings by city?
 --
 
 ```r
-airbnb %>% 
-  group_by(room_type, address) %>% 
+airbnb |> 
+  group_by(room_type, address) |> 
   summarise(n_listings = n())
 ```
 
@@ -795,9 +798,9 @@ How do you further update the code to only see rows for Kirkland?
 --
 
 ```r
-airbnb %>% 
-  group_by(room_type, address) %>% 
-  summarise(n_listings = n()) %>% 
+airbnb |> 
+  group_by(room_type, address) |> 
+  summarise(n_listings = n()) |> 
   filter(address == 'Kirkland')
 ```
 
@@ -809,9 +812,9 @@ airbnb %>%
 In `airbnb`, how many listings of each room type are there?
 
 ```r
-airbnb %>% 
-  group_by(room_type, address) %>% 
-  summarise(n_listings = n()) %>% 
+airbnb |> 
+  group_by(room_type, address) |> 
+  summarise(n_listings = n()) |> 
   filter(address == 'Kirkland')
 ```
 
@@ -827,10 +830,10 @@ In `airbnb`, how many listings of each room type are there?
 Building on the code above, how would you create a variable that indicates whether there is a deficit of listings for the three `room_types` (let's say "deficit" is defined as fewer than 100 hosts)?
 
 ```r
-airbnb %>% 
-  group_by(room_type, address) %>% 
-  summarise(n_listings = n()) %>% 
-  filter(address == 'Kirkland') %>% 
+airbnb |> 
+  group_by(room_type, address) |> 
+  summarise(n_listings = n()) |> 
+  filter(address == 'Kirkland') |> 
   mutate(listings_deficit = ifelse(n_listings < 100, 'y', 'n'))
 ```
 
@@ -857,8 +860,137 @@ countdown(minutes = 6, seconds = 0)
 - The output should only contain `month` and `mean_temp` variables
 
 ```r
-climate %>% 
-  filter(country == 'China') %>% 
-  group_by(month) %>% 
+climate |> 
+  filter(country == 'China') |> 
+  group_by(month) |> 
   summarise(mean_temp = mean(temp, na.rm = TRUE))
+```
+
+---
+class: inverse, middle, center
+
+# Reshaping a tibble or data frame
+
+---
+
+# Reshaping
+
+- `pivot_longer()` and `pivot_wider()` are the functions we use to reshape data
+- Reshape means to turn...
+  - Columns into rows (with `pivot_longer()`), so the new dataset is narrower, has more rows, and fewer columns than the old dataset
+  - Rows into columns (with `pivot_wider()`), so the new dataset is wider and has fewer rows than the old dataset
+  
+<img src="http://garrettgman.github.io/images/tidy-9.png" style="height: 350px"/>
+
+---
+
+# Reshaping
+
+- `pivot_longer()` and `pivot_wider()` are the functions we use to reshape data
+- Reshape means to turn...
+  - Columns into rows (with `pivot_longer()`), so the new dataset is narrower, has more rows, and fewer columns than the old dataset
+  - Rows into columns (with `pivot_wider()`), so the new dataset is wider and has fewer rows than the old dataset
+  
+<img src="http://garrettgman.github.io/images/tidy-8.png" style="height: 400px"/>
+
+---
+
+# Reshaping
+
+`pivot_longer()`
+- Turn columns into rows
+- Often data are **easier to analyze** when stored in columns
+- 4 arguments
+  - `data`, Your tibble 
+  - `cols`, which columns you want turn into rows
+  - `names_to`, name of column for column names
+  - `values_to`, name of column for values in columns
+  
+```r
+airbnb %>% 
+  select(room_id, host_id, room_type, address, reviews, rating) %>% 
+  pivot_longer(
+    cols = c(reviews, rating)
+    , names_to = 'rental_characteristics'
+    , values_to = 'values'
+    )
+  
+```
+
+---
+
+# Reshaping
+
+`pivot_wider()`
+- Turn rows into columns
+  - Good use of screen space
+  - Data may be **easier to read** when denormalized (or are in a wider format)
+  - Useful format when reporting + useful setting up calculations in specific situations
+- 3 arguments
+  - `data`, your tibble  
+  - `names_from`, name of column that contains the names of the new columns
+  - `values_from`, name of columns that contains the values of the new columns
+
+```r
+airbnb %>% 
+  group_by(address, room_type) %>% 
+  summarise(number_of_rentals = n(), .groups = 'drop') %>% 
+  pivot_wider(names_from = room_type, values_from = number_of_rentals)
+```
+
+--
+
+```r
+airbnb %>% 
+  group_by(address, room_type) %>% 
+  summarise(number_of_rentals = n(), .groups = 'drop') %>% 
+  pivot_wider(names_from = room_type, values_from = number_of_rentals) %>%
+  mutate(private_or_shared = `Private room` + `Shared room`)
+```
+
+---
+
+# Exercise - 10 minutes
+
+With the `climate` data, report the mean temperatures for `"Angola"`, `"Ivory Coast"`, `"Ethiopia"`
+, and `"Kenya"` in the years `1850`, `1900`, `1950`, and `2000`
+- There should be one row per country
+- You should pivot the data so the years are columns like in the example 
+- In this exercise you will use `filter()`, `group_by()`, `summarise()`, and `pivot_wider()`
+
+```{r, echo = FALSE}
+countdown(minutes = 10, seconds = 0)
+```
+
+---
+
+# Exercise - 10 minutes
+
+**Exercise #1 hint**
+```{r, echo = FALSE, warning=FALSE, message=FALSE}
+climate %>% 
+  filter(
+    country %in% c('Angola', 'Ivory Coast', 'Ethiopia', 'Kenya') 
+    & year %in% c(1850, 1900, 1950, 2000)
+  ) %>% 
+  group_by(country, year) %>% 
+  summarise(temp = mean(temp), .groups = 'drop') %>% 
+  pivot_wider(names_from = year, values_from = temp, names_sort = TRUE) %>% 
+  mutate(across(.cols = ! contains('country'), ~ case_when(is.numeric(.x) ~ '-'))) %>% 
+  as.data.frame
+```
+
+---
+
+# Exercise - 10 minutes
+
+```r
+climate %>% 
+  filter(
+    country %in% c('Angola', 'Ivory Coast', 'Ethiopia', 'Kenya') 
+    & year %in% c(1850, 1900, 1950, 2000)
+  ) %>% 
+  group_by(country, year) %>% 
+  summarise(temp = mean(temp), .groups = 'drop') %>% 
+  pivot_wider(names_from = year, values_from = temp, names_sort = TRUE)
 ```
