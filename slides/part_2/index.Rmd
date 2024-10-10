@@ -90,14 +90,14 @@ You can find the a description of the MBA admissions data [here](https://www.kag
 --
 
 **Exercise 1 - 8 minutes**  
-- What is the lowest `gpa` in the `mba` dataset?  
+- What is the lowest `gpa` in the `mba` tibble?  
 - What is the average number of years of work experience (`work_exp`)?  
 - How many applicants are international students?  
-- In how many rows in the dataset is Consulting the `work_industry` value?  
+- In how many rows in the tibble is Consulting the `work_industry` value?  
 
 --
 
-<b>Begin the exercise by importing the mba admissions dataset in R Studio</b>  
+<b>Begin the exercise by importing the mba admissions data in R Studio</b>  
 ```r
 mba <- read_csv("https://bit.ly/4evYpeW")
 ```
@@ -111,10 +111,10 @@ countdown(minutes = 8, seconds = 0)
 # Refresher with MBA admissions data
 
 **Exercise 1 - 8 minutes**  
-- What is the lowest `gpa` in the `mba` dataset?  
+- What is the lowest `gpa` in the `mba` tibble?  
 - What is the average number of years of work experience (`work_exp`)?  
 - How many applicants are international students?  
-- In how many rows in the dataset is Consulting the `work_industry` value?  
+- In how many rows in the tibble is Consulting the `work_industry` value?  
 
 ```{r, echo = TRUE, collapse=TRUE}
 min(mba$gpa)
@@ -137,10 +137,10 @@ table(mba$international)
 # Refresher with MBA admissions data
 
 **Exercise 1 - 8 minutes**  
-- What is the lowest `gpa` in the `mba` dataset?  
+- What is the lowest `gpa` in the `mba` tibble?  
 - What is the average number of years of work experience (`work_exp`)?  
 - How many applicants are international students?  
-- In how many rows in the dataset is Consulting the `work_industry` value?  
+- In how many rows in the tibble is Consulting the `work_industry` value?  
 
 ```{r, echo = TRUE, collapse=TRUE}
 table(mba$work_industry)['Consulting']
@@ -155,8 +155,8 @@ class: inverse, middle, center
 
 # <span style="color:#6DA34D">Select</span>, create, and rename variables 
 
-- `select()` keeps the named variables from the dataset
-- You can remove variables from the dataset with `-`
+- `select()` keeps the named variables from the tibble
+- You can remove variables from the tibble with `-`
 - You may use [selection helpers](https://dplyr.tidyverse.org/reference/select.html)
   - For example, `everything()`
 - Use `'``'` for multi-word variables and variable names that begin with numbers
@@ -178,8 +178,8 @@ head(select(airbnb, host_id, reviews, rating, price), 3) |>
 
 # <span style="color:#6DA34D">Select</span>, create, and rename variables 
 
-- `select()` keeps the named variables from the dataset
-- You can remove variables from the dataset with `-`
+- `select()` keeps the named variables from the tibble
+- You can remove variables from the tibble with `-`
 - You may use [selection helpers](https://dplyr.tidyverse.org/reference/select.html)
   - For example, `everything()`
 - Use `'``'` for multi-word variables and variable names that begin with numbers
@@ -200,8 +200,8 @@ head(select(select(airbnb, host_id, reviews, rating, price), -rating), 3) |>
 
 # <span style="color:#6DA34D">Select</span>, create, and rename variables
 
-- `select()` keeps the named variables from the dataset
-- You can remove variables from the dataset with `-`
+- `select()` keeps the named variables from the tibble
+- You can remove variables from the tibble with `-`
 - You may use [selection helpers](https://dplyr.tidyverse.org/reference/select.html)
   - For example, `everything()`
 - Use `'``'` for multi-word variables and variable names that begin with numbers
@@ -419,7 +419,7 @@ airbnb |>
 # Select, <span style="color:#6DA34D">create</span>, and rename variables 
 
 <b>Exercise - 6 minutes</b>  
-- With the `climate` dataset, create variables called `high_uncertainty` and `winter`
+- With the `climate` data, create variables called `high_uncertainty` and `winter`
 - In `high_uncertainty`, flag with a `1` all observations where `uncertainty` is greater than 1.5. All other rows should have a `0`.  
 - In `winter`, flag with a `1` all observations where month is a 1, 2, 12.  
 - Only report the following variables in the output: `country`, `city`, `high_uncertainty` and `winter`
@@ -439,7 +439,7 @@ countdown(minutes = 6, seconds = 0)
 # Select, <span style="color:#6DA34D">create</span>, and rename variables 
 
 <b>Exercise - 6 minutes</b>  
-- With the `climate` dataset, create variables called `high_uncertainty` and `winter`
+- With the `climate` data, create variables called `high_uncertainty` and `winter`
 - In `high_uncertainty`, flag with a `1` all observations where `uncertainty` is greater than 1.5. All other rows should have a `0`  
 - In `winter`, flag with a `1` all observations where month is a 1, 2, 12.  
 - Only report the following variables in the output: `country`, `city`, `high_uncertainty` and `winter`
@@ -664,7 +664,7 @@ airbnb |> sample_n(3) |> select(room_id, host_id, address, room_type, price, nam
 # Exercise - 12 minutes
 
 .pull-left[
-- Create a dataset called `colombia` that meets these conditions:  
+- Create a tibble called `colombia` that meets these conditions:  
   - Contains `temp` values not equal to `NA`  
   - Contains data for 'Colombia' only
   - Contains no dates prior to January 2001
@@ -688,7 +688,7 @@ countdown(minutes = 12, seconds = 0)
 
 # Exercise - 12 minutes
 
-- Create a dataset called `colombia` that meets these conditions  
+- Create a tibble called `colombia` that meets these conditions  
   - Contains `temp` values not equal to `NA`  
   - Contains data for 'Colombia' only
   - Contains no dates prior to January 2001
@@ -841,7 +841,7 @@ airbnb |>
 
 # Exercise - 6 minutes
 
-- With the `climate` dataset, calculate the monthly mean temperature for all cities in China  
+- With the `climate` data, calculate the monthly mean temperature for all cities in China  
 - The output should only contain `month` and `mean_temp` variables
 
 ```r
@@ -856,7 +856,7 @@ countdown(minutes = 6, seconds = 0)
 
 # Exercise - 6 minutes
 
-- With the `climate` dataset, calculate the monthly mean temperature for all cities in China  
+- With the `climate` data, calculate the monthly mean temperature for all cities in China  
 - The output should only contain `month` and `mean_temp` variables
 
 ```r
@@ -877,8 +877,8 @@ class: inverse, middle, center
 
 - `pivot_longer()` and `pivot_wider()` are the functions we use to reshape data
 - Reshape means to turn...
-  - Columns into rows (with `pivot_longer()`), so the new dataset is narrower, has more rows, and fewer columns than the old dataset
-  - Rows into columns (with `pivot_wider()`), so the new dataset is wider and has fewer rows than the old dataset
+  - Columns into rows (with `pivot_longer()`), so the new tibble is narrower, has more rows, and fewer columns than the old tibble
+  - Rows into columns (with `pivot_wider()`), so the new tibble is wider and has fewer rows than the old tibble
   
 <img src="http://garrettgman.github.io/images/tidy-9.png" style="height: 350px"/>
 
@@ -888,8 +888,8 @@ class: inverse, middle, center
 
 - `pivot_longer()` and `pivot_wider()` are the functions we use to reshape data
 - Reshape means to turn...
-  - Columns into rows (with `pivot_longer()`), so the new dataset is narrower, has more rows, and fewer columns than the old dataset
-  - Rows into columns (with `pivot_wider()`), so the new dataset is wider and has fewer rows than the old dataset
+  - Columns into rows (with `pivot_longer()`), so the new tibble is narrower, has more rows, and fewer columns than the old tibble
+  - Rows into columns (with `pivot_wider()`), so the new tibble is wider and has fewer rows than the old tibble
   
 <img src="http://garrettgman.github.io/images/tidy-8.png" style="height: 400px"/>
 

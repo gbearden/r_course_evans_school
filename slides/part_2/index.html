@@ -90,19 +90,19 @@ You can find the a description of the MBA admissions data [here](https://www.kag
 --
 
 **Exercise 1 - 8 minutes**  
-- What is the lowest `gpa` in the `mba` dataset?  
+- What is the lowest `gpa` in the `mba` tibble?  
 - What is the average number of years of work experience (`work_exp`)?  
 - How many applicants are international students?  
-- In how many rows in the dataset is Consulting the `work_industry` value?  
+- In how many rows in the tibble is Consulting the `work_industry` value?  
 
 --
 
-&lt;b&gt;Begin the exercise by importing the mba admissions dataset in R Studio&lt;/b&gt;  
+&lt;b&gt;Begin the exercise by importing the mba admissions data in R Studio&lt;/b&gt;  
 ```r
 mba &lt;- read_csv("https://bit.ly/4evYpeW")
 ```
 
-<div class="countdown" id="timer_da9f4ac9" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
+<div class="countdown" id="timer_c591bda0" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
 <div class="countdown-controls"><button class="countdown-bump-down">&minus;</button><button class="countdown-bump-up">&plus;</button></div>
 <code class="countdown-time"><span class="countdown-digits minutes">08</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
@@ -112,10 +112,10 @@ mba &lt;- read_csv("https://bit.ly/4evYpeW")
 # Refresher with MBA admissions data
 
 **Exercise 1 - 8 minutes**  
-- What is the lowest `gpa` in the `mba` dataset?  
+- What is the lowest `gpa` in the `mba` tibble?  
 - What is the average number of years of work experience (`work_exp`)?  
 - How many applicants are international students?  
-- In how many rows in the dataset is Consulting the `work_industry` value?  
+- In how many rows in the tibble is Consulting the `work_industry` value?  
 
 
 ``` r
@@ -146,10 +146,10 @@ table(mba$international)
 # Refresher with MBA admissions data
 
 **Exercise 1 - 8 minutes**  
-- What is the lowest `gpa` in the `mba` dataset?  
+- What is the lowest `gpa` in the `mba` tibble?  
 - What is the average number of years of work experience (`work_exp`)?  
 - How many applicants are international students?  
-- In how many rows in the dataset is Consulting the `work_industry` value?  
+- In how many rows in the tibble is Consulting the `work_industry` value?  
 
 
 ``` r
@@ -167,8 +167,8 @@ class: inverse, middle, center
 
 # &lt;span style="color:#6DA34D"&gt;Select&lt;/span&gt;, create, and rename variables 
 
-- `select()` keeps the named variables from the dataset
-- You can remove variables from the dataset with `-`
+- `select()` keeps the named variables from the tibble
+- You can remove variables from the tibble with `-`
 - You may use [selection helpers](https://dplyr.tidyverse.org/reference/select.html)
   - For example, `everything()`
 - Use `'``'` for multi-word variables and variable names that begin with numbers
@@ -216,8 +216,8 @@ select(airbnb, host_id, reviews, rating, price)
 
 # &lt;span style="color:#6DA34D"&gt;Select&lt;/span&gt;, create, and rename variables 
 
-- `select()` keeps the named variables from the dataset
-- You can remove variables from the dataset with `-`
+- `select()` keeps the named variables from the tibble
+- You can remove variables from the tibble with `-`
 - You may use [selection helpers](https://dplyr.tidyverse.org/reference/select.html)
   - For example, `everything()`
 - Use `'``'` for multi-word variables and variable names that begin with numbers
@@ -260,8 +260,8 @@ select(airbnb_2, -rating)
 
 # &lt;span style="color:#6DA34D"&gt;Select&lt;/span&gt;, create, and rename variables
 
-- `select()` keeps the named variables from the dataset
-- You can remove variables from the dataset with `-`
+- `select()` keeps the named variables from the tibble
+- You can remove variables from the tibble with `-`
 - You may use [selection helpers](https://dplyr.tidyverse.org/reference/select.html)
   - For example, `everything()`
 - Use `'``'` for multi-word variables and variable names that begin with numbers
@@ -527,7 +527,7 @@ airbnb |&gt;
 # Select, &lt;span style="color:#6DA34D"&gt;create&lt;/span&gt;, and rename variables 
 
 &lt;b&gt;Exercise - 6 minutes&lt;/b&gt;  
-- With the `climate` dataset, create variables called `high_uncertainty` and `winter`
+- With the `climate` data, create variables called `high_uncertainty` and `winter`
 - In `high_uncertainty`, flag with a `1` all observations where `uncertainty` is greater than 1.5. All other rows should have a `0`.  
 - In `winter`, flag with a `1` all observations where month is a 1, 2, 12.  
 - Only report the following variables in the output: `country`, `city`, `high_uncertainty` and `winter`
@@ -538,7 +538,7 @@ airbnb |&gt;
 climate &lt;- read_csv('https://bit.ly/3kKErEb')
 ```
 
-<div class="countdown" id="timer_432921b8" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
+<div class="countdown" id="timer_388079b2" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
 <div class="countdown-controls"><button class="countdown-bump-down">&minus;</button><button class="countdown-bump-up">&plus;</button></div>
 <code class="countdown-time"><span class="countdown-digits minutes">06</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
@@ -548,7 +548,7 @@ climate &lt;- read_csv('https://bit.ly/3kKErEb')
 # Select, &lt;span style="color:#6DA34D"&gt;create&lt;/span&gt;, and rename variables 
 
 &lt;b&gt;Exercise - 6 minutes&lt;/b&gt;  
-- With the `climate` dataset, create variables called `high_uncertainty` and `winter`
+- With the `climate` data, create variables called `high_uncertainty` and `winter`
 - In `high_uncertainty`, flag with a `1` all observations where `uncertainty` is greater than 1.5. All other rows should have a `0`  
 - In `winter`, flag with a `1` all observations where month is a 1, 2, 12.  
 - Only report the following variables in the output: `country`, `city`, `high_uncertainty` and `winter`
@@ -695,7 +695,7 @@ airbnb |&gt;
   - Rename `city` as `location`
   - In `temp`, change `NA` values to `0`  
 
-<div class="countdown" id="timer_824a512f" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
+<div class="countdown" id="timer_a4efc769" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
 <div class="countdown-controls"><button class="countdown-bump-down">&minus;</button><button class="countdown-bump-up">&plus;</button></div>
 <code class="countdown-time"><span class="countdown-digits minutes">06</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
@@ -766,11 +766,11 @@ airbnb |&gt;
 ``` r
 airbnb |&gt; sample_n(3) |&gt; select(room_id, host_id, address, room_type, price, name)
 ## # A tibble: 3 × 6
-##    room_id   host_id address room_type       price name                         
-##      &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;           &lt;dbl&gt; &lt;chr&gt;                        
-## 1 24259002 140236800 Seattle Entire home/apt   145 Sunny 2BR In Queen Anne Dupl…
-## 2 21621973 109291307 Seattle Entire home/apt    99 Garden Oasis                 
-## 3 23483229    595610 Seattle Entire home/apt   105 Cap Hill 3BR in walkable loc…
+##    room_id  host_id address room_type       price name                          
+##      &lt;dbl&gt;    &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;           &lt;dbl&gt; &lt;chr&gt;                         
+## 1 24454685  2761632 Seattle Entire home/apt   190 "Modern Townhouse - \"Amazing…
+## 2  8627921 34946797 Seattle Entire home/apt    72 "Dahl House in Columbia City" 
+## 3  9067268   724729 Seattle Private room       51 "Spacious Multi-windowed Rm i…
 ```
 
 --
@@ -779,11 +779,11 @@ airbnb |&gt; sample_n(3) |&gt; select(room_id, host_id, address, room_type, pric
 ``` r
 airbnb |&gt; sample_n(3) |&gt; select(room_id, host_id, address, room_type, price, name)
 ## # A tibble: 3 × 6
-##    room_id   host_id address  room_type       price name                        
-##      &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;           &lt;dbl&gt; &lt;chr&gt;                       
-## 1 21332206 112448661 Seattle  Entire home/apt   286 Beautiful, upscale home w/ …
-## 2  5580773   4183116 Seattle  Entire home/apt    54 Bright 1B Apartment on Beac…
-## 3 26859337  67440594 Bellevue Private room      167 Peace in the Park  no other…
+##    room_id   host_id address room_type       price name                         
+##      &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;           &lt;dbl&gt; &lt;chr&gt;                        
+## 1 25160814   4090399 Seattle Entire home/apt   320 Stunning Home with Puget Sou…
+## 2 27464173  20041587 Seattle Entire home/apt   106 Gorgeous, 2 BR Retreat,Walka…
+## 3 21244844 153567357 Seattle Private room       45 Private Bed and Bath in Cute…
 ```
 
 ---
@@ -791,7 +791,7 @@ airbnb |&gt; sample_n(3) |&gt; select(room_id, host_id, address, room_type, pric
 # Exercise - 12 minutes
 
 .pull-left[
-- Create a dataset called `colombia` that meets these conditions:  
+- Create a tibble called `colombia` that meets these conditions:  
   - Contains `temp` values not equal to `NA`  
   - Contains data for 'Colombia' only
   - Contains no dates prior to January 2001
@@ -807,7 +807,7 @@ airbnb |&gt; sample_n(3) |&gt; select(room_id, host_id, address, room_type, pric
   - The names of cities in `colombia`
 ]
 
-<div class="countdown" id="timer_aa5f92d0" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
+<div class="countdown" id="timer_e7bc20dd" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
 <div class="countdown-controls"><button class="countdown-bump-down">&minus;</button><button class="countdown-bump-up">&plus;</button></div>
 <code class="countdown-time"><span class="countdown-digits minutes">12</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
@@ -816,7 +816,7 @@ airbnb |&gt; sample_n(3) |&gt; select(room_id, host_id, address, room_type, pric
 
 # Exercise - 12 minutes
 
-- Create a dataset called `colombia` that meets these conditions  
+- Create a tibble called `colombia` that meets these conditions  
   - Contains `temp` values not equal to `NA`  
   - Contains data for 'Colombia' only
   - Contains no dates prior to January 2001
@@ -979,14 +979,14 @@ airbnb |&gt;
 
 # Exercise - 6 minutes
 
-- With the `climate` dataset, calculate the monthly mean temperature for all cities in China  
+- With the `climate` data, calculate the monthly mean temperature for all cities in China  
 - The output should only contain `month` and `mean_temp` variables
 
 ```r
 climate &lt;- read_csv('https://bit.ly/3kKErEb')
 ```
 
-<div class="countdown" id="timer_fc34209a" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
+<div class="countdown" id="timer_6e93e92c" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
 <div class="countdown-controls"><button class="countdown-bump-down">&minus;</button><button class="countdown-bump-up">&plus;</button></div>
 <code class="countdown-time"><span class="countdown-digits minutes">06</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
@@ -995,7 +995,7 @@ climate &lt;- read_csv('https://bit.ly/3kKErEb')
 
 # Exercise - 6 minutes
 
-- With the `climate` dataset, calculate the monthly mean temperature for all cities in China  
+- With the `climate` data, calculate the monthly mean temperature for all cities in China  
 - The output should only contain `month` and `mean_temp` variables
 
 ```r
@@ -1016,8 +1016,8 @@ class: inverse, middle, center
 
 - `pivot_longer()` and `pivot_wider()` are the functions we use to reshape data
 - Reshape means to turn...
-  - Columns into rows (with `pivot_longer()`), so the new dataset is narrower, has more rows, and fewer columns than the old dataset
-  - Rows into columns (with `pivot_wider()`), so the new dataset is wider and has fewer rows than the old dataset
+  - Columns into rows (with `pivot_longer()`), so the new tibble is narrower, has more rows, and fewer columns than the old tibble
+  - Rows into columns (with `pivot_wider()`), so the new tibble is wider and has fewer rows than the old tibble
   
 &lt;img src="http://garrettgman.github.io/images/tidy-9.png" style="height: 350px"/&gt;
 
@@ -1027,8 +1027,8 @@ class: inverse, middle, center
 
 - `pivot_longer()` and `pivot_wider()` are the functions we use to reshape data
 - Reshape means to turn...
-  - Columns into rows (with `pivot_longer()`), so the new dataset is narrower, has more rows, and fewer columns than the old dataset
-  - Rows into columns (with `pivot_wider()`), so the new dataset is wider and has fewer rows than the old dataset
+  - Columns into rows (with `pivot_longer()`), so the new tibble is narrower, has more rows, and fewer columns than the old tibble
+  - Rows into columns (with `pivot_wider()`), so the new tibble is wider and has fewer rows than the old tibble
   
 &lt;img src="http://garrettgman.github.io/images/tidy-8.png" style="height: 400px"/&gt;
 
@@ -1097,7 +1097,7 @@ With the `climate` data, report the mean temperatures for `"Angola"`, `"Ivory Co
 - You should pivot the data so the years are columns like in the example 
 - In this exercise you will use `filter()`, `group_by()`, `summarise()`, and `pivot_wider()`
 
-<div class="countdown" id="timer_04a6bfa3" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
+<div class="countdown" id="timer_8647159b" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
 <div class="countdown-controls"><button class="countdown-bump-down">&minus;</button><button class="countdown-bump-up">&plus;</button></div>
 <code class="countdown-time"><span class="countdown-digits minutes">10</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
