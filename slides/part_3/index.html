@@ -4,8 +4,8 @@
     <title>Part 3 - Data Visualization with ggplot2</title>
     <meta charset="utf-8" />
     <meta name="author" content="Graham Bearden" />
-    <meta name="date" content="2023-10-17" />
-    <script src="libs/header-attrs-2.20/header-attrs.js"></script>
+    <meta name="date" content="2024-10-17" />
+    <script src="libs/header-attrs-2.27/header-attrs.js"></script>
     <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
     <link href="libs/remark-css-0.0.1/metropolis.css" rel="stylesheet" />
     <link href="libs/remark-css-0.0.1/metropolis-fonts.css" rel="stylesheet" />
@@ -26,7 +26,7 @@ class: center, middle, inverse, title-slide
 ### University of Washington
 ]
 .date[
-### October 17, 2023
+### October 17, 2024
 ]
 
 ---
@@ -37,22 +37,21 @@ class: center, middle, inverse, title-slide
 # Housekeeping
 
 - You can access notes from the first and second class in the syllabus  
-- [Example script](https://github.com/gbearden/r_course_evans_school/blob/master/help/example_glm.R) for creating a logistic regression (or classifier model) with tidymodels
+- Check out [NotebookLM](notebooklm.google.com)  
 
 ---
 
 # What we learned in the previous class
 
-- A bit about troubleshooting
 - Creating and updating variables  
 - Subsetting tibbles/data frames  
+- How to aggregate data  
 
 ---
 
 # What we'll learn today  
 
 - Overview of ggplot2  
-- How to aggregate data  
 - Building bar, line, and scatter plots  
   - Aggregated data
   - Disaggregated data
@@ -66,9 +65,13 @@ class: center, middle, inverse, title-slide
 - Ensure the code finished running (`+`s vs. `&gt;`s in the R console)  
 - Red "x" annotation beside line numbers (after saving your file)
 
---
+![](./figures/red_x_example.png)
 
-This code contains 3 mistakes. The code is supposed to report the mean temperatures for Peru and Saudi Arabia before 1900.  
+---
+
+# Exercise: Troubleshooting
+
+This code contains 3 mistakes. The code is supposed to report the mean temperatures for Peru and Saudi Arabia before 1900. Find the 3 mistakes and correct them.  
 
 ```r
 library(tidyverse)
@@ -81,19 +84,48 @@ saudi &lt;- climate %&gt;%
 peru &lt;- climate %&gt;% 
   filter(year &lt; 1900 &amp; country = 'Peru')
 
-saudi %&gt;% pull(temp) %&gt;% mean(na.rm = TRUE)
-peru %&gt;% pull(temp) %&gt;% mean(rm.na = TRUE)
+mean(saudi$temp, na.rm = TRUE)
+mean(peru$temp, rm.na = TRUE)
 ```
+
+<div class="countdown" id="timer_48798fd6" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
+<div class="countdown-controls"><button class="countdown-bump-down">&minus;</button><button class="countdown-bump-up">&plus;</button></div>
+<code class="countdown-time"><span class="countdown-digits minutes">05</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
+</div>
 
 ---
 
-# A reminder on troubleshooting
+# Exercise: Aggregation
 
-- Run code line by line  
-- Ensure the code finished running (`+`s vs. `&gt;`s in the R console)  
-- Red "x" annotation beside line numbers (after saving your file)
+Report the average GMAT scores and number of applicants by major for female applicants only. To complete the task, you'll need to:
+  - Subset your data using `filter()` (click [here](https://gbearden.github.io/r_course_evans_school/slides/part_2/#43) for help)  
+  - Use `group_by()` and `summarise()` to count applicants and and compute the mean 
 
-![](./figures/red_x_example.png)
+```r
+mba &lt;- read_csv("https://bit.ly/4evYpeW")
+```
+
+<div class="countdown" id="timer_01bc6a17" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
+<div class="countdown-controls"><button class="countdown-bump-down">&minus;</button><button class="countdown-bump-up">&plus;</button></div>
+<code class="countdown-time"><span class="countdown-digits minutes">05</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
+</div>
+
+---
+
+# Exercise: Aggregation
+
+Report the average GMAT scores and number of applicants by major for female applicants only. To complete the task, you'll need to:
+  - Subset your data using `filter()` (click [here](https://gbearden.github.io/r_course_evans_school/slides/part_2/#43) for help)  
+  - Use `group_by()` and `summarise()` to count applicants and and compute the mean 
+
+```r
+mba &lt;- read_csv("https://bit.ly/4evYpeW")
+
+mba %&gt;% 
+  filter(gender == "Female") %&gt;% 
+  group_by(major) %&gt;% 
+  summarise(gmat_mean = mean(gmat), n = n())
+```
 
 ---
 class: inverse, middle, center
@@ -182,7 +214,7 @@ starwars %&gt;% filter(mass &lt; 1000) %&gt;% ggplot() + geom_point(aes(height, 
 
 --
 
-![](index_files/figure-html/unnamed-chunk-1-1.png)&lt;!-- --&gt;
+![](index_files/figure-html/unnamed-chunk-3-1.png)&lt;!-- --&gt;
 
 ---
 
@@ -270,11 +302,11 @@ aes(x = NULL, y = NULL, color = NULL
 Map a character variable to `x`  
 
 
-```r
+``` r
 airbnb %&gt;% ggplot(aes(x = address)) + geom_bar()
 ```
 
-![](index_files/figure-html/unnamed-chunk-2-1.png)&lt;!-- --&gt;
+![](index_files/figure-html/unnamed-chunk-4-1.png)&lt;!-- --&gt;
 
 ---
 
@@ -283,11 +315,11 @@ airbnb %&gt;% ggplot(aes(x = address)) + geom_bar()
 Map a character variable to `x`...and to `fill`
 
 
-```r
+``` r
 airbnb %&gt;% ggplot(aes(x = address, fill = address)) + geom_bar()
 ```
 
-![](index_files/figure-html/unnamed-chunk-3-1.png)&lt;!-- --&gt;
+![](index_files/figure-html/unnamed-chunk-5-1.png)&lt;!-- --&gt;
 
 ---
 
@@ -296,11 +328,11 @@ airbnb %&gt;% ggplot(aes(x = address, fill = address)) + geom_bar()
 Map a second character variable to `fill` to build a stacked bar plot
 
 
-```r
+``` r
 airbnb %&gt;% ggplot(aes(x = address, fill = room_type)) + geom_bar()
 ```
 
-![](index_files/figure-html/unnamed-chunk-4-1.png)&lt;!-- --&gt;
+![](index_files/figure-html/unnamed-chunk-6-1.png)&lt;!-- --&gt;
 
 ---
 
@@ -317,7 +349,7 @@ climate &lt;- read_csv('https://bit.ly/3kKErEb')
 ```
   
 
-<div class="countdown" id="timer_f0d8b6d2" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
+<div class="countdown" id="timer_81740b0c" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
 <div class="countdown-controls"><button class="countdown-bump-down">&minus;</button><button class="countdown-bump-up">&plus;</button></div>
 <code class="countdown-time"><span class="countdown-digits minutes">07</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
@@ -344,14 +376,14 @@ climate %&gt;%
 # Geom - Bar Plot
 
 
-```r
+``` r
 climate %&gt;% 
   filter(country %in% c('Brazil', 'China', 'India', 'Turkey', 'United States')) %&gt;% 
   ggplot(aes(x = country, fill = country)) + 
   geom_bar()
 ```
 
-![](index_files/figure-html/unnamed-chunk-6-1.png)&lt;!-- --&gt;
+![](index_files/figure-html/unnamed-chunk-8-1.png)&lt;!-- --&gt;
 
 ---
 class: inverse, middle, center
@@ -489,7 +521,7 @@ airbnb %&gt;%
 ```]  
 .pull-right[
 
-```r
+``` r
   airbnb %&gt;% 
 *   group_by(address) %&gt;%
 *   summarise(count = n()) %&gt;%
@@ -518,7 +550,7 @@ airbnb %&gt;%
   mutate(listings_deficit = if_else(n_listings &lt; 100, 'y', 'n'))
 ```
 
-<div class="countdown" id="timer_df107f04" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
+<div class="countdown" id="timer_e2588a2b" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
 <div class="countdown-controls"><button class="countdown-bump-down">&minus;</button><button class="countdown-bump-up">&plus;</button></div>
 <code class="countdown-time"><span class="countdown-digits minutes">05</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
@@ -528,7 +560,7 @@ airbnb %&gt;%
 # group_by() and summarise() + ggplot()
 
 
-```r
+``` r
 airbnb %&gt;% 
   group_by(room_type, address) %&gt;% 
   summarise(n_listings = n()) %&gt;% 
@@ -538,7 +570,7 @@ airbnb %&gt;%
   geom_bar(stat = 'identity')
 ```
 
-![](index_files/figure-html/unnamed-chunk-9-1.png)&lt;!-- --&gt;
+![](index_files/figure-html/unnamed-chunk-11-1.png)&lt;!-- --&gt;
 
 ---
 
@@ -550,7 +582,7 @@ Other handy features when building bar plots
 - arguments outside of `aes()`
 
 
-```r
+``` r
 airbnb %&gt;% 
   ggplot(aes(x = address, fill = room_type)) + 
 * geom_bar(position = 'dodge')
@@ -566,7 +598,7 @@ Other handy features when building bar plots
 - arguments outside of `aes()`
 
 
-```r
+``` r
 airbnb %&gt;% 
   group_by(address) %&gt;%   
   summarise(n = n()) %&gt;%
@@ -590,7 +622,7 @@ Other handy features when building bar plots
 - arguments outside of `aes()`
 
 
-```r
+``` r
 my_data &lt;- airbnb %&gt;% 
   group_by(address) %&gt;% 
   summarise(n = n())
@@ -616,7 +648,7 @@ my_data %&gt;%
   - The updated version of the plot should use `group_by()` and `summarise()` and `stat` should be `'identity'` in `geom_bar()`
   - Use `reorder()` to update the order of the bars  
 
-<div class="countdown" id="timer_0de0e537" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
+<div class="countdown" id="timer_03dca21c" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
 <div class="countdown-controls"><button class="countdown-bump-down">&minus;</button><button class="countdown-bump-up">&plus;</button></div>
 <code class="countdown-time"><span class="countdown-digits minutes">05</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
@@ -637,7 +669,7 @@ climate %&gt;%
 # Geom - Bar Plot
 
 
-```r
+``` r
 climate %&gt;% 
   filter(country %in% c('Brazil', 'China', 'India', 'Turkey', 'United States')) %&gt;% 
   group_by(country) %&gt;% 
@@ -646,7 +678,7 @@ climate %&gt;%
   geom_bar(stat = 'identity')
 ```
 
-![](index_files/figure-html/unnamed-chunk-14-1.png)&lt;!-- --&gt;
+![](index_files/figure-html/unnamed-chunk-16-1.png)&lt;!-- --&gt;
 
 ---
 class: inverse, middle, center
@@ -679,14 +711,14 @@ ylab('Y Axis Title')
 # Axis, legend, and chart titles
 
 
-```r
+``` r
 airbnb %&gt;% 
   ggplot(aes(x = address, fill = room_type)) + 
   geom_bar() + 
   labs(x = 'City', y = 'Number of Rentals (#)')
 ```
 
-![](index_files/figure-html/unnamed-chunk-15-1.png)&lt;!-- --&gt;
+![](index_files/figure-html/unnamed-chunk-17-1.png)&lt;!-- --&gt;
 
 ---
 
@@ -697,7 +729,7 @@ Try adding axis names to the plot of countries made from the `climate` data
 --
 
 
-```r
+``` r
 climate %&gt;% 
   filter(country %in% c('Brazil', 'China', 'India', 'Turkey', 'United States')) %&gt;% 
   group_by(country) %&gt;% 
@@ -707,7 +739,7 @@ climate %&gt;%
   labs(x = 'Country', y = 'Number of Countries (#)')
 ```
 
-![](index_files/figure-html/unnamed-chunk-16-1.png)&lt;!-- --&gt;
+![](index_files/figure-html/unnamed-chunk-18-1.png)&lt;!-- --&gt;
 
 ---
 
@@ -732,14 +764,14 @@ labs(colour = 'Check out these colors')
 # Axis, legend, and chart titles
 
 
-```r
+``` r
 airbnb %&gt;% 
   ggplot(aes(x = address, fill = room_type)) + 
   geom_bar() + 
   labs(x = 'City', y = 'Number of Rentals (#)', fill = 'Check out these colors')
 ```
 
-![](index_files/figure-html/unnamed-chunk-17-1.png)&lt;!-- --&gt;
+![](index_files/figure-html/unnamed-chunk-19-1.png)&lt;!-- --&gt;
 
 ---
 
@@ -750,7 +782,7 @@ Try removing the legend name from the plot of countries made from the `climate` 
 --
 
 
-```r
+``` r
 climate %&gt;% 
   filter(country %in% c('Brazil', 'China', 'India', 'Turkey', 'United States')) %&gt;% 
   group_by(country) %&gt;% 
@@ -760,7 +792,7 @@ climate %&gt;%
   labs(x = 'Country', y = 'Number of Observations (#)', fill = element_blank())
 ```
 
-![](index_files/figure-html/unnamed-chunk-18-1.png)&lt;!-- --&gt;
+![](index_files/figure-html/unnamed-chunk-20-1.png)&lt;!-- --&gt;
 
 ---
 
@@ -800,7 +832,7 @@ airbnb %&gt;%
 
 # Axis, legend, and chart titles
 
-![](index_files/figure-html/unnamed-chunk-19-1.png)&lt;!-- --&gt;
+![](index_files/figure-html/unnamed-chunk-21-1.png)&lt;!-- --&gt;
 
 ---
 
@@ -831,7 +863,7 @@ climate %&gt;%
 
 Try adding a title to the plot of countries made from the `climate` data
 
-![](index_files/figure-html/unnamed-chunk-20-1.png)&lt;!-- --&gt;
+![](index_files/figure-html/unnamed-chunk-22-1.png)&lt;!-- --&gt;
 
 ---
 
@@ -872,7 +904,7 @@ airbnb %&gt;%
 
 # Axis units
 
-![](index_files/figure-html/unnamed-chunk-21-1.png)&lt;!-- --&gt;
+![](index_files/figure-html/unnamed-chunk-23-1.png)&lt;!-- --&gt;
 
 ---
 
@@ -904,7 +936,7 @@ climate %&gt;%
 
 Try adding commas to the y-axis of the plot you made from the `climate` data
 
-![](index_files/figure-html/unnamed-chunk-22-1.png)&lt;!-- --&gt;
+![](index_files/figure-html/unnamed-chunk-24-1.png)&lt;!-- --&gt;
 
 ---
 class: inverse, middle, center
@@ -975,7 +1007,7 @@ airbnb %&gt;%
 
 Economist theme  
   
-![](index_files/figure-html/unnamed-chunk-23-1.png)&lt;!-- --&gt;
+![](index_files/figure-html/unnamed-chunk-25-1.png)&lt;!-- --&gt;
 
 ---
 
@@ -1015,7 +1047,7 @@ climate %&gt;%
 
 Try adding a theme to the plot you made from the `climate` data
 
-![](index_files/figure-html/unnamed-chunk-24-1.png)&lt;!-- --&gt;
+![](index_files/figure-html/unnamed-chunk-26-1.png)&lt;!-- --&gt;
 
 ---
 
@@ -1090,7 +1122,7 @@ climate %&gt;%
 
 ---
 
-![](index_files/figure-html/unnamed-chunk-25-1.png)&lt;!-- --&gt;
+![](index_files/figure-html/unnamed-chunk-27-1.png)&lt;!-- --&gt;
 
 ---
 
@@ -1126,7 +1158,7 @@ climate %&gt;%
 ```
 ]
 
-<div class="countdown" id="timer_aefcf7b5" data-update-every="1" tabindex="0" style="bottom:0;left:0;">
+<div class="countdown" id="timer_01ed5f9a" data-update-every="1" tabindex="0" style="bottom:0;left:0;">
 <div class="countdown-controls"><button class="countdown-bump-down">&minus;</button><button class="countdown-bump-up">&plus;</button></div>
 <code class="countdown-time"><span class="countdown-digits minutes">07</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
@@ -1161,7 +1193,7 @@ climate %&gt;%
 
 # Exercise 
 
-![](index_files/figure-html/unnamed-chunk-27-1.png)&lt;!-- --&gt;
+![](index_files/figure-html/unnamed-chunk-29-1.png)&lt;!-- --&gt;
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
