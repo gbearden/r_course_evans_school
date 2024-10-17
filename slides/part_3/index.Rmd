@@ -2,7 +2,7 @@
 title: "Part 3 - Data Visualization with ggplot2"
 author: "Graham Bearden"
 institute: "University of Washington"
-date: "October 17, 2023"
+date: "October 17, 2024"
 output:
   xaringan::moon_reader:
     lib_dir: libs
@@ -34,6 +34,7 @@ xaringanthemer::style_extra_css(css = extra_css, outfile = "custom.css")
 
 airbnb <- read_csv('https://bit.ly/3oadz2L', col_types = cols())
 climate <- read_csv('https://bit.ly/3kKErEb', col_types = cols())
+mba <- read_csv("https://bit.ly/4evYpeW", col_types = cols())
 
 wacky_palette <- c("#FF0099", "#00CCFF", "#FF9900", "#33FF33", "#FF33CC", "#FFFF66", "#6600CC")
 ```
@@ -41,22 +42,21 @@ wacky_palette <- c("#FF0099", "#00CCFF", "#FF9900", "#33FF33", "#FF33CC", "#FFFF
 # Housekeeping
 
 - You can access notes from the first and second class in the syllabus  
-- [Example script](https://github.com/gbearden/r_course_evans_school/blob/master/help/example_glm.R) for creating a logistic regression (or classifier model) with tidymodels
+- Check out [NotebookLM](notebooklm.google.com)  
 
 ---
 
 # What we learned in the previous class
 
-- A bit about troubleshooting
 - Creating and updating variables  
 - Subsetting tibbles/data frames  
+- How to aggregate data  
 
 ---
 
 # What we'll learn today  
 
 - Overview of ggplot2  
-- How to aggregate data  
 - Building bar, line, and scatter plots  
   - Aggregated data
   - Disaggregated data
@@ -70,9 +70,13 @@ wacky_palette <- c("#FF0099", "#00CCFF", "#FF9900", "#33FF33", "#FF33CC", "#FFFF
 - Ensure the code finished running (`+`s vs. `>`s in the R console)  
 - Red "x" annotation beside line numbers (after saving your file)
 
---
+![](./figures/red_x_example.png)
 
-This code contains 3 mistakes. The code is supposed to report the mean temperatures for Peru and Saudi Arabia before 1900.  
+---
+
+# Exercise: Troubleshooting
+
+This code contains 3 mistakes. The code is supposed to report the mean temperatures for Peru and Saudi Arabia before 1900. Find the 3 mistakes and correct them.  
 
 ```r
 library(tidyverse)
@@ -85,19 +89,46 @@ saudi <- climate %>%
 peru <- climate %>% 
   filter(year < 1900 & country = 'Peru')
 
-saudi %>% pull(temp) %>% mean(na.rm = TRUE)
-peru %>% pull(temp) %>% mean(rm.na = TRUE)
+mean(saudi$temp, na.rm = TRUE)
+mean(peru$temp, rm.na = TRUE)
+```
+
+```{r, echo = FALSE}
+countdown(minutes = 5, seconds = 0)
 ```
 
 ---
 
-# A reminder on troubleshooting
+# Exercise: Aggregation
 
-- Run code line by line  
-- Ensure the code finished running (`+`s vs. `>`s in the R console)  
-- Red "x" annotation beside line numbers (after saving your file)
+Report the average GMAT scores and number of applicants by major for female applicants only. To complete the task, you'll need to:
+  - Subset your data using `filter()` (click [here](https://gbearden.github.io/r_course_evans_school/slides/part_2/#43) for help)  
+  - Use `group_by()` and `summarise()` to count applicants and and compute the mean 
 
-![](./figures/red_x_example.png)
+```r
+mba <- read_csv("https://bit.ly/4evYpeW")
+```
+
+```{r, echo = FALSE}
+countdown(minutes = 5, seconds = 0)
+```
+
+---
+
+# Exercise: Aggregation
+
+Report the average GMAT scores and number of applicants by major for female applicants only. To complete the task, you'll need to:
+  - Subset your data using `filter()` (click [here](https://gbearden.github.io/r_course_evans_school/slides/part_2/#43) for help)  
+  - Use `group_by()` and `summarise()` to count applicants and and compute the mean 
+
+```r
+mba <- read_csv("https://bit.ly/4evYpeW")
+
+mba %>% 
+  filter(gender == "Female") %>% 
+  group_by(major) %>% 
+  summarise(gmat_mean = mean(gmat), n = n())
+```
 
 ---
 class: inverse, middle, center
