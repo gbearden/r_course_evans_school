@@ -85,7 +85,7 @@ Why does this code throw an error in R?
 
 # Refresher with MBA admissions data
 
-You can find the a description of the MBA admissions data [here](https://www.kaggle.com/datasets/taweilo/mba-admission-dataset). The data were generated from the University of Pennsylvania Wharton Class of 2025. Use slides functions to explore [tibbles](https://gbearden.github.io/r_course_evans_school/slides/part_1/#38) and [vectors](https://gbearden.github.io/r_course_evans_school/slides/part_1/#44) from the previous class to help answer these questions.
+You can find the a description of the MBA admissions data [here](https://www.kaggle.com/datasets/taweilo/mba-admission-dataset). The data were generated from the University of Pennsylvania Wharton Class of 2025. Use functions to explore [tibbles](https://gbearden.github.io/r_course_evans_school/slides/part_1/#38) and [vectors](https://gbearden.github.io/r_course_evans_school/slides/part_1/#44) from the previous class to help answer these questions.
 
 --
 
