@@ -97,8 +97,9 @@ mba <- read_csv("https://bit.ly/4evYpeW")
 
 - Running code in an R Notebook
 - Build line and scatter plots  
-- Pivoting data   
+- Creating maps
 - More ways to use logical conditions for filtering and changing variable values
+- Pivoting data   
 
 ---
 
