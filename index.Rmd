@@ -71,7 +71,7 @@ We will also begin to explore data summary techniques and troubleshooting tactic
 
 At the end of first class, students should be familiar with the R interface, know how to perform basic operations, calculate summary statistics, and walk through a series of steps to troubleshoot code.
 
-Helpful materials: [example .R file](https://github.com/gbearden/r_course_evans_school/blob/master/notes/example_script.R), [base R cheat sheet](https://iqss.github.io/dss-workshops/R/Rintro/base-r-cheat-sheet.pdf), [notes](https://github.com/gbearden/r_course_evans_school/blob/master/notes/class_1.R)
+Helpful materials: [example .R file](https://github.com/gbearden/r_course_evans_school/blob/master/notes/example_script.R), [base R cheat sheet](https://iqss.github.io/dss-workshops/R/Rintro/base-r-cheat-sheet.pdf)
 
 #### October 16
 
@@ -111,13 +111,13 @@ If you have not downloaded R and RStudio already, use the links below to set up 
 * Install R [on a Mac with a silicon M1/M2/M3 chip](https://cran.rstudio.com/bin/macosx/big-sur-arm64/base/R-4.5.1-arm64.pkg), [on a Mac with an Intel chip](https://cran.rstudio.com/bin/macosx/big-sur-x86_64/base/R-4.5.1-x86_64.pkg), or [on a PC](https://cran.rstudio.com/bin/windows/base/R-4.5.1-win.exe)
 * Install RStudio [on a Mac](https://download1.rstudio.org/electron/macos/RStudio-2025.05.1-513.dmg) or [on a PC](https://download1.rstudio.org/electron/windows/RStudio-2025.05.1-513.exe)
 
-## Install and Set Up VS Code
-
-Go to [this guide]() to install and set up VS Code.
-
 ## AI Assistants
 
 We will use an AI Assistant to troubleshoot, document, and write R code. Sign up or log in to [Perplexity](https://www.perplexity.ai/) or [ChatGPT](https://chat.openai.com/auth/login), or feel free to use any of the other AI assistant. 
+
+## Install and Set Up VS Code
+
+Go to [this guide](https://github.com/gbearden/r_course_evans_school/blob/help/vscode) to install and set up VS Code.
 
 ## Reference Materials
 
