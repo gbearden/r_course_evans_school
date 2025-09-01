@@ -11,3 +11,4 @@ output: html_document
 - Change the text file language to R in the Select Language Mode menu (link in botton right)
 <img src="figures/lang_mode.png" alt="Language Mode" width="600"/>
 - VS Code will prompt you to install `languageserver`; agree to the prompt
+
