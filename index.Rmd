@@ -1,8 +1,6 @@
 ---
 title: "Introduction to Data Processing and Visualization Design in R"
-date: "gbearden@uw.edu"
-author: "Graham Bearden"
-subtitle: "Autumn 2024"
+subtitle: "Autumn 2025"
 output: html_document
 ---
 
@@ -33,23 +31,28 @@ h4.date {
 
 <br>
 
-## Schedule Overview
+## Schedule  
 
 **Time: 5:30-8:20pm**  
-**Class Dates: 10/3, 10/10, 10/17, 10/24**  
+**Class Dates: 10/9, 10/16, 10/23, 10/30**  
 **Location: [PAR 220](https://www.washington.edu/maps/#!/par)** 
+
+## Instructors
+
+**Graham Bearden (gbearden@uw.edu)**  
+**Oeuyown Kim (kim.oeuyown@gmail.com)**  
 
 ## Course Overview
 
 This is an introductory course designed for new R programmers. You will learn the fundamental skills required to prepare, analyze and visualize data in R. You will also build a foundation for additional training in R and general applied data analysis.
 
-Course materials are prepared in order to offer a survey of selected R functionality. Students interested in R programming that is more sophisticated and/or specialized than what is taught in the course are encouraged to seek additional opportunities to apply their R programming skills.
+Course materials are prepared to offer a survey of selected R functionality. Along the way, you will learn how to use AI assistants effectively to support your learning, debug code, and strengthen your understanding of R programming concepts. Students interested in more sophisticated or specialized programming than what is taught in this course are encouraged to seek additional opportunities to apply their skills.
 
 This is an applied course that focuses on successful execution of code. While students should consider theory, style, and efficiency of R programming, getting the job done right will be the first priority.  
 
 ## Course Expectations
 
-- Attend four classes. Class dates are 10/3, 10/10, 10/17, 10/24. A full class is 2 hours and 50 minutes, breaks included.
+- Attend four classes. Class dates are 10/9, 10/16, 10/23, 10/30. A full class is 2 hours and 50 minutes, breaks included.
 - Submit 2 "stakeholder-ready" data visualizations by November 3 or before (See [example plots](https://github.com/gbearden/r_course_evans_school/blob/master/plots/))
  
 ## Accomodations
@@ -60,7 +63,7 @@ Please let me know if you need any specific accommodations related to religious 
 
 ## Schedule
 
-#### [October 3](https://gbearden.github.io/r_course_evans_school/slides/part_1/)
+#### October 9
 
 The first class will focus on the basics of R. Students will learn about key R concepts like data types and the anatomy of a function, how to read (import) and write (export) data, and the essentials of writing successful code.
 
@@ -70,7 +73,7 @@ At the end of first class, students should be familiar with the R interface, kno
 
 Helpful materials: [example .R file](https://github.com/gbearden/r_course_evans_school/blob/master/notes/example_script.R), [base R cheat sheet](https://iqss.github.io/dss-workshops/R/Rintro/base-r-cheat-sheet.pdf), [notes](https://github.com/gbearden/r_course_evans_school/blob/master/notes/class_1.R)
 
-#### [October 10](https://gbearden.github.io/r_course_evans_school/slides/part_2/)
+#### October 16
 
 The second class will focus on data processing. We will use a variety of methods to manipulate data and prepare it for analysis. The `tidyverse` will be emphasized. Students will learn how to manipulate data at various levels, including at the dataset-level, the variable-level, and the value-level.
 
@@ -78,7 +81,7 @@ At the end of second class, students should possess skills necessary to transfor
 
 Helpful materials: [data transformation cheat sheet](https://github.com/rstudio/cheatsheets/blob/main/data-transformation.pdf), [data tidying cheat sheet](https://github.com/rstudio/cheatsheets/blob/main/tidyr.pdf), [R for Stata users](https://www.matthieugomez.com/statar/manipulate-data.html)
 
-#### [October 17](https://gbearden.github.io/r_course_evans_school/slides/part_3/)
+#### October 23
 
 The third class will focus on data visualization. We will use `ggplot`, a visualization library that is part of the `tidyverse`, to build many types of plots. The modularity of `ggplot` plotting functions will be emphasized as will the distinction between visualizing aggregated and non-aggregated data.
 
@@ -86,7 +89,7 @@ At the end of third class, students should be able to produce a standard set of 
 
 Helpful materials: [data visualization cheat sheet](https://github.com/rstudio/cheatsheets/blob/master/data-visualization-2.1.pdf), [Coolors](https://coolors.co/)
 
-#### [October 24](https://gbearden.github.io/r_course_evans_school/slides/part_4/)
+#### October 30
 
 The fourth class will build on the skills students learned in previous lessons, introducing additional data visualization and data processing skills used to better work with strings and reshape data. 
 
@@ -101,12 +104,16 @@ We will use the datasets below in our workshop. ([Here](https://github.com/gbear
 * [Seattle Airbnb Source](https://www.kaggle.com/shanelev/seattle-airbnb-listings)  
   * [Seattle Airbnb Dataset](https://raw.githubusercontent.com/gbearden/r_course_evans_school/master/data/seattle_airbnb.csv)
 
-## R Download
+## Install R
 
 If you have not downloaded R and RStudio already, use the links below to set up your machines.
 
-* Install R [on a Mac with an Intel chip](https://cran.rstudio.com/bin/macosx/big-sur-x86_64/base/R-4.4.1-x86_64.pkg), [on a Mac with a silicon M1/M2/M3 chip](https://cran.rstudio.com/bin/macosx/big-sur-arm64/base/R-4.4.1-arm64.pkg), or [on a PC](https://cran.rstudio.com/bin/windows/base/R-4.4.1-win.exe)
-* Install RStudio [on a Mac](https://download1.rstudio.org/electron/macos/RStudio-2024.04.2-764.dmg) or [on a PC](https://download1.rstudio.org/electron/windows/RStudio-2024.04.2-764.exe)
+* Install R [on a Mac with a silicon M1/M2/M3 chip](https://cran.rstudio.com/bin/macosx/big-sur-arm64/base/R-4.5.1-arm64.pkg), [on a Mac with an Intel chip](https://cran.rstudio.com/bin/macosx/big-sur-x86_64/base/R-4.5.1-x86_64.pkg), or [on a PC](https://cran.rstudio.com/bin/windows/base/R-4.5.1-win.exe)
+* Install RStudio [on a Mac](https://download1.rstudio.org/electron/macos/RStudio-2025.05.1-513.dmg) or [on a PC](https://download1.rstudio.org/electron/windows/RStudio-2025.05.1-513.exe)
+
+## Install and Set Up VS Code
+
+Go to [this guide]() to install and set up VS Code.
 
 ## AI Assistants
 
