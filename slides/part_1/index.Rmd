@@ -1,8 +1,8 @@
 ---
 title: "Part 1 - R Basics"
-author: "Graham Bearden"
+author: "Graham Bearden and Oeuyown Kim"
 institute: "University of Washington"
-date: "October 3, 2024"
+date: "October 9, 2025"
 output:
   xaringan::moon_reader:
     lib_dir: libs
@@ -36,7 +36,10 @@ mba <- read_csv("https://bit.ly/4evYpeW", col_types = cols())
 - Set up your machine to run R
   - Install R [on a Mac with an Intel chip](https://cran.rstudio.com/bin/macosx/big-sur-x86_64/base/R-4.4.1-x86_64.pkg), [on a Mac with a silicon M1/M2/M3 chip](https://cran.rstudio.com/bin/macosx/big-sur-arm64/base/R-4.4.1-arm64.pkg), or [on a PC](https://cran.rstudio.com/bin/windows/base/R-4.4.1-win.exe)
   - Install RStudio [on a Mac](https://download1.rstudio.org/electron/macos/RStudio-2024.04.2-764.dmg) or [on a PC](https://download1.rstudio.org/electron/windows/RStudio-2024.04.2-764.exe)
-- Create a [ChatGPT](https://chat.openai.com/auth/login) or [Perplexity](https://www.perplexity.ai/) account
+- Create a [ChatGPT](https://chat.openai.com/auth/login), [Perplexity](https://www.perplexity.ai/), and/or [Github Copilot](https://github.com/features/copilot) account
+- [Install VS Code](https://code.visualstudio.com/download)
+  - Install [REditorSupport](https://marketplace.visualstudio.com/items?itemName=reditorsupport.r)
+  - Install R library languageserver (`install.packages("languageserver")`)
 
 ---
 
@@ -46,15 +49,15 @@ mba <- read_csv("https://bit.ly/4evYpeW", col_types = cols())
   - Data preparation (cleaning, reshaping, creation)  
   - Data analysis
   - Data visualization
-  - Automation
-  - Productizing
+  - Statistical modeling
+  - Productizing and automation
 - Mental models and analysis tools
   - Excel/SPSS/Stata --> computational programming tools like R
 - What all R programmers do
+  - Leverage ChatGPT, Perplexity, Github Copilot, or another AI assistant
   - Google for answers
   - Borrow code
   - Ask friends and pros for help
-  - Ask ChatGPT, Perplexity, or another AI assistant
 - Useful references (see Reference Materials in the [syllabus](https://gbearden.github.io/r_course_evans_school/) for more)
   - help()
   - ??
@@ -107,7 +110,7 @@ class: inverse, middle, center
 # <img src="figures/toolbox.png" style="height: 50px"/> <span style='color:#6DA34D'>Libraries</span>, functions, data
 
 - Libraries (or packages) are collections of functions (and datasets)
-- ~21,000 libraries on [CRAN](https://cran.r-project.org/web/packages/)
+- ~22,600 libraries on [CRAN](https://cran.r-project.org/web/packages/)
 
 ```r
 install.packages('tidyverse')
@@ -121,7 +124,7 @@ library(tidyverse)
 - Functions perform operations in R
 ```r
 some_numbers <- c(1,2,4)
-# min(), mean(), max(), and sd() are functions. c() is actually a function too!
+# min(), mean(), max(), and sd() are functions. c() is a function too!
 min(some_numbers)
 mean(some_numbers)
 max(some_numbers)
@@ -135,7 +138,7 @@ sd(some_numbers)
 - Functions perform operations in R
 ```{r, echo = TRUE, collapse=TRUE}
 some_numbers <- c(1,2,4)
-# min(), mean(), max(), and sd() are functions. c() is actually a function too!
+# min(), mean(), max(), and sd() are functions. c() is a function too!
 min(some_numbers)
 mean(some_numbers)
 max(some_numbers)
@@ -147,9 +150,9 @@ sd(some_numbers)
 # <img src="figures/tools.png" style="height: 50px"/> Libraries, <span style='color:#6DA34D'>functions</span>, data
 
 - Function arguments
-  - Let's look at arguments in the `lm` and `min` functions  
   - Arguments are used to specify the data and operation
-  - Arguments are comma separated
+  - Arguments are comma separated  
+  - Let's look at arguments in the `lm` and `min` functions  
 
 ```r
 help(lm)
@@ -161,9 +164,9 @@ help(min)
 # <img src="figures/tools.png" style="height: 50px"/> Libraries, <span style='color:#6DA34D'>functions</span>, data
 
 - Function arguments
-  - Let's look at arguments in the `lm` and `min` functions  
   - Arguments are used to specify the data and operation
-  - Arguments are comma separated
+  - Arguments are comma separated  
+  - Let's look at arguments in the `lm` and `min` functions  
 
 ```r
 some_numbers <- c(1, 2, NA, 4)
@@ -178,9 +181,9 @@ sd(some_numbers)
 # <img src="figures/tools.png" style="height: 50px"/> Libraries, <span style='color:#6DA34D'>functions</span>, data
 
 - Function arguments
-  - Let's look at arguments in the `lm` and `min` functions  
   - Arguments are used to specify the data and operation
-  - Arguments are comma separated
+  - Arguments are comma separated  
+  - Let's look at arguments in the `lm` and `min` functions  
 
 ```{r, echo = TRUE, collapse=TRUE}
 some_numbers <- c(1,2,NA, 4)
@@ -195,9 +198,9 @@ sd(some_numbers)
 # <img src="figures/tools.png" style="height: 50px"/> Libraries, <span style='color:#6DA34D'>functions</span>, data
 
 - Function arguments
-  - Let's look at arguments in the `lm` and `min` functions  
   - Arguments are used to specify the data and operation
-  - Arguments are comma separated
+  - Arguments are comma separated  
+  - Let's look at arguments in the `lm` and `min` functions  
 
 ```{r, echo = TRUE, collapse=TRUE}
 some_numbers <- c(1,2,NA, 4)
@@ -211,7 +214,7 @@ sd(some_numbers, na.rm = TRUE)
 
 # <img src="figures/tools.png" style="height: 50px"/> Libraries, <span style='color:#6DA34D'>functions</span>, data
 
-- Anatomy of a function
+**Anatomy of a function**  
 
 ```r
 compute_mean <- function(x) { 
@@ -237,8 +240,33 @@ compute_mean <- function(x) {
 
 # <img src="figures/tools.png" style="height: 50px"/> Libraries, <span style='color:#6DA34D'>functions</span>, data
 
+- Leverage AI to maintain foundational knowledge as an R programmer  
+  - Basics like setting up RStudio or another IDE (Integrated Development Environment), running and writing code, and further exploring core concepts in R like data types and how functions work  
+  - For example, ask your AI assistant to respond to the prompt: *"Explain the anatomy of an R function"*
+
+---
+
+# <img src="figures/tools.png" style="height: 50px"/> Libraries, <span style='color:#6DA34D'>functions</span>, data
+
+- R programmer AI tools
+  - Browser-based tools  
+  - Desktop tools  
+  - Models  
+  - Cloud-based Ops orchestration
+- Common prompting strategies
+  - Role Prompting (*“Act as an R programming instructor for beginners and explain functions.”*)
+  - Ask for code and explanations
+  - Be specific and mention specific tasks, libraries, and error messages
+  - Iterate, clarifying if the first answer isn’t right
+  - Break down tasks (*“First clean data, then summarize, then plot.”*)
+  - Use XML tags (&lt;Tag1&gt;)
+
+---
+
+# <img src="figures/tools.png" style="height: 50px"/> Libraries, <span style='color:#6DA34D'>functions</span>, data
+
 **Exercise - 5 minutes**  
-- Ask [ChatGPT](https://chat.openai.com/) or [Perplexity](https://www.perplexity.ai/) to write a function that sums two numbers
+- Ask [ChatGPT](https://chat.openai.com/), [Github Copilot](https://github.com/features/copilot), or [Perplexity](https://www.perplexity.ai/) to write a function that sums two numbers
 - Copy and paste the function into your R script
 - Run the code in the command line to create the function
 - Try to use the function!
@@ -252,7 +280,7 @@ countdown(minutes = 5, seconds = 0)
 # <img src="figures/tools.png" style="height: 50px"/> Libraries, <span style='color:#6DA34D'>functions</span>, data
 
 **Exercise - 5 minutes**  
-- Ask [ChatGPT](https://chat.openai.com/) or [Perplexity](https://www.perplexity.ai/) to write a function that sums two numbers
+- Ask [ChatGPT](https://chat.openai.com/), [Github Copilot](https://github.com/features/copilot), or [Perplexity](https://www.perplexity.ai/) to write a function that sums two numbers
 - Copy and paste the function into your R script
 - Run the code in the command line to create the function
 - Try to use the function!
@@ -275,7 +303,7 @@ sum_two_numbers <- function(x, y) {
 
 # <img src="figures/data.png" style="height: 50px"/> Libraries, functions, <span style='color:#6DA34D'>data</span>
 
-- Data type is an important concept in all programming languages
+- Knowing data types when programming is really important!
   - Creates a set of rules for what operations can be executed  
 - Data types  
   - Vectors, tibbles, data frames
@@ -284,180 +312,33 @@ sum_two_numbers <- function(x, y) {
   - Integers, numbers, characters, factors
       - You can sum integers and numbers, but not character strings
   
---
-
-Confirm data type
-
 ```r
-class(c('Washington', 'Oregon', 'Idaho'))
-is.character(c('Washington', 'Oregon', 'Idaho'))
-is.factor(c('Washington', 'Oregon', 'Idaho'))
-```
-
----
-
-# <img src="figures/data.png" style="height: 50px"/> Libraries, functions, <span style='color:#6DA34D'>data</span>
-
-- Data type is an important concept in all programming languages
-  - Creates a set of rules for what operations can be executed  
-- Data types  
-  - Vectors, tibbles, data frames
-      - `str_subset()` removes a value from a string
-      - `filter()` removes an observation from a tibble or data frame
-  - Integers, numbers, characters, factors
-      - You can sum integers and numbers, but not character strings
-  
-Confirm data type
-
-```{r, echo=TRUE, collapse=TRUE}
-class(c('Washington', 'Oregon', 'Idaho'))
-is.character(c('Washington', 'Oregon', 'Idaho'))
-is.factor(c('Washington', 'Oregon', 'Idaho'))
-```
-
----
-
-# <img src="figures/data.png" style="height: 50px"/> Libraries, functions, <span style='color:#6DA34D'>data</span>
-
-- Data type is an important concept in all programming languages
-  - Creates a set of rules for what operations can be executed  
-- Data types  
-  - Vectors, tibbles, data frames
-      - `str_subset()` removes a value from a string
-      - `filter()` removes an observation from a tibble or data frame
-  - Integers, numbers, characters, factors
-      - You can sum integers and numbers, but not character strings
-
-Confirm data type
-
-```r
-class(c('Washington', 'Oregon', 'Idaho'))
-is.character(c('Washington', 'Oregon', 'Idaho'))
-is.factor(c('Washington', 'Oregon', 'Idaho'))
-```
-
---
-
-Coerce data type
-
-```r
-as.factor(c('Washington', 'Oregon', 'Idaho'))
-class(as.factor(c('Washington', 'Oregon', 'Idaho')))
-```
-
----
-
-# <img src="figures/data.png" style="height: 50px"/> Libraries, functions, <span style='color:#6DA34D'>data</span>
-
-- Data type is an important concept in all programming languages
-  - Creates a set of rules for what operations can be executed  
-- Data types  
-  - Vectors, tibbles, data frames
-      - `str_subset()` removes a value from a string
-      - `filter()` removes an observation from a tibble or data frame
-  - Integers, numbers, characters, factors
-      - You can sum integers and numbers, but not character strings
-  
-Coerce data type
-
-```{r, echo = TRUE, collapse=TRUE}
-as.factor(c('Washington', 'Oregon', 'Idaho'))
-class(as.factor(c('Washington', 'Oregon', 'Idaho')))
-```
-
----
-
-# <img src="figures/data.png" style="height: 50px"/> Libraries, functions, <span style='color:#6DA34D'>data</span> 
-
-- Data types  
-  -  **Vectors**, tibbles, data frames
-- Vectors contain 1 or more values in a string  
-- Call a specific element by its location in a vector  
-```{r, echo = TRUE, collapse=TRUE}
-c('Washington', 'Oregon', 'Idaho')
-1:10
-rep(1:2, times = 2)
-seq(from = 0, to = 100, by = 10)
-```
-
----
-
-# <img src="figures/data.png" style="height: 50px"/> Libraries, functions, <span style='color:#6DA34D'>data</span>
-
-- Data types  
-  - **Vectors**, tibbles, data frames
-- Vectors contain 1 or more values in a string  
-- Call a specific element by its location in a vector  
-
-```r
-c('Washington', 'Oregon', 'Idaho')[2]
-seq(from = 0, to = 100, by = 10)[6]
-```
-
----
-
-# <img src="figures/data.png" style="height: 50px"/> Libraries, functions, <span style='color:#6DA34D'>data</span>
-
-- Data types  
-  - **Vectors**, tibbles, data frames
-- Vectors contain 1 or more values in a string  
-- Call a specific element by its location in a vector  
-
-```{r, echo = TRUE, collapse=TRUE}
-c('Washington', 'Oregon', 'Idaho')[2]
-seq(from = 0, to = 100, by = 10)[6]
-```
-
----
-
-# <img src="figures/data.png" style="height: 50px"/> Libraries, functions, <span style='color:#6DA34D'>data</span>
-
-- Data types  
-  - Vectors, **tibbles**, data frames
-- Tibbles look a little like spreadsheets
-- Tibbles contain metadata on the dataset
-  - Dimensions
-  - Variable types
-- Truncate variable names and values 
-```{r, echo = TRUE, collapse=TRUE}
-tibble(
-  x = c(1:3)
-  , y = c(4:6)
-  , z = c('Washington', 'Oregon', 'Idaho')
-  )
-```
-
----
-
-# <img src="figures/data.png" style="height: 50px"/> Libraries, functions, <span style='color:#6DA34D'>data</span>
-
-- Call a specific variable by name or location in the tibble
-  - Variables are vectors  
-  - Use the `$` between the tibble name and the variable name
-  - Also able to call the column (or row) by index number
-
-```r
-starwars$name
-starwars[,1]
+starwars
 ```
 
 ```{r, echo = FALSE, collapse=FALSE}
-head(starwars$name, 7)
+head(starwars, 3)
 ```
 
 ---
 
 # <img src="figures/data.png" style="height: 50px"/> Libraries, functions, <span style='color:#6DA34D'>data</span>
 
-- Data types  
-  - Vectors, tibbles, **data frames**
-- Data frames are like tibbles minus metadata (and truncated print)
-```{r, echo = TRUE, collapse=TRUE}
-data.frame(
-  x = c(1:3)
-  , y = c(4:6)
-  , z = c('Washington', 'Oregon', 'Idaho')
-  )
+**More on data types**
+
+- Inspect the dataset  
+  - `class()` tells the overall type  
+  - `is.[type]()` checks if something is numeric, character, etc.  
+- Access parts of a dataset  
+  - `$` to pull a column as a vector  
+  - `[ ]` to pull elements by position  
+- Create and coerce variables  
+  - `as.character()`, `as.numeric()`  
+
+**Import and inspect your own dataset (`read_csv()`)**  
+
+```r
+byod_df <- read_csv("[...].csv")
 ```
 
 ---
@@ -607,7 +488,7 @@ summary(airbnb)
 
 You can nest multiple functions
 ```r
-length(unique(airbnb$room_type))
+length(unique(starwars$homeworld))
 ```
 
 ---
@@ -639,7 +520,7 @@ length(unique(airbnb$address))
 --
 
 ```{r, echo = TRUE, collapse=TRUE}
-head(sort(unique(airbnb$host_id)), 3)
+sort(unique(airbnb$host_id))[3]
 ```
 
 --
@@ -665,7 +546,7 @@ Make sure...
 
 --
 
-Feel free to ask ChatGPT why you see an error!
+Feel free to ask an AI assistant why you see an error!
 
 ```
 Why does this code throw an error in R? 
@@ -751,7 +632,7 @@ You can find the a description of the synthetic MBA admissions data [here](https
 - What is the lowest `gpa` in the `mba` dataset?  
 - What is the average number of years of work experience (`work_exp`)?  
 - How many applicants are international students?  
-- In how many rows in the dataset is Consulting the `work_industry` value?  
+- In how many rows in the dataset is "Consulting" the `work_industry` value?  
 
 --
 
@@ -772,7 +653,7 @@ countdown(minutes = 8, seconds = 0)
 - What is the lowest `gpa` in the `mba` dataset?  
 - What is the average number of years of work experience (`work_exp`)?  
 - How many applicants are international students?  
-- In how many rows in the dataset is Consulting the `work_industry` value?  
+- In how many rows in the dataset is "Consulting" the `work_industry` value?  
 
 ```{r, echo = TRUE, collapse=TRUE}
 min(mba$gpa)
@@ -798,7 +679,7 @@ table(mba$international)
 - What is the lowest `gpa` in the `mba` dataset?  
 - What is the average number of years of work experience (`work_exp`)?  
 - How many applicants are international students?  
-- In how many rows in the dataset is Consulting the `work_industry` value?  
+- In how many rows in the dataset is "Consulting" the `work_industry` value?  
 
 ```{r, echo = TRUE, collapse=TRUE}
 table(mba$work_industry)['Consulting']
