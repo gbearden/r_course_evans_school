@@ -3,12 +3,21 @@ title: "Install VS Code"
 output: html_document
 ---
 
-- Navigate to the [VS Code download page](https://code.visualstudio.com/download) and download the correct installer
-- Launch the installer and walk through the steps to install VS Code
-- Open VS Code, navigate to the VS Code Extension Marketplace, and install [REditorSupport](https://marketplace.visualstudio.com/items?itemName=REditorSupport.r)
+##### 1. Navigate to the [VS Code download page](https://code.visualstudio.com/download) and download the correct installer  
+
+##### 2. Launch the installer and walk through the steps to install VS Code. 
+
+##### 3. Open VS Code, navigate to the VS Code Extension Marketplace, and install [REditorSupport](https://marketplace.visualstudio.com/items?itemName=REditorSupport.r)
+
 <img src="figures/marketplace.png" alt="Marketplace" width="600"/>
-- Open a new text file
-- Change the text file language to R in the Select Language Mode menu (link in botton right)
+
+##### 4. Open a new text file. 
+
+##### 5. Change the text file language to R in the Select Language Mode menu (link in botton right)  
+
 <img src="figures/lang_mode.png" alt="Language Mode" width="600"/>
-- VS Code will prompt you to install `languageserver`; agree to the prompt
+
+##### 6. VS Code will prompt you to install `languageserver`; agree to the prompt
+
+<br><br>
 
