@@ -117,7 +117,7 @@ We will use an AI Assistant to troubleshoot, document, and write R code. Sign up
 
 ## Install and Set Up VS Code
 
-Go to [this guide](https://github.com/gbearden/r_course_evans_school/blob/help/vscode) to install and set up VS Code.
+Go to [this guide](https://gbearden.github.io/r_course_evans_school/help/vscode/) to install and set up VS Code.
 
 ## Reference Materials
 
