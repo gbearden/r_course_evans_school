@@ -39,8 +39,7 @@ h4.date {
 
 ## Instructors
 
-**Graham Bearden (gbearden@uw.edu)**  
-**Oeuyown Kim (kim.oeuyown@gmail.com)**  
+**Graham Bearden (gbearden@uw.edu)**    
 
 ## Course Overview
 
@@ -113,7 +112,7 @@ If you have not downloaded R and RStudio already, use the links below to set up 
 
 ## AI Assistants
 
-We will use an AI Assistant to troubleshoot, document, and write R code. Sign up or log in to [Perplexity](https://www.perplexity.ai/) or [ChatGPT](https://chat.openai.com/auth/login), or feel free to use any of the other AI assistant. 
+We will use an AI Assistant to troubleshoot, document, and write R code. Sign up or log in to [ChatGPT](https://chat.openai.com/auth/login), [Perplexity](https://www.perplexity.ai/), and/or [Github Copilot](https://github.com/features/copilot) account, or feel free to use any of the other AI assistant. 
 
 ## Install and Set Up VS Code
 
