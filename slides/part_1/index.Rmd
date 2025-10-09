@@ -1,6 +1,6 @@
 ---
 title: "Part 1 - R Basics"
-author: "Graham Bearden and Oeuyown Kim"
+author: "Graham Bearden"
 institute: "University of Washington"
 date: "October 9, 2025"
 output:
@@ -37,9 +37,6 @@ mba <- read_csv("https://bit.ly/4evYpeW", col_types = cols())
   - Install R [on a Mac with an Intel chip](https://cran.rstudio.com/bin/macosx/big-sur-x86_64/base/R-4.4.1-x86_64.pkg), [on a Mac with a silicon M1/M2/M3 chip](https://cran.rstudio.com/bin/macosx/big-sur-arm64/base/R-4.4.1-arm64.pkg), or [on a PC](https://cran.rstudio.com/bin/windows/base/R-4.4.1-win.exe)
   - Install RStudio [on a Mac](https://download1.rstudio.org/electron/macos/RStudio-2024.04.2-764.dmg) or [on a PC](https://download1.rstudio.org/electron/windows/RStudio-2024.04.2-764.exe)
 - Create a [ChatGPT](https://chat.openai.com/auth/login), [Perplexity](https://www.perplexity.ai/), and/or [Github Copilot](https://github.com/features/copilot) account
-- [Install VS Code](https://code.visualstudio.com/download)
-  - Install [REditorSupport](https://marketplace.visualstudio.com/items?itemName=reditorsupport.r)
-  - Install R library languageserver (`install.packages("languageserver")`)
 
 ---
 
@@ -49,7 +46,7 @@ mba <- read_csv("https://bit.ly/4evYpeW", col_types = cols())
   - Data preparation (cleaning, reshaping, creation)  
   - Data analysis
   - Data visualization
-  - Statistical modeling
+  - Modeling 
   - Productizing and automation
 - Mental models and analysis tools
   - Excel/SPSS/Stata --> computational programming tools like R
@@ -63,6 +60,23 @@ mba <- read_csv("https://bit.ly/4evYpeW", col_types = cols())
   - ??
   - [R Bloggers](https://www.r-bloggers.com/)
   - [stackoverflow](https://stackoverflow.com/questions/tagged/r)
+  
+---
+
+# AI Tools and R Programming
+
+- R programmer AI tools
+  - Browser-based tools (ChatGPT)  
+  - Desktop tools (VS Code)  
+  - Statistical models (transformers, neural network models, GANs)  
+  - Cloud-based Ops orchestration (auto-scaling cloud resources, incident detection)
+- Common prompting strategies
+  - Role Prompting (*“As if you were a lead data scientist with extensive experience building complex EHR data models [...]”*)
+  - Ask for code and explanations
+  - Be specific and mention specific tasks, libraries, and error messages
+  - Iterate, clarifying if the first answer isn’t right
+  - Break down tasks (*“First clean data, then summarize, then plot.”*)
+  - Use XML tags (&lt;Tag1&gt;)
 
 ---
 
@@ -100,7 +114,7 @@ install.packages('tidyverse')
 knitr::include_graphics("./figures/r_studio_install_packages.png")
 ```
 
---- 
+---
 class: inverse, middle, center
 
 # Libraries, functions, data
@@ -240,31 +254,6 @@ compute_mean <- function(x) {
 
 # <img src="figures/tools.png" style="height: 50px"/> Libraries, <span style='color:#6DA34D'>functions</span>, data
 
-- Leverage AI to maintain foundational knowledge as an R programmer  
-  - Basics like setting up RStudio or another IDE (Integrated Development Environment), running and writing code, and further exploring core concepts in R like data types and how functions work  
-  - For example, ask your AI assistant to respond to the prompt: *"Explain the anatomy of an R function"*
-
----
-
-# <img src="figures/tools.png" style="height: 50px"/> Libraries, <span style='color:#6DA34D'>functions</span>, data
-
-- R programmer AI tools
-  - Browser-based tools  
-  - Desktop tools  
-  - Models  
-  - Cloud-based Ops orchestration
-- Common prompting strategies
-  - Role Prompting (*“Act as an R programming instructor for beginners and explain functions.”*)
-  - Ask for code and explanations
-  - Be specific and mention specific tasks, libraries, and error messages
-  - Iterate, clarifying if the first answer isn’t right
-  - Break down tasks (*“First clean data, then summarize, then plot.”*)
-  - Use XML tags (&lt;Tag1&gt;)
-
----
-
-# <img src="figures/tools.png" style="height: 50px"/> Libraries, <span style='color:#6DA34D'>functions</span>, data
-
 **Exercise - 5 minutes**  
 - Ask [ChatGPT](https://chat.openai.com/), [Github Copilot](https://github.com/features/copilot), or [Perplexity](https://www.perplexity.ai/) to write a function that sums two numbers
 - Copy and paste the function into your R script
@@ -306,10 +295,11 @@ sum_two_numbers <- function(x, y) {
 - Knowing data types when programming is really important!
   - Creates a set of rules for what operations can be executed  
 - Data types  
-  - Vectors, tibbles, data frames
+  - Vectors, data frames, tibbles
       - `str_subset()` removes a value from a string
-      - `filter()` removes an observation from a tibble or data frame
-  - Integers, numbers, characters, factors
+      - `filter()` removes an observation from a data frame or tibble
+  - Vectors
+      - Integers, numbers, characters, factors
       - You can sum integers and numbers, but not character strings
   
 ```r
@@ -339,6 +329,9 @@ head(starwars, 3)
 
 ```r
 byod_df <- read_csv("[...].csv")
+# Or take a look at the 538 partisan lean dataset from 2022
+# https://github.com/fivethirtyeight/data/tree/master/partisan-lean
+byod_df <- read_csv("http://bit.ly/48Ru0Ip")
 ```
 
 ---
