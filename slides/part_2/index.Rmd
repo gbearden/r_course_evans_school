@@ -44,6 +44,8 @@ colombia <- climate |>
 - Also, create PPTX outputs
   - Check out [officer](https://davidgohel.github.io/officer/)
 
+---
+
 # What we learned in the previous class
 
 - Getting up and running in RStudio  
