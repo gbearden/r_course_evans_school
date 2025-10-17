@@ -2,7 +2,7 @@
 title: "Part 2 - Introduction to the Tidyverse"
 author: "Graham Bearden"
 institute: "University of Washington"
-date: "October 10, 2024"
+date: "October 16, 2025"
 output:
   xaringan::moon_reader:
     lib_dir: libs
@@ -37,6 +37,13 @@ colombia <- climate |>
     )
 ```
 
+# Questions from last class
+
+- How do I create pdf outputs in R Notebook? 
+  - Check out [tinytex](https://yihui.org/tinytex/)
+- Also, create PPTX outputs
+  - Check out [officer](https://davidgohel.github.io/officer/)
+
 # What we learned in the previous class
 
 - Getting up and running in RStudio  
@@ -46,7 +53,6 @@ colombia <- climate |>
 - How to import data  
 - Regularly used data summary functions  
 - Assignment operator (`<-`)
-- Basic troubleshooting
 
 ---
 
@@ -59,22 +65,25 @@ colombia <- climate |>
 
 ---
 
-# Reminder on how to troubleshoot code
+# Troubleshooting tips
 
 Make sure...
 
 - You loaded your libraries
+- Check spelling
 - Arguments in your functions are comma-separated
-- Your functions have start and closing parentheses
-- You have start and end quotation marks where relevant
+- Ensure the code finished running (`+`s vs. `>`s in the R console)  
+  - Your functions should have start and closing parentheses
+  - Check for red "x" annotation beside line numbers (after saving your file)
+  - You have start and end quotation marks where relevant
 - The variable type is correct to perform the function you call
   - For example you probably don't want to run `min()` on a character string
 - Your assignment operator looks like this: `<-`
-- You're running code inside a code chunk (in a notebook)
+- Run code line by line  
 
 --
 
-Also, feel free to ask ChatGPT why you see an error!
+Also, feel free to ask an AI assistant why you see an error!
 
 ```
 Why does this code throw an error in R? 
@@ -85,15 +94,15 @@ Why does this code throw an error in R?
 
 # Refresher with MBA admissions data
 
-You can find the a description of the MBA admissions data [here](https://www.kaggle.com/datasets/taweilo/mba-admission-dataset). The data were generated from the University of Pennsylvania Wharton Class of 2025. Use functions to explore [tibbles](https://gbearden.github.io/r_course_evans_school/slides/part_1/#38) and [vectors](https://gbearden.github.io/r_course_evans_school/slides/part_1/#44) from the previous class to help answer these questions.
+You can find the a description of the MBA admissions data [here](https://www.kaggle.com/datasets/taweilo/mba-admission-dataset). The data were generated from the University of Pennsylvania Wharton Class of 2025. Use functions to explore [tibbles](https://gbearden.github.io/r_course_evans_school/slides/part_1/#30) and [vectors](https://gbearden.github.io/r_course_evans_school/slides/part_1/#37) from the previous class to help answer these questions.
 
 --
 
-**Exercise 1 - 8 minutes**  
+**Exercise 1 - 5 minutes**  
 - What is the lowest `gpa` in the `mba` tibble?  
 - What is the average number of years of work experience (`work_exp`)?  
 - How many applicants are international students?  
-- In how many rows in the tibble is Consulting the `work_industry` value?  
+- In how many rows in the tibble is "Consulting" the `work_industry` value?  
 
 --
 
@@ -103,14 +112,14 @@ mba <- read_csv("https://bit.ly/4evYpeW")
 ```
 
 ```{r, echo = FALSE}
-countdown(minutes = 8, seconds = 0)
+countdown(minutes = 5, seconds = 0)
 ```
 
 ---
 
 # Refresher with MBA admissions data
 
-**Exercise 1 - 8 minutes**  
+**Exercise 1 - 5 minutes**  
 - What is the lowest `gpa` in the `mba` tibble?  
 - What is the average number of years of work experience (`work_exp`)?  
 - How many applicants are international students?  
@@ -164,6 +173,8 @@ class: inverse, middle, center
 --
 
 ```r
+airbnb <- read_csv('https://bit.ly/3oadz2L', col_types = cols())
+
 select(airbnb, host_id, reviews, rating, price)
 ```
 
@@ -256,7 +267,7 @@ select(airbnb_2, host_id, price, everything())
   - Makes data management within your script easier  
   - Style-wise, pipes are the present and future
 - Do not use the operator when you need to:  
-  - Refer to a data object created at an intermediate step
+  - Refer to a data object created in an intermediate step
   - Process more than 1 distinct data object
 
 ```r
@@ -418,7 +429,9 @@ airbnb |>
 
 # Select, <span style="color:#6DA34D">create</span>, and rename variables 
 
-<b>Exercise - 6 minutes</b>  
+By day you're an analyst at the City of Seattle; by night you're a climate analyst at the Earth Institute. You will analyze [climate data](https://www.kaggle.com/sohelranaccselab/global-climate-change) to answer questions that help the Earth Institute understand temperature and temperature change in cities and countries around the world.
+
+**Exercise - 6 minutes**  
 - With the `climate` data, create variables called `high_uncertainty` and `winter`
 - In `high_uncertainty`, flag with a `1` all observations where `uncertainty` is greater than 1.5. All other rows should have a `0`.  
 - In `winter`, flag with a `1` all observations where month is a 1, 2, 12.  
@@ -515,6 +528,31 @@ climate |>
     high_uncertainty = if_else(uncertainty > 1.5, 1, 0),
     winter = if_else(month %in% c(1, 2, 12), 1, 0)
     )
+```
+
+---
+
+# Exercise: Troubleshooting
+
+This code contains 3 mistakes. The code is supposed to create a new tibble called `bathrooms`. Find the 3 mistakes and correct them. Find the mistakes on your own, with a friend, and/or ask an AI assistant to help.   
+
+```r
+library(tinyverse)
+
+bathrooms <- airbnb %> 
+  transmute(
+  rental = room_id, 
+  room_type, 
+  bathrooms
+  bathrooms_2_more = bathrooms >= 2,
+  price_per_bathroom = price / bathrooms
+  ) 
+  
+head(bathrooms)
+```
+
+```{r, echo = FALSE}
+countdown(minutes = 5, seconds = 0)
 ```
 
 ---
