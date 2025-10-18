@@ -42,7 +42,7 @@ wacky_palette <- c("#FF0099", "#00CCFF", "#FF9900", "#33FF33", "#FF33CC", "#FFFF
 # Housekeeping
 
 - Submit 2 “stakeholder-ready” data visualizations and your code on November 3 or before  
-  - The assignment has been added to Canvas
+  - The assignment will be added to Canvas
   - See examples [here](https://github.com/gbearden/r_course_evans_school/blob/master/plots/) on Github  
 - The error message <span style="color:red">`could not find function "%>%"`</span> means you need to run `library(tidyverse)`  
 - How do you clean up your RStudio environment?  
