@@ -2,7 +2,7 @@
 title: "Part 3 - Data Visualization with ggplot2"
 author: "Graham Bearden"
 institute: "University of Washington"
-date: "October 17, 2024"
+date: "October 23, 2025"
 output:
   xaringan::moon_reader:
     lib_dir: libs
@@ -42,9 +42,8 @@ wacky_palette <- c("#FF0099", "#00CCFF", "#FF9900", "#33FF33", "#FF33CC", "#FFFF
 # Housekeeping
 
 - Submit 2 “stakeholder-ready” data visualizations and your code on November 3 or before  
-  - The assignment has been added to Canvas
+  - The assignment will be added to Canvas
   - See examples [here](https://github.com/gbearden/r_course_evans_school/blob/master/plots/) on Github  
-- You can access notes from the first and second class in the syllabus  
 - The error message <span style="color:red">`could not find function "%>%"`</span> means you need to run `library(tidyverse)`  
 - How do you clean up your RStudio environment?  
   - `rm()` 
@@ -56,7 +55,7 @@ wacky_palette <- c("#FF0099", "#00CCFF", "#FF9900", "#33FF33", "#FF33CC", "#FFFF
 
 - Creating and updating variables  
 - Subsetting tibbles/data frames  
-- How to aggregate data  
+- How to [aggregate data](https://gbearden.github.io/r_course_evans_school/slides/part_2/#58)  
 
 ---
 
@@ -80,9 +79,9 @@ wacky_palette <- c("#FF0099", "#00CCFF", "#FF9900", "#33FF33", "#FF33CC", "#FFFF
 
 ---
 
-# Exercise: Troubleshooting
+# Exercise 1 of 2: Troubleshooting
 
-This code contains 3 mistakes. The code is supposed to report the mean temperatures for Peru and Saudi Arabia before 1900. Find the 3 mistakes and correct them.  
+This code contains 3 mistakes. The code is supposed to report the mean temperatures for Peru and Saudi Arabia before 1900. Find the 3 mistakes and correct them. Feel free to use an AI assistant!  
 
 ```r
 library(tidyverse)
@@ -105,10 +104,10 @@ countdown(minutes = 5, seconds = 0)
 
 ---
 
-# Exercise: Aggregation
+# Exercise 2 of 2: Aggregation
 
 Report the average GMAT scores and number of applicants by major for female applicants only. To complete the task, you'll need to:
-  - Subset your data using `filter()` (click [here](https://gbearden.github.io/r_course_evans_school/slides/part_2/#43) for help)  
+  - Subset your data using `filter()` (click [here](https://gbearden.github.io/r_course_evans_school/slides/part_2/#46) for help)  
   - Use `group_by()` and `summarise()` to count applicants and and compute the mean 
 
 ```r
@@ -121,10 +120,10 @@ countdown(minutes = 5, seconds = 0)
 
 ---
 
-# Exercise: Aggregation
+# Exercise 2 of 2: Aggregation
 
 Report the average GMAT scores and number of applicants by major for female applicants only. To complete the task, you'll need to:
-  - Subset your data using `filter()` (click [here](https://gbearden.github.io/r_course_evans_school/slides/part_2/#43) for help)  
+  - Subset your data using `filter()` (click [here](https://gbearden.github.io/r_course_evans_school/slides/part_2/#46) for help)  
   - Use `group_by()` and `summarise()` to count applicants and and compute the mean 
 
 ```r
@@ -302,7 +301,7 @@ airbnb %>% ggplot() + geom_bar(mapping = aes()) # Alternate placement of aes()
 ```r
 aes(x = NULL, y = NULL, color = NULL
   , fill = NULL, alpha = NULL, linetype = NULL
-  , shape = NULL, size = NULL
+  , shape = NULL, size = NULL, linewidth = NULL
   )
 ```
 
@@ -626,7 +625,7 @@ my_data %>%
     ) + 
   geom_bar(
     stat = 'identity', fill = '#CC3F0C', alpha = .5 # coolors.co/generate #<<
-    , linetype = 'dashed', color = 'black', size = 1 #<<
+    , linetype = 'dashed', color = 'black', linewidth = 1 #<<
     ) 
 ```
 
@@ -967,7 +966,7 @@ class: inverse, middle, center
 - Change fonts
 - Change plot borders/boundaries and ticks
 - Pre-built themes vs. custom themes
-  - `ggplot2` and `ggthemes` themes
+  - `ggplot2` and `ggthemes` themes ([ggthemes](https://github.com/jrnold/ggthemes))
 
 ```r
 install.packages('ggthemes')
