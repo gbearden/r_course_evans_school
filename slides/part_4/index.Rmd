@@ -573,6 +573,87 @@ brazil_cities %>%
 
 ---
 
-# VS Code
+# Setting up VS Code and Github
 
-Click [here](https://gbearden.github.io/r_course_evans_school/help/vscode/) to set up VS Code
+- Click [here](https://gbearden.github.io/r_course_evans_school/help/vscode/) to set up VS Code and Github
+- Open a text file, click on "select a language," and select R
+- Connect VS Code and Github
+
+---
+
+# AI Tools in VS Code
+
+- Auto-complete code in an R script
+- Inline and side chat
+  - Chat modes
+  - Models
+
+---
+  
+# VS Code Agent Mode
+
+Use Agent Mode to:  
+
+- Explore files + ask structured questions
+- Request code generation + edits
+- Run code or workflows 
+
+**Tips**
+
+- Be specific when asking agents to edit files
+- Validate results—agents can be wrong
+- Break requests into small steps
+- Give permission to perform tasks
+
+**Datasets**
+
+- airbnb. https://bit.ly/3oadz2L
+- climate. https://bit.ly/3kKErEb
+- mba. https://bit.ly/4evYpeW
+
+---
+
+# VS Code Agent Mode
+
+**Datasets**
+
+- airbnb. https://bit.ly/3oadz2L
+- climate. https://bit.ly/3kKErEb
+- mba. https://bit.ly/4evYpeW
+
+What analyses would you like for the agent to conduct? Find the best value Airbnb properties? Identify the city with the most stable climate? 
+
+--
+
+**My prompt**
+
+<i>I need to conduct an analysis in R in which I evaluate the data in the climate dataset you can find here: https://bit.ly/3kKErEb. Write the R code in the tidyverse. Perform the following tasks:
+
+- Identify countries where temperature change over time is minimal
+- Identify countries where temperature change over time is significant
+- Determine whether there is an pattern to the uncertainty in the dataset
+- Create data visualizations
+
+Please package the anaysis so that it's ready to share with stakeholder groups.</i>
+
+---
+
+# VS Code Agent Mode
+
+**Additional Prompts**
+
+Prompt #2  
+<i>This code has errors. Are you able to iteratively work through it and identify and fix the errors?</i>  
+
+Prompt #3  
+<i>When creating country_trends, it throws the error:  
+<br>
+Error in group_by():  
+! Must group by variables found in .data.  
+✖ Column Country is not found.</i>  
+
+Prompt #4  
+<i>Really nice job, thank you. Please add code to the script to recommend a few countries where I should consider moving given that I prefer warm temperatures and climate stability.</i>  
+
+Prompt #5  
+<i>You put the code at the top of the script. Could you append it to the bottom?</i>
