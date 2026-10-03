@@ -1,0 +1,17 @@
+% Shared LaTeX setup for PDF memos. Linked from the memo's YAML header with
+%   includes:
+%     in_header: memo_preamble.tex
+
+\usepackage{wrapfig}   % text wrapping around figures (see memo_setup.R)
+\usepackage{booktabs}  % clean table rules
+
+\pagenumbering{gobble}           % no page numbers
+\setlength{\parskip}{0.6em}      % space between paragraphs
+\setlength{\parindent}{0pt}      % no paragraph indent
+
+% Section headings: bold, body-size text, little space around them
+\makeatletter
+\renewcommand\section{\@startsection{section}{1}{0pt}{1.4ex}{0.4ex}{\normalfont\large\bfseries}}
+\renewcommand\subsection{\@startsection{subsection}{2}{0pt}{1.2ex}{0.4ex}{\normalfont\bfseries}}
+\renewcommand\subsubsection{\@startsection{subsubsection}{3}{0pt}{1ex}{0.3ex}{\normalfont\itshape\bfseries}}
+\makeatother

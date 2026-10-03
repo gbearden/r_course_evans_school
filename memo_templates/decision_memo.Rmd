@@ -1,0 +1,96 @@
+---
+pagetitle: "Decision Memo"
+output:
+  html_document:
+    theme: null
+    highlight: null
+    mathjax: null
+    css: memo.css
+params:
+  to: "Councilmember, Seattle City Council"
+  from: "Your Name, Office of Planning and Community Development"
+  date: !r format(Sys.Date(), "%B %d, %Y")
+  re: "Short-term rental listings in the Seattle area"
+---
+
+```{r setup, include = FALSE}
+library(tidyverse)
+library(scales)
+
+# Styles live in memo.css; the header layout lives in memo_header.html;
+# figure options (wrap, wrap.width) are explained in memo_setup.R
+source("memo_setup.R")
+```
+
+```{r data}
+# Replace this chunk with your own data
+airbnb <- read_csv("https://bit.ly/3oadz2L", show_col_types = FALSE)
+
+n_listings    <- nrow(airbnb)
+share_seattle <- mean(airbnb$address == "Seattle")
+share_entire  <- mean(airbnb$room_type == "Entire home/apt")
+
+by_city <- airbnb |>
+  group_by(address) |>
+  summarise(
+    listings     = n(),
+    share_entire = mean(room_type == "Entire home/apt"),
+    median_price = median(price, na.rm = TRUE)
+  )
+city <- function(x) filter(by_city, address == x)
+```
+
+```{r header}
+memo_header(params)
+```
+
+<!-- Opening summary: state the bottom line in two or three sentences. A busy
+reader should be able to stop here and still know what you found and what you
+recommend. -->
+
+**There are `r comma(n_listings, accuracy = 1)` Airbnb listings in Seattle, Bellevue, Kirkland, and Redmond, and `r percent(share_seattle, accuracy = 1)` of them are in Seattle. Most listings (`r percent(share_entire, accuracy = 1)`) rent out an entire home or apartment rather than a room. [Replace with your recommendation in one sentence.]**
+
+## Background
+
+<!-- Why is this memo landing on the reader's desk now? Keep it to the
+context they need to understand the analysis. -->
+
+[Describe the policy question and why it matters to the reader. Cite sources in footnotes.^[Author, *Title*, Publisher, Year, URL.]]
+
+## Analysis
+
+```{r listings-plot, wrap = "right", wrap.width = 0.45, fig.width = 4, fig.height = 2.8}
+airbnb |>
+  count(address, room_type) |>
+  ggplot(aes(x = n, y = reorder(address, n, sum), fill = room_type)) +
+  geom_col() +
+  scale_x_continuous(labels = comma) +
+  labs(x = "Listings", y = NULL, fill = NULL, title = "Listings by city and room type") +
+  theme_minimal(base_size = 11) +
+  theme(legend.position = "bottom", plot.title.position = "plot")
+```
+
+<!-- Lead with the finding, then give the evidence. This paragraph wraps
+around the figure: change wrap = "right" to wrap = "left" to move the figure,
+or change wrap.width to resize it. Keep the paragraph at least as tall as the
+figure, or the text after it will wrap too. -->
+
+Short-term rentals are concentrated in Seattle. The city has `r comma(city("Seattle")$listings)` listings, more than `r floor(city("Seattle")$listings / sum(by_city$listings[by_city$address != "Seattle"]))` times as many as Bellevue, Kirkland, and Redmond combined. The type of rental also differs across the region. In Seattle, `r percent(city("Seattle")$share_entire, accuracy = 1)` of listings rent out an entire home or apartment, compared with `r percent(city("Bellevue")$share_entire, accuracy = 1)` in Bellevue and `r percent(city("Redmond")$share_entire, accuracy = 1)` in Redmond, where renting out a private room is more common. Whole-home rentals matter most for housing policy because they can take units out of the long-term rental market. [Replace with what the evidence means for the reader's decision, and note any limits of the data, such as when it was collected.]
+
+```{r price-table}
+airbnb |>
+  group_by(City = address) |>
+  summarise(
+    Listings = n(),
+    `Entire home (%)` = round(100 * mean(room_type == "Entire home/apt")),
+    `Median nightly price ($)` = median(price, na.rm = TRUE)
+  ) |>
+  arrange(desc(Listings)) |>
+  kable(format.args = list(big.mark = ","), caption = "Listings and prices by city")
+```
+
+## Recommendation
+
+<!-- Tell the reader what to do, and what happens next. -->
+
+[State your recommendation, the main trade-off, and the next step.]

@@ -1,0 +1,116 @@
+---
+pagetitle: "Analysis Memo"
+output:
+  html_document:
+    theme: null
+    highlight: null
+    mathjax: null
+    css: memo.css
+params:
+  to: "Director, Earth Institute"
+  from: "Your Name, Climate Analyst"
+  date: !r format(Sys.Date(), "%B %d, %Y")
+  re: "Warming in Brazil's largest cities, 1951-2012"
+---
+
+```{r setup, include = FALSE}
+library(tidyverse)
+library(scales)
+
+# Styles live in memo.css; the header layout lives in memo_header.html;
+# figure options (wrap, wrap.width) are explained in memo_setup.R
+source("memo_setup.R")
+```
+
+```{r data}
+# Replace this chunk with your own data
+climate <- read_csv("https://bit.ly/3kKErEb", show_col_types = FALSE)
+
+brazil <- climate |>
+  filter(country == "Brazil", year >= 1951, year <= 2012, !is.na(temp)) |>
+  mutate(period = if_else(year <= 1980, "1951-1980", "1983-2012")) |>
+  filter(year <= 1980 | year >= 1983)
+
+change <- brazil |>
+  group_by(city, period) |>
+  summarise(mean_temp = mean(temp), .groups = "drop") |>
+  pivot_wider(names_from = period, values_from = mean_temp) |>
+  mutate(change = `1983-2012` - `1951-1980`) |>
+  arrange(desc(change))
+
+fastest <- slice_max(change, change, n = 1)
+slowest <- slice_min(change, change, n = 1)
+```
+
+```{r header}
+memo_header(params)
+```
+
+<!-- Opening summary: the bottom line in two or three sentences. -->
+
+**Average temperatures rose in all `r nrow(change)` of Brazil's largest cities between 1951-1980 and 1983-2012. `r fastest$city` warmed the most (`r number(fastest$change, accuracy = 0.01)`°C) and `r slowest$city` warmed the least (`r number(slowest$change, accuracy = 0.01)`°C). [Replace with your recommendation in one sentence.]**
+
+## Background
+
+[Describe the question, who is asking, and why it matters now. Cite sources in footnotes.^[Author, *Title*, Publisher, Year, URL.]]
+
+## Findings
+
+<!-- Repeat this Finding / Evidence / Implication block for each finding. -->
+
+### Finding 1: Every city is warmer than it was a generation ago
+
+```{r trend-plot, wrap = "left", wrap.width = 0.5, fig.width = 5, fig.height = 3.6}
+brazil |>
+  group_by(city, year) |>
+  summarise(temp = mean(temp), .groups = "drop") |>
+  ggplot(aes(x = year, y = temp, color = city)) +
+  geom_line(linewidth = 0.6) +
+  labs(x = NULL, y = "Mean temperature (°C)", color = NULL,
+       title = "Annual mean temperature, 1951-2012") +
+  theme_minimal(base_size = 12) +
+  theme(legend.position = "bottom", plot.title.position = "plot") +
+  guides(color = guide_legend(nrow = 2))
+```
+
+**Evidence:** Each line shows a city's average temperature by year. The cities differ by several degrees, but they move together, and each one ends the period warmer than it started. Year-to-year swings are large, so comparing 30-year averages gives a steadier picture than comparing single years. [Replace with the evidence for your finding.]
+
+**Implication:** [Explain what this finding means for the reader's decision. Text in this section wraps around the figure. Change `wrap = "left"` to `wrap = "right"` to move the figure, or change `wrap.width` to resize it. Keep this text at least as tall as the figure, or the next heading will start below it.]
+
+### Finding 2: Warming was uneven across cities
+
+**Evidence:** The change in average temperature ranged from `r number(slowest$change, accuracy = 0.01)`°C in `r slowest$city` to `r number(fastest$change, accuracy = 0.01)`°C in `r fastest$city`. [Replace with the evidence for your finding.]
+
+```{r change-plot, fig.align = "center", out.width = "75%", fig.width = 6, fig.height = 3}
+change |>
+  ggplot(aes(x = change, y = reorder(city, change))) +
+  geom_segment(aes(x = 0, xend = change, yend = city), color = "grey70") +
+  geom_point(size = 3, color = "#B5532A") +
+  labs(x = "Change in mean temperature (°C), 1951-1980 to 1983-2012", y = NULL,
+       title = "Change in average temperature by city") +
+  theme_minimal(base_size = 12) +
+  theme(plot.title.position = "plot")
+```
+
+**Implication:** [Explain what this finding means for the reader's decision. The figure above is centered on its own line. Change `fig.align` to `"left"` or `"right"` to align it, and `out.width` to resize it.]
+
+## Summary Table
+
+```{r change-table}
+change |>
+  transmute(
+    City = city,
+    `1951-1980 (°C)` = number(`1951-1980`, accuracy = 0.1),
+    `1983-2012 (°C)` = number(`1983-2012`, accuracy = 0.1),
+    `Change (°C)` = number(change, accuracy = 0.01)
+  ) |>
+  kable(caption = "Average monthly temperature by period")
+```
+
+## Recommendation
+
+[State your recommendation, the main trade-off, and the next step.]
+
+## Data and Methods
+
+Temperatures come from Berkeley Earth's land temperature records for major cities.^[Berkeley Earth, *Climate Change: Earth Surface Temperature Data*, Kaggle, https://www.kaggle.com/datasets/berkeleyearth/climate-change-earth-surface-temperature-data.] Each period averages the monthly mean temperatures for each city across 30 years. [Note any limits of the data the reader should know about.]

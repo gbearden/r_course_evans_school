@@ -1,0 +1,14 @@
+% Memo header for PDF memos. memo_header() in memo_setup.R replaces each
+% {{field}} with the matching value from the memo's YAML `params`.
+% Note: LaTeX treats & % $ # _ as special characters; write \& or \% in
+% params if you need them.
+\begin{center}\textbf{\large MEMORANDUM}\end{center}
+
+\begin{tabular}{@{}ll@{}}
+\textbf{To:}   & {{to}} \\
+\textbf{From:} & {{from}} \\
+\textbf{Date:} & {{date}} \\
+\textbf{Re:}   & {{re}} \\
+\end{tabular}
+
+\noindent\rule{\textwidth}{0.4pt}
