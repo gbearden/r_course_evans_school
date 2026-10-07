@@ -2,7 +2,7 @@
 title: "Part 1 - R Basics"
 author: "Graham Bearden"
 institute: "University of Washington"
-date: "October 9, 2025"
+date: "October 6, 2026"
 output:
   xaringan::moon_reader:
     lib_dir: libs
@@ -20,6 +20,7 @@ class: inverse, middle, center
 library(tidyverse)
 library(knitr)
 library(countdown)
+library(tidycensus)
 options(scipen=999)
 
 opts_chunk$set(warning=FALSE, message=FALSE)
@@ -27,6 +28,18 @@ opts_chunk$set(warning=FALSE, message=FALSE)
 airbnb <- read_csv('https://bit.ly/3oadz2L', col_types = cols())
 climate <- read_csv('https://bit.ly/3kKErEb', col_types = cols())
 mba <- read_csv("https://bit.ly/4evYpeW", col_types = cols())
+
+# Census chunks only run when a key is available (see census_api_key())
+has_census_key <- nzchar(Sys.getenv("CENSUS_API_KEY"))
+if (has_census_key) {
+  wa_counties <- get_acs(
+    geography = "county",
+    state = "WA",
+    variables = c(median_income = "B19013_001", population = "B01003_001"),
+    year = 2024,
+    output = "wide"
+  )
+}
 ```
 
 ---
@@ -34,9 +47,20 @@ mba <- read_csv("https://bit.ly/4evYpeW", col_types = cols())
 # Set Up
 
 - Set up your machine to run R
-  - Install R [on a Mac with an Intel chip](https://cran.rstudio.com/bin/macosx/big-sur-x86_64/base/R-4.4.1-x86_64.pkg), [on a Mac with a silicon M1/M2/M3 chip](https://cran.rstudio.com/bin/macosx/big-sur-arm64/base/R-4.4.1-arm64.pkg), or [on a PC](https://cran.rstudio.com/bin/windows/base/R-4.4.1-win.exe)
-  - Install RStudio [on a Mac](https://download1.rstudio.org/electron/macos/RStudio-2024.04.2-764.dmg) or [on a PC](https://download1.rstudio.org/electron/windows/RStudio-2024.04.2-764.exe)
-- Create a [ChatGPT](https://chat.openai.com/auth/login), [Perplexity](https://www.perplexity.ai/), and/or [Github Copilot](https://github.com/features/copilot) account
+  - Install R [on a Mac with an Intel chip](https://cloud.r-project.org/bin/macosx/big-sur-x86_64/base/R-4.6.1-x86_64.pkg), [on a Mac with a silicon chip](https://cloud.r-project.org/bin/macosx/sonoma-arm64/base/R-4.6.1-arm64.pkg), or [on a PC](https://cloud.r-project.org/bin/windows/base/R-4.6.1-win.exe)
+  - Install RStudio [on a Mac](https://download1.rstudio.org/electron/macos/RStudio-2026.09.0-174.dmg) or [on a PC](https://download1.rstudio.org/electron/windows/RStudio-2026.09.0-174.exe)
+- Save a Census API key so R can pull Census data
+  1. Request a free [Census API key](https://api.census.gov/data/key_signup.html) and find it in your email
+  2. Paste your key between the quotes below and run the code in the RStudio **Console** (not in a script)
+  3. Restart R: **Session > Restart R**
+
+```r
+install.packages("tidycensus")
+tidycensus::census_api_key("PASTE-YOUR-KEY-HERE", install = TRUE)
+Sys.getenv("CENSUS_API_KEY") # After restarting R, this should print your key
+```
+
+- OPTIONAL: Create a [Claude](https://claude.com/), [ChatGPT](https://chatgpt.com/), and/or [GitHub Copilot](https://github.com/features/copilot) account
 
 ---
 
@@ -50,24 +74,25 @@ mba <- read_csv("https://bit.ly/4evYpeW", col_types = cols())
   - Productizing and automation
 - Mental models and analysis tools
   - Excel/SPSS/Stata --> computational programming tools like R
-- What all R programmers do
-  - Leverage ChatGPT, Perplexity, Github Copilot, or another AI assistant
-  - Google for answers
-  - Borrow code
-  - Ask friends and pros for help
+- The typical R programmer
+  - Leverages Claude, ChatGPT, GitHub Copilot, or another AI assistant
+  - Googles for answers
+  - Borrows code
+  - Asks friends and pros for help
 - Useful references (see Reference Materials in the [syllabus](https://gbearden.github.io/r_course_evans_school/) for more)
   - help()
   - ??
   - [R Bloggers](https://www.r-bloggers.com/)
-  - [stackoverflow](https://stackoverflow.com/questions/tagged/r)
+  - [Stack Overflow](https://stackoverflow.com/questions/tagged/r)
   
 ---
 
 # AI Tools and R Programming
 
 - R programmer AI tools
-  - Browser-based tools (ChatGPT)  
-  - Desktop tools (VS Code)  
+  - Browser-based tools (Claude, ChatGPT)  
+  - Desktop AI assistant apps
+  - Desktop AI-enabled code editors (VS Code)  
   - Statistical models (transformers, neural network models, GANs)  
   - Cloud-based Ops orchestration (auto-scaling cloud resources, incident detection)
 - Common prompting strategies
@@ -80,7 +105,7 @@ mba <- read_csv("https://bit.ly/4evYpeW", col_types = cols())
 
 ---
 
-# Quick Tour of R Studio
+# Quick Tour of RStudio
 
 - Script vs. notebook  
   - Scripts are good for code development, running code in production, version control, and multi-file analyses
@@ -89,7 +114,7 @@ mba <- read_csv("https://bit.ly/4evYpeW", col_types = cols())
   - Console vs. notebooks/scripts
 - Make sure you can install packages
   - Command line/Console
-  - R Studio GUI
+  - RStudio GUI
 
 --
 
@@ -99,7 +124,7 @@ install.packages('tidyverse')
 
 ---
 
-# Quick Tour of R Studio
+# Quick Tour of RStudio
 
 - Script vs. notebook  
   - Scripts are good for code development, running code in production, version control, and multi-file analyses
@@ -108,7 +133,7 @@ install.packages('tidyverse')
   - Console vs. notebooks/scripts
 - Make sure you can install packages
   - Command line/Console
-  - R Studio GUI
+  - RStudio GUI
   
 ```{r, echo=FALSE, out.width="60%"}
 knitr::include_graphics("./figures/r_studio_install_packages.png")
@@ -124,7 +149,7 @@ class: inverse, middle, center
 # <img src="figures/toolbox.png" style="height: 50px"/> <span style='color:#6DA34D'>Libraries</span>, functions, data
 
 - Libraries (or packages) are collections of functions (and datasets)
-- ~22,600 libraries on [CRAN](https://cran.r-project.org/web/packages/)
+- ~25,178 libraries on [CRAN](https://cran.r-project.org/web/packages/)
 
 ```r
 install.packages('tidyverse')
@@ -252,44 +277,6 @@ compute_mean <- function(x) {
 
 ---
 
-# <img src="figures/tools.png" style="height: 50px"/> Libraries, <span style='color:#6DA34D'>functions</span>, data
-
-**Exercise - 5 minutes**  
-- Ask [ChatGPT](https://chat.openai.com/), [Github Copilot](https://github.com/features/copilot), or [Perplexity](https://www.perplexity.ai/) to write a function that sums two numbers
-- Copy and paste the function into your R script
-- Run the code in the command line to create the function
-- Try to use the function!
-
-```{r, echo = FALSE}
-countdown(minutes = 5, seconds = 0)
-```
-
----
-
-# <img src="figures/tools.png" style="height: 50px"/> Libraries, <span style='color:#6DA34D'>functions</span>, data
-
-**Exercise - 5 minutes**  
-- Ask [ChatGPT](https://chat.openai.com/), [Github Copilot](https://github.com/features/copilot), or [Perplexity](https://www.perplexity.ai/) to write a function that sums two numbers
-- Copy and paste the function into your R script
-- Run the code in the command line to create the function
-- Try to use the function!
-
-```r
-# A function called sum_two_numbers that takes two arguments.
-# Argument 'x' represents the first number to be added.
-# Argument 'y' represents the second number to be added.
-
-sum_two_numbers <- function(x, y) {
-  # Calculate the sum of x and y and store it in the variable 'result'
-  result <- x + y
-  
-  # Return the result as the output of the function
-  return(result)
-}
-```
-
----
-
 # <img src="figures/data.png" style="height: 50px"/> Libraries, functions, <span style='color:#6DA34D'>data</span>
 
 - Knowing data types when programming is really important!
@@ -301,6 +288,7 @@ sum_two_numbers <- function(x, y) {
   - Vectors
       - Integers, numbers, characters, factors
       - You can sum integers and numbers, but not character strings
+      - You can make character strings upper case, but not integers and numbers
   
 ```r
 starwars
@@ -325,7 +313,7 @@ head(starwars, 3)
 - Create and coerce variables  
   - `as.character()`, `as.numeric()`  
 
-**Import and inspect your own dataset (`read_csv()`)**  
+**Import and inspect your own dataset with `read_csv()`**  
 
 ```r
 byod_df <- read_csv("[...].csv")
@@ -333,6 +321,28 @@ byod_df <- read_csv("[...].csv")
 # https://github.com/fivethirtyeight/data/tree/master/partisan-lean
 byod_df <- read_csv("http://bit.ly/48Ru0Ip")
 ```
+
+---
+
+# <img src="figures/data.png" style="height: 50px"/> Libraries, functions, <span style='color:#6DA34D'>data</span>
+
+**Pull data from the U.S. Census Bureau with `tidycensus`**
+
+```r
+library(tidycensus)
+
+wa_counties <- get_acs(
+  geography = "county",
+  state = "WA",
+  variables = c(median_income = "B19013_001", population = "B01003_001"),
+  year = 2024,
+  output = "wide"
+)
+```
+
+**Troubleshooting**
+- Error that a key already exists? Re-run the set up code with `overwrite = TRUE` added, then restart R
+- `Sys.getenv("CENSUS_API_KEY")` prints `""`? Restart R (**Session > Restart R**) and check again
 
 ---
 class: inverse, middle, center
@@ -343,15 +353,15 @@ class: inverse, middle, center
 
 # Let's apply what we learned to real data
 
-You are an analyst at the City of Seattle. City leadership wants to develop new policy to regulate Airbnb properties. Over the next month, you will be asked to prepare findings that you observe in the [dataset compiled on Airbnb properties](https://www.kaggle.com/shanelev/seattle-airbnb-listings).  
+You are an analyst at the City of Seattle. City leadership wants to develop new policy to regulate Airbnb properties. Over the next month, you will be asked to prepare findings that you observe in the [dataset compiled on Airbnb properties](https://www.kaggle.com/datasets/shanelev/seattle-airbnb-listings).  
 
 --
 
 **Exercise - 5 minutes**  
 - What type of data object is `airbnb`?  
-- What is the fewest number of `reviews` for a property?  
+- What is the smallest number of `reviews` for a property?  
 - What is the average number of `reviews` for a property?  
-- What is the range of number of `bathrooms` in the `airbnb` data?  
+- What is the range of the number of `bathrooms` in the `airbnb` data?  
 
 --
 
@@ -370,9 +380,9 @@ countdown(minutes = 5, seconds = 0)
 
 **Exercise - 5 minutes**  
 - What type of data object is `airbnb`?  
-- What is the fewest number of `reviews` for a property?  
+- What is the smallest number of `reviews` for a property?  
 - What is the average number of `reviews` for a property?  
-- What is the range of number of `bathrooms` in the `airbnb` data?  
+- What is the range of the number of `bathrooms` in the `airbnb` data?  
 
 ```{r, echo = TRUE, collapse=TRUE}
 class(airbnb)
@@ -404,7 +414,7 @@ class: inverse, middle, center
 Get in the habit of running these functions when you open a new dataset
 
 - `head()` shows you the top of a tibble (or data frame)
-  - `head()` argument defaults to 6  
+  - `head()` shows 6 rows by default  
   - `tail()` shows the bottom of a tibble  
   - `arrange()` pairs nicely with subsetting functions to explore your data
 - `summary()` shows summary statistics on all variables in a dataset
@@ -426,7 +436,7 @@ Get in the habit of running these functions when you open a new dataset
 - What is the median value for `rating`?  
 - How many variables are in `airbnb`?  
 
-<i>Hint: There are multiple ways to answers these questions with the functions you know</i>
+<i>Hint: There are multiple ways to answer these questions with the functions you know</i>
 
 ```{r, echo = FALSE}
 countdown(minutes = 5, seconds = 0)
@@ -471,7 +481,7 @@ summary(airbnb)
 
 - `table()` shows you the distribution of values in a vector  
   - Indexed by name and position  
-- `length()` tells you in the number of elements in a vector  
+- `length()` tells you the number of elements in a vector  
 - `unique()` shows you the unique values in a vector  
 - `sort()` orders values in a vector  
 - `summary()` shows you descriptive statistics on a vector  
@@ -481,7 +491,7 @@ summary(airbnb)
 
 You can nest multiple functions
 ```r
-length(unique(starwars$homeworld))
+length(unique(wa_counties$NAME))
 ```
 
 ---
@@ -530,10 +540,10 @@ Make sure...
 
 - You loaded your libraries
 - Arguments in your functions are comma-separated
-- Your functions have start and closing parentheses
+- Your functions have opening and closing parentheses
 - You have start and end quotation marks where relevant
 - The variable type is correct to perform the function you call
-  - For example you probably don't want to run `min()` on a character string
+  - For example, you probably don't want to run `min()` on a character string
 - Your assignment operator looks like this: `<-`
 - You're running code inside a code chunk (in a notebook)
 
@@ -550,7 +560,7 @@ Why does this code throw an error in R?
 
 # Practice with climate data
 
-By day you're an analyst at the City of Seattle; by night you're a climate analyst at the Earth Institute. Over the next four weeks, you will analyze [climate data](https://www.kaggle.com/sohelranaccselab/global-climate-change) to answer questions that help the Earth Institute understand temperature and temperature change in cities and countries around the world.
+By day you're an analyst at the City of Seattle; by night you're a climate analyst at the Earth Institute. Over the next four weeks, you will analyze [climate data](https://www.kaggle.com/datasets/berkeleyearth/climate-change-earth-surface-temperature-data) to answer questions that help the Earth Institute understand temperature and temperature change in cities and countries around the world.
 
 --
 
@@ -562,7 +572,7 @@ By day you're an analyst at the City of Seattle; by night you're a climate analy
 
 --
 
-<b>Begin the exercise by importing the climate dataset in R Studio</b>  
+<b>Begin the exercise by importing the climate dataset in RStudio</b>  
 ```r
 climate <- read_csv('https://bit.ly/3kKErEb')
 ```
@@ -617,11 +627,11 @@ table(climate$country)['Japan']
 
 # More practice - MBA admissions
 
-You can find the a description of the synthetic MBA admissions data [here](https://www.kaggle.com/datasets/taweilo/mba-admission-dataset). The data were generated from the University of Pennsylvania Wharton Class of 2025.
+You can find a description of the synthetic MBA admissions data [here](https://www.kaggle.com/datasets/taweilo/mba-admission-dataset). The data were generated from the University of Pennsylvania Wharton Class of 2025.
 
 --
 
-**Exercise 4 - 8 minutes**  
+**Exercise 5 - 8 minutes**  
 - What is the lowest `gpa` in the `mba` dataset?  
 - What is the average number of years of work experience (`work_exp`)?  
 - How many applicants are international students?  
@@ -629,7 +639,7 @@ You can find the a description of the synthetic MBA admissions data [here](https
 
 --
 
-<b>Begin the exercise by importing the mba admissions dataset in R Studio</b>  
+<b>Begin the exercise by importing the MBA admissions dataset in RStudio</b>  
 ```r
 mba <- read_csv("https://bit.ly/4evYpeW")
 ```
@@ -642,7 +652,7 @@ countdown(minutes = 8, seconds = 0)
 
 # More practice - MBA admissions
 
-**Exercise 4 - 8 minutes**  
+**Exercise 5 - 8 minutes**  
 - What is the lowest `gpa` in the `mba` dataset?  
 - What is the average number of years of work experience (`work_exp`)?  
 - How many applicants are international students?  
@@ -668,7 +678,7 @@ table(mba$international)
 
 # More practice - MBA admissions
 
-**Exercise 4 - 8 minutes**  
+**Exercise 5 - 8 minutes**  
 - What is the lowest `gpa` in the `mba` dataset?  
 - What is the average number of years of work experience (`work_exp`)?  
 - How many applicants are international students?  
