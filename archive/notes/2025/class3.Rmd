@@ -1,0 +1,175 @@
+---
+title: "Class 3 - Data Visualization"
+output: html_notebook
+---
+
+# Notes
+## Title 2
+### Title 3
+#### Title 4
+
+Shortcut for code chunk: cmd+option+i
+
+# Load libraries and data
+
+```{r}
+library(tidyverse)
+library(scales)
+library(ggthemes)
+
+airbnb <- read_csv('https://bit.ly/3oadz2L')
+```
+
+# Begin analysis here
+
+```{r}
+# functions to aggregate or summarize data
+airbnb %>% 
+  group_by(address) %>% 
+  summarise(
+    mean_cost = mean(price),
+    count = n(),
+    n_room_types = n_distinct(room_type)
+    )
+```
+
+# GMAT exercise at beginning of class
+
+```{r}
+mba <- read_csv("https://bit.ly/4evYpeW")
+
+f_mba <- mba %>% 
+  filter(gender == "Female") %>% 
+  group_by(major) %>% 
+  summarise(
+    n_applicants = n(),
+    gmat_avg = mean(gmat)
+  )
+
+```
+
+# Test plot
+
+```{r}
+starwars %>% 
+  filter(mass < 1000) %>% 
+  ggplot() + 
+  geom_point(aes(height, mass))
+```
+
+```{r}
+airbnb %>% 
+  ggplot(aes(x = address, fill = address)) + 
+  geom_bar()
+```
+
+
+`stat` can be "count" or "identity"
+
+```{r}
+climate <- read_csv('https://bit.ly/3kKErEb')
+
+my_countries <- c('Brazil', 'China', 'India', 'Turkey', 'United States')
+
+climate %>% 
+  filter(country %in% my_countries) %>% 
+  ggplot(aes(x = country, fill = country)) + 
+  geom_bar(stat = "count")
+```
+
+```{r}
+  airbnb %>% 
+    group_by(address) %>%
+    summarise(count = n()) %>%
+    ggplot(
+      aes(
+        x = address,
+        y = count,
+        fill = address
+        )
+      ) + 
+    geom_bar(stat = 'identity')
+```
+
+```{r}
+airbnb %>% 
+  ggplot(
+    aes(
+      x = address,
+      fill = address
+      )
+    ) + 
+  geom_bar()
+```
+
+```{r}
+airbnb %>% 
+  group_by(room_type, address) %>%
+  summarise(n_listings = n()) %>%
+  filter(address == 'Kirkland') %>% 
+  mutate(listings_deficit = if_else(n_listings < 100, 'y', 'n')) %>%
+  ggplot(aes(x = room_type, y = n_listings, fill = listings_deficit)) + 
+  geom_bar(stat = "identity")
+```
+
+```{r}
+airbnb %>% 
+  group_by(address) %>%   
+  summarise(n = n()) %>%
+  ggplot(
+    aes(
+      x = reorder(address, -n),
+      y = n,  
+      fill = address
+      )
+    ) + 
+  geom_bar(stat = 'identity')
+```
+
+```{r}
+my_data <- airbnb %>% 
+  group_by(address) %>% 
+  summarise(n = n())
+
+my_data %>% 
+  ggplot(
+    aes(
+      x = reorder(address, -n),
+      y = n  
+      )
+    ) + 
+  geom_bar(
+    stat = 'identity', fill = '#CC3F0C', alpha = .5 # coolors.co/generate
+    , linetype = 'dashed', color = 'black', linewidth = 1
+    )
+```
+
+
+```{r}
+
+my_colors <- c("#ff006e", "#80ed99")
+
+climate %>% 
+  filter(country %in% c('Brazil', 'China', 'India', 'Turkey', 'United States')) %>% 
+  group_by(country) %>% 
+  summarise(n = n()) %>% 
+  ggplot(aes(x = reorder(country, -n), y = n, fill = country)) + 
+  geom_bar(stat = 'identity') + 
+  xlab("Country") + 
+  ylab("Number of Countries") + 
+  scale_y_continuous(labels = comma) + 
+  ggplot2::theme_void() + 
+  ggthemes::scale_fill_few()
+```
+```{r}
+
+```
+
+
+
+
+
+
+
+
+

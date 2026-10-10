@@ -1,0 +1,31 @@
+---
+title: "Class 3 - Data Visualization"
+author: "Graham Bearden"
+date: "2024-10-18"
+output: html_document
+---
+
+# Set up
+
+Load tidyverse and read climate data
+
+```{r}
+library(tidyverse)
+
+climate <- read_csv('https://bit.ly/3kKErEb')
+
+my_countries <- c('Brazil', 'China', 'India', 
+                  'Turkey', 'United States')
+```
+
+Create data visualization
+
+```{r}
+my_countries_df <- climate %>% 
+  filter(country %in% my_countries) 
+
+my_countries_df %>% 
+  ggplot(aes(x = country, fill = country)) + 
+  geom_bar()
+```
+

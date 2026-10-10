@@ -1,87 +1,185 @@
-# Write comments like this.
-# Everything that follow the hash is a comment in an R script.
+# ==============================================================================
+# R Class 1 Notes: R basics, data types, loading data, and exploring data
+# ==============================================================================
 
-# Short-cut to run code
-# command + return
 
-# Install tidyverse or any package with install.packages()
-install.packages("tidyverse")
+# ------------------------------------------------------------------------------
+# 1. Setup: install and load packages
+# ------------------------------------------------------------------------------
 
-# Load library
+# Install packages ONCE per machine (comment these out after the first run)
+install.packages("tidyverse")   # dplyr, readr, ggplot2, and friends
+install.packages("tidycensus")  # access to US Census / ACS data
+
+# Load packages EVERY session
 library(tidyverse)
+library(tidycensus)
 
-# Built-in datasets
-cars
-starwars # dataset that ships with tidyverse
+# Comments can go on their own line, or at the end of a line like this one.
 
-# Import data with read_csv()
-# Here we import data from a URL. You can also import a local file.
-airbnb <- read_csv('https://bit.ly/3oadz2L')
+# Store your Census API key as an environment variable.
+# Replace the placeholder with your own key; install = TRUE saves it to
+# your .Renviron so you only need to do this once.
+census_api_key("PASTE-YOUR-KEY-HERE", install = TRUE)
 
-# Import climate data
-climate <- read_csv('https://bit.ly/3kKErEb')
 
-# Use help to learn more about functions
-help(c)
+# ------------------------------------------------------------------------------
+# 2. Vectors and functions
+# ------------------------------------------------------------------------------
 
-# Create a data object with `<-`
+# c() combines values into a vector. It is a function too!
 some_numbers <- c(1, 2, 4)
 
-# min(), mean(), max(), and sd() are functions. c() is actually a function too!
-# Compute descriptive statistics
-min(some_numbers)
-mean(some_numbers, na.rm = TRUE)
+# min(), mean(), max(), and sd() are functions that summarize a vector.
+# Assigning with <- saves the result; without it, R just prints the result.
+min_value <- min(some_numbers)  # saved to an object
+mean(some_numbers)              # printed to the console
 max(some_numbers)
 sd(some_numbers)
 
-# My custom mean function
-# All functions have a body and an output
-# Functions are created using function() 
-compute_mean <- function(x) { 
-  # Calculate the sum of all values in `x`
-  x_sum <- sum(x, na.rm = TRUE)
-  # We'll learn more about the ! operator later
-  # Just know that the code below used to create `x_clean` removes NA values
-  x_clean <- x[!is.na(x)]
-  # Count the number of values in `x`
-  x_len <- length(x_clean)
-  # Divide `x_sum` by `x_len`
-  x_mean <- x_sum / x_len
-  # `return` is used to tell R the output of the function
-  return(x_mean)
-}
-
-compute_mean(x = some_numbers)
+# Use help() to learn more about any function (or ?min as a shortcut)
+help(min)
+help(lm)
 
 
-pnw <- c('Washington', 'Oregon', 'Idaho')
-class(pnw)
-class(c('Washington', 'Oregon', 'Idaho'))
+# ------------------------------------------------------------------------------
+# 3. Data types and classes
+# ------------------------------------------------------------------------------
 
-# Create a tibble with the tibble() function
-tibble(
-  x = c(1:3)
-  , y = c(4:6)
-  , z = c('Washington', 'Oregon', 'Idaho')
+# starwars is a built-in dataset that ships with dplyr (part of tidyverse)
+starwars
+as.data.frame(starwars)  # convert from a tibble to a base R data frame
+
+# class() tells you what kind of object something is
+class(starwars)      # a tibble / data frame
+class(some_numbers)  # numeric
+
+# Use $ to pull a single column out of a data frame
+sw_height <- starwars$height
+
+class(sw_height)
+is.integer(sw_height)    # FALSE: height is stored as numeric (double)
+is.character(sw_height)  # FALSE: it is not text
+
+# Converting to character first turns the numbers into text, so mean() cannot
+# compute an average. R returns NA with a warning. Lesson: check your classes.
+mean(as.character(sw_height), na.rm = TRUE)
+
+# The correct way to average a numeric column with missing values:
+mean(sw_height, na.rm = TRUE)
+
+
+# ------------------------------------------------------------------------------
+# 4. Loading data
+# ------------------------------------------------------------------------------
+
+# read_csv() imports data; write_csv() exports it
+# getwd() prints your current working directory (where relative paths start)
+getwd()
+
+# Bring your own data (BYOD): swap in your own file path
+# byod_df <- read_csv("data/[my_file].csv")
+
+# FiveThirtyEight political lean data, read directly from a URL
+byod_df <- read_csv("http://bit.ly/48Ru0Ip")
+
+# Airbnb listings data
+airbnb <- read_csv("https://bit.ly/3oadz2L")
+
+# Climate data
+climate <- read_csv("https://bit.ly/3kKErEb")
+
+# Census data via tidycensus: median income and population by WA county
+wa_counties <- get_acs(
+  geography = "county",
+  state     = "WA",
+  variables = c(median_income = "B19013_001", population = "B01003_001"),
+  year      = 2024,
+  output    = "wide"  # one row per county, with E (estimate) and M (margin of error) columns
 )
 
-# Refer to specific variable in a tibble with $ or the index like starwars[,1]
-# Continue my comment here.
-max(starwars$height, na.rm = TRUE)
-starwars[,1]
 
-# Coerce characters into factors when using summary
-summary(as.factor(starwars$homeworld))
-table(starwars$homeworld)["Iridonia"]
+# ------------------------------------------------------------------------------
+# 5. Exploring a data frame
+# ------------------------------------------------------------------------------
 
-# See names of columns with ls()
-ls(starwars)
-ls(airbnb)
+# Column names, alphabetized (names() is the more common way to list columns)
+sort(names(wa_counties))
 
-# Count the number of variables in the data
-num_vars <- length(ls(airbnb))
+head(wa_counties, n = 3)  # first 3 rows
+summary(wa_counties)      # quick summary of every column
 
-# Sort alphabetically the values in a string
-sort(starwars$name)
+# Treating GEOID as a factor gives a count per unique value
+summary(as.factor(wa_counties$GEOID))
+
+# Sort counties by median income, highest first
+arrange(wa_counties, desc(median_incomeE))
+
+# Size of a data frame: dim() returns c(rows, columns)
+dim(airbnb)[1]  # number of rows
+help(nrow)      # nrow(airbnb) does the same thing more directly
+
+summary(airbnb)
 
 
+# ------------------------------------------------------------------------------
+# 6. Selecting columns and saving data
+# ------------------------------------------------------------------------------
+
+# Keep only the columns you need
+airbnb_reviews <- select(airbnb, room_id, reviews)
+
+# Write the result to a CSV in your working directory
+write_csv(airbnb_reviews, "airbnb_review.csv")
+
+
+# ------------------------------------------------------------------------------
+# 7. Counting and unique values
+# ------------------------------------------------------------------------------
+
+# table() counts how many times each value appears
+table(starwars$eye_color)
+
+# Number of distinct values in a column
+length(unique(starwars$hair_color))
+length(unique(airbnb$address))
+
+# unique() returns the distinct values themselves
+unique(airbnb$address)
+
+# Sort the distinct host IDs, then look at the first few
+head(sort(unique(airbnb$host_id)))
+
+# Square brackets [ ] pick out elements by position: here, the 3rd smallest ID
+sort(unique(airbnb$host_id))[3]
+
+
+# ------------------------------------------------------------------------------
+# 8. Equivalence checks
+# ------------------------------------------------------------------------------
+
+# == compares element by element: returns one TRUE/FALSE per room type
+"yurt" == unique(airbnb$room_type)
+
+# %in% asks one question: is "yurt" anywhere in the vector? (single TRUE/FALSE)
+"yurt" %in% unique(airbnb$room_type)
+
+
+# ------------------------------------------------------------------------------
+# 9. Pipes and counting by category
+# ------------------------------------------------------------------------------
+
+# The pipe (%>%) passes the result on the left into the function on the right.
+# Read it as "and then". This selects the year and month columns of climate.
+climate %>%
+  select(year, month)
+
+# A vector of text values
+two_countries <- c("Spain", "Japan")
+
+# table() output can be indexed by position: here, the count for the 2nd country
+table(climate$country)[2]
+
+# Use %in% with the vector above to keep only rows for those two countries
+climate %>%
+  filter(country %in% two_countries)
