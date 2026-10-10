@@ -54,7 +54,7 @@ This is an applied course that focuses on successful execution of code. While st
 - Attend four classes. Class dates are 10/6, 10/13, 10/20, 10/27. A full class is 2 hours and 50 minutes, breaks included.
 - Submit a memo created in R by 10/30 or before. 
     + The memo must include either (a) two data visualizations or (b) one data visualization and one table made in R. Start from one of the [memo templates](https://github.com/gbearden/r_course_evans_school/tree/master/memo_templates) and see the [example memo](https://gbearden.github.io/r_course_evans_school/memo_templates/decision_memo.html).
-    + This course teaches data analysis tools, not data analysis, so you do not need to write up an analysis. The memo's text can be placeholder text, like the "lorem ipsum" text in the example memo.
+    + This course teaches data analysis tools, not data analysis, so you do not need to write up an analysis. The memo's text can be placeholder text, such as "lorem ipsum" text.
     + Visualizations should be "stakeholder-ready" (see [example plots](https://github.com/gbearden/r_course_evans_school/tree/master/plots)). A stakeholder-ready visualization:
         - Has a descriptive plot title
         - Has labeled axes
@@ -77,7 +77,7 @@ We will also begin to explore data summary techniques and troubleshooting tactic
 
 At the end of first class, students should be familiar with the R interface, know how to perform basic operations, calculate summary statistics, and walk through a series of steps to troubleshoot code.
 
-Helpful materials: [example .R file](https://github.com/gbearden/r_course_evans_school/blob/master/notes/example_script.R), [base R cheat sheet](https://rstudio.github.io/cheatsheets/base-r.pdf)
+Helpful materials: [class 1 notes](https://github.com/gbearden/r_course_evans_school/blob/master/notes/class_1.R), [example .R file](https://github.com/gbearden/r_course_evans_school/blob/master/notes/example_script.R), [base R cheat sheet](https://rstudio.github.io/cheatsheets/base-r.pdf)
 
 #### October 13
 
