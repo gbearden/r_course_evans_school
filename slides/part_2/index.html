@@ -107,7 +107,7 @@ You can find a description of the MBA admissions data [here](https://www.kaggle.
 mba &lt;- read_csv("https://bit.ly/4evYpeW")
 ```
 
-<countdown-timer class="countdown" id="timer_feb94064" minutes="5" seconds="0" update-every="1" tabindex="0" style="right:0;bottom:0;"></countdown-timer>
+<countdown-timer class="countdown" id="timer_2c28f84b" minutes="5" seconds="0" update-every="1" tabindex="0" style="right:0;bottom:0;"></countdown-timer>
 
 ---
 
@@ -533,7 +533,7 @@ By day you're an analyst at the City of Seattle; by night you're a climate analy
 climate &lt;- read_csv('https://bit.ly/3kKErEb')
 ```
 
-<countdown-timer class="countdown" id="timer_2388211a" minutes="6" seconds="0" update-every="1" tabindex="0" style="right:0;bottom:0;"></countdown-timer>
+<countdown-timer class="countdown" id="timer_e5ddc8f4" minutes="6" seconds="0" update-every="1" tabindex="0" style="right:0;bottom:0;"></countdown-timer>
 
 ---
 
@@ -630,7 +630,7 @@ bathrooms &lt;- airbnb %&gt;
 head(bathrooms)
 ```
 
-<countdown-timer class="countdown" id="timer_0da867ca" minutes="5" seconds="0" update-every="1" tabindex="0" style="right:0;bottom:0;"></countdown-timer>
+<countdown-timer class="countdown" id="timer_d8a56c78" minutes="5" seconds="0" update-every="1" tabindex="0" style="right:0;bottom:0;"></countdown-timer>
 
 ---
 
@@ -698,7 +698,7 @@ airbnb |&gt;
   - Rename `city` as `location`
   - In `temp`, change `NA` values to `0`  
 
-<countdown-timer class="countdown" id="timer_ad32b1e1" minutes="6" seconds="0" update-every="1" tabindex="0" style="right:0;bottom:0;"></countdown-timer>
+<countdown-timer class="countdown" id="timer_3ceb3e10" minutes="6" seconds="0" update-every="1" tabindex="0" style="right:0;bottom:0;"></countdown-timer>
 
 ---
 
@@ -768,11 +768,11 @@ airbnb |&gt;
 ``` r
 airbnb |&gt; sample_n(3) |&gt; select(room_id, host_id, address, room_type, price, name)
 ## # A tibble: 3 × 6
-##    room_id  host_id address room_type       price name                          
-##      &lt;dbl&gt;    &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;           &lt;dbl&gt; &lt;chr&gt;                         
-## 1 19543829 22121954 Seattle Private room       49 The Blue House                
-## 2 10439666 35961304 Seattle Entire home/apt    79 Clean &amp; Minimal Downtown Stud…
-## 3 21199701 49209595 Seattle Entire home/apt   150 Urban Oasis in hip Columbia C…
+##    room_id  host_id address  room_type       price name                         
+##      &lt;dbl&gt;    &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;           &lt;dbl&gt; &lt;chr&gt;                        
+## 1 23983736 26967583 Seattle  Private room       25 Wild Horse Queen Bedroom 10 …
+## 2 15843238 45073670 Bellevue Private room      600 Comfy home minutes to downto…
+## 3 26300122 40751929 Kirkland Entire home/apt    72 Kirkland beach condo
 ```
 
 --
@@ -781,11 +781,11 @@ airbnb |&gt; sample_n(3) |&gt; select(room_id, host_id, address, room_type, pric
 ``` r
 airbnb |&gt; sample_n(3) |&gt; select(room_id, host_id, address, room_type, price, name)
 ## # A tibble: 3 × 6
-##    room_id   host_id address room_type       price name                         
-##      &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;           &lt;dbl&gt; &lt;chr&gt;                        
-## 1 19735309  94677729 Seattle Private room       45 Private BR&amp;Bath, Quick acces…
-## 2 16409164  16103622 Seattle Private room       52 Comfy Upstairs Room&amp; Private…
-## 3 28268883 207109604 Seattle Entire home/apt    61 Pike Place Ruby
+##    room_id  host_id address room_type       price name                          
+##      &lt;dbl&gt;    &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;           &lt;dbl&gt; &lt;chr&gt;                         
+## 1   356608  1787819 Seattle Entire home/apt   166 St. John's Apt. 309 *Walkscor…
+## 2 17842474 11472997 Seattle Entire home/apt   130 2 BR/1BA Fremont Home, Great …
+## 3 22818039 82961680 Seattle Entire home/apt    85 Executive Apt near Facebk/Amz…
 ```
 
 ---
@@ -809,7 +809,7 @@ airbnb |&gt; sample_n(3) |&gt; select(room_id, host_id, address, room_type, pric
   - The names of cities in `colombia`
 ]
 
-<countdown-timer class="countdown" id="timer_42a1871f" minutes="12" seconds="0" update-every="1" tabindex="0" style="right:0;bottom:0;"></countdown-timer>
+<countdown-timer class="countdown" id="timer_a46a4b3b" minutes="12" seconds="0" update-every="1" tabindex="0" style="right:0;bottom:0;"></countdown-timer>
 
 ---
 
@@ -979,7 +979,7 @@ airbnb |&gt;
 climate &lt;- read_csv('https://bit.ly/3kKErEb')
 ```
 
-<countdown-timer class="countdown" id="timer_334a3648" minutes="6" seconds="0" update-every="1" tabindex="0" style="right:0;bottom:0;"></countdown-timer>
+<countdown-timer class="countdown" id="timer_af622b98" minutes="6" seconds="0" update-every="1" tabindex="0" style="right:0;bottom:0;"></countdown-timer>
 
 ---
 
@@ -1164,7 +1164,7 @@ With the `climate` data, report the mean temperatures for `"Angola"`, `"Ivory Co
 - Pivot the data so the years are columns (see the hint on the next slide)
 - In this exercise, you will use `filter()`, `group_by()`, `summarise()`, and `pivot_wider()`
 
-<countdown-timer class="countdown" id="timer_a81de1ca" minutes="10" seconds="0" update-every="1" tabindex="0" style="right:0;bottom:0;"></countdown-timer>
+<countdown-timer class="countdown" id="timer_dd09638d" minutes="10" seconds="0" update-every="1" tabindex="0" style="right:0;bottom:0;"></countdown-timer>
 
 ---
 
