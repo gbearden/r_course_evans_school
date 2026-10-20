@@ -21,7 +21,6 @@ library(kableExtra)
 library(formatR)
 library(scales)
 library(ggthemes)
-library(tidycensus)
 options(scipen=999)
 
 opts_chunk$set(warning=FALSE, message=FALSE)
@@ -65,6 +64,16 @@ wacky_palette <- c("#FF0099", "#00CCFF", "#FF9900", "#33FF33", "#FF33CC", "#FFFF
   - Aggregated data
   - Disaggregated data
 - Customizing plots
+
+**Import datasets for today's class**
+
+```r
+library(tidyverse)
+
+airbnb <- read_csv('https://bit.ly/3oadz2L')
+climate <- read_csv('https://bit.ly/3kKErEb')
+mba <- read_csv("https://bit.ly/4evYpeW")
+```
 
 ---
 
@@ -223,7 +232,7 @@ starwars %>% ggplot() + geom_point(aes(height, mass))
 
 --
 
-```{r, echo = FALSE, collapse=TRUE, fig.height = 2.5, fig.width = 5, out.height = "235px", dpi=300, eval = has_census_key}
+```{r, echo = FALSE, collapse=TRUE, fig.height = 2.5, fig.width = 5, out.height = "235px", dpi=300}
 starwars %>% ggplot() + geom_point(aes(height, mass))
 ```
 
@@ -1348,7 +1357,7 @@ airbnb %>%
 - With `climate`, create a line plot of mean Fahrenheit temperatures for cities in Brazil
   - Data should be for 1850 and onward ([help](https://gbearden.github.io/r_course_evans_school/slides/part_2/#45))  
   - Use the following formula to convert Celsius to Fahrenheit: `(temp * 9/5) + 32` ([help](https://gbearden.github.io/r_course_evans_school/slides/part_2/#24))  
-  - Create the mean temperature with `summarise` and call it `mean_temp` ([help](https://gbearden.github.io/r_course_evans_school/slides/part_3/#33))  
+  - Create the mean temperature with `summarise` and call it `mean_temp` ([help](https://gbearden.github.io/r_course_evans_school/slides/part_2/#54))  
   - Make line color equal to `city`
   - Feel free to change plot aesthetics as you see fit (add a theme; change axis, legend, or plot titles; change the color of lines for cities; etc.)  
   - *Click forward once for a hint on the functions required to prepare the data*  
