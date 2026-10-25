@@ -53,7 +53,7 @@ This is an applied course that focuses on successful execution of code. While st
 
 - Attend four classes. Class dates are 10/6, 10/13, 10/20, 10/27. A full class is 2 hours and 50 minutes, breaks included.
 - Submit a memo created in R by 10/30 or before. 
-    + The memo must include either (a) two data visualizations or (b) one data visualization and one table made in R. Start from one of the [memo templates](https://github.com/gbearden/r_course_evans_school/tree/master/memo_templates) and see the [example memo](https://gbearden.github.io/r_course_evans_school/memo_templates/decision_memo.html).
+    + The memo must include either (a) two data visualizations or (b) one data visualization and one table made in R. Start from one of the [memo templates](https://github.com/gbearden/r_course_evans_school/tree/master/memo_templates) (PDF preferred; HTML is the backup) and see the [example memo](https://gbearden.github.io/r_course_evans_school/memo_templates/memo_pdf.pdf).
     + This course teaches data analysis tools, not data analysis, so you do not need to write up an analysis. The memo's text can be placeholder text, such as "lorem ipsum" text.
     + Visualizations should be "stakeholder-ready" (see [example plots](https://github.com/gbearden/r_course_evans_school/tree/master/plots)). A stakeholder-ready visualization:
         - Has a descriptive plot title
@@ -97,7 +97,7 @@ Helpful materials: [class 3 notes](https://github.com/gbearden/r_course_evans_sc
 
 #### October 27
 
-The fourth class will build on the skills students learned in previous lessons, introducing additional data visualization and data processing skills used to better work with strings and reshape data. 
+The fourth class will build on the skills students learned in previous lessons, introducing additional data visualization and data processing skills used to better work with tibbles and reshape data. 
 
 At the end of the fourth class, students should be able to prepare data for analysis and "stakeholder-ready" visualization using a broad set of coding skills.
 
