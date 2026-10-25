@@ -93,7 +93,7 @@ The third class will focus on data visualization. We will use `ggplot`, a visual
 
 At the end of third class, students should be able to produce a standard set of plots and manipulate plot aesthetics.
 
-Helpful materials: [data visualization cheat sheet](https://github.com/rstudio/cheatsheets/blob/main/data-visualization-2.1.pdf), [Coolors](https://coolors.co/)
+Helpful materials: [class 3 notes](https://github.com/gbearden/r_course_evans_school/blob/master/notes/class_3.R), [data visualization cheat sheet](https://github.com/rstudio/cheatsheets/blob/main/data-visualization-2.1.pdf), [Coolors](https://coolors.co/)
 
 #### October 27
 
