@@ -4,7 +4,10 @@
 
 library(knitr)
 
-opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE, dpi = 200)
+# Hide warnings and messages in the memo. Code is hidden chunk by chunk with
+# echo = FALSE in each chunk's first line, so you can show a chunk's code
+# with echo = TRUE.
+opts_chunk$set(warning = FALSE, message = FALSE, dpi = 200)
 
 # Memo header ---------------------------------------------------------------
 # Fills the {{to}}, {{from}}, {{date}}, and {{re}} fields in the header file

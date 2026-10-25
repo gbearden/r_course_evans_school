@@ -1,6 +1,8 @@
 ---
-# PDF version of decision_memo.Rmd. Requires LaTeX (for example, TinyTeX:
-# install.packages("tinytex"); tinytex::install_tinytex()).
+# PDF memo template. Knitting to PDF requires LaTeX. To install TinyTeX, run
+# install.packages("tinytex") and then tinytex::install_tinytex() in the
+# console, and restart RStudio. If you can't install TinyTeX, use
+# memo_html.Rmd instead.
 output:
   pdf_document:
     includes:
@@ -23,25 +25,28 @@ library(scales)
 source("memo_setup.R")
 ```
 
-```{r data}
+```{r data, include = FALSE}
 # Replace this chunk with your own data
 airbnb <- read_csv("https://bit.ly/3oadz2L", show_col_types = FALSE)
 
-n_listings    <- nrow(airbnb)
-share_seattle <- mean(airbnb$address == "Seattle")
-share_entire  <- mean(airbnb$room_type == "Entire home/apt")
+n_listings <- nrow(airbnb)
 
-by_city <- airbnb |>
-  group_by(address) |>
+# Descriptive statistics to report in the text with inline R code
+price_stats <- airbnb |>
   summarise(
-    listings     = n(),
-    share_entire = mean(room_type == "Entire home/apt"),
-    median_price = median(price, na.rm = TRUE)
+    mean   = mean(price, na.rm = TRUE),
+    median = median(price, na.rm = TRUE),
+    sd     = sd(price, na.rm = TRUE),
+    min    = min(price, na.rm = TRUE),
+    max    = max(price, na.rm = TRUE)
   )
-city <- function(x) filter(by_city, address == x)
+
+share_entire <- mean(airbnb$room_type == "Entire home/apt")
+n_rated      <- sum(!is.na(airbnb$rating))
+mean_rating  <- mean(airbnb$rating, na.rm = TRUE)
 ```
 
-```{r header}
+```{r header, echo = FALSE}
 memo_header(params)
 ```
 
@@ -49,18 +54,15 @@ memo_header(params)
 reader should be able to stop here and still know what you found and what you
 recommend. -->
 
-**There are `r comma(n_listings, accuracy = 1)` Airbnb listings in Seattle, Bellevue, Kirkland, and Redmond, and `r percent(share_seattle, accuracy = 1)` of them are in Seattle. Most listings (`r percent(share_entire, accuracy = 1)`) rent out an entire home or apartment rather than a room. [Replace with your recommendation in one sentence.]**
+**Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. The data include `r comma(n_listings)` rows.**
 
 ## Background
 
-<!-- Why is this memo landing on the reader's desk now? Keep it to the
-context they need to understand the analysis. -->
-
-[Describe the policy question and why it matters to the reader. Cite sources in footnotes.^[Author, *Title*, Publisher, Year, URL.]]
+[Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.. Cite sources in footnotes.^[Author, *Title*, Publisher, Year, URL.]]
 
 ## Analysis
 
-```{r listings-plot, wrap = "right", wrap.width = 0.45, fig.width = 4, fig.height = 2.8}
+```{r listings-plot, echo = FALSE, wrap = "right", wrap.width = 0.45, fig.width = 4, fig.height = 2.8}
 airbnb |>
   count(address, room_type) |>
   ggplot(aes(x = n, y = reorder(address, n, sum), fill = room_type)) +
@@ -71,14 +73,11 @@ airbnb |>
   theme(legend.position = "bottom", plot.title.position = "plot")
 ```
 
-<!-- Lead with the finding, then give the evidence. This paragraph wraps
-around the figure: change wrap = "right" to wrap = "left" to move the figure,
-or change wrap.width to resize it. Keep the paragraph at least as tall as the
-figure, or the text after it will wrap too. -->
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Curabitur pretium tincidunt lacus. Nulla gravida orci a odio. Nullam varius, turpis et commodo pharetra, est eros bibendum elit, nec luctus magna felis sollicitudin mauris. Integer in mauris eu nibh euismod gravida. Duis ac tellus et risus vulputate vehicula.
 
-Short-term rentals are concentrated in Seattle. The city has `r comma(city("Seattle")$listings)` listings, more than `r floor(city("Seattle")$listings / sum(by_city$listings[by_city$address != "Seattle"]))` times as many as Bellevue, Kirkland, and Redmond combined. The type of rental also differs across the region. In Seattle, `r percent(city("Seattle")$share_entire, accuracy = 1)` of listings rent out an entire home or apartment, compared with `r percent(city("Bellevue")$share_entire, accuracy = 1)` in Bellevue and `r percent(city("Redmond")$share_entire, accuracy = 1)` in Redmond, where renting out a private room is more common. Whole-home rentals matter most for housing policy because they can take units out of the long-term rental market. [Replace with what the evidence means for the reader's decision, and note any limits of the data, such as when it was collected.]
+**Descriptive statistics:** Lorem ipsum dolor sit amet `r dollar(price_stats$median)`, consectetur adipiscing elit `r dollar(price_stats$mean, accuracy = 1)` (sed do eiusmod: `r dollar(price_stats$sd, accuracy = 1)`). Tempor incididunt ut labore `r dollar(price_stats$min)` et dolore `r dollar(price_stats$max)` magna aliqua. Ut enim ad minim veniam `r percent(share_entire, accuracy = 1)`, quis nostrud exercitation. Ullamco laboris `r comma(n_rated)` nisi ut aliquip `r number(mean_rating, accuracy = 0.1)` ex ea commodo consequat. [Replace with the descriptive statistics your reader needs.]
 
-```{r price-table}
+```{r price-table, echo = FALSE}
 airbnb |>
   group_by(City = address) |>
   summarise(
@@ -92,6 +91,4 @@ airbnb |>
 
 ## Recommendation
 
-<!-- Tell the reader what to do, and what happens next. -->
-
-[State your recommendation, the main trade-off, and the next step.]
+Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. 
