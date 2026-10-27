@@ -51,14 +51,14 @@ memo_header(params)
 reader should be able to stop here and still know what you found and what you
 recommend. -->
 
-**Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. The data include `r comma(n_listings)` rows. [Replace with your bottom line and your recommendation in one sentence. Inline R code, like the row count in the previous sentence, fills in a number from your data when you knit.]**
+**Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. The data include `r comma(n_listings)` rows.**
 
 ## Background
 
 <!-- Why is this memo landing on the reader's desk now? Keep it to the
-context they need to understand the analysis. -->
+context they need to understand the analysis. Cite sources in footnotes. -->
 
-[Describe the policy question and why it matters to the reader. Cite sources in footnotes.^[Author, *Title*, Publisher, Year, URL.]]
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.^[Author, *Title*, Publisher, Year, URL.]
 
 ## Analysis
 
@@ -78,7 +78,7 @@ around the figure: change wrap = "right" to wrap = "left" to move the figure,
 or change wrap.width to resize it. Keep the paragraph at least as tall as the
 figure, or the text after it will wrap too. -->
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Curabitur pretium tincidunt lacus. Nulla gravida orci a odio. Nullam varius, turpis et commodo pharetra, est eros bibendum elit, nec luctus magna felis sollicitudin mauris. Integer in mauris eu nibh euismod gravida. Duis ac tellus et risus vulputate vehicula. [Replace with your finding, the evidence for it, and what it means for the reader's decision.]
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Curabitur pretium tincidunt lacus. Nulla gravida orci a odio. Nullam varius, turpis et commodo pharetra, est eros bibendum elit, nec luctus magna felis sollicitudin mauris. Integer in mauris eu nibh euismod gravida. Duis ac tellus et risus vulputate vehicula.
 
 <!-- Inline reporting: compute statistics in the data chunk, then report
 them in the text with inline R code. The scales package formats numbers:
@@ -86,7 +86,7 @@ comma() adds thousands separators, dollar() adds a dollar sign, percent()
 turns a share into a percentage, and number() rounds. Use `accuracy` to set
 the rounding, e.g., accuracy = 0.1 for one decimal place. -->
 
-**Descriptive statistics:** Lorem ipsum dolor sit amet `r dollar(price_stats$median)`, consectetur adipiscing elit `r dollar(price_stats$mean, accuracy = 1)` (sed do eiusmod: `r dollar(price_stats$sd, accuracy = 1)`). Tempor incididunt ut labore `r dollar(price_stats$min)` et dolore `r dollar(price_stats$max)` magna aliqua. Ut enim ad minim veniam `r percent(share_entire, accuracy = 1)`, quis nostrud exercitation. Ullamco laboris `r comma(n_rated)` nisi ut aliquip `r number(mean_rating, accuracy = 0.1)` ex ea commodo consequat. [Replace with the descriptive statistics your reader needs.]
+**Descriptive statistics:** Lorem ipsum dolor sit amet `r dollar(price_stats$median)`, consectetur adipiscing elit `r dollar(price_stats$mean, accuracy = 1)` (sed do eiusmod: `r dollar(price_stats$sd, accuracy = 1)`). Tempor incididunt ut labore `r dollar(price_stats$min)` et dolore `r dollar(price_stats$max)` magna aliqua. Ut enim ad minim veniam `r percent(share_entire, accuracy = 1)`, quis nostrud exercitation. Ullamco laboris `r comma(n_rated)` nisi ut aliquip `r number(mean_rating, accuracy = 0.1)` ex ea commodo consequat.
 
 ```{r price-table, echo = FALSE}
 airbnb |>
@@ -104,4 +104,4 @@ airbnb |>
 
 <!-- Tell the reader what to do, and what happens next. -->
 
-[State your recommendation, the main trade-off, and the next step.]
+Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
