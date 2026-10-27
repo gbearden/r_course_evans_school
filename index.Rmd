@@ -95,7 +95,7 @@ At the end of third class, students should be able to produce a standard set of 
 
 Helpful materials: [class 3 notes](https://github.com/gbearden/r_course_evans_school/blob/master/notes/class_3.R), [data visualization cheat sheet](https://github.com/rstudio/cheatsheets/blob/main/data-visualization-2.1.pdf), [Coolors](https://coolors.co/)
 
-#### October 27
+#### [October 27](https://gbearden.github.io/r_course_evans_school/slides/part_4/)
 
 The fourth class will build on the skills students learned in previous lessons, introducing additional data visualization and data processing skills used to better work with tibbles and reshape data. 
 
