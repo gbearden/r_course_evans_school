@@ -101,6 +101,8 @@ The fourth class will build on the skills students learned in previous lessons, 
 
 At the end of the fourth class, students should be able to prepare data for analysis and "stakeholder-ready" visualization using a broad set of coding skills.
 
+Helpful materials: [class 4 notes](https://github.com/gbearden/r_course_evans_school/blob/master/notes/class_4.R)
+
 ## Data
 
 We will use the datasets below in our workshop. ([Here](https://github.com/gbearden/r_course_evans_school/blob/master/data/process_course_data.r) is code to prepare the temperature and Airbnb data.)
