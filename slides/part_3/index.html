@@ -47,7 +47,7 @@ class: center, middle, inverse, title-slide
 
 - Creating and updating variables  
 - Subsetting tibbles/data frames  
-- How to [aggregate data](https://gbearden.github.io/r_course_evans_school/slides/part_2/#54)  
+- How to [aggregate data](https://gbearden.github.io/r_course_evans_school/slides/part_2/#38)  
 
 ---
 
@@ -101,28 +101,28 @@ mean(saudi$temp, na.rm = TRUE)
 mean(peru$temp, rm.na = TRUE)
 ```
 
-<countdown-timer class="countdown" id="timer_b2c23405" minutes="5" seconds="0" update-every="1" tabindex="0" style="right:0;bottom:0;"></countdown-timer>
+<countdown-timer class="countdown" id="timer_1809bbc0" minutes="5" seconds="0" update-every="1" tabindex="0" style="right:0;bottom:0;"></countdown-timer>
 
 ---
 
 # Exercise 2 of 2: Aggregation
 
 Report the average GMAT scores and number of applicants by major for female applicants only. To complete the task, you'll need to:
-  - Subset your data using `filter()` (click [here](https://gbearden.github.io/r_course_evans_school/slides/part_2/#45) for help)  
+  - Subset your data using `filter()` (click [here](https://gbearden.github.io/r_course_evans_school/slides/part_2/#31) for help)  
   - Use `group_by()` and `summarise()` to count applicants and compute the mean 
 
 ```r
 mba &lt;- read_csv("https://bit.ly/4evYpeW")
 ```
 
-<countdown-timer class="countdown" id="timer_898d9fcb" minutes="5" seconds="0" update-every="1" tabindex="0" style="right:0;bottom:0;"></countdown-timer>
+<countdown-timer class="countdown" id="timer_7fb70412" minutes="5" seconds="0" update-every="1" tabindex="0" style="right:0;bottom:0;"></countdown-timer>
 
 ---
 
 # Exercise 2 of 2: Aggregation
 
 Report the average GMAT scores and number of applicants by major for female applicants only. To complete the task, you'll need to:
-  - Subset your data using `filter()` (click [here](https://gbearden.github.io/r_course_evans_school/slides/part_2/#45) for help)  
+  - Subset your data using `filter()` (click [here](https://gbearden.github.io/r_course_evans_school/slides/part_2/#31) for help)  
   - Use `group_by()` and `summarise()` to count applicants and compute the mean 
 
 ```r
@@ -349,7 +349,7 @@ airbnb %&gt;% ggplot(aes(x = address, fill = room_type)) + geom_bar()
 **Exercise**  
 - Build a bar chart with `climate` data that shows the number of rows for the following countries: 'Brazil', 'China', 'India', 'Turkey', and 'United States'
 - To complete the task, you'll need to:
-  - Subset your data using `filter()` (click [here](https://gbearden.github.io/r_course_evans_school/slides/part_2/#45) for help)  
+  - Subset your data using `filter()` (click [here](https://gbearden.github.io/r_course_evans_school/slides/part_2/#31) for help)  
   - Set the color of the bars equal to `country`
   
 ```r
@@ -357,7 +357,7 @@ climate &lt;- read_csv('https://bit.ly/3kKErEb')
 ```
   
 
-<countdown-timer class="countdown" id="timer_e79f3202" minutes="7" seconds="0" update-every="1" tabindex="0" style="right:0;bottom:0;"></countdown-timer>
+<countdown-timer class="countdown" id="timer_3a111bd9" minutes="7" seconds="0" update-every="1" tabindex="0" style="right:0;bottom:0;"></countdown-timer>
 
 ---
 
@@ -366,7 +366,7 @@ climate &lt;- read_csv('https://bit.ly/3kKErEb')
 **Exercise**  
 - Build a bar chart with `climate` data that shows the number of rows for the following countries: 'Brazil', 'China', 'India', 'Turkey', and 'United States'
 - To complete the task, you'll need to:
-  - Subset your data using `filter()` (click [here](https://gbearden.github.io/r_course_evans_school/slides/part_2/#45) for help)  
+  - Subset your data using `filter()` (click [here](https://gbearden.github.io/r_course_evans_school/slides/part_2/#31) for help)  
   - Set the color of the bars equal to `country`
   
 ```r
@@ -441,7 +441,7 @@ airbnb %&gt;%
   mutate(listings_deficit = if_else(n_listings &lt; 100, 'y', 'n'))
 ```
 
-<countdown-timer class="countdown" id="timer_143ce889" minutes="5" seconds="0" update-every="1" tabindex="0" style="right:0;bottom:0;"></countdown-timer>
+<countdown-timer class="countdown" id="timer_c778500b" minutes="5" seconds="0" update-every="1" tabindex="0" style="right:0;bottom:0;"></countdown-timer>
 
 ---
 
@@ -536,7 +536,7 @@ my_data %&gt;%
   - The updated version of the plot should use `group_by()` and `summarise()` and `stat` should be `'identity'` in `geom_bar()`
   - Use `reorder()` to update the order of the bars  
 
-<countdown-timer class="countdown" id="timer_7e8f6aa8" minutes="5" seconds="0" update-every="1" tabindex="0" style="right:0;bottom:0;"></countdown-timer>
+<countdown-timer class="countdown" id="timer_a955814c" minutes="5" seconds="0" update-every="1" tabindex="0" style="right:0;bottom:0;"></countdown-timer>
   
 --
   
@@ -1043,7 +1043,7 @@ climate %&gt;%
 ```
 ]
 
-<countdown-timer class="countdown" id="timer_bdae0d74" minutes="7" seconds="0" update-every="1" tabindex="0" style="bottom:0;left:0;"></countdown-timer>
+<countdown-timer class="countdown" id="timer_b6cbfee2" minutes="7" seconds="0" update-every="1" tabindex="0" style="bottom:0;left:0;"></countdown-timer>
 
 ---
 
@@ -1196,7 +1196,7 @@ Take a moment to create scatterplots with (a) `gpa` and `gmat` from `mba` and (b
 - Use `group_by()` and `summarise()` if you would like  
 - Feel free to subset your data with `filter()` or `sample_n()`
 
-<countdown-timer class="countdown" id="timer_0c0d9630" minutes="7" seconds="0" update-every="1" tabindex="0" style="bottom:0;left:0;"></countdown-timer>
+<countdown-timer class="countdown" id="timer_2f383519" minutes="7" seconds="0" update-every="1" tabindex="0" style="bottom:0;left:0;"></countdown-timer>
 
 ---
 
@@ -1226,15 +1226,15 @@ airbnb %&gt;%
 # Exercise
 
 - With `climate`, create a line plot of mean Fahrenheit temperatures for cities in Brazil
-  - Data should be for 1850 and onward ([help](https://gbearden.github.io/r_course_evans_school/slides/part_2/#45))  
-  - Use the following formula to convert Celsius to Fahrenheit: `(temp * 9/5) + 32` ([help](https://gbearden.github.io/r_course_evans_school/slides/part_2/#24))  
-  - Create the mean temperature with `summarise` and call it `mean_temp` ([help](https://gbearden.github.io/r_course_evans_school/slides/part_2/#54))  
+  - Data should be for 1850 and onward ([help](https://gbearden.github.io/r_course_evans_school/slides/part_2/#32))  
+  - Use the following formula to convert Celsius to Fahrenheit: `(temp * 9/5) + 32` ([help](https://gbearden.github.io/r_course_evans_school/slides/part_2/#14))  
+  - Create the mean temperature with `summarise` and call it `mean_temp` ([help](https://gbearden.github.io/r_course_evans_school/slides/part_2/#39))  
   - Make line color equal to `city`
   - Feel free to change plot aesthetics as you see fit (add a theme; change axis, legend, or plot titles; change the color of lines for cities; etc.)  
   - *Click forward once for a hint on the functions required to prepare the data*  
   - *Click forward twice to see the plot you'll create*
 
-<countdown-timer class="countdown" id="timer_0b0d4976" minutes="15" seconds="0" update-every="1" tabindex="0" style="bottom:0;left:0;"></countdown-timer>
+<countdown-timer class="countdown" id="timer_9981aa93" minutes="15" seconds="0" update-every="1" tabindex="0" style="bottom:0;left:0;"></countdown-timer>
 
 --
 

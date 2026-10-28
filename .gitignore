@@ -5,3 +5,4 @@
 *.RProj
 /data-raw/
 *.DS_Store
+!memo_templates/memo_templates.Rproj

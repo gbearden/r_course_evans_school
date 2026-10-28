@@ -53,7 +53,7 @@ wacky_palette <- c("#FF0099", "#00CCFF", "#FF9900", "#33FF33", "#FF33CC", "#FFFF
 
 - Creating and updating variables  
 - Subsetting tibbles/data frames  
-- How to [aggregate data](https://gbearden.github.io/r_course_evans_school/slides/part_2/#54)  
+- How to [aggregate data](https://gbearden.github.io/r_course_evans_school/slides/part_2/#38)  
 
 ---
 
@@ -116,7 +116,7 @@ countdown(minutes = 5, seconds = 0)
 # Exercise 2 of 2: Aggregation
 
 Report the average GMAT scores and number of applicants by major for female applicants only. To complete the task, you'll need to:
-  - Subset your data using `filter()` (click [here](https://gbearden.github.io/r_course_evans_school/slides/part_2/#45) for help)  
+  - Subset your data using `filter()` (click [here](https://gbearden.github.io/r_course_evans_school/slides/part_2/#31) for help)  
   - Use `group_by()` and `summarise()` to count applicants and compute the mean 
 
 ```r
@@ -132,7 +132,7 @@ countdown(minutes = 5, seconds = 0)
 # Exercise 2 of 2: Aggregation
 
 Report the average GMAT scores and number of applicants by major for female applicants only. To complete the task, you'll need to:
-  - Subset your data using `filter()` (click [here](https://gbearden.github.io/r_course_evans_school/slides/part_2/#45) for help)  
+  - Subset your data using `filter()` (click [here](https://gbearden.github.io/r_course_evans_school/slides/part_2/#31) for help)  
   - Use `group_by()` and `summarise()` to count applicants and compute the mean 
 
 ```r
@@ -352,7 +352,7 @@ airbnb %>% ggplot(aes(x = address, fill = room_type)) + geom_bar()
 **Exercise**  
 - Build a bar chart with `climate` data that shows the number of rows for the following countries: 'Brazil', 'China', 'India', 'Turkey', and 'United States'
 - To complete the task, you'll need to:
-  - Subset your data using `filter()` (click [here](https://gbearden.github.io/r_course_evans_school/slides/part_2/#45) for help)  
+  - Subset your data using `filter()` (click [here](https://gbearden.github.io/r_course_evans_school/slides/part_2/#31) for help)  
   - Set the color of the bars equal to `country`
   
 ```r
@@ -371,7 +371,7 @@ countdown(minutes = 7, seconds = 0)
 **Exercise**  
 - Build a bar chart with `climate` data that shows the number of rows for the following countries: 'Brazil', 'China', 'India', 'Turkey', and 'United States'
 - To complete the task, you'll need to:
-  - Subset your data using `filter()` (click [here](https://gbearden.github.io/r_course_evans_school/slides/part_2/#45) for help)  
+  - Subset your data using `filter()` (click [here](https://gbearden.github.io/r_course_evans_school/slides/part_2/#31) for help)  
   - Set the color of the bars equal to `country`
   
 ```r
@@ -1355,9 +1355,9 @@ airbnb %>%
 # Exercise
 
 - With `climate`, create a line plot of mean Fahrenheit temperatures for cities in Brazil
-  - Data should be for 1850 and onward ([help](https://gbearden.github.io/r_course_evans_school/slides/part_2/#45))  
-  - Use the following formula to convert Celsius to Fahrenheit: `(temp * 9/5) + 32` ([help](https://gbearden.github.io/r_course_evans_school/slides/part_2/#24))  
-  - Create the mean temperature with `summarise` and call it `mean_temp` ([help](https://gbearden.github.io/r_course_evans_school/slides/part_2/#54))  
+  - Data should be for 1850 and onward ([help](https://gbearden.github.io/r_course_evans_school/slides/part_2/#32))  
+  - Use the following formula to convert Celsius to Fahrenheit: `(temp * 9/5) + 32` ([help](https://gbearden.github.io/r_course_evans_school/slides/part_2/#14))  
+  - Create the mean temperature with `summarise` and call it `mean_temp` ([help](https://gbearden.github.io/r_course_evans_school/slides/part_2/#39))  
   - Make line color equal to `city`
   - Feel free to change plot aesthetics as you see fit (add a theme; change axis, legend, or plot titles; change the color of lines for cities; etc.)  
   - *Click forward once for a hint on the functions required to prepare the data*  
